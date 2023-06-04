@@ -1,76 +1,76 @@
-<div class="flex flex-col sm:flex-row items-center md:items-start sm:justify-center md:justify-start flex-auto min-w-0">
-    <div class="md:flex md:items-center md:justify-end w-full sm:w-auto md:h-full md:w-1/2 py-8 px-4 sm:p-12 md:p-16 sm:rounded-2xl md:rounded-none sm:shadow md:shadow-none sm:bg-card">
-        <div class="w-full max-w-80 sm:w-80 mx-auto sm:mx-0">
-            <!-- Logo -->
-            <div class="w-12">
-                <img src="assets/images/logo/logoipsium.svg">
-            </div>
+<!-- SET NEW PASSWORD DIV -->
+<div class="container mx-auto flex flex-col justify-center items-center w-full h-screen px-8 py-8">
+    <div class="w-full float-left">
+        <img class="w-auto mb-6" src="assets/images/logo/logoipsium.svg" alt="Logo image">
+        <h1 class="font-bold text-3xl text--primary font-sans text-left">Set New Password</h1>
+        <p class="font-medium text--secondary text-lg font-sans text-left mt-2">Enter Whatsapp Number
 
-            <!-- Title -->
-            <div class="mt-8 text-4xl font-extrabold tracking-tight leading-tight">Confirmation required</div>
-            <div class="mt-4">
-                A confirmation mail with instructions has been sent to your email address.
-                Follow those instructions to confirm your email address and activate your account.
-            </div>
-
-            <!-- Form footer -->
-            <div class="mt-8 text-md font-medium text-secondary">
-                <span>Return to</span>
-                <a
-                    class="ml-1 text-primary-500 hover:underline"
-                    [routerLink]="['/sign-in']">sign in
-                </a>
-            </div>
-        </div>
+        </p>
     </div>
-    <div class="relative hidden md:flex flex-auto items-center justify-center w-1/2 h-full p-16 lg:px-28 overflow-hidden bg-gray-800 dark:border-l">
-        <!-- Background - @formatter:off -->
-        <!-- Rings -->
-        <svg class="absolute inset-0 pointer-events-none"
-             viewBox="0 0 960 540" width="100%" height="100%" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">
-            <g class="text-gray-700 opacity-25" fill="none" stroke="currentColor" stroke-width="100">
-                <circle r="234" cx="196" cy="23"></circle>
-                <circle r="234" cx="790" cy="491"></circle>
-            </g>
-        </svg>
-        <!-- Dots -->
-        <svg class="absolute -top-16 -right-16 text-gray-700"
-             viewBox="0 0 220 192" width="220" height="192" fill="none">
-            <defs>
-                <pattern id="837c3e70-6c3a-44e6-8854-cc48c737b659" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
-                    <rect x="0" y="0" width="4" height="4" fill="currentColor"></rect>
-                </pattern>
-            </defs>
-            <rect width="220" height="192" fill="url(#837c3e70-6c3a-44e6-8854-cc48c737b659)"></rect>
-        </svg>
-        <!-- @formatter:on -->
-        <!-- Content -->
-        <div class="z-10 relative w-full max-w-2xl">
-            <div class="text-7xl font-bold leading-none text-gray-100">
-                <div>Welcome to</div>
-                <div>our community</div>
-            </div>
-            <div class="mt-6 text-lg tracking-tight leading-6 text-gray-400">
-                Fuse helps developers to build organized and well coded dashboards full of beautiful and rich modules.
-                Join us and start building your application today.
-            </div>
-            <div class="flex items-center mt-8">
-                <div class="flex flex-0 items-center -space-x-1.5">
-                    <img
-                        class="flex-0 w-10 h-10 rounded-full ring-4 ring-offset-1 ring-gray-800 ring-offset-gray-800 object-cover"
-                        src="assets/images/avatars/female-18.jpg">
-                    <img
-                        class="flex-0 w-10 h-10 rounded-full ring-4 ring-offset-1 ring-gray-800 ring-offset-gray-800 object-cover"
-                        src="assets/images/avatars/female-11.jpg">
-                    <img
-                        class="flex-0 w-10 h-10 rounded-full ring-4 ring-offset-1 ring-gray-800 ring-offset-gray-800 object-cover"
-                        src="assets/images/avatars/male-09.jpg">
-                    <img
-                        class="flex-0 w-10 h-10 rounded-full ring-4 ring-offset-1 ring-gray-800 ring-offset-gray-800 object-cover"
-                        src="assets/images/avatars/male-16.jpg">
+    <form class="flex flex-col my-12 w-full">
+        <div class="relative z-0 w-full mb-6">
+            <input type="text" name="password" placeholder=" "
+                class="block rounded-lg font-sans px-3 pb-3 pt-4 w-full text-base font-semibold text-gray-900 bg-white border--primary appearance-none focus:outline-none focus:ring-0 focus:border-[#8544E4]" />
+            <label for="password"
+                class="absolute duration-300 top-4 left-4 z-10 origin-0 text-gray-500 focus:text-grey-900 bg-white text-base">Enter
+                Whatsapp Number</label>
+        </div>
+
+
+     <div class="h-24"></div>
+        <button type="button"
+            class="w-full mt-20 text-white focus:outline-none bg-black rounded-md font-sans font-semibold text-sm px-5 py-2.5 text-center mr-2 uppercase mb-2">send otp</button>
+    </form>
+</div>
+<!-- SET NEW PASSWORD DIV -->
+
+
+<div class="container mx-auto flex flex-col justify-center items-center w-full h-screen px-8 py-8">
+    <div class="w-full float-left">
+        <img class="w-auto mb-6" src="assets/images/logo/logoipsium.svg" alt="Logo image">
+        <h1 class="font-bold text-3xl text--primary font-sans text-left">Verification</h1>
+        <p class="font-medium text--secondary text-lg font-sans text-left mt-2">We have send OTP on <span
+                class="text--primary font-semibold">9999999999</span> please enter into the field
+
+        </p>
+    </div>
+    <form class="flex flex-col my-12 w-full">
+        <div class="relative z-0 w-full mb-6">
+            <div class="flex flex-col space-y-16">
+                <div class="flex flex-row items-center justify-between mx-auto w-full max-w-xs">
+                    <div class="w-12 h-12 ">
+                        <input
+                            class="w-full h-full flex flex-col items-center justify-center text-center px-4 outline-none rounded-lg border--primary text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
+                            type="text" name="" id="">
+                    </div>
+                    <div class="w-12 h-12 ">
+                        <input
+                            class="w-full h-full flex flex-col items-center justify-center text-center px-4 outline-none rounded-lg border--primary text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
+                            type="text" name="" id="">
+                    </div>
+                    <div class="w-12 h-12 ">
+                        <input
+                            class="w-full h-full flex flex-col items-center justify-center text-center px-4 outline-none rounded-lg border--primary text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
+                            type="text" name="" id="">
+                    </div>
+                    <div class="w-12 h-12 ">
+                        <input
+                            class="w-full h-full flex flex-col items-center justify-center text-center px-4 outline-none rounded-lg border--primary text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
+                            type="text" name="" id="">
+                    </div>
                 </div>
-                <div class="ml-4 font-medium tracking-tight text-gray-400">More than 17k people joined us, it's your turn</div>
             </div>
         </div>
-    </div>
+
+        <div class="h-24"></div>
+
+        <button type="button"
+            class="w-full mt-20 text-white focus:outline-none bg-black rounded-md font-sans font-semibold text-sm px-5 py-2.5 text-center mr-2 uppercase mb-2">SET
+            PASSWORD</button>
+        <div class="flex items-center mt-4 justify-between">
+            <p class="text-center text-base text--secondary font-sans font-medium">00:45 </p>
+            <a href="sign-up.html" class="font-sans text-base text--primary font-semibold ">Resend OTP?</a>
+        </div>
+
+    </form>
 </div>
