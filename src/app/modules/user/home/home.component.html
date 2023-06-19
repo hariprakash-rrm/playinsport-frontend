@@ -1,0 +1,9 @@
+<div>
+    <h2>Chat App</h2>
+    <div>Online Users: {{ onlineUsers }}</div>
+    <ul>
+      <li *ngFor="let message of messages">{{ message }}</li>
+    </ul>
+    <input [(ngModel)]="message" placeholder="Type a message..." />
+    <button (click)="sendMessage()">Send</button>
+  </div>

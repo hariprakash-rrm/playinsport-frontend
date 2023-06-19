@@ -45,9 +45,8 @@ export class AuthSignInComponent implements OnInit
     {
         // Create the form
         this.signInForm = this._formBuilder.group({
-            email     : ['hughes.brian@company.com', [Validators.required, Validators.email]],
-            password  : ['admin', Validators.required],
-            rememberMe: ['']
+            number     : ['',Validators.required],
+            password  : ['', Validators.required],
         });
     }
 
@@ -66,14 +65,13 @@ export class AuthSignInComponent implements OnInit
             return;
         }
 
-        // Disable the form
-        this.signInForm.disable();
-
-        // Hide the alert
-        this.showAlert = false;
+        let credentials = {
+            number: this.signInForm.value.number as string,
+            password: this.signInForm.value.password
+        }
 
         // Sign in
-        this._authService.signIn(this.signInForm.value)
+        this._authService.signIn(credentials)
             .subscribe(
                 (res:any) => {
 
@@ -90,15 +88,15 @@ export class AuthSignInComponent implements OnInit
                 (response) => {
 
                     // Re-enable the form
-                    this.signInForm.enable();
+                    // this.signInForm.enable();
 
                     // Reset the form
-                    this.signInNgForm.resetForm();
+                    // this.signInNgForm.resetForm();
 
                     // Set the alert
                     this.alert = {
                         type   : 'error',
-                        message: 'Wrong email or password'
+                        message: 'Phone number or password'
                     };
 
                     // Show the alert
@@ -106,4 +104,9 @@ export class AuthSignInComponent implements OnInit
                 }
             );
     }
+
+    goToSignUpForm() {
+        this._router.navigate(['/sign-up']);
+      }
+      
 }

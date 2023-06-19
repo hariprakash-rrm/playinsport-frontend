@@ -6,8 +6,7 @@ import { AuthUtils } from 'app/core/auth/auth.utils';
 import { UserService } from 'app/core/user/user.service';
 
 @Injectable()
-export class AuthService
-{
+export class AuthService {
     private _authenticated: boolean = false;
 
     /**
@@ -16,8 +15,7 @@ export class AuthService
     constructor(
         private _httpClient: HttpClient,
         private _userService: UserService
-    )
-    {
+    ) {
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -27,13 +25,11 @@ export class AuthService
     /**
      * Setter & getter for access token
      */
-    set accessToken(token: string)
-    {
+    set accessToken(token: string) {
         localStorage.setItem('accessToken', token);
     }
 
-    get accessToken(): string
-    {
+    get accessToken(): string {
         return localStorage.getItem('accessToken') ?? '';
     }
 
@@ -44,11 +40,10 @@ export class AuthService
     /**
      * Forgot password
      *
-     * @param email
+     * @param number
      */
-    forgotPassword(email: string): Observable<any>
-    {
-        return this._httpClient.post('api/auth/forgot-password', email);
+    forgotPassword(number: string): Observable<any> {
+        return this._httpClient.post('http://localhost:3000/submit-otp', number);
     }
 
     /**
@@ -56,9 +51,8 @@ export class AuthService
      *
      * @param password
      */
-    resetPassword(password: string): Observable<any>
-    {
-        return this._httpClient.post('api/auth/reset-password', password);
+    resetPassword(validation: { token: any, password: string; }): Observable<any> {
+        return this._httpClient.post('http://localhost:3000/set-password', validation);
     }
 
     /**
@@ -66,19 +60,41 @@ export class AuthService
      *
      * @param credentials
      */
-    signIn(credentials: { email: string; password: string }): Observable<any>
-    {
+    signIn(credentials: { number: string; password: string }): Observable<any> {
         // Throw error, if the user is already logged in
-        if ( this._authenticated )
-        {
+        if (this._authenticated) {
             return throwError('User is already logged in.');
         }
 
-        return this._httpClient.post('api/auth/sign-in', credentials).pipe(
+        return this._httpClient.post('http://localhost:3000/signin', credentials).pipe(
+            switchMap((response: any) => {
+                console.log(response)
+                // Store the access token in the local storage
+                this.accessToken = response.token;
+
+                // Set the authenticated flag to true
+                this._authenticated = true;
+
+                // Store the user on the user service
+                this._userService.user = response.user;
+
+                // Return a new observable with the response
+                return of(response);
+            })
+        );
+    }
+
+
+    submitOTP(OTPValidation: { otp: any, number: Number; }): Observable<any> {
+        // Throw error, if the user is already logged in
+        if (this._authenticated) {
+            return throwError('User is already logged in.');
+        }
+        return this._httpClient.post('http://localhost:3000/submit-otp', OTPValidation).pipe(
             switchMap((response: any) => {
 
                 // Store the access token in the local storage
-                this.accessToken = response.accessToken;
+                this.accessToken = response.token;
 
                 // Set the authenticated flag to true
                 this._authenticated = true;
@@ -95,9 +111,9 @@ export class AuthService
     /**
      * Sign in using the access token
      */
-    signInUsingToken(): Observable<any>
-    {
+    signInUsingToken(): Observable<any> {
         // Renew token
+        return of(true);
         return this._httpClient.post('api/auth/refresh-access-token', {
             accessToken: this.accessToken
         }).pipe(
@@ -126,8 +142,7 @@ export class AuthService
     /**
      * Sign out
      */
-    signOut(): Observable<any>
-    {
+    signOut(): Observable<any> {
         // Remove the access token from the local storage
         localStorage.removeItem('accessToken');
 
@@ -143,9 +158,8 @@ export class AuthService
      *
      * @param user
      */
-    signUp(user: { name: string; email: string; password: string; company: string }): Observable<any>
-    {
-        return this._httpClient.post('api/auth/sign-up', user);
+    signUp(user: { username: string; number: Number; }): Observable<any> {
+        return this._httpClient.post('http://localhost:3000/signup', user);
     }
 
     /**
@@ -153,31 +167,27 @@ export class AuthService
      *
      * @param credentials
      */
-    unlockSession(credentials: { email: string; password: string }): Observable<any>
-    {
-        return this._httpClient.post('api/auth/unlock-session', credentials);
+    unlockSession(credentials: { number: Number; password: string }): Observable<any> {
+        return this._httpClient.post('http://localhost:3000/login', credentials);
     }
 
     /**
      * Check the authentication status
      */
-    check(): Observable<boolean>
-    {
+    check(): Observable<boolean> {
         // Check if the user is logged in
-        if ( this._authenticated )
-        {
+        
+        if (this._authenticated) {
             return of(true);
         }
 
         // Check the access token availability
-        if ( !this.accessToken )
-        {
+        if (!this.accessToken) {
             return of(false);
         }
 
         // Check the access token expire date
-        if ( AuthUtils.isTokenExpired(this.accessToken) )
-        {
+        if (AuthUtils.isTokenExpired(this.accessToken)) {
             return of(false);
         }
 
