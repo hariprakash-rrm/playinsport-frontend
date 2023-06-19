@@ -20,8 +20,16 @@ export class HomeComponent implements OnInit {
   constructor(private socket: Socket) { }
 
   ngOnInit() {
+    this.socket.emit('getGame');
+    // this.socket = io('http://localhost:3000');
     this.socket.fromEvent('chat').subscribe((message: string) => {
       this.messages.push(message);
+      console.log(message)
+    });
+
+    this.socket.fromEvent('getGame').subscribe((message: string) => {
+     
+      console.log(message)
     });
 
     this.socket.fromEvent('users').subscribe((users: number) => {
@@ -31,14 +39,15 @@ export class HomeComponent implements OnInit {
 
   sendMessage() {
     let token = localStorage.getItem('accessToken')
-    let message= {
-token:token,
-message :this.message
+    let message = {
+      token: token,
+      message: this.message
     }
     if (this.message) {
-      this.socket.emit('chat',message);
+      this.socket.emit('chat', message);
       this.message = '';
     }
+   
   }
 
 }
