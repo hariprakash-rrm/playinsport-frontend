@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule, Route } from '@angular/router';
 import { SlotTokenComponent } from './slot-token.component';
 
 // const routes: Routes = [];
@@ -8,9 +8,9 @@ import { SlotTokenComponent } from './slot-token.component';
 //   imports: [RouterModule.forChild(routes)],
 //   exports: [RouterModule]
 // })
-export class SlotTokenRouting: Route[] = [
-  {
-      path     : 'SlotTokenComponent',
-      component: 
-  },
-]
+export const SlotTokenRouting: Route[] = [
+    {
+        path: '',
+        component: SlotTokenComponent,
+    },
+];
