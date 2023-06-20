@@ -130,7 +130,7 @@ export class AuthSignUpComponent implements OnInit {
             console.log(this.signUpForm.controls.username.status);
 
             if (this.signUpForm.invalid) {
-                    // this.errorMessage = '';
+                return;
             }
             return;
         }
@@ -148,9 +148,6 @@ export class AuthSignUpComponent implements OnInit {
                 if (response.statusCode === 201) {
                     this.currentStep++;
                     this.phoneNumber = this.signUpForm.value.number;
-                    // this.snackbar.success(response.message, 3000);
-                    this.errorMessage = response.message;
-
                     this.startCountdown();
                 }
                 console.log(response);
@@ -178,13 +175,10 @@ export class AuthSignUpComponent implements OnInit {
             (response) => {
                 if (response.statusCode === 201) {
                     this.currentStep++;
-                    // this.snackbar.success(response.message, 3000);
-                    this.errorMessage = response.message;
                 }
                 console.log(response);
             },
             (error) => {
-                // this.snackbar.error(error.error.message, 4000);
                 this.errorMessage = error.error.message;
             }
         );
@@ -195,16 +189,12 @@ export class AuthSignUpComponent implements OnInit {
 
         this.tokens = localStorage.getItem('accessToken');
         if (this.setPasswordForm.controls.password.status === 'INVALID') {
-            // this.snackbar.error('Minimum 6 characters in password', 4000);
-            this.errorMessage = 'Minimum 6 character in password';
             return;
         }
         if (
             this.setPasswordForm.value.password !==
             this.setPasswordForm.value.confirmPassword
         ) {
-            // this.snackbar.error(`Passwords don't match`, 4000);
-            this.errorMessage = "Password don't match";
             return;
         }
         let validation = {
@@ -216,11 +206,9 @@ export class AuthSignUpComponent implements OnInit {
                 if (response.statusCode === 201) {
                     this.currentStep++;
                 }
-                // this.snackbar.success(response.message, 3000);
                 this._router.navigate(['/home']);
             },
             (error) => {
-                // this.snackbar.error(error.error.message, 4000);
                 this.errorMessage = error.error.message;
             }
         );

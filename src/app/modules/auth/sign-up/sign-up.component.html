@@ -41,7 +41,8 @@
                 class="absolute duration-300 top-4 left-4 z-10 origin-0 text-gray-500 focus:text-grey-900 bg-white text-base">Enter
                 Whatsapp Number</label>
             <mat-error
-                *ngIf="signUpForm.controls['number'].touched && (signUpForm.get('number').errors?.pattern || signUpForm.get('number').errors?.required)">
+                *ngIf="signUpForm.controls['number'].touched && (signUpForm.get('number').errors?.pattern || signUpForm.get('number').errors?.required)"
+                class="text-red-500 text-sm mt-1" >
                 Please enter valid phone number
             </mat-error>
 
@@ -138,11 +139,11 @@
             <label for="password"
                 class="absolute duration-300 top-4 left-4 z-10 origin-0 text-gray-500 focus:text-grey-900 bg-white text-base">Enter
                 Password</label>
-            <mat-error
-                *ngIf="setPasswordForm.controls['password'].touched && setPasswordForm.get('password').errors?.required && setPasswordForm.get('password').errors?.minlength">
-                Password should have minimum 6 characters
-            </mat-error>
-
+        <mat-error
+            *ngIf="setPasswordForm.controls['password'].touched && (setPasswordForm.get('password').errors?.minlength || setPasswordForm.get('password').errors?.required)"
+            class="text-red-500 text-sm mt-1">
+            Password should have minimum 6 characters
+        </mat-error>
             <div *ngIf="errorMessage" class="text-red-500">{{ errorMessage }}</div>
 
         </div>
