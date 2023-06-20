@@ -28,7 +28,10 @@
                   class="block rounded-lg font-sans px-3 pb-3 pt-4 w-full text-base font-semibold text-gray-900 bg-white border--primary appearance-none focus:outline-none focus:ring-0 focus:border-[#8544E4]"
                 />
                 <label for="name" class="absolute duration-300 top-4 left-4 z-10 origin-0 text-gray-500 focus:text-grey-900 bg-white text-base">Enter User Name</label>
-                
+                <mat-error *ngIf=" signUpForm.controls['userName'].touched && (username.errors?.['minlength']||signUpForm.get('userName').errors?.required)">
+                    குறைந்தபட்ச 3 எழுத்துக்கள் '(minimum 3 characters)'
+                  </mat-error>
+    
               </div>
             
               <div class="relative z-0 w-full mb-6">

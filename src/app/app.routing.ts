@@ -76,7 +76,9 @@ export const appRoutes: Route[] = [
         },
         children   : [
             {path: 'example', loadChildren: () => import('app/modules/admin/example/example.module').then(m => m.ExampleModule)},
-            {path:'home',loadChildren:()=>import ('app/modules/user/home/home.module').then(m=>m.HomeModule)}
+            {path:'home',loadChildren:()=>import ('app/modules/user/home/home.module').then(m=>m.HomeModule)},
+            {path:'token',loadChildren:()=>import ('app/modules/user/slot-token/slot-token.module').then(m=>m.SlotTokenModule)}
+            
         ]
     },
 

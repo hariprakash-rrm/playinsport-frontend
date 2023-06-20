@@ -35,6 +35,7 @@
     "@fullcalendar/timegrid": "4.4.2",
     "@material/snackbar": "^14.0.0",
     "@ngneat/transloco": "2.22.0",
+    "angular-responsive-carousel": "^2.1.2",
     "apexcharts": "3.27.3",
     "crypto-js": "3.3.0",
     "flowbite": "^1.6.6",
