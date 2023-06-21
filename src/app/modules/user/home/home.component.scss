@@ -1,0 +1,20 @@
+.container {
+    max-width: 800px;
+  }
+  
+  .selected {
+    background-color: blue;
+    color: white;
+  }
+  
+  .unavailable {
+    background-color: gray;
+    color: white;
+  }
+  
+  .bg-overlay {
+    background: rgba(0, 0, 0, 0.2);
+  }
+  .-top-bg {
+    top: -25%;
+  }

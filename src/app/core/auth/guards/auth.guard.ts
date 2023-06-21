@@ -71,6 +71,7 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad
     private _check(redirectURL: string): Observable<boolean>
     {
         // Check the authentication status
+        // return of(true);
         return this._authService.check()
                    .pipe(
                        switchMap((authenticated) => {

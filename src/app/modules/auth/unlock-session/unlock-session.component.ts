@@ -20,10 +20,10 @@ export class AuthUnlockSessionComponent implements OnInit
         type   : 'success',
         message: ''
     };
-    name: string;
+    username: string;
     showAlert: boolean = false;
     unlockSessionForm: FormGroup;
-    private _email: string;
+    private _number: string;
 
     /**
      * Constructor
@@ -49,15 +49,15 @@ export class AuthUnlockSessionComponent implements OnInit
     {
         // Get the user's name
         this._userService.user$.subscribe((user) => {
-            this.name = user.name;
-            this._email = user.email;
+            this.username = user.username;
+            this._number = user.number;
         });
 
         // Create the form
         this.unlockSessionForm = this._formBuilder.group({
-            name    : [
+            username: [
                 {
-                    value   : this.name,
+                    value   : this.username,
                     disabled: true
                 }
             ],
@@ -87,7 +87,7 @@ export class AuthUnlockSessionComponent implements OnInit
         this.showAlert = false;
 
         this._authService.unlockSession({
-            email   : this._email ?? '',
+            number: Number(this._number) ?? 0,
             password: this.unlockSessionForm.get('password').value
         }).subscribe(
             () => {
@@ -109,9 +109,9 @@ export class AuthUnlockSessionComponent implements OnInit
 
                 // Reset the form
                 this.unlockSessionNgForm.resetForm({
-                    name: {
-                        value   : this.name,
-                        disabled: true
+                    username: {
+                        value   : this.username,
+                        disabled: true,
                     }
                 });
 

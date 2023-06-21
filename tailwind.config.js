@@ -68,10 +68,11 @@ const config = {
     experimental: {},
     future      : {},
     darkMode    : 'class',
+    
     important   : true,
     purge       : {
         enabled: process.env.TAILWIND_MODE === 'build',
-        content: ['./src/**/*.{html,scss,ts}'],
+        content: ['./src/**/*.{html,scss,ts}',"./node_modules/flowbite/**/*.js"],
         options: {
             safelist: {
                 standard: ['dark'],
@@ -442,7 +443,8 @@ const config = {
         // Other third party and/or custom plugins
         require('@tailwindcss/typography')({modifiers: ['sm', 'lg']}),
         require('@tailwindcss/aspect-ratio'),
-        require('@tailwindcss/line-clamp')
+        require('@tailwindcss/line-clamp'),
+        require('flowbite/plugin')
     ]
 };
 

@@ -49,10 +49,10 @@ export class AuthInterceptor implements HttpInterceptor
                 if ( error instanceof HttpErrorResponse && error.status === 401 )
                 {
                     // Sign out
-                    this._authService.signOut();
+                    // this._authService.signOut();
 
                     // Reload the app
-                    location.reload();
+                    // location.reload();
                 }
 
                 return throwError(error);
