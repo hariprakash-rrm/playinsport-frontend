@@ -1,27 +1,35 @@
-import { Component, OnInit, ElementRef, ViewChild, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, FormGroup, NgForm, Validators, FormControl } from '@angular/forms';
+import {
+    Component,
+    OnInit,
+    ElementRef,
+    ViewChild,
+    ViewEncapsulation,
+} from '@angular/core';
+import {
+    FormBuilder,
+    FormGroup,
+    NgForm,
+    Validators,
+    FormControl,
+    ReactiveFormsModule
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseAlertType } from '@fuse/components/alert';
 import { AuthService } from 'app/core/auth/auth.service';
 import { SnackbarServiceService } from 'app/shared/snackbar-service.service';
+import { Subscription, interval } from 'rxjs';
 
 @Component({
     selector: 'auth-sign-up',
     templateUrl: './sign-up.component.html',
     encapsulation: ViewEncapsulation.None,
-    animations: fuseAnimations
+    animations: fuseAnimations,
 })
 export class AuthSignUpComponent implements OnInit {
-    // @ViewChild('otpInput1') otpInput1: ElementRef;
-    // @ViewChild('otpInput2') otpInput2: ElementRef;
-    // @ViewChild('otpInput3') otpInput3: ElementRef;
-    // @ViewChild('otpInput4') otpInput4: ElementRef;
-    // @ViewChild('signUpNgForm') signUpNgForm: NgForm;
-
     alert: { type: FuseAlertType; message: string } = {
         type: 'success',
-        message: ''
+        message: '',
     };
     signUpForm: FormGroup;
     showAlert: boolean = false;
@@ -29,6 +37,12 @@ export class AuthSignUpComponent implements OnInit {
     otpForm: FormGroup;
     setPasswordForm: FormGroup;
     tokens: any;
+    phoneNumber: any;
+    errorMessage: string = '';
+    // errorMessage1 : string;
+
+    countdown: number = 45; // Initial countdown value
+    interval: any;
 
     /**
      * Constructor
@@ -40,19 +54,29 @@ export class AuthSignUpComponent implements OnInit {
         private snackbar: SnackbarServiceService
     ) {
         this.setPasswordForm = this._formBuilder.group({
-            password: new FormControl('', [Validators.required, Validators.minLength(6),
-            Validators.maxLength(12)]),
-            confirmPassword: new FormControl('', [Validators.required, Validators.minLength(6),
-            Validators.maxLength(12)])
-        })
+            password: new FormControl('', [
+                Validators.required,
+                Validators.minLength(6),
+            ]),
+            confirmPassword: new FormControl('', [
+                Validators.required,
+                Validators.minLength(6),
+            ]),
+        });
+
         this.otpForm = this._formBuilder.group({
             otp1: [''],
             otp2: [''],
             otp3: [''],
-            otp4: ['']
+            otp4: [''],
         });
+    }
 
-
+    get password() {
+        return this.setPasswordForm.get('password');
+    }
+    get confirmPassword() {
+        return this.setPasswordForm.get('confirmPassword');
     }
 
     // handleOTPInput(event: any, nextInput: ElementRef | null) {
@@ -61,7 +85,6 @@ export class AuthSignUpComponent implements OnInit {
     //     }
     // }
 
-
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks
     // -----------------------------------------------------------------------------------------------------
@@ -69,25 +92,30 @@ export class AuthSignUpComponent implements OnInit {
     /**
      * On init
      */
+
     ngOnInit(): void {
         // Create the form
         this.signUpForm = this._formBuilder.group({
             username: new FormControl('', [
                 Validators.required,
                 Validators.minLength(6),
-                Validators.maxLength(12),
             ]),
             number: new FormControl('', [
                 Validators.required,
-                Validators.pattern('[0-9]{10}') // Regular expression for 10-digit phone numbers
-            ])
-
+                Validators.pattern('[0-9]{10}'),
+            ]),
         });
-
-
+    }
+    get username() {
+        return this.signUpForm.get('username');
+    }
+    get number() {
+        return this.signUpForm.get('number');
     }
 
-
+    // ngOnDestroy() {
+    //     clearInterval(this.interval);
+    // }
 
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
@@ -98,21 +126,15 @@ export class AuthSignUpComponent implements OnInit {
      */
     signUp(): void {
         if (this.signUpForm.invalid) {
-            console.log(this.signUpForm)
+            console.log(this.signUpForm);
             console.log(this.signUpForm.controls.username.status);
 
-            if (this.signUpForm.controls.username.status == 'INVALID') {
-                this.snackbar.error('Minimum 6 character in user name', 4000)
-                return
-
-            }
-            if (this.signUpForm.controls.number.status == 'INVALID') {
-                this.snackbar.error('Please enter correct whatsapp number', 4000)
-                return
+            if (this.signUpForm.invalid) {
+                return;
             }
             return;
         }
-        console.log(this.signUpForm.value)
+        console.log(this.signUpForm.value);
 
         // Disable the form
         this.signUpForm.disable();
@@ -123,21 +145,22 @@ export class AuthSignUpComponent implements OnInit {
         // Sign up
         this._authService.signUp(this.signUpForm.value).subscribe(
             (response) => {
-                if (response.statusCode == 201) {
+                if (response.statusCode === 201) {
                     this.currentStep++;
+                    this.phoneNumber = this.signUpForm.value.number;
+                    this.startCountdown();
                 }
-                this.snackbar.success(response.message, 3000)
+                console.log(response);
             },
             (error) => {
-                console.log(error)
-                this.signUpForm.enable()
-                this.snackbar.error(error.error.message, 4000)
+                console.log(error);
+                this.signUpForm.enable();
+                this.errorMessage = error.error.message;
             }
         );
     }
 
     checkOTP(): void {
-
         const { otp1, otp2, otp3, otp4 } = this.otpForm.value;
         const enteredOTP = otp1 + otp2 + otp3 + otp4;
 
@@ -146,51 +169,64 @@ export class AuthSignUpComponent implements OnInit {
         }
         let OTPValidation = {
             otp: enteredOTP,
-            number: this.signUpForm.value.number
-        }
+            number: this.signUpForm.value.number,
+        };
         this._authService.submitOTP(OTPValidation).subscribe(
             (response) => {
-                if (response.statusCode == 201) {
+                if (response.statusCode === 201) {
                     this.currentStep++;
-                    this.snackbar.success(response.message, 3000)
                 }
                 console.log(response);
-
             },
             (error) => {
-                this.snackbar.error(error.error.message, 4000)
+                this.errorMessage = error.error.message;
             }
-        )
+        );
     }
 
     _setpassword(): void {
         console.log(this.setPasswordForm);
 
-        this.tokens = localStorage.getItem('accessToken')
-        if (this.setPasswordForm.controls.password.status == 'INVALID') {
-            this.snackbar.error('Minimum 6 character in password', 4000)
-            return
-
+        this.tokens = localStorage.getItem('accessToken');
+        if (this.setPasswordForm.controls.password.status === 'INVALID') {
+            return;
         }
-        if (this.setPasswordForm.value.password != this.setPasswordForm.value.confirmPassword) {
-            this.snackbar.error(`Password doesn't match`, 4000)
-            return
+        if (
+            this.setPasswordForm.value.password !==
+            this.setPasswordForm.value.confirmPassword
+        ) {
+            return;
         }
         let validation = {
             token: this.tokens,
-            password: this.setPasswordForm.value.password
-        }
+            password: this.setPasswordForm.value.password,
+        };
         this._authService.resetPassword(validation).subscribe(
             (response) => {
-                if (response.statusCode == 201) {
+                if (response.statusCode === 201) {
                     this.currentStep++;
                 }
-                this.snackbar.success(response.message, 3000)
                 this._router.navigate(['/home']);
             },
             (error) => {
-                this.snackbar.error(error.error.message, 4000)
+                this.errorMessage = error.error.message;
             }
-        )
+        );
+    }
+
+    startCountdown(): void {
+        this.countdown = 45;
+        this.interval = setInterval(() => {
+            this.countdown--;
+            console.log(this.countdown);
+            if (this.countdown === 0) {
+                clearInterval(this.interval);
+            }
+        }, 45000);
+    }
+
+    resetCountdown(): void {
+        clearInterval(this.interval);
+        this.countdown = 45;
     }
 }
