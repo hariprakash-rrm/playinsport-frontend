@@ -3,6 +3,7 @@ import { Socket } from 'ngx-socket-io';
 interface Seat {
   label: number;
   selected: boolean;
+  disable:boolean
 }
 @Component({
   selector: 'app-slot-token',
@@ -10,40 +11,34 @@ interface Seat {
   styleUrls: ['./slot-token.component.scss']
 })
 export class SlotTokenComponent implements OnInit {
+
   message: string;
   messages: string[] = [];
   onlineUsers: number = 0;
   isDisabled: any = []
   seats: Seat[] = [];
-  test:any=[]
+  
+
   constructor(private socket: Socket) {
-    for (let i = 1; i <= 32; i++) {
+    for (let i = 0; i <= 32; i++) {
       this.seats.push({
         label:  i,
         selected: false,
+        disable:true
       });
-      this.test.push(i)
-      this.isDisabled.push(false)
     }
+  
   }
 
   ngOnInit() {
-    this.socket.emit('getGame')
+    
     this.socket.fromEvent('chat').subscribe((message: any) => {
-      this.messages.push(message);
-      console.log(message)
-      for (let i = 0; i <message.length; i++) {
-        let index = this.test.indexOf(message[i])
-        console.log(index)
-        if (index) {
-          this.isDisabled[i] = true
-        }
-      }
-      console.log(this.isDisabled)
+      console.log(this.seats)
     });
+    this.socket.emit('getGame')
 
     this.socket.fromEvent('getGame').subscribe((message: any) => {
-
+      this.handle(message)
       console.log('haha', message)
 
     });
@@ -51,6 +46,18 @@ export class SlotTokenComponent implements OnInit {
     this.socket.fromEvent('users').subscribe((users: number) => {
       this.onlineUsers = users;
     });
+  }
+
+ async handle(message:any){
+  
+  for (let i = 0; i <= 32; i++) {
+    this.seats[i].disable=true
+    }
+  
+    for (let i = 0; i <message.length; i++) {
+      this.seats[message[i]].disable= false
+      console.log( this.seats[message[i]].disable,i)
+    }
   }
 
   toggleSeatSelection(index: number, ): void {
