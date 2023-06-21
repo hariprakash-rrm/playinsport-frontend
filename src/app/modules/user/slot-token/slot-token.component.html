@@ -3,8 +3,11 @@
       *ngFor="let seat of seats; let i = index"
       class="p-4 bg-gray-200 cursor-pointer"
       (dblclick)="toggleSeatSelection(i)"
+      [ngClass]="{'disabled': !isDisabled[i]}"
       [class.bg-blue-500]="seat.selected"
+      [class.disabled]="!isDisabled[i]"
     >
       {{ seat.label }}
+      
     </div>
   </div>
