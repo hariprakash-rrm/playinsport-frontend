@@ -27,7 +27,9 @@ export class AuthSignInComponent implements OnInit {
     signInForm: FormGroup;
     showAlert: boolean = false;
     errorMessage: string = '';
+    numberError: string = '';
 
+    phoneNumber: any;
     /**
      * Constructor
      */
@@ -35,8 +37,7 @@ export class AuthSignInComponent implements OnInit {
         private _activatedRoute: ActivatedRoute,
         private _authService: AuthService,
         private _formBuilder: FormBuilder,
-        private _router: Router,
-    
+        private _router: Router
     ) {}
 
     // -----------------------------------------------------------------------------------------------------
@@ -60,10 +61,10 @@ export class AuthSignInComponent implements OnInit {
         });
     }
 
-    get number(){
+    get number() {
         return this.signInForm.get('number');
-    };
-    get password(){
+    }
+    get password() {
         return this.signInForm.get('password');
     }
     // -----------------------------------------------------------------------------------------------------
@@ -74,44 +75,40 @@ export class AuthSignInComponent implements OnInit {
      * Sign in
      */
     signIn(): void {
+        console.log(!this.signInForm.value.number === true);
+
         // Return if the form is invalid
         if (this.signInForm.invalid) {
+            this.numberError = 'Phone number or password cannot be empty';
             return;
         }
 
         let credentials = {
-            number: this.signInForm.value.number as string,
+            number: this.signInForm.value.number,
             password: this.signInForm.value.password,
         };
 
         // Sign in
         this._authService.signIn(credentials).subscribe(
-            (res: any) => {
-                // Set the redirect url.
-                // The '/signed-in-redirect' is a dummy url to catch the request and redirect the user
-                // to the correct page after a successful sign in. This way, that url can be set via
-                // routing file and we don't have to touch here.
-                const redirectURL =
-                    this._activatedRoute.snapshot.queryParamMap.get(
-                        'redirectURL'
-                    ) || '/signed-in-redirect';
-
-                // Navigate to the redirect url
-                this._router.navigateByUrl(redirectURL);
-            },
             (response) => {
-                this.alert = {
-                    type: 'error',
-                    message: 'Phone number or password',
-                };
-
-                // Show the alert
-                this.showAlert = true;
+                if (response.statusCode === 201) {
+                    this.phoneNumber = this.signInForm.value.number;
+                    this.errorMessage = '';
+                }
             },
+            (error) => {
+                console.log(error.error.message);
+                this.signInForm.enable();
+                this.errorMessage = error.error.message;
+            }
         );
     }
 
     goToSignUpForm() {
         this._router.navigate(['/sign-up']);
+    }
+
+    goToResetPassword() {
+        this._router.navigate(['/reset-password']);
     }
 }

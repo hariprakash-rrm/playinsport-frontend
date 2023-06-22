@@ -76,7 +76,7 @@ export class AuthService {
 
         return this._httpClient.post('http://localhost:3000/signin', credentials).pipe(
             switchMap((response: any) => {
-                console.log(response)
+                console.log(response);
                 // Store the access token in the local storage
                 this.accessToken = response.token;
                 this.user=JSON.stringify(response.details)

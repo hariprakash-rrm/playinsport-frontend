@@ -9,7 +9,8 @@
 
     </p>
   </div>
-  <form [formGroup]="signInForm" class="flex flex-col my-12 w-full">
+  <form [formGroup]="signInForm" class="relative z-0 w-full mb-6"
+    [ngClass]="{ 'border-red-500': signInForm.get('number').invalid }" class="flex flex-col my-12 w-full">
     <!-- <div class="relative">
                 <input formControlName="userName"  name="userName" type="text" id="userName" class="block rounded-lg font-sans px-3 pb-2 pt-4 w-full text-sm text-gray-900 border--primary appearance-none focus:outline-none focus:ring-0 focus:border-[#8544E4]  peer" placeholder=" " />
                 <label for="username" class="absolute text-sm font-medium font-sans text-gray-500 focus:text-grey-900 dark:text-gray-400 duration-300 transform -translate-y-3 scale-75 top-4 z-10 origin-[0] left-3 peer-focus:text-[#8544E4] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-3 peer-focus:font-semibold">Username</label>
@@ -25,13 +26,11 @@
       <label for="number"
         class="absolute duration-300 top-4 left-4 z-10 origin-0 text-gray-500 focus:text-grey-900 bg-white text-base">Enter
         Phone Number</label>
-      <mat-error
+
+      <mat-error 
         *ngIf="signInForm.controls['number'].touched && (signInForm.get('number').errors?.pattern || signInForm.get('number').errors?.required)">
         Please enter valid phone number
       </mat-error>
-
-      <div *ngIf="errorMessage" class="text-red-500">{{ errorMessage }}</div>
-
 
     </div>
 
@@ -42,16 +41,23 @@
         class="absolute duration-300 top-4 left-4 z-10 origin-0 text-gray-500 focus:text-grey-900 bg-white text-base">Enter
         Password</label>
       <mat-error
-        *ngIf="signInForm.controls['password'].touched && signInForm.get('password').errors?.required && signInForm.get('password').errors?.minlength">
+        *ngIf="signInForm.controls['password'].touched && (signInForm.get('password').errors?.required || signInForm.get('password').errors?.minlength)">
         Password should have minimum 6 characters
       </mat-error>
 
-      <div *ngIf="errorMessage" class="text-red-500">{{ errorMessage }}</div>
+      <div *ngIf="signInForm.invalid || (!signInForm.get('number').value || !signInForm.get('password').value)"
+        class="text-red-500 text-sm mt-1">{{numberError}}</div>
+
+      <div *ngIf="errorMessage" class="text-red-500 text-sm mt-1">{{errorMessage}}</div>
 
     </div>
+
+
+    <!-- <div *ngIf="numberError" class="text-red-500">{{ numberError }}</div> -->
     <div class="ml-auto">
 
-      <a href="#" class="text-sm ml-auto text--primary font-semibold float-right">Forgot Password?</a>
+      <a href="#" (click)="goToResetPassword()" class="text-sm ml-auto text--primary font-semibold float-right">Forgot
+        Password?</a>
     </div>
 
     <button type="button" (click)="signIn()"

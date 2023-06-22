@@ -11,26 +11,19 @@
         </p>
     </div>
     <form [formGroup]="signUpForm" class="flex flex-col my-12 w-full">
-        <!-- <div class="relative">
-                <input formControlName="userName"  name="userName" type="text" id="userName" class="block rounded-lg font-sans px-3 pb-2 pt-4 w-full text-sm text-gray-900 border--primary appearance-none focus:outline-none focus:ring-0 focus:border-[#8544E4]  peer" placeholder=" " />
-                <label for="username" class="absolute text-sm font-medium font-sans text-gray-500 focus:text-grey-900 dark:text-gray-400 duration-300 transform -translate-y-3 scale-75 top-4 z-10 origin-[0] left-3 peer-focus:text-[#8544E4] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-3 peer-focus:font-semibold">Username</label>
-                
-                  <mat-error *ngIf=" registerForm.controls['userName'].touched && (userName.errors?.['minlength']||registerForm.get('userName').errors?.required)">
-                    குறைந்தபட்ச 3 எழுத்துக்கள் '(minimum 3 characters)'
-                  </mat-error>
-                 
-            </div> -->
+
         <div class="relative z-0 w-full mb-6" *ngIf="currentStep === 1">
             <input formControlName="username" type="text" placeholder=" "
-                class="block rounded-lg font-sans px-3 pb-3 pt-4 w-full text-base font-semibold text-gray-900 bg-white border--primary appearance-none focus:outline-none focus:ring-0 focus:border-[#8544E4]" />
+                class="block rounded-lg font-sans px-3 pb-3 pt-4 w-full text-base font-semibold text-gray-900 bg-white border--primary appearance-none focus:outline-none focus:ring-0 focus:border-[#8544E4]"
+                [ngClass]="{ 'border-red': signUpForm.get('username').invalid && signUpForm.get('username').touched }" />
             <!-- [class.border-red-500]="signUpForm.get('username').touched && signUpForm.get('username').hasError('minlength')" -->
             <label for="name"
                 class="absolute duration-300 top-4 left-4 z-10 origin-0 text-gray-500 focus:text-grey-900 bg-white text-base">Enter
                 User Name</label>
-            <div *ngIf="signUpForm.get('username').touched && signUpForm.get('username').hasError('minlength')"
+            <div *ngIf="signUpForm.get('username').touched && (signUpForm.get('username').hasError('minlength') || signUpForm.get('username').hasError('required'))"
                 class="text-red-500 text-sm mt-1">Minimum 6 characters in username</div>
 
-            <div *ngIf="errorMessage" class="text-red-500">{{ errorMessage }}</div>
+            <div *ngIf="errorMessage" class="text-red-500 text-sm mt-1">{{ errorMessage }}</div>
 
         </div>
 
@@ -42,13 +35,16 @@
                 Whatsapp Number</label>
             <mat-error
                 *ngIf="signUpForm.controls['number'].touched && (signUpForm.get('number').errors?.pattern || signUpForm.get('number').errors?.required)"
-                class="text-red-500 text-sm mt-1" >
+                class="text-red-500 text-sm mt-1">
                 Please enter valid phone number
             </mat-error>
-
-            <div *ngIf="errorMessage" class="text-red-500">{{ errorMessage }}</div>
+            <div *ngIf="errorMessage || signUpForm.invalid" class="text-red-500 text-sm mt-1">{{ errorMessage }}</div>
 
         </div>
+
+        <div *ngIf="signUpForm.invalid || (!signUpForm.get('username').value || !signUpForm.get('number').value)"
+            class="text-red-500 text-sm mt-1">{{numberError}}</div>
+
         <div class="h-20"></div>
         <button type="button" (click)="signUp()"
             class="w-full mt-20 text-white focus:outline-none bg-black rounded-md font-sans font-semibold text-sm px-5 py-2.5 text-center mr-2 uppercase mb-2">Send
@@ -96,14 +92,15 @@
                 </div>
             </div>
         </div>
-
+        <div *ngIf="errorMessage" class="text-red-500 text-sm mt-1">{{ errorMessage }}</div>
         <div class="h-24"></div>
+
 
         <button type="button" (click)="checkOTP()"
             class="w-full mt-20 text-white focus:outline-none bg-black rounded-md font-sans font-semibold text-sm px-5 py-2.5 text-center mr-2 uppercase mb-2">Verify
             OTP</button>
         <div class="flex items-center mt-4 justify-between">
-            <p class="text-center text-base text--secondary font-sans font-medium">{{ countdown }}</p>
+            <p class="text-center text-base text--secondary font-sans font-medium"> 00:{{ countdown }}</p>
             <a href="sign-up.html" class="font-sans text-base text--primary font-semibold ">Resend OTP?</a>
         </div>
 
@@ -123,15 +120,6 @@
         </p>
     </div>
     <form [formGroup]="setPasswordForm" class="flex flex-col my-12 w-full">
-        <!-- <div class="relative">
-                <input formControlName="userName"  name="userName" type="text" id="userName" class="block rounded-lg font-sans px-3 pb-2 pt-4 w-full text-sm text-gray-900 border--primary appearance-none focus:outline-none focus:ring-0 focus:border-[#8544E4]  peer" placeholder=" " />
-                <label for="username" class="absolute text-sm font-medium font-sans text-gray-500 focus:text-grey-900 dark:text-gray-400 duration-300 transform -translate-y-3 scale-75 top-4 z-10 origin-[0] left-3 peer-focus:text-[#8544E4] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-3 peer-focus:font-semibold">Username</label>
-                
-                  <mat-error *ngIf=" registerForm.controls['userName'].touched && (userName.errors?.['minlength']||registerForm.get('userName').errors?.required)">
-                    குறைந்தபட்ச 3 எழுத்துக்கள் '(minimum 3 characters)'
-                  </mat-error>
-                 
-            </div> -->
 
         <div class="relative z-0 w-full mb-6">
             <input type="password" placeholder=" " formControlName="password"
@@ -139,12 +127,12 @@
             <label for="password"
                 class="absolute duration-300 top-4 left-4 z-10 origin-0 text-gray-500 focus:text-grey-900 bg-white text-base">Enter
                 Password</label>
-        <mat-error
-            *ngIf="setPasswordForm.controls['password'].touched && (setPasswordForm.get('password').errors?.minlength || setPasswordForm.get('password').errors?.required)"
-            class="text-red-500 text-sm mt-1">
-            Password should have minimum 6 characters
-        </mat-error>
-            <div *ngIf="errorMessage" class="text-red-500">{{ errorMessage }}</div>
+            <mat-error
+                *ngIf="setPasswordForm.controls['password'].touched && (setPasswordForm.get('password').errors?.minlength || setPasswordForm.get('password').errors?.required)"
+                class="text-red-500 text-sm mt-1">
+                Password should have minimum 6 characters
+            </mat-error>
+            <!-- <div *ngIf="errorMessage" class="text-red-500 text-sm mt-1">{{ errorMessage }}</div> -->
 
         </div>
 
@@ -155,11 +143,12 @@
                 class="absolute duration-300 top-4 left-4 z-10 origin-0 text-gray-500 focus:text-grey-900 bg-white text-base">Enter
                 Confirm Password</label>
             <mat-error
-                *ngIf="setPasswordForm.controls['confirmPassword'].touched && setPasswordForm.get('confirmPassword').errors?.required && setPasswordForm.get('confirmPassword').errors?.minlength">
+                *ngIf="setPasswordForm.controls['confirmPassword'].touched && (setPasswordForm.get('confirmPassword').errors?.minlength || setPasswordForm.get('confirmPassword').errors?.required)"
+                class="text-red-500 text-sm mt-1">
                 Password should have minimum 6 characters
             </mat-error>
 
-            <div *ngIf="errorMessage" class="text-red-500">{{ errorMessage }}</div>
+            <div *ngIf="errorMessage" class="text-red-500 text-sm mt-1">{{ errorMessage }}</div>
 
         </div>
         <div class="h-20"></div>
