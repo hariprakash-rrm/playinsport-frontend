@@ -33,12 +33,14 @@ export class AuthSignUpComponent implements OnInit {
     };
     signUpForm: FormGroup;
     showAlert: boolean = false;
-    currentStep: number = 1;
+    currentStep: number = 2;
     otpForm: FormGroup;
     setPasswordForm: FormGroup;
     tokens: any;
     phoneNumber: any;
     errorMessage: string = '';
+    numberError: string = '';
+
     // errorMessage1 : string;
 
     countdown: number = 45; // Initial countdown value
@@ -130,12 +132,19 @@ export class AuthSignUpComponent implements OnInit {
             console.log(this.signUpForm.controls.username.status);
 
             if (this.signUpForm.invalid) {
+                if (
+                    !this.signUpForm.value.username ||
+                    !this.signUpForm.value.number
+                ) {
+                    this.numberError =
+                        'User name or phone number cannot be empty';
+                } else {
+                    this.numberError = '';
+                }
                 return;
             }
             return;
         }
-        console.log(this.signUpForm.value);
-
         // Disable the form
         this.signUpForm.disable();
 
@@ -195,6 +204,7 @@ export class AuthSignUpComponent implements OnInit {
             this.setPasswordForm.value.password !==
             this.setPasswordForm.value.confirmPassword
         ) {
+            this.errorMessage  = 'Confirm password doesn\'t match password';
             return;
         }
         let validation = {
@@ -215,18 +225,18 @@ export class AuthSignUpComponent implements OnInit {
     }
 
     startCountdown(): void {
-        this.countdown = 45;
+        // this.countdown = 10;
         this.interval = setInterval(() => {
             this.countdown--;
             console.log(this.countdown);
             if (this.countdown === 0) {
                 clearInterval(this.interval);
             }
-        }, 45000);
+        }, 1000); // Changed interval to 1000 milliseconds (1 second)
     }
 
     resetCountdown(): void {
         clearInterval(this.interval);
-        this.countdown = 45;
+        this.countdown = 10;
     }
 }
