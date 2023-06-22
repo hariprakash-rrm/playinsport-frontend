@@ -33,6 +33,14 @@ export class AuthService {
         return localStorage.getItem('accessToken') ?? '';
     }
 
+    set user(user: string) {
+        localStorage.setItem('user', user);
+    }
+
+    get user(): string {
+        return localStorage.getItem('user') ?? '';
+    }
+
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
@@ -71,7 +79,7 @@ export class AuthService {
                 console.log(response)
                 // Store the access token in the local storage
                 this.accessToken = response.token;
-
+                this.user=JSON.stringify(response.details)
                 // Set the authenticated flag to true
                 this._authenticated = true;
 
@@ -95,7 +103,7 @@ export class AuthService {
 
                 // Store the access token in the local storage
                 this.accessToken = response.token;
-
+                this.user=JSON.stringify(response.details)
                 // Set the authenticated flag to true
                 this._authenticated = true;
 

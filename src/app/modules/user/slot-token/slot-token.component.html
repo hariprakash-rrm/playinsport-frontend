@@ -3,8 +3,10 @@
       *ngFor="let seat of seats; let i = index"
       class="p-4 bg-gray-200 cursor-pointer"
       (dblclick)="toggleSeatSelection(seat.tokenNumber,seat.isSelected)"
-      [class.bg-blue-500]="seat.userName"
+      
       [class.bg-red-500]="seat.isSelected"
+  
+      [class.bg-blue-500]="seat.userSelected"
     >
       {{ seat.tokenNumber}}
       

@@ -4,7 +4,8 @@ import { Socket } from 'ngx-socket-io';
 interface Seat {
   tokenNumber: number;
   selectedBy: string;
-  isSelected:boolean
+  isSelected:boolean;
+  userSelected:boolean
 }
 @Component({
   selector: 'app-slot-token',
@@ -19,16 +20,16 @@ export class SlotTokenComponent implements OnInit {
   isDisabled: any = []
   seats: Seat[] = [];
   tokenData=[]
-  
-  
-
+  userDetails:any
   constructor(private socket: Socket,private snackbar:SnackbarServiceService) {
     
   
   }
 
-  ngOnInit() {
-    
+  async ngOnInit() {
+    let user =await localStorage.getItem('user')
+    this.userDetails = JSON.parse(user)
+    console.log(this.userDetails)
     this.socket.fromEvent('chat').subscribe((message: any) => {
       console.log(this.seats)
     });
@@ -36,13 +37,17 @@ export class SlotTokenComponent implements OnInit {
 
     this.socket.fromEvent('getGame').subscribe((message: any) => {
       for (let i = 0; i <message.length; i++) {
+        
         this.seats.push({
           tokenNumber:  i,
           selectedBy: '',
-          isSelected:false
+          isSelected:false,
+          userSelected:false
         });
+        
         // if(this.seats[i].selectedBy)
       }
+      
       this.handle(message)
       this.tokenData=message
       console.log('haha', message)
@@ -59,6 +64,13 @@ export class SlotTokenComponent implements OnInit {
   for (let i =0;i<message.length;i++){
     this.seats.push(message[i])
   }
+  for(let i=0;i<message.length;i++){
+    console.log(this.userDetails.username,this.seats[i].selectedBy)
+      if(this.userDetails.name==this.seats[i].selectedBy){
+        this.seats[i].userSelected=true
+      }
+    }
+  
   
   // for (let i = 0; i <= 32; i++) {
   //   this.seats[i].disable=true
@@ -71,7 +83,7 @@ export class SlotTokenComponent implements OnInit {
   }
 
   toggleSeatSelection(index: number,isSelected:any ): void {
-   console.log(isSelected);
+   console.log(index);
    
     if(isSelected){
       this.snackbar.error(`This token is selected by ${this.seats[index-1].selectedBy}`,4000)
@@ -80,7 +92,8 @@ export class SlotTokenComponent implements OnInit {
     let token = localStorage.getItem('accessToken')
     let message = {
       token: token,
-      index: index
+      index: index-1,
+      tokenNumber:index
     }
 
     // this.seats[index].selected = !this.seats[index].selected;
