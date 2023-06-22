@@ -33,7 +33,7 @@ export class AuthSignUpComponent implements OnInit {
     };
     signUpForm: FormGroup;
     showAlert: boolean = false;
-    currentStep: number = 2;
+    currentStep: number = 1;
     otpForm: FormGroup;
     setPasswordForm: FormGroup;
     tokens: any;
@@ -184,6 +184,7 @@ export class AuthSignUpComponent implements OnInit {
             (response) => {
                 if (response.statusCode === 201) {
                     this.currentStep++;
+                    this.errorMessage = '';
                 }
                 console.log(response);
             },
