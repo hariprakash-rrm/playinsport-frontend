@@ -51,7 +51,7 @@ export class AuthService {
      * @param number
      */
     forgotPassword(number: string): Observable<any> {
-        return this._httpClient.post('http://localhost:3000/submit-otp', number);
+        return this._httpClient.post('http://localhost:3000/send-otp', number);
     }
 
     /**
@@ -184,7 +184,6 @@ export class AuthService {
      */
     check(): Observable<boolean> {
         // Check if the user is logged in
-        
         if (this._authenticated) {
             return of(true);
         }

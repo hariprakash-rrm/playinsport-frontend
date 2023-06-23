@@ -184,6 +184,7 @@ export class AuthSignUpComponent implements OnInit {
             (response) => {
                 if (response.statusCode === 201) {
                     this.currentStep++;
+                    this.errorMessage = '';
                 }
                 console.log(response);
             },
