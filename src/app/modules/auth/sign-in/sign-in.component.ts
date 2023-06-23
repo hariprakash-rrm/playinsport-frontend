@@ -29,10 +29,11 @@ export class AuthSignInComponent implements OnInit {
     showAlert: boolean = false;
     errorMessage: string = '';
     numberError: string = '';
-    currentStep: number = 2;
+    currentStep: number = 3;
     numberForm: FormGroup;
-    countdown: number = 45;
+    countdown: number = 0;
     interval: any;
+    otpForm: FormGroup;
 
     phoneNumber: any;
     /**
@@ -44,6 +45,12 @@ export class AuthSignInComponent implements OnInit {
         private _formBuilder: FormBuilder,
         private _router: Router
     ) {
+        this.otpForm = this._formBuilder.group({
+            otp1: [''],
+            otp2: [''],
+            otp3: [''],
+            otp4: [''],
+        });
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -160,6 +167,10 @@ export class AuthSignInComponent implements OnInit {
             }
         );
     }
+
+    goToForgotPassword() {
+        this.currentStep++;
+    }
     goToResetPassword() {}
 
     startCountdown(): void {
@@ -169,7 +180,43 @@ export class AuthSignInComponent implements OnInit {
             console.log(this.countdown);
             if (this.countdown === 0) {
                 clearInterval(this.interval);
+                this.countdown = 0;
             }
         }, 1000); // Changed interval to 1000 milliseconds (1 second)
+    }
+
+    checkOTP(): void {
+        const { otp1, otp2, otp3, otp4 } = this.otpForm.value;
+        console.log(otp1);
+        const enteredOTP = otp1 + otp2 + otp3 + otp4;
+
+        if (this.otpForm.invalid) {
+            return;
+        }
+        let OTPValidation = {
+            otp: enteredOTP,
+            number: this.numberForm.value.numbers,
+        };
+        this._authService.submitOTP(OTPValidation).subscribe(
+            (response) => {
+                if (response.statusCode === 201) {
+                    this.currentStep++;
+                    this.errorMessage = '';
+                }
+                console.log(response);
+            },
+            (error) => {
+                this.errorMessage = error.error.message;
+            }
+        );
+    }
+    resendotp() {
+        if (this.countdown !== 0) {
+            this.errorMessage = 'You attempted to resend the OTP (One-Time Password), but the countdown is still in progress. Please wait for the current countdown to finish before requesting a new OTP.';
+        }
+        if (this.countdown === 0) {
+            this.goToSendOtp();
+            this.startCountdown();
+        }
     }
 }
