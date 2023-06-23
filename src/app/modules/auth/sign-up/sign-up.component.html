@@ -38,7 +38,10 @@
                 class="text-red-500 text-sm mt-1">
                 Please enter valid phone number
             </mat-error>
-            <div *ngIf="errorMessage || signUpForm.invalid" class="text-red-500 text-sm mt-1">{{ errorMessage }}</div>
+            <!-- <div *ngIf="errorMessage || signUpForm.invalid" class="text-red-500 text-sm mt-1">{{ errorMessage }}</div> -->
+
+            <div *ngIf="signUpForm.invalid && (!signUpForm.get('username').value || !signUpForm.get('number').value)"
+                class="text-red-500 text-sm mt-1">{{errorMessage}}</div>
 
         </div>
 

@@ -59,7 +59,7 @@ export class AuthService {
      *
      * @param password
      */
-    resetPassword(validation: { token: any, password: string; }): Observable<any> {
+    resetPassword(validation: { token: any; password: string}): Observable<any> {
         return this._httpClient.post('http://localhost:3000/set-password', validation);
     }
 

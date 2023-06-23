@@ -1,4 +1,10 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import {
+    Component,
+    OnInit,
+    ViewChild,
+    ElementRef,
+    ViewEncapsulation,
+} from '@angular/core';
 import {
     FormBuilder,
     FormGroup,
@@ -10,9 +16,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseAlertType } from '@fuse/components/alert';
 import { AuthService } from 'app/core/auth/auth.service';
-import { Subscription, interval } from 'rxjs';
 import { SnackbarServiceService } from 'app/shared/snackbar-service.service';
-
 
 @Component({
     selector: 'auth-sign-in',
@@ -22,6 +26,12 @@ import { SnackbarServiceService } from 'app/shared/snackbar-service.service';
 })
 export class AuthSignInComponent implements OnInit {
     @ViewChild('signInNgForm') signInNgForm: NgForm;
+    @ViewChild('otp1Input') otpInput1!: ElementRef;
+    @ViewChild('otp2Input') otpInput2!: ElementRef;
+    @ViewChild('otp3Input') otpInput3!: ElementRef;
+    @ViewChild('otp4Input') otpInput4!: ElementRef;
+    // @ViewChild('otp1Input', { static: false }) otp1Input: ElementRef;
+    // @ViewChild('otp2Input', { static: false }) otp2Input: ElementRef;
 
     alert: { type: FuseAlertType; message: string } = {
         type: 'success',
@@ -31,7 +41,7 @@ export class AuthSignInComponent implements OnInit {
     showAlert: boolean = false;
     errorMessage: string = '';
     numberError: string = '';
-    currentStep: number = 2;
+    currentStep: number = 1;
     numberForm: FormGroup;
     countdown: number = 10;
     interval: any;
@@ -113,6 +123,7 @@ export class AuthSignInComponent implements OnInit {
     get confirmPassword() {
         return this.setPasswordForm.get('confirmPassword');
     }
+
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
@@ -121,11 +132,16 @@ export class AuthSignInComponent implements OnInit {
      * Sign in
      */
     signIn(): void {
-        console.log(!this.signInForm.value.number === true);
+
+        console.log(!this.signInForm.value.number);
+        console.log(!this.signInForm.value.number);
 
         // Return if the form is invalid
+
         if (this.signInForm.invalid) {
-            this.numberError = 'Phone number or password cannot be empty';
+            if(!this.signInForm.value.number || !this.signInForm.value.password){
+                this.numberError = 'Phone number or password cannot be empty';
+            }
             return;
         }
 
@@ -208,7 +224,6 @@ export class AuthSignInComponent implements OnInit {
         // this.countdown = 10;
         this.interval = setInterval(() => {
             this.countdown--;
-            console.log(this.countdown);
             if (this.countdown === 0) {
                 clearInterval(this.interval);
                 this.countdown = 0;
@@ -218,7 +233,6 @@ export class AuthSignInComponent implements OnInit {
 
     checkOTP(): void {
         const { otp1, otp2, otp3, otp4 } = this.otpForm.value;
-        console.log(otp1);
         const enteredOTP = otp1 + otp2 + otp3 + otp4;
 
         if (this.otpForm.invalid) {
@@ -234,7 +248,6 @@ export class AuthSignInComponent implements OnInit {
                     this.currentStep++;
                     this.errorMessage = '';
                 }
-                console.log(response);
             },
             (error) => {
                 this.errorMessage = error.error.message;
@@ -275,8 +288,6 @@ export class AuthSignInComponent implements OnInit {
             (response) => {
                 if (response.statusCode === 201) {
                     this.currentStep++;
-                    console.log('response')
-                    console.log(response.statusCode === 201);
                 }
                 this._router.navigate(['/home']);
             },
@@ -284,5 +295,23 @@ export class AuthSignInComponent implements OnInit {
                 this.errorMessage = error.error.message;
             }
         );
+    }
+    onInputChange(event: any, nextInput: number) {
+        const input = event.target as HTMLInputElement;
+        if (input.value.length >= input.maxLength) {
+            // Move focus to the next input field
+            switch (nextInput) {
+                case 2:
+                    this.otpInput2.nativeElement.focus();
+                    break;
+                case 3:
+                    this.otpInput3.nativeElement.focus();
+                    break;
+                case 4:
+                    this.otpInput4.nativeElement.focus();
+                    break;
+                // Add more cases for additional input fields
+            }
+        }
     }
 }
