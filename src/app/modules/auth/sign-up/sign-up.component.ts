@@ -11,7 +11,7 @@ import {
     NgForm,
     Validators,
     FormControl,
-    ReactiveFormsModule
+    ReactiveFormsModule,
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
@@ -205,7 +205,7 @@ export class AuthSignUpComponent implements OnInit {
             this.setPasswordForm.value.password !==
             this.setPasswordForm.value.confirmPassword
         ) {
-            this.errorMessage  = 'Confirm password doesn\'t match password';
+            this.errorMessage = "Confirm password doesn't match password";
             return;
         }
         let validation = {
@@ -216,6 +216,7 @@ export class AuthSignUpComponent implements OnInit {
             (response) => {
                 if (response.statusCode === 201) {
                     this.currentStep++;
+                    this.snackbar.success('Password updated', 4000);
                 }
                 this._router.navigate(['/home']);
             },

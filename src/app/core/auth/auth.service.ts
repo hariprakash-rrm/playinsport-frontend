@@ -50,8 +50,8 @@ export class AuthService {
      *
      * @param number
      */
-    forgotPassword(number: string): Observable<any> {
-        return this._httpClient.post('http://localhost:3000/send-otp', number);
+    forgotPassword(data: any): Observable<any> {
+        return this._httpClient.post('http://localhost:3000/send-otp', data);
     }
 
     /**
