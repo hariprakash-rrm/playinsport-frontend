@@ -11,6 +11,8 @@ import { fuseAnimations } from '@fuse/animations';
 import { FuseAlertType } from '@fuse/components/alert';
 import { AuthService } from 'app/core/auth/auth.service';
 import { Subscription, interval } from 'rxjs';
+import { SnackbarServiceService } from 'app/shared/snackbar-service.service';
+
 
 @Component({
     selector: 'auth-sign-in',
@@ -29,11 +31,13 @@ export class AuthSignInComponent implements OnInit {
     showAlert: boolean = false;
     errorMessage: string = '';
     numberError: string = '';
-    currentStep: number = 3;
+    currentStep: number = 2;
     numberForm: FormGroup;
-    countdown: number = 0;
+    countdown: number = 10;
     interval: any;
     otpForm: FormGroup;
+    tokens: any;
+    setPasswordForm: FormGroup;
 
     phoneNumber: any;
     /**
@@ -43,13 +47,25 @@ export class AuthSignInComponent implements OnInit {
         private _activatedRoute: ActivatedRoute,
         private _authService: AuthService,
         private _formBuilder: FormBuilder,
-        private _router: Router
+        private _router: Router,
+        private snackbar: SnackbarServiceService
     ) {
         this.otpForm = this._formBuilder.group({
             otp1: [''],
             otp2: [''],
             otp3: [''],
             otp4: [''],
+        });
+
+        this.setPasswordForm = this._formBuilder.group({
+            passwords: new FormControl('', [
+                Validators.required,
+                Validators.minLength(6),
+            ]),
+            confirmPassword: new FormControl('', [
+                Validators.required,
+                Validators.minLength(6),
+            ]),
         });
     }
 
@@ -89,6 +105,13 @@ export class AuthSignInComponent implements OnInit {
 
     get numbers() {
         return this.numberForm.get('numbers');
+    }
+
+    get passwords() {
+        return this.setPasswordForm.get('password');
+    }
+    get confirmPassword() {
+        return this.setPasswordForm.get('confirmPassword');
     }
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
@@ -134,9 +157,11 @@ export class AuthSignInComponent implements OnInit {
 
     goToSendOtp() {
         if (this.numberForm.invalid) {
+            console.log(this.numberForm.value.numbers);
             if (this.numberForm.invalid) {
                 if (!this.numberForm.value.numbers) {
                     this.numberError = 'Phone number cannot be empty';
+                    console.log(this.numberForm.valid);
                 } else {
                     this.numberError = '';
                 }
@@ -150,13 +175,20 @@ export class AuthSignInComponent implements OnInit {
         // Hide the alert
         this.showAlert = false;
 
+        const data = {
+            num: this.numberForm.value.numbers,
+        };
+        console.log(data.num);
+        console.log(`current step ${this.currentStep}`);
+
         // Sign up
-        this._authService.forgotPassword(this.numberForm.value).subscribe(
+        this._authService.forgotPassword(data).subscribe(
             (response) => {
                 if (response.statusCode === 201) {
                     this.currentStep++;
                     this.phoneNumber = this.numberForm.value.numbers;
                     this.startCountdown();
+                    this.errorMessage = '';
                 }
                 console.log(response);
             },
@@ -171,7 +203,6 @@ export class AuthSignInComponent implements OnInit {
     goToForgotPassword() {
         this.currentStep++;
     }
-    goToResetPassword() {}
 
     startCountdown(): void {
         // this.countdown = 10;
@@ -212,11 +243,46 @@ export class AuthSignInComponent implements OnInit {
     }
     resendotp() {
         if (this.countdown !== 0) {
-            this.errorMessage = 'You attempted to resend the OTP (One-Time Password), but the countdown is still in progress. Please wait for the current countdown to finish before requesting a new OTP.';
+            this.errorMessage =
+                'Please wait for 45 seconds before generating a new OTP.';
         }
         if (this.countdown === 0) {
+            console.log('GOTOSENDOTP');
+            this.currentStep--;
+            this.countdown = 10;
             this.goToSendOtp();
-            this.startCountdown();
         }
+    }
+    _setpassword(): void {
+        console.log(this.setPasswordForm);
+
+        this.tokens = localStorage.getItem('accessToken');
+        if (this.setPasswordForm.controls.passwords.status === 'INVALID') {
+            return;
+        }
+        if (
+            this.setPasswordForm.value.passwords !==
+            this.setPasswordForm.value.confirmPassword
+        ) {
+            this.errorMessage = "Confirm password doesn't match password";
+            return;
+        }
+        let validation = {
+            token: this.tokens,
+            password: this.setPasswordForm.value.passwords,
+        };
+        this._authService.resetPassword(validation).subscribe(
+            (response) => {
+                if (response.statusCode === 201) {
+                    this.currentStep++;
+                    console.log('response')
+                    console.log(response.statusCode === 201);
+                }
+                this._router.navigate(['/home']);
+            },
+            (error) => {
+                this.errorMessage = error.error.message;
+            }
+        );
     }
 }
