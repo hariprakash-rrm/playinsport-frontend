@@ -25,7 +25,7 @@ export class SelectTokenComponent implements OnInit {
   seats: Seat[] = [];
   tokenData = []
   userDetails: any
-  round:any=1
+  round:any="1"
 
   constructor(private socket: Socket, private snackbar: SnackbarServiceService) { }
 
@@ -41,19 +41,16 @@ export class SelectTokenComponent implements OnInit {
       const socketId = this.socket.ioSocket.id;
       console.log(`Socket ID: ${socketId}`);
       this.userDetails.socketId = socketId
+      let data = {
+        round:this.round,
+        userId:socketId
+      }
+      console.log(data)
+      this.socket.emit('gameDetails',data)
       // You can use the socket ID for further operations
     });
-
-    this.socket.fromEvent('chat').subscribe((message: any) => {
-      console.log(this.seats)
-    });
-    this.socket.fromEvent('isError').subscribe((message: any) => {
+    this.socket.fromEvent('gameDetails').subscribe((message: any) => {
       console.log(message)
-      this.snackbar.error(message?.message, 3000)
-    });
-    this.socket.emit('getGame')
-
-    this.socket.fromEvent('getGame').subscribe((message: any) => {
       for (let i = 0; i < message.length; i++) {
 
         this.seats.push({
@@ -69,12 +66,53 @@ export class SelectTokenComponent implements OnInit {
       this.handle(message)
       this.tokenData = message
       console.log('haha', message)
-
+      // this.snackbar.error(message?.message, 3000)
     });
+
+    // this.socket.fromEvent('chat').subscribe((message: any) => {
+    //   console.log(this.seats)
+    // });
+    this.socket.fromEvent('isError').subscribe((message: any) => {
+      console.log(message)
+      this.snackbar.error(message?.message, 3000)
+    });
+    this.socket.fromEvent('success').subscribe((message: any) => {
+      console.log(message)
+      this.getGame()
+      this.snackbar.error(message?.message, 3000)
+    });
+    // this.socket.emit('getGame')
+
+    // this.socket.fromEvent('getGame').subscribe((message: any) => {
+    //   for (let i = 0; i < message.length; i++) {
+
+    //     this.seats.push({
+    //       round:this.round,
+    //       tokenNumber: i,
+    //       selectedBy: '',
+    //       isSelected: false,
+    //       userSelected: false,
+        
+    //     });
+    //   }
+
+    //   this.handle(message)
+    //   this.tokenData = message
+    //   console.log('haha', message)
+
+    // });
 
     this.socket.fromEvent('users').subscribe((users: number) => {
       this.onlineUsers = users;
     });
+  }
+
+  async getGame(){
+    let data = {
+      round:this.round,
+      userId:this.userDetails.socketId
+    }
+    this.socket.emit('gameDetails',data)
   }
 
   async handle(message: any) {
@@ -112,7 +150,8 @@ export class SelectTokenComponent implements OnInit {
       token: token,
       index: index - 1,
       tokenNumber: index,
-      id: this.userDetails.socketId
+      id: this.userDetails.socketId,
+      round:this.round
     }
 
     // this.seats[index].selected = !this.seats[index].selected;

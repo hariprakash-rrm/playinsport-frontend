@@ -10,9 +10,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule } from '@angular/material/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SelectTokenComponent } from './components/select-token/select-token.component';
-import { NgxMatDatetimePickerModule, NgxMatTimepickerModule } from '@angular-material-components/datetime-picker';
+
 @NgModule({
     declarations: [SlotTokenComponent, SelectTokenComponent],
-    imports: [CommonModule, RouterModule.forChild(SlotTokenRouting),MatFormFieldModule,MatDatepickerModule,MatInputModule,MatNativeDateModule,ReactiveFormsModule,FormsModule,NgxMatDatetimePickerModule,NgxMatTimepickerModule],
+    imports: [CommonModule, RouterModule.forChild(SlotTokenRouting),MatFormFieldModule,MatDatepickerModule,MatInputModule,MatNativeDateModule,ReactiveFormsModule,FormsModule,],
 })
 export class SlotTokenModule {}

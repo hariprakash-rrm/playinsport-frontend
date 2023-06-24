@@ -18,7 +18,11 @@ export class SlotTokenComponent implements OnInit {
   selectedTime:any
   selectedDate: Date;
   cards: CardData[];
+  defaultValue = { hour: 13, minute: 30 };
 
+  timeChangeHandler(event: any) {}
+
+  invalidInputHandler() {}
 
 
   constructor( private snackbar: SnackbarServiceService) {
