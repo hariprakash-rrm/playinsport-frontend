@@ -31,7 +31,7 @@ export class AuthSignInComponent implements OnInit {
     showAlert: boolean = false;
     errorMessage: string = '';
     numberError: string = '';
-    currentStep: number = 2;
+    currentStep: number = 1;
     numberForm: FormGroup;
     countdown: number = 10;
     interval: any;

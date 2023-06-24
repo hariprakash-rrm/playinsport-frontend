@@ -1,4 +1,4 @@
-<div class="grid grid-cols-4 gap-4">
+<!-- <div class="grid grid-cols-4 gap-4">
     <div
       *ngFor="let seat of seats; let i = index"
       class="p-4 bg-gray-200 cursor-pointer rounded-xl"
@@ -11,4 +11,24 @@
       {{ seat.tokenNumber}}
       
     </div>
-  </div>
+  </div> -->
+  <mat-form-field>
+    <input matInput [matDatepicker]="picker" placeholder="Select a date" [(ngModel)]="selectedDate" (ngModelChange)="onDateChange($event)">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+  
+  <mat-card class="border border-solid-4" *ngIf="selectedDate">
+    <mat-card-header>
+      <div mat-card-avatar></div>
+      <mat-card-title>Selected Date: {{ selectedDate | date }}</mat-card-title>
+      <mat-card-subtitle>Additional Details</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <!-- Display additional details -->
+      <p>Time: {{ selectedDate | date: 'hh:mm a' }}</p>
+      <p>Price: $XX.XX</p>
+      <!-- Add more details as needed -->
+    </mat-card-content>
+  </mat-card>
+  
