@@ -4,10 +4,15 @@ import { RouterModule } from '@angular/router';
 
 import { SlotTokenRouting } from './slot-token-routing.module';
 import { SlotTokenComponent } from './slot-token.component';
-
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatInputModule } from '@angular/material/input';
+import { MatNativeDateModule } from '@angular/material/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SelectTokenComponent } from './components/select-token/select-token.component';
 
 @NgModule({
-    declarations: [SlotTokenComponent],
-    imports: [CommonModule, RouterModule.forChild(SlotTokenRouting)],
+    declarations: [SlotTokenComponent, SelectTokenComponent],
+    imports: [CommonModule, RouterModule.forChild(SlotTokenRouting),MatFormFieldModule,MatDatepickerModule,MatInputModule,MatNativeDateModule,ReactiveFormsModule,FormsModule,],
 })
 export class SlotTokenModule {}

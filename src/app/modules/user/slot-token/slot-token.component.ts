@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Socket } from 'ngx-socket-io';
-interface Seat {
-  label: number;
-  selected: boolean;
+import { SnackbarServiceService } from 'app/shared/snackbar-service.service';
+
+
+interface CardData {
+  title: string;
+  subtitle: string;
+  time: string;
+  price: number;
 }
 @Component({
   selector: 'app-slot-token',
@@ -10,59 +14,47 @@ interface Seat {
   styleUrls: ['./slot-token.component.scss']
 })
 export class SlotTokenComponent implements OnInit {
-  message: string;
-  messages: string[] = [];
-  onlineUsers: number = 0;
-  isDisabled: any = []
-  seats: Seat[] = [];
-  test:any=[]
-  constructor(private socket: Socket) {
-    for (let i = 1; i <= 32; i++) {
-      this.seats.push({
-        label:  i,
-        selected: false,
-      });
-      this.test.push(i)
-      this.isDisabled.push(false)
-    }
+
+  selectedTime:any
+  selectedDate: Date;
+  cards: CardData[];
+  defaultValue = { hour: 13, minute: 30 };
+
+  timeChangeHandler(event: any) {}
+
+  invalidInputHandler() {}
+
+
+  constructor( private snackbar: SnackbarServiceService) {
+
+    this.selectedDate = new Date();
   }
 
-  ngOnInit() {
-    this.socket.emit('getGame')
-    this.socket.fromEvent('chat').subscribe((message: any) => {
-      this.messages.push(message);
-      console.log(message)
-      for (let i = 0; i <message.length; i++) {
-        let index = this.test.indexOf(message[i])
-        console.log(index)
-        if (index) {
-          this.isDisabled[i] = true
-        }
-      }
-      console.log(this.isDisabled)
-    });
+  async ngOnInit() {
+   
 
-    this.socket.fromEvent('getGame').subscribe((message: any) => {
+    this.cards = [
+      {
+        title: 'Card 1',
+        subtitle: 'Card 1 Subtitle',
+        time: '10:00 AM',
+        price: 10.99
+      },
+      {
+        title: 'Card 2',
+        subtitle: 'Card 2 Subtitle',
+        time: '2:30 PM',
+        price: 19.99
+      },
+      // Add more card data as needed
+    ];
 
-      console.log('haha', message)
-
-    });
-
-    this.socket.fromEvent('users').subscribe((users: number) => {
-      this.onlineUsers = users;
-    });
   }
 
-  toggleSeatSelection(index: number, ): void {
-    
-    let token = localStorage.getItem('accessToken')
-    let message = {
-      token: token,
-      message: index
-    }
 
-    this.seats[index].selected = !this.seats[index].selected;
-    console.log('Seat ' + (index + 1) + ' selected:', this.seats[index].selected);
-    this.socket.emit('chat', message);
+  onDateChange(event: any) {
+    console.log('Selected Date:', this.selectedDate);
   }
+
+
 }

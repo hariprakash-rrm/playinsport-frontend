@@ -33,6 +33,14 @@ export class AuthService {
         return localStorage.getItem('accessToken') ?? '';
     }
 
+    set user(user: string) {
+        localStorage.setItem('user', user);
+    }
+
+    get user(): string {
+        return localStorage.getItem('user') ?? '';
+    }
+
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
@@ -42,8 +50,8 @@ export class AuthService {
      *
      * @param number
      */
-    forgotPassword(number: string): Observable<any> {
-        return this._httpClient.post('http://localhost:3000/submit-otp', number);
+    forgotPassword(data: any): Observable<any> {
+        return this._httpClient.post('http://localhost:3000/send-otp', data);
     }
 
     /**
@@ -68,10 +76,10 @@ export class AuthService {
 
         return this._httpClient.post('http://localhost:3000/signin', credentials).pipe(
             switchMap((response: any) => {
-                console.log(response)
+                console.log(response);
                 // Store the access token in the local storage
                 this.accessToken = response.token;
-
+                this.user=JSON.stringify(response.details)
                 // Set the authenticated flag to true
                 this._authenticated = true;
 
@@ -95,7 +103,7 @@ export class AuthService {
 
                 // Store the access token in the local storage
                 this.accessToken = response.token;
-
+                this.user=JSON.stringify(response.details)
                 // Set the authenticated flag to true
                 this._authenticated = true;
 
@@ -176,7 +184,6 @@ export class AuthService {
      */
     check(): Observable<boolean> {
         // Check if the user is logged in
-        
         if (this._authenticated) {
             return of(true);
         }

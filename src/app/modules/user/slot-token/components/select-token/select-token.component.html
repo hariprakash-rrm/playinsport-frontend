@@ -1,0 +1,15 @@
+<input [(ngModel)]="round" type="text">
+<div class="grid grid-cols-4 gap-4">
+    <div
+      *ngFor="let seat of seats; let i = index"
+      class="p-4 bg-gray-200 cursor-pointer rounded-xl"
+      (dblclick)="toggleSeatSelection(seat.tokenNumber,seat.isSelected)"
+      
+      [class.bg-red-500]="seat.isSelected"
+  
+      [class.bg-blue-500]="seat.userSelected"
+    >
+      {{ seat.tokenNumber}}
+      
+    </div>
+  </div>
