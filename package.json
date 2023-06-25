@@ -39,6 +39,7 @@
         "apexcharts": "3.27.3",
         "crypto-js": "3.3.0",
         "flowbite": "^1.6.6",
+        "fs-promise": "^2.0.3",
         "highlight.js": "11.2.0",
         "lodash-es": "4.17.21",
         "moment": "2.29.1",
