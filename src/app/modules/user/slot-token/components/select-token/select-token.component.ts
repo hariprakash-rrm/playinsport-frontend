@@ -25,7 +25,7 @@ export class SelectTokenComponent implements OnInit {
   seats: Seat[] = [];
   tokenData = []
   userDetails: any
-  round: any = "1"
+  round: any = 1
 
   constructor(private socket: Socket, private snackbar: SnackbarServiceService) { }
 
@@ -37,42 +37,83 @@ export class SelectTokenComponent implements OnInit {
   }
 
   async triggerSocket() {
-    this.socket.on('connect', () => {
+    this.socket.on('connect', async () => {
       const socketId = this.socket.ioSocket.id;
-      console.log(`Socket ID: ${socketId}`);
-      this.userDetails.socketId = socketId
+      // console.log(`Socket ID: ${socketId}`);
+      this.userDetails.socketId = await socketId
+      this.handleSocketResponse()
       // You can use the socket ID for further operations
     });
+  }
 
-    this.socket.fromEvent('chat').subscribe((message: any) => {
-      console.log(this.seats)
+  handleSeats(message: any) {
+    if (+this.round == +message[0].round) {
+      for (let i = 0; i < message.length; i++) {
+        this.seats.push({
+          round: this.round,
+          tokenNumber: i,
+          selectedBy: '',
+          isSelected: false,
+          userSelected: false,
+        });
+      }
+      this.handleSeatData(message)
+      this.tokenData = message
+    } else {
+      return
+    }
+  }
+
+  async handleSeatData(message: any) {
+    this.seats = []
+    for (let i = 0; i < message.length; i++) {
+      this.seats.push(message[i])
+    }
+    for (let i = 0; i < message.length; i++) {
+      // console.log(this.userDetails.username, this.seats[i].selectedBy)
+      if (this.userDetails.name == this.seats[i].selectedBy) {
+        this.seats[i].userSelected = true
+      }
+    }
+  }
+
+  handleSocketResponse() {
+    // this.socket.fromEvent('chat').subscribe((message: any) => {
+    //   console.log(this.seats)
+    // });
+
+    let token = localStorage.getItem('accessToken')
+    this.socket.fromEvent('userBalance').subscribe((message: any) => {
+      console.log('user balance ', message)
     });
+
     this.socket.fromEvent('isError').subscribe((message: any) => {
       console.log(message)
       this.snackbar.error(message?.message, 3000)
     });
-    this.socket.emit('getGame')
 
+    this.socket.fromEvent('game').subscribe((message: any) => {
+      console.log(message)
+      this.handleSeats(message)
+    });
+
+    this.socket.emit('getGame', this.round)
+    this.socket.emit('game', this.round)
+    let balanceQuery = {
+      token: token,
+      userId: this.userDetails.socketId
+    }
+    this.socket.emit('userBalance', balanceQuery)
     this.socket.fromEvent('getGame').subscribe((message: any) => {
-      console.log('haha', message)
-      console.log(+this.round , +message.round);
-      
-      if (+this.round == +message[0].round) {
-        for (let i = 0; i < message.length; i++) {
-
-          this.seats.push({
-            round: this.round,
-            tokenNumber: i,
-            selectedBy: '',
-            isSelected: false,
-            userSelected: false,
-
-          });
+      console.log(message)
+      if (+this.round == +message.round) {
+        this.seats[message.tokenNumber-1]=message
+        console.log( this.seats[message.tokenNumber-1]);
+        if (this.userDetails.name == this.seats[message.tokenNumber-1].selectedBy) {
+          this.seats[message.tokenNumber-1].userSelected = true
         }
-
-        this.handle(message)
-        this.tokenData = message
         
+        // this.handleSeats(message)
       } else {
         return
       }
@@ -82,33 +123,12 @@ export class SelectTokenComponent implements OnInit {
     this.socket.fromEvent('users').subscribe((users: number) => {
       this.onlineUsers = users;
     });
-  }
-
-  async handle(message: any) {
-    this.seats = []
-    for (let i = 0; i < message.length; i++) {
-      this.seats.push(message[i])
-    }
-    for (let i = 0; i < message.length; i++) {
-      console.log(this.userDetails.username, this.seats[i].selectedBy)
-      if (this.userDetails.name == this.seats[i].selectedBy) {
-        this.seats[i].userSelected = true
-      }
-    }
 
 
-    // for (let i = 0; i <= 32; i++) {
-    //   this.seats[i].disable=true
-    //   }
-
-    //   for (let i = 0; i <message.totalToken.length; i++) {
-    //     this.seats[message.totalToken[i]].disable= false
-    //     console.log( this.seats[message.totalToken[i]].disable,i)
-    //   }
   }
 
   toggleSeatSelection(index: number, isSelected: any): void {
-    console.log(index);
+    // console.log(index);
 
     if (isSelected) {
       this.snackbar.error(`This token is selected by ${this.seats[index - 1].selectedBy}`, 4000)
