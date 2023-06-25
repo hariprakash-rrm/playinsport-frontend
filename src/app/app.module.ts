@@ -15,7 +15,7 @@ import { appRoutes } from 'app/app.routing';
 // import { HomeComponent } from './modules/home/home.component';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 
-const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
+const config: SocketIoConfig = { url: 'https://d1d0-2401-4900-3601-781a-2e3-7fbf-7866-4096.ngrok-free.app', options: {} };
 
 const routerConfig: ExtraOptions = {
     preloadingStrategy       : PreloadAllModules,
@@ -28,7 +28,7 @@ const routerConfig: ExtraOptions = {
         
     ],
     imports     : [
-        SocketIoModule.forRoot({ url: 'http://localhost:3000', options: {} }),
+        SocketIoModule.forRoot({ url: 'https://d1d0-2401-4900-3601-781a-2e3-7fbf-7866-4096.ngrok-free.app', options: {} }),
         BrowserModule,
         BrowserAnimationsModule,
         RouterModule.forRoot(appRoutes, routerConfig),

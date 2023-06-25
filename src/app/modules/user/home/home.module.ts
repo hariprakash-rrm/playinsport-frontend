@@ -15,7 +15,7 @@ import {IvyCarouselModule} from 'angular-responsive-carousel';
   imports: [
     IvyCarouselModule,
     CommonModule,
-    SocketIoModule.forRoot({ url: 'http://localhost:3000', options: {} }),
+    SocketIoModule.forRoot({ url: 'https://d1d0-2401-4900-3601-781a-2e3-7fbf-7866-4096.ngrok-free.app', options: {} }),
     ReactiveFormsModule,
     SharedModule,
     RouterModule.forChild(HomeRoute),

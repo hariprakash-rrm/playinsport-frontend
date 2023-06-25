@@ -55,10 +55,10 @@
 </fuse-vertical-navigation>
 
 <!-- Wrapper -->
-<div class="flex flex-col flex-auto w-full min-w-0">
+<div class="flex flex-col flex-auto w-full min-w-0 relative">
 
     <!-- Header -->
-    <div class="relative flex flex-0 items-center w-full h-16 px-4 md:px-6 z-49 shadow dark:shadow-none dark:border-b bg-card dark:bg-transparent print:hidden">
+    <div class="relative flex flex-0 items-start w-full h-64 p-4 md:p-6 z-49 shadow dark:shadow-none dark:border-b bg-black dark:bg-transparent print:hidden">
         <!-- Navigation toggle button -->
         <button
             mat-icon-button
@@ -66,26 +66,34 @@
             <mat-icon [svgIcon]="'heroicons_outline:menu'"></mat-icon>
         </button>
         <!-- Components -->
-        <div class="flex items-center pl-2 ml-auto space-x-1 sm:space-x-2">
-            <div class="flex items-center w-full p-4 pl-6">
+        <div class="flex items-start pl-2 ml-auto space-x-1 sm:space-x-2 relative">
+            <div class="flex items-center w-full px-4">
                  <!-- Components -->
-            <div class="flex items-center ml-auto">
-                <!-- <notifications></notifications> -->
-                <!-- <user [userEmail] = "userEmail"[showAvatar]="false"></user> -->
-            </div>
-            </div>
-            <!-- User -->
-           
+                <div class="flex items-center ml-auto absolute right-0 top-2 space-x-6">
+                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="#ffff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="#ffff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                    <!-- <notifications></notifications> -->
+                    <!-- <user [userEmail] = "userEmail"[showAvatar]="false"></user> -->
+                </div>
+            </div> 
             <!-- <languages></languages>
             <fuse-fullscreen class="hidden md:block"></fuse-fullscreen>
             <search [appearance]="'bar'"></search>
             <shortcuts></shortcuts>
             <messages></messages> -->
+            <!-- User -->
+           
+           
+            <img src="../../../../../assets/images/new-ui/Frame.png" class="h-64 w-full mt-16" alt="">
+            <div class="absolute -left-72 top-20">
+                <h1 class=" text-white text-4xl font-bold">Hello Hari</h1>
+                <p class="text-white text-base">How was your day</p>
+            </div>
         </div>
     </div>
 
     <!-- Content -->
-    <div class="flex flex-col flex-auto">
+    <div class="flex flex-col flex-auto absolute z-999 top-48 w-full bg-white card--rounded">
         <!-- *ngIf="true" hack is required here for router-outlet to work correctly.
              Otherwise, layout changes won't be registered and the view won't be updated! -->
         <router-outlet *ngIf="true"></router-outlet>
