@@ -23,7 +23,7 @@
             <div *ngIf="signUpForm.get('username').touched && (signUpForm.get('username').hasError('minlength') || signUpForm.get('username').hasError('required'))"
                 class="text-red-500 text-sm mt-1">Minimum 6 characters in username</div>
 
-            <div *ngIf="errorMessage" class="text-red-500 text-sm mt-1">{{ errorMessage }}</div>
+            <!-- <div *ngIf="errorMessage" class="text-red-500 text-sm mt-1">{{ errorMessage }}</div> -->
 
         </div>
 
@@ -38,13 +38,9 @@
                 class="text-red-500 text-sm mt-1">
                 Please enter valid phone number
             </mat-error>
-            <!-- <div *ngIf="errorMessage || signUpForm.invalid" class="text-red-500 text-sm mt-1">{{ errorMessage }}</div> -->
-
-            <div *ngIf="signUpForm.invalid && (!signUpForm.get('username').value || !signUpForm.get('number').value)"
-                class="text-red-500 text-sm mt-1">{{errorMessage}}</div>
+            <div *ngIf="errorMessage" class="text-red-500 text-sm mt-1">{{ errorMessage }}</div>
 
         </div>
-
         <div *ngIf="signUpForm.invalid || (!signUpForm.get('username').value || !signUpForm.get('number').value)"
             class="text-red-500 text-sm mt-1">{{numberError}}</div>
 

@@ -30,8 +30,6 @@ export class AuthSignInComponent implements OnInit {
     @ViewChild('otp2Input') otpInput2!: ElementRef;
     @ViewChild('otp3Input') otpInput3!: ElementRef;
     @ViewChild('otp4Input') otpInput4!: ElementRef;
-    // @ViewChild('otp1Input', { static: false }) otp1Input: ElementRef;
-    // @ViewChild('otp2Input', { static: false }) otp2Input: ElementRef;
 
     alert: { type: FuseAlertType; message: string } = {
         type: 'success',
@@ -48,6 +46,7 @@ export class AuthSignInComponent implements OnInit {
     otpForm: FormGroup;
     tokens: any;
     setPasswordForm: FormGroup;
+    isAdmin = true;
 
     phoneNumber: any;
     /**
@@ -132,14 +131,16 @@ export class AuthSignInComponent implements OnInit {
      * Sign in
      */
     signIn(): void {
-
         console.log(!this.signInForm.value.number);
         console.log(!this.signInForm.value.number);
 
         // Return if the form is invalid
 
         if (this.signInForm.invalid) {
-            if(!this.signInForm.value.number || !this.signInForm.value.password){
+            if (
+                !this.signInForm.value.number ||
+                !this.signInForm.value.password
+            ) {
                 this.numberError = 'Phone number or password cannot be empty';
             }
             return;
@@ -157,10 +158,13 @@ export class AuthSignInComponent implements OnInit {
                     this.phoneNumber = this.signInForm.value.number;
                     this.errorMessage = '';
                 }
-                this._router.navigate(['/home']);
+                if (this.isAdmin) {
+                    this._router.navigate(['/admin/home']);
+                } else {
+                    this._router.navigate(['/home']);
+                }
             },
             (error) => {
-                console.log(error.error.message);
                 this.signInForm.enable();
                 this.errorMessage = error.error.message;
             }

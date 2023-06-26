@@ -155,6 +155,7 @@ export class AuthSignUpComponent implements OnInit {
         this._authService.signUp(this.signUpForm.value).subscribe(
             (response) => {
                 if (response.statusCode === 201) {
+                    this.errorMessage = '';
                     this.currentStep++;
                     this.phoneNumber = this.signUpForm.value.number;
                     this.startCountdown();
