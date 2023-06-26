@@ -51,7 +51,7 @@ export class AuthService {
      * @param number
      */
     forgotPassword(data: any): Observable<any> {
-        return this._httpClient.post('http://localhost:3000/send-otp', data);
+        return this._httpClient.post('https://d1d0-2401-4900-3601-781a-2e3-7fbf-7866-4096.ngrok-free.app/send-otp', data);
     }
 
     /**
@@ -60,7 +60,7 @@ export class AuthService {
      * @param password
      */
     resetPassword(validation: { token: any, password: string; }): Observable<any> {
-        return this._httpClient.post('http://localhost:3000/set-password', validation);
+        return this._httpClient.post('https://d1d0-2401-4900-3601-781a-2e3-7fbf-7866-4096.ngrok-free.app/set-password', validation);
     }
 
     /**
@@ -74,7 +74,7 @@ export class AuthService {
             return throwError('User is already logged in.');
         }
 
-        return this._httpClient.post('http://localhost:3000/signin', credentials).pipe(
+        return this._httpClient.post('https://d1d0-2401-4900-3601-781a-2e3-7fbf-7866-4096.ngrok-free.app/signin', credentials).pipe(
             switchMap((response: any) => {
                 console.log(response);
                 // Store the access token in the local storage
@@ -98,7 +98,7 @@ export class AuthService {
         if (this._authenticated) {
             return throwError('User is already logged in.');
         }
-        return this._httpClient.post('http://localhost:3000/submit-otp', OTPValidation).pipe(
+        return this._httpClient.post('https://d1d0-2401-4900-3601-781a-2e3-7fbf-7866-4096.ngrok-free.app/submit-otp', OTPValidation).pipe(
             switchMap((response: any) => {
 
                 // Store the access token in the local storage
@@ -167,7 +167,7 @@ export class AuthService {
      * @param user
      */
     signUp(user: { username: string; number: Number; }): Observable<any> {
-        return this._httpClient.post('http://localhost:3000/signup', user);
+        return this._httpClient.post('https://d1d0-2401-4900-3601-781a-2e3-7fbf-7866-4096.ngrok-free.app/signup', user);
     }
 
     /**
@@ -176,7 +176,7 @@ export class AuthService {
      * @param credentials
      */
     unlockSession(credentials: { number: Number; password: string }): Observable<any> {
-        return this._httpClient.post('http://localhost:3000/login', credentials);
+        return this._httpClient.post('https://d1d0-2401-4900-3601-781a-2e3-7fbf-7866-4096.ngrok-free.app/login', credentials);
     }
 
     /**

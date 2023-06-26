@@ -18,3 +18,7 @@
   .-top-bg {
     top: -25%;
   }
+  [aria-current]:not([aria-current="false"]) {
+   background-color: #000 !important;
+  }
+  
