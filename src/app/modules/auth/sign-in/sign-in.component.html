@@ -4,7 +4,7 @@
 
   <div class="w-full float-left">
     <img class="w-auto mb-6" src="assets/images/logo/logoipsium.svg" alt="Logo image">
-    <h1 class="font-bold text-3xl text--primary font-sans text-left">Welcome Back, Hari</h1>
+    <h1 class="font-bold text-3xl text--primary font-sans text-left">Welcome Back</h1>
     <p class="font-medium text--secondary text-lg font-sans text-left mt-2">Please enter your details.
 
     </p>
@@ -18,7 +18,7 @@
         class="absolute duration-300 top-4 left-4 z-10 origin-0 text-gray-500 focus:text-grey-900 bg-white text-base">Enter
         Phone Number</label>
 
-      <mat-error 
+      <mat-error class="text-sm mt-1"
         *ngIf="signInForm.controls['number'].touched && (signInForm.get('number').errors?.pattern || signInForm.get('number').errors?.required)">
         Please enter valid phone number
       </mat-error>
@@ -31,15 +31,15 @@
       <label for="password"
         class="absolute duration-300 top-4 left-4 z-10 origin-0 text-gray-500 focus:text-grey-900 bg-white text-base">Enter
         Password</label>
-      <mat-error
+      <mat-error class="text-sm mt-1"
         *ngIf="signInForm.controls['password'].touched && (signInForm.get('password').errors?.required || signInForm.get('password').errors?.minlength)">
         Password should have minimum 6 characters
       </mat-error>
 
-      <div *ngIf="signInForm.invalid || (!signInForm.get('number').value || !signInForm.get('password').value)"
-        class="text-red-500 text-sm mt-1">{{numberError}}</div>
+       <div *ngIf="signInForm.invalid && (!signInForm.get('number').value || !signInForm.get('password').value)"
+        class="text-red-500 text-sm mt-1">{{numberError}}</div> 
 
-      <div *ngIf="errorMessage" class="text-red-500 text-sm mt-1">{{errorMessage}}</div>
+      <!-- <div *ngIf="errorMessage && !signInForm.value.number" class="text-red-500 text-sm mt-1">Phone number or password cannot be empty</div> -->
 
     </div>
 
@@ -78,7 +78,7 @@
         class="block rounded-lg font-sans px-3 pb-3 pt-4 w-full text-base font-semibold text-gray-900 bg-white border--primary appearance-none focus:outline-none focus:ring-0 focus:border-[#8544E4]" />
       <label for="numbers"
         class="absolute duration-300 top-4 left-4 z-10 origin-0 text-gray-500 focus:text-grey-900 bg-white text-base">Enter Phone number</label>
-        <mat-error
+        <mat-error class="text-sm mt-1"
           *ngIf="numberForm.controls['numbers'].touched && (numberForm.get('numbers').errors?.pattern || numberForm.get('numbers').errors?.required)"
           class="text-red-500 text-sm mt-1">
           Enter valid phone number
@@ -105,45 +105,51 @@
     </p>
   </div>
   <form [formGroup]="otpForm" class="flex flex-col my-12 w-full">
-    <div class="relative z-0 w-full mb-6">
-      <div class="flex flex-col space-y-16">
-        <div class="flex flex-row items-center justify-between mx-auto w-full max-w-xs">
-          <div class="w-12 h-12 ">
-            <input
-              class="w-full h-full flex flex-col items-center justify-center text-center px-4 outline-none rounded-lg border--primary text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
-              type="text" formControlName="otp1" maxlength="1" type="text">
-          </div>
-          <div class="w-12 h-12 ">
-            <input
-              class="w-full h-full flex flex-col items-center justify-center text-center px-4 outline-none rounded-lg border--primary text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
-              type="text" formControlName="otp2" maxlength="1">
-          </div>
-          <div class="w-12 h-12 ">
-            <input
-              class="w-full h-full flex flex-col items-center justify-center text-center px-4 outline-none rounded-lg border--primary text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
-              type="text" formControlName="otp3" maxlength="1">
-          </div>
-          <div class="w-12 h-12 ">
-            <input
-              class="w-full h-full flex flex-col items-center justify-center text-center px-4 outline-none rounded-lg border--primary text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
-              type="text" formControlName="otp4" maxlength="1">
-          </div>
+  <div class="relative z-0 w-full mb-6">
+    <div class="flex flex-col space-y-16">
+      <div class="flex flex-row items-center justify-between mx-auto w-full max-w-xs">
+        <div class="w-12 h-12">
+          <input
+            #otp1Input
+            (input)="onInputChange($event, 2)"
+            class="w-full h-full flex flex-col items-center justify-center text-center px-4 outline-none rounded-lg border--primary text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
+            type="text" formControlName="otp1" maxlength="1">
+        </div>
+        <div class="w-12 h-12">
+          <input
+            #otp2Input
+            (input)="onInputChange($event, 3)"
+            class="w-full h-full flex flex-col items-center justify-center text-center px-4 outline-none rounded-lg border--primary text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
+            type="text" formControlName="otp2" maxlength="1">
+        </div>
+        <div class="w-12 h-12">
+          <input
+            #otp3Input
+            (input)="onInputChange($event, 4)"
+            class="w-full h-full flex flex-col items-center justify-center text-center px-4 outline-none rounded-lg border--primary text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
+            type="text" formControlName="otp3" maxlength="1">
+        </div>
+        <div class="w-12 h-12">
+          <input
+            #otp4Input
+            class="w-full h-full flex flex-col items-center justify-center text-center px-4 outline-none rounded-lg border--primary text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
+            type="text" formControlName="otp4" maxlength="1">
         </div>
       </div>
     </div>
-    <div *ngIf="errorMessage" class="text-red-500 text-sm mt-1">{{ errorMessage }}</div>
-    <div class="h-24"></div>
+  </div>
+  <div *ngIf="errorMessage" class="text-red-500 text-sm mt-1">{{ errorMessage }}</div>
+  <div class="h-24"></div>
 
+  <button type="button" (click)="checkOTP()"
+    class="w-full mt-20 text-white focus:outline-none bg-black rounded-md font-sans font-semibold text-sm px-5 py-2.5 text-center mr-2 uppercase mb-2">Verify
+    OTP</button>
+  <div class="flex items-center mt-4 justify-between">
+    <p class="text-center text-base text--secondary font-sans font-medium"> 00:{{ countdown }}</p>
+    <a (click)="resendotp()" class="font-sans text-base text--primary font-semibold ">Resend OTP?</a>
+  </div>
+</form>
 
-    <button type="button" (click)="checkOTP()"
-      class="w-full mt-20 text-white focus:outline-none bg-black rounded-md font-sans font-semibold text-sm px-5 py-2.5 text-center mr-2 uppercase mb-2">Verify
-      OTP</button>
-    <div class="flex items-center mt-4 justify-between">
-      <p class="text-center text-base text--secondary font-sans font-medium"> 00:{{ countdown }}</p>
-      <a (click)="resendotp()" class="font-sans text-base text--primary font-semibold ">Resend OTP?</a>
-    </div>
-
-  </form>
 </div>
 
 <!-- resetPassword -->
@@ -166,7 +172,7 @@
       <label for="passwords"
         class="absolute duration-300 top-4 left-4 z-10 origin-0 text-gray-500 focus:text-grey-900 bg-white text-base">Enter
         Password</label>
-      <mat-error
+      <mat-error class="text-sm mt-1"
         *ngIf="setPasswordForm.controls['password'].touched && (setPasswordForm.get('password').errors?.minlength || setPasswordForm.get('password').errors?.required)"
         class="text-red-500 text-sm mt-1">
         Password should have minimum 6 characters
@@ -181,7 +187,7 @@
       <label for="confirm-password"
         class="absolute duration-300 top-4 left-4 z-10 origin-0 text-gray-500 focus:text-grey-900 bg-white text-base">Enter
         Confirm Password</label>
-      <mat-error
+      <mat-error class="text-sm mt-1"
         *ngIf="setPasswordForm.controls['confirmPassword'].touched && (setPasswordForm.get('confirmPassword').errors?.minlength || setPasswordForm.get('confirmPassword').errors?.required)"
         class="text-red-500 text-sm mt-1">
         Password should have minimum 6 characters

@@ -138,6 +138,13 @@ export const appRoutes: Route[] = [
                         'app/modules/user/slot-token/slot-token.module'
                     ).then((m) => m.SlotTokenModule),
             },
+            {
+                path: 'admin',
+                loadChildren: () =>
+                    import('app/modules/admin/home/home.module').then(
+                        (m) => m.HomeModule
+                    ),
+            },
         ],
     },
 ];
