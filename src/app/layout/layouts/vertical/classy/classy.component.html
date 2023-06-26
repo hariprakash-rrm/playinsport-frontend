@@ -66,7 +66,7 @@
             <mat-icon [svgIcon]="'heroicons_outline:menu'"></mat-icon>
         </button>
         <!-- Components -->
-        <div class="flex items-start pl-2 ml-auto space-x-1 sm:space-x-2 relative">
+        <div class="flex items-start pl-2 ml-auto space-x-1 sm:space-x-2 w-full relative">
             <div class="flex items-center w-full px-4">
                  <!-- Components -->
                 <div class="flex items-center ml-auto absolute right-0 top-2 space-x-6">
@@ -84,8 +84,8 @@
             <!-- User -->
            
            
-            <img src="../../../../../assets/images/new-ui/Frame.png" class="h-64 w-full mt-16" alt="">
-            <div class="absolute -left-72 top-20">
+            <img src="../../../../../assets/images/new-ui/Frame.png" class="h-64 w-64 object-contain mt-16" alt="">
+            <div class="absolute top-20 -left-8">
                 <h1 class=" text-white text-4xl font-bold">Hello Hari</h1>
                 <p class="text-white text-base">How was your day</p>
             </div>
@@ -93,10 +93,12 @@
     </div>
 
     <!-- Content -->
-    <div class="flex flex-col flex-auto absolute z-999 top-48 w-full bg-white card--rounded">
-        <!-- *ngIf="true" hack is required here for router-outlet to work correctly.
+    <div class="flex flex-col flex-auto absolute z-999 top-48 w-full bg-black ">
+        <div class="bg-white card--rounded shadow-xl h-screen mx-3">
+              <!-- *ngIf="true" hack is required here for router-outlet to work correctly.
              Otherwise, layout changes won't be registered and the view won't be updated! -->
         <router-outlet *ngIf="true"></router-outlet>
+        </div>      
     </div>
 
     <!-- Footer -->
