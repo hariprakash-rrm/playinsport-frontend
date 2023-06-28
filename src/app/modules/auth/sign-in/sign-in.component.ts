@@ -17,6 +17,7 @@ import { fuseAnimations } from '@fuse/animations';
 import { FuseAlertType } from '@fuse/components/alert';
 import { AuthService } from 'app/core/auth/auth.service';
 import { SnackbarServiceService } from 'app/shared/snackbar-service.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
     selector: 'auth-sign-in',
@@ -131,11 +132,7 @@ export class AuthSignInComponent implements OnInit {
      * Sign in
      */
     signIn(): void {
-        console.log(!this.signInForm.value.number);
-        console.log(!this.signInForm.value.number);
-
         // Return if the form is invalid
-
         if (this.signInForm.invalid) {
             if (
                 !this.signInForm.value.number ||
@@ -146,7 +143,7 @@ export class AuthSignInComponent implements OnInit {
             return;
         }
 
-        let credentials = {
+        const credentials = {
             number: this.signInForm.value.number,
             password: this.signInForm.value.password,
         };
@@ -158,15 +155,19 @@ export class AuthSignInComponent implements OnInit {
                     this.phoneNumber = this.signInForm.value.number;
                     this.errorMessage = '';
                 }
+
                 if (this.isAdmin) {
                     this._router.navigate(['/admin/home']);
                 } else {
                     this._router.navigate(['/home']);
                 }
             },
-            (error) => {
-                this.signInForm.enable();
-                this.errorMessage = error.error.message;
+            (error: HttpErrorResponse) => {
+                if (error.status === 0) {
+                    this.errorMessage = 'Error: Backend server not connected';
+                } else {
+                    this.errorMessage = error.error.message;
+                }
             }
         );
     }
@@ -212,10 +213,12 @@ export class AuthSignInComponent implements OnInit {
                 }
                 console.log(response);
             },
-            (error) => {
-                console.log(error);
-                this.numberForm.enable();
-                this.errorMessage = error.error.message;
+            (error: HttpErrorResponse) => {
+                if (error.status === 0) {
+                    this.errorMessage = 'Error: Backend server not connected';
+                } else {
+                    this.errorMessage = error.error.message;
+                }
             }
         );
     }
@@ -253,10 +256,13 @@ export class AuthSignInComponent implements OnInit {
                     this.errorMessage = '';
                 }
             },
-            (error) => {
-                this.errorMessage = error.error.message;
-            }
-        );
+            (error: HttpErrorResponse) => {
+                if (error.status === 0) {
+                    this.errorMessage = 'Error: Backend server not connected';
+                } else {
+                    this.errorMessage = error.error.message;
+                }
+            });
     }
     resendotp() {
         if (this.countdown !== 0) {
@@ -295,11 +301,14 @@ export class AuthSignInComponent implements OnInit {
                 }
                 this._router.navigate(['/home']);
             },
-            (error) => {
-                this.errorMessage = error.error.message;
-            }
-        );
-    }
+            (error: HttpErrorResponse) => {
+                if (error.status === 0) {
+                    this.errorMessage = 'Error: Backend server not connected';
+                } else {
+                    this.errorMessage = error.error.message;
+                }
+    });
+}
     onInputChange(event: any, nextInput: number) {
         const input = event.target as HTMLInputElement;
         if (input.value.length >= input.maxLength) {

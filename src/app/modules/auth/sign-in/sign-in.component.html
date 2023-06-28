@@ -5,7 +5,7 @@
   <div class="w-full float-left">
     <img class="w-auto mb-6" src="assets/images/logo/logoipsium.svg" alt="Logo image">
     <h1 class="font-bold text-3xl text--primary font-sans text-left">Welcome Back</h1>
-    <p class="font-medium text--secondary text-lg font-sans text-left mt-2">Please enter your details.
+    <p class="font-medium text--secondary text-lg font-sans text-left mt-2">Please enter your details. madhu
 
     </p>
   </div>
@@ -38,6 +38,8 @@
 
        <div *ngIf="signInForm.invalid && (!signInForm.get('number').value || !signInForm.get('password').value)"
         class="text-red-500 text-sm mt-1">{{numberError}}</div> 
+
+        <div *ngIf="errorMessage"  class="text-red-500 text-sm mt-1">{{errorMessage}}</div>
 
       <!-- <div *ngIf="errorMessage && !signInForm.value.number" class="text-red-500 text-sm mt-1">Phone number or password cannot be empty</div> -->
 
