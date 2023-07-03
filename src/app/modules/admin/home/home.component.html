@@ -1,0 +1,57 @@
+<div class="mt-4">
+    <form [formGroup]="UserForm">
+        <h2 class="mb-4 text-2xl font-bold">User Details</h2>
+        <div class="p-4">
+            <div class="mb-4 flex items-center">
+                <!-- <mat-icon class="mr-2">search</mat-icon> -->
+                <input type="text" formControlName="searchName" class="w-full p-2 border border-gray-300 rounded"
+                    placeholder="Search user" >
+                    <button (click)="searchUser()" class="bg-transparent border-none ml-2" >
+                        <mat-icon>search</mat-icon>
+                    </button>
+            </div>
+            <div *ngIf="UserForm.get('searchName').hasError('minlength')" class="text-red-500 text-sm mt-1">Minimum 6 characters in
+                username</div>
+            <table class="w-full border-collapse">
+                <thead>
+                    <tr>
+                        <th class="py-2 px-4 bg-gray-200">Name</th>
+                        <th class="py-2 px-4 bg-gray-200">Phone Number</th>
+                        <th class="py-2 px-4 bg-gray-200">Wallet</th>
+                        <th class="py-2 px-4 bg-gray-200">TnxHistory</th>
+                        <th class="py-2 px-4 bg-gray-200">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="py-2 px-4 border">{{userName}}</td>
+                        <td class="py-2 px-4 border">{{phonenumber}}</td>
+                        <td class="py-2 px-4 border">{{wallet}}</td>
+                        <td class="py-2 px-4 border">
+                            <div class="flex justify-end mb-4">
+                                <button (click)="showTransactionHistory = true" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Click here</button>
+                            </div>
+                        </td>
+                        
+                        <!-- Add more table cells as needed -->
+                        <td class="py-2 px-4 border">
+                            <div class="flex justify-end mb-4">
+                                <button
+                                    class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Update</button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div *ngIf="showTransactionHistory">
+                <h2 class="mb-4 text-2xl font-bold">Transaction History</h2>
+                <div class="p-4">
+                    <!-- Display the transaction history data here -->
+                    <ul>
+                        <li *ngFor="let transaction of transactionHistory">{{ TnxHistory }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

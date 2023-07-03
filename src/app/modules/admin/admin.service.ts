@@ -5,9 +5,9 @@ import { catchError, switchMap } from 'rxjs/operators';
 import { AuthUtils } from 'app/core/auth/auth.utils';
 import { UserService } from 'app/core/user/user.service';
 import { environment } from 'environments/environment';
-
+import { HttpParams } from '@angular/common/http';
 @Injectable()
-export class AuthService {
+export class AdminService {
     private _authenticated: boolean = false;
     private apiUrl = environment.apiUrl;
 
@@ -63,39 +63,28 @@ export class AuthService {
      *
      * @param data
      */
-    getUser(): Observable<any> {
+
+    getUser( username: string, token: any ): Observable<any> {
+        console.log('getUser');
         // Throw error, if the user is already logged in
         if (this._authenticated) {
             return throwError('User is already logged in.');
         }
 
-        return this._httpClient.get(`${this.apiUrl}/users`).pipe(
-            switchMap((response: any) => {
-                console.log(response);
-                // Store the access token in the local storage
-                this.accessToken = response.token;
-                this.user = JSON.stringify(response.details);
-                // Set the authenticated flag to true
-                this._authenticated = true;
+        console.log(token);
+         if (!username || !token) {
+             return throwError('Username and token should not be empty.');
+         }
 
-                // Store the user on the user service
-                this._userService.user = response.user;
+         const params = new HttpParams()
+             .set('username', username)
+             .set('token', token);
 
-                // Return a new observable with the response
-                return of(response);
-            })
-        );
-    }
-
-    updateUser(): Observable<any> {
-        // Throw error, if the user is already logged in
-        if (this._authenticated) {
-            return throwError('User is already logged in.');
-        }
         return this._httpClient
-            .get(`${this.apiUrl}/update-user`)
+            .get(`${this.apiUrl}/user/get-user`,{ params: params })
             .pipe(
                 switchMap((response: any) => {
+                    console.log(response);
                     // Store the access token in the local storage
                     this.accessToken = response.token;
                     this.user = JSON.stringify(response.details);
@@ -109,5 +98,27 @@ export class AuthService {
                     return of(response);
                 })
             );
+    }
+
+    updateUser(): Observable<any> {
+        // Throw error, if the user is already logged in
+        if (this._authenticated) {
+            return throwError('User is already logged in.');
+        }
+        return this._httpClient.get(`${this.apiUrl}/update-user`).pipe(
+            switchMap((response: any) => {
+                // Store the access token in the local storage
+                this.accessToken = response.token;
+                this.user = JSON.stringify(response.details);
+                // Set the authenticated flag to true
+                this._authenticated = true;
+
+                // Store the user on the user service
+                this._userService.user = response.user;
+
+                // Return a new observable with the response
+                return of(response);
+            })
+        );
     }
 }

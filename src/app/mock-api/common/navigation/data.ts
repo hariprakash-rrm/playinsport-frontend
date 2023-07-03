@@ -19,12 +19,26 @@ export const defaultNavigation: FuseNavigationItem[] = [
 ];
 export const compactNavigation: FuseNavigationItem[] = [
     {
-        id   : 'Token',
+        id: 'Home',
+        title: 'Home',
+        type: 'basic',
+        icon: 'heroicons_outline:home',
+        link: '/admin/home',
+    },
+    {
+        id: 'Game',
+        title: 'Game',
+        type: 'basic',
+        icon: 'heroicons_outline:token_',
+        link: '/admin/game',
+    },
+    {
+        id: 'Token',
         title: 'Token',
-        type : 'basic',
-        icon : 'heroicons_outline:token_',
-        link : '/token'
-    }
+        type: 'basic',
+        icon: 'heroicons_outline:token_',
+        link: '/admin/token',
+    },
 ];
 export const futuristicNavigation: FuseNavigationItem[] = [
     {
