@@ -27,7 +27,6 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy {
     navigation: Navigation;
     user: User;
     isAdmin: boolean = true;
-    // value: Navigation;
     currentNavigation: FuseNavigationItem[];
 
     private _unsubscribeAll: Subject<any> = new Subject<any>();
@@ -75,25 +74,6 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy {
         const accessToken = localStorage.getItem('accessToken');
 
         if (accessToken) {
-            // Send access token to the backend API
-            // this._httpClient
-            //     .post(`${this.apiUrl}/get-user`, accessToken)
-            //     .pipe(
-            //         switchMap((response: any) => {
-            //             console.log(response);
-            //             // Return an observable here
-            //             return new Observable<any>((observer) => {
-            //                 // Process the response as needed
-            //                 observer.next(response);
-            //                 observer.complete();
-            //             });
-            //         })
-            //     )
-            //     .subscribe((processedResponse: any) => {
-            //         // Handle the processed response
-            //     });
-
-            console.log(accessToken);
             if (this.isAdmin) {
                 this.currentNavigation = this.navigation.compact;
             } else {

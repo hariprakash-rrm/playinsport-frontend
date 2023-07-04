@@ -5,12 +5,13 @@
             <div class="mb-4 flex items-center">
                 <!-- <mat-icon class="mr-2">search</mat-icon> -->
                 <input type="text" formControlName="searchName" class="w-full p-2 border border-gray-300 rounded"
-                    placeholder="Search user" >
-                    <button (click)="searchUser()" class="bg-transparent border-none ml-2" >
-                        <mat-icon>search</mat-icon>
-                    </button>
+                    placeholder="Search user">
+                <button (click)="searchUser()" class="bg-transparent border-none ml-2">
+                    <mat-icon>search</mat-icon>
+                </button>
             </div>
-            <div *ngIf="UserForm.get('searchName').hasError('minlength')" class="text-red-500 text-sm mt-1">Minimum 6 characters in
+            <div *ngIf="UserForm.get('searchName').hasError('minlength')" class="text-red-500 text-sm mt-1">Minimum 6
+                characters in
                 username</div>
             <table class="w-full border-collapse">
                 <thead>
@@ -24,20 +25,32 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td class="py-2 px-4 border">{{userName}}</td>
-                        <td class="py-2 px-4 border">{{phonenumber}}</td>
-                        <td class="py-2 px-4 border">{{wallet}}</td>
+                        <td class="py-2 px-4 border">
+                            <input type="text" [(ngModel)]="userName" [ngModelOptions]="{ standalone: true }"
+                                class="w-full p-2 border border-gray-300 rounded" [readonly]="!isEditing">
+                        </td>
+                        <td class="py-2 px-4 border">
+                            <input type="text" [(ngModel)]="phonenumber" [ngModelOptions]="{ standalone: true }"
+                                class="w-full p-2 border border-gray-300 rounded" [readonly]="!isEditing">
+                        </td>
+                        <td class="py-2 px-4 border">
+                            <input type="text" [(ngModel)]="wallet" [ngModelOptions]="{ standalone: true }"
+                                class="w-full p-2 border border-gray-300 rounded" [readonly]="!isEditing">
+                        </td>
                         <td class="py-2 px-4 border">
                             <div class="flex justify-end mb-4">
-                                <button (click)="showTransactionHistory = true" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Click here</button>
+                                <button (click)="showTransactionHistory = true"
+                                    class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+                                    Click here
+                                </button>
                             </div>
                         </td>
-                        
-                        <!-- Add more table cells as needed -->
                         <td class="py-2 px-4 border">
                             <div class="flex justify-end mb-4">
-                                <button
-                                    class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Update</button>
+                                <button (click)="toggleEdit()"
+                                    class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+                                    {{ isEditing ? 'Save' : 'Edit' }}
+                                </button>
                             </div>
                         </td>
                     </tr>
@@ -48,7 +61,26 @@
                 <div class="p-4">
                     <!-- Display the transaction history data here -->
                     <ul>
-                        <li *ngFor="let transaction of transactionHistory">{{ TnxHistory }}</li>
+                        <li *ngFor="let tnxHistory of txnHistory">
+                            <table class="w-full border-collapse">
+                                <thead>
+                                    <tr>
+                                        <th class="py-2 px-4 bg-gray-200">Message</th>
+                                        <th class="py-2 px-4 bg-gray-200">Amount</th>
+                                        <th class="py-2 px-4 bg-gray-200">Time</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <tr *ngFor="let history of txnHistory">
+                                        <td class="py-2 px-4 border">{{ history.message }}</td>
+                                        <td class="py-2 px-4 border">{{ history.amount }}</td>
+                                        <td class="py-2 px-4 border">{{ history.time }}</td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </li>
                     </ul>
                 </div>
             </div>

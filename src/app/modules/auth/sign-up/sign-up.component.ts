@@ -1,24 +1,19 @@
 import {
     Component,
     OnInit,
-    ElementRef,
-    ViewChild,
     ViewEncapsulation,
 } from '@angular/core';
 import {
     FormBuilder,
     FormGroup,
-    NgForm,
     Validators,
     FormControl,
-    ReactiveFormsModule,
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseAlertType } from '@fuse/components/alert';
 import { AuthService } from 'app/core/auth/auth.service';
 import { SnackbarServiceService } from 'app/shared/snackbar-service.service';
-import { Subscription, interval } from 'rxjs';
 
 @Component({
     selector: 'auth-sign-up',

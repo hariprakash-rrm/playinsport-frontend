@@ -29,14 +29,14 @@ export const compactNavigation: FuseNavigationItem[] = [
         id: 'Game',
         title: 'Game',
         type: 'basic',
-        icon: 'heroicons_outline:token_',
+        icon: 'heroicons_outline:game',
         link: '/admin/game',
     },
     {
         id: 'Token',
         title: 'Token',
         type: 'basic',
-        icon: 'heroicons_outline:token_',
+        icon: 'heroicons_outline:token',
         link: '/admin/token',
     },
 ];

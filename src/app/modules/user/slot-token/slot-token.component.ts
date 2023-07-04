@@ -15,7 +15,7 @@ interface CardData {
 })
 export class SlotTokenComponent implements OnInit {
 
-  selectedTime:any
+  selectedTime: any;
   selectedDate: Date;
   cards: CardData[];
   defaultValue = { hour: 13, minute: 30 };
@@ -46,7 +46,6 @@ export class SlotTokenComponent implements OnInit {
         time: '2:30 PM',
         price: 19.99
       },
-      // Add more card data as needed
     ];
 
   }

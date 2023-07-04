@@ -3,7 +3,6 @@ import { AdminService } from '../admin.service';
 import {
     FormBuilder,
     FormGroup,
-    NgForm,
     Validators,
     FormControl,
 } from '@angular/forms';
@@ -21,6 +20,8 @@ export class HomeComponent implements OnInit {
     wallet: number;
     txnHistory: any;
     showTransactionHistory: boolean = false;
+    accessToken: string;
+    isEditing: boolean = false;
 
     constructor(
         private _formBuilder: FormBuilder,
@@ -36,15 +37,18 @@ export class HomeComponent implements OnInit {
     get searchName() {
         return this.UserForm.get('searchName');
     }
-    accessToken() {
-        return localStorage.getItem('accessToken');
-    }
 
     searchUser(): void {
+        this.accessToken = localStorage.getItem('accessToken');
+
         const data = {
             username: this.UserForm.value.searchName,
-            token: this.accessToken(),
+            token: this.accessToken,
         };
+
+        console.log(this.accessToken);
+
+        this.showTransactionHistory = false;
 
         this._adminService.getUser(data.username, data.token).subscribe(
             (response) => {
@@ -53,13 +57,45 @@ export class HomeComponent implements OnInit {
                     this.userName = response.data.username;
                     this.phonenumber = response.data.number;
                     this.wallet = response.data.wallet;
-                    this.txnHistory = response.data.txnHistory;
+                    this.txnHistory = Object.values(response.data.txnHistory);
                 }
+                console.log(this.txnHistory);
             },
             (error) => {
-                this.errorMessage = error.error.message;
+                console.log(error);
             }
         );
     }
-    // search(): void {}
+
+    updateData(): void {
+
+    }
+
+    toggleEdit(): void {
+        this.isEditing = !this.isEditing;
+        if(!this.isEditing){
+        const AccessToken = localStorage.getItem('accessToken');
+        console.log(AccessToken);
+
+             const updatedDetails = {
+                 username: this.userName,
+                 number: this.phonenumber,
+                 wallet: this.wallet,
+                 block: true,
+                 token: AccessToken,
+             };
+             this._adminService.updateUser(updatedDetails).subscribe(
+                 (response) => {
+                     if (response.statusCode === 201) {
+                         this.errorMessage = '';
+                        //  this.isEditing = false;
+                     }
+                     console.log(this.txnHistory);
+                 },
+                 (error) => {
+                     console.log(error);
+                 }
+             );
+        }
+    }
 }

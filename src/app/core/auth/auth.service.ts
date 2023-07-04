@@ -96,7 +96,7 @@ export class AuthService {
 
                 // Return a new observable with the response
                 return of(response);
-            }),
+            })
         );
     }
 
@@ -194,13 +194,13 @@ export class AuthService {
      * Check the authentication status
      */
     check(): Observable<boolean> {
-        // Check if the user is logged in
+        // Check if the user is already authenticated
         if (this._authenticated) {
             return of(true);
         }
 
         // Check the access token availability
-        if (!this.accessToken) {
+        if (this.accessToken === null || this.accessToken === 'undefined') {
             return of(false);
         }
 
@@ -209,7 +209,7 @@ export class AuthService {
             return of(false);
         }
 
-        // If the access token exists and it didn't expire, sign in using it
+        // If the access token exists and it hasn't expired, sign in using it
         return this.signInUsingToken();
     }
 }
