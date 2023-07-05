@@ -1,65 +1,35 @@
-<form [formGroup]="tokenForm" class="flex flex-col my-12 w-full">
-
-    <div class="relative z-0 w-full mb-6">
-        <input formControlName="name" type="text" placeholder=" "
-            class="block rounded-lg font-sans px-3 pb-3 pt-4 w-full text-base font-semibold text-gray-900 bg-white border--primary appearance-none focus:outline-none focus:ring-0 focus:border-[#8544E4]" />
-        <label for="name"
-            class="absolute duration-300 top-4 left-4 z-10 origin-0 text-gray-500 focus:text-grey-900 bg-white text-base">
-            Name</label>
+<form>
+    <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" class="form-control" id="name" [(ngModel)]="name" name="name" required>
     </div>
 
-    <div class="relative z-0 w-full mb-6">
-        <input formControlName="prize" type="text" placeholder=" "
-            class="block rounded-lg font-sans px-3 pb-3 pt-4 w-full text-base font-semibold text-gray-900 bg-white border--primary appearance-none focus:outline-none focus:ring-0 focus:border-[#8544E4]" />
-        <label for="prize"
-            class="absolute duration-300 top-4 left-4 z-10 origin-0 text-gray-500 focus:text-grey-900 bg-white text-base">Prize</label>
-
-        <div *ngIf="errorMessage" class="text-red-500 text-sm mt-1">{{ errorMessage }}</div>
+    <div class="form-group">
+        <label for="prize">Prize:</label>
+        <input type="text" class="form-control" id="prize" [(ngModel)]="prize" name="prize" required>
     </div>
 
-    <div class="relative z-0 w-full mb-6">
-        <input formControlName="tokenPrice" type="text" placeholder=" "
-            class="block rounded-lg font-sans px-3 pb-3 pt-4 w-full text-base font-semibold text-gray-900 bg-white border--primary appearance-none focus:outline-none focus:ring-0 focus:border-[#8544E4]" />
-        <label for="tokenPrice"
-            class="absolute duration-300 top-4 left-4 z-10 origin-0 text-gray-500 focus:text-grey-900 bg-white text-base">tokenPrice</label>
-
-        <div *ngIf="errorMessage" class="text-red-500 text-sm mt-1">{{ errorMessage }}</div>
+    <div class="form-group">
+        <label for="tokenPrice">Token Price:</label>
+        <input type="text" class="form-control" id="tokenPrice" [(ngModel)]="tokenPrice" name="tokenPrice" required>
     </div>
 
-    <div class="relative z-0 w-full mb-6">
-        <input formControlName="date" type="text" placeholder=" "
-            class="block rounded-lg font-sans px-3 pb-3 pt-4 w-full text-base font-semibold text-gray-900 bg-white border--primary appearance-none focus:outline-none focus:ring-0 focus:border-[#8544E4]" />
-        <label for="date"
-            class="absolute duration-300 top-4 left-4 z-10 origin-0 text-gray-500 focus:text-grey-900 bg-white text-base">Date</label>
-
-        <div *ngIf="errorMessage" class="text-red-500 text-sm mt-1">{{ errorMessage }}</div>
+    <div class="form-group">
+        <label for="date">Date:</label>
+        <input type="date" class="form-control" id="date" [(ngModel)]="date" name="date" required>
     </div>
 
-
-    <div class="relative z-0 w-full mb-6">
-        <input formControlName="maximumTokenPerUser" type="text" placeholder=" "
-            class="block rounded-lg font-sans px-3 pb-3 pt-4 w-full text-base font-semibold text-gray-900 bg-white border--primary appearance-none focus:outline-none focus:ring-0 focus:border-[#8544E4]" />
-        <label for="maximumTokenPerUser"
-            class="absolute duration-300 top-4 left-4 z-10 origin-0 text-gray-500 focus:text-grey-900 bg-white text-base">MaximumTokenPerUser</label>
-
-        <div *ngIf="errorMessage" class="text-red-500 text-sm mt-1">{{ errorMessage }}</div>
+    <div class="form-group">
+        <label for="maximumTokenPerUser">Maximum Token per User:</label>
+        <input type="number" class="form-control" id="maximumTokenPerUser" [(ngModel)]="maximumTokenPerUser"
+            name="maximumTokenPerUser" required>
     </div>
 
-
-    <div class="relative z-0 w-full mb-6">
-        <input formControlName="totalTokenNumber" type="text" placeholder=" "
-            class="block rounded-lg font-sans px-3 pb-3 pt-4 w-full text-base font-semibold text-gray-900 bg-white border--primary appearance-none focus:outline-none focus:ring-0 focus:border-[#8544E4]" />
-        <label for="totalTokenNumber"
-            class="absolute duration-300 top-4 left-4 z-10 origin-0 text-gray-500 focus:text-grey-900 bg-white text-base">TotalTokenNumber</label>
-
-        <div *ngIf="errorMessage" class="text-red-500 text-sm mt-1">{{ errorMessage }}</div>
+    <div class="form-group">
+        <label for="totalTokenNumber">Total Token Number:</label>
+        <input type="number" class="form-control" id="totalTokenNumber" [(ngModel)]="totalTokenNumber"
+            name="totalTokenNumber" required>
     </div>
 
-
-    <div class="h-20">
-        <button type="button" (click)="createToken()"
-            class="w-full mt-20 text-white focus:outline-none bg-black rounded-md font-sans font-semibold text-sm px-5 py-2.5 text-center mr-2 uppercase mb-2">CreateToken
-        </button>
-    </div>
-
+    <button type="submit" class="btn btn-primary">Submit</button>
 </form>

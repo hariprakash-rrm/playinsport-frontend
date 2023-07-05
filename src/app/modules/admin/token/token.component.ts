@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators, FormGroup, FormBuilder } from '@angular/forms';
+import {
+    FormBuilder,
+    FormGroup,
+    Validators,
+    FormControl,
+} from '@angular/forms';
 
 @Component({
     selector: 'app-token',
@@ -7,35 +12,15 @@ import { FormControl, Validators, FormGroup, FormBuilder } from '@angular/forms'
     styleUrls: ['./token.component.css'],
 })
 export class TokenComponent implements OnInit {
+    maximumTokenPerUser: number;
     name: string;
+    date: number;
+    totalTokenNumber: number;
     prize: number;
     tokenPrice: number;
-    date: Date;
-    maximumTokenPerUser: number;
-    totalTokenNumber: number;
     tokenForm: FormGroup;
 
-    constructor(private _formBuilder: FormBuilder) {}
+    constructor() {}
 
-    ngOnInit(): void {
-         this.tokenForm = this._formBuilder.group({
-             name: ['', Validators.required],
-             prize: ['', Validators.required],
-             tokenPrice: ['', Validators.required],
-             date: ['', Validators.required],
-             maximumTokenPerUser: ['', Validators.required],
-             totalTokenNumber: ['', Validators.required],
-         });
-    }
-
-    createToken(): void {
-        // console.log(this.name);
-        if (this.tokenForm.valid) {
-            const tokenData = this.tokenForm.value;
-            console.log(tokenData);
-            // Perform further actions with the token data
-        } else {
-            // Handle form validation errors if needed
-        }
-    }
+    ngOnInit(): void {}
 }
