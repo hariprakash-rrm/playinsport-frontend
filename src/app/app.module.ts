@@ -12,23 +12,27 @@ import { mockApiServices } from 'app/mock-api';
 import { LayoutModule } from 'app/layout/layout.module';
 import { AppComponent } from 'app/app.component';
 import { appRoutes } from 'app/app.routing';
+import { ReactiveFormsModule } from '@angular/forms';
 // import { HomeComponent } from './modules/home/home.component';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 
-const config: SocketIoConfig = { url: 'https://d1d0-2401-4900-3601-781a-2e3-7fbf-7866-4096.ngrok-free.app', options: {} };
+const config: SocketIoConfig = {
+    url: 'https://d1d0-2401-4900-3601-781a-2e3-7fbf-7866-4096.ngrok-free.app',
+    options: {},
+};
 
 const routerConfig: ExtraOptions = {
-    preloadingStrategy       : PreloadAllModules,
-    scrollPositionRestoration: 'enabled'
+    preloadingStrategy: PreloadAllModules,
+    scrollPositionRestoration: 'enabled',
 };
 
 @NgModule({
-    declarations: [
-        AppComponent,
-        
-    ],
-    imports     : [
-        SocketIoModule.forRoot({ url: 'https://d1d0-2401-4900-3601-781a-2e3-7fbf-7866-4096.ngrok-free.app', options: {} }),
+    declarations: [AppComponent],
+    imports: [
+        SocketIoModule.forRoot({
+            url: 'https://d1d0-2401-4900-3601-781a-2e3-7fbf-7866-4096.ngrok-free.app',
+            options: {},
+        }),
         BrowserModule,
         BrowserAnimationsModule,
         RouterModule.forRoot(appRoutes, routerConfig),
@@ -44,13 +48,11 @@ const routerConfig: ExtraOptions = {
         // Layout module of your application
         LayoutModule,
 
+        ReactiveFormsModule,
+
         // 3rd party modules that require global configuration via forRoot
-        MarkdownModule.forRoot({})
+        MarkdownModule.forRoot({}),
     ],
-    bootstrap   : [
-        AppComponent
-    ]
+    bootstrap: [AppComponent],
 })
-export class AppModule
-{
-}
+export class AppModule {}

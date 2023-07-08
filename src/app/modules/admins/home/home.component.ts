@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { AdminService } from '../admin.service';
+import { Component, Inject, OnInit } from '@angular/core';
+import { AdminService } from '../../admins/admin.service';
 import {
     FormBuilder,
     FormGroup,
@@ -67,35 +67,33 @@ export class HomeComponent implements OnInit {
         );
     }
 
-    updateData(): void {
-
-    }
+    updateData(): void {}
 
     toggleEdit(): void {
         this.isEditing = !this.isEditing;
-        if(!this.isEditing){
-        const AccessToken = localStorage.getItem('accessToken');
-        console.log(AccessToken);
+        if (!this.isEditing) {
+            const AccessToken = localStorage.getItem('accessToken');
+            console.log(AccessToken);
 
-             const updatedDetails = {
-                 username: this.userName,
-                 number: this.phonenumber,
-                 wallet: this.wallet,
-                 block: true,
-                 token: AccessToken,
-             };
-             this._adminService.updateUser(updatedDetails).subscribe(
-                 (response) => {
-                     if (response.statusCode === 201) {
-                         this.errorMessage = '';
+            const updatedDetails = {
+                username: this.userName,
+                number: this.phonenumber,
+                wallet: this.wallet,
+                block: true,
+                token: AccessToken,
+            };
+            this._adminService.updateUser(updatedDetails).subscribe(
+                (response) => {
+                    if (response.statusCode === 201) {
+                        this.errorMessage = '';
                         //  this.isEditing = false;
-                     }
-                     console.log(this.txnHistory);
-                 },
-                 (error) => {
-                     console.log(error);
-                 }
-             );
+                    }
+                    console.log(this.txnHistory);
+                },
+                (error) => {
+                    console.log(error);
+                }
+            );
         }
     }
 }

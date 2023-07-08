@@ -118,13 +118,6 @@ export const appRoutes: Route[] = [
         },
         children: [
             {
-                path: 'example',
-                loadChildren: () =>
-                    import('app/modules/admin/example/example.module').then(
-                        (m) => m.ExampleModule
-                    ),
-            },
-            {
                 path: 'home',
                 loadChildren: () =>
                     import('app/modules/user/home/home.module').then(
@@ -141,8 +134,8 @@ export const appRoutes: Route[] = [
             {
                 path: 'admin',
                 loadChildren: () =>
-                    import('app/modules/admin/home/home.module').then(
-                        (m) => m.HomeModule
+                    import('app/modules/admins/admins.module').then(
+                        (m) => m.AdminsModule
                     ),
             },
         ],
