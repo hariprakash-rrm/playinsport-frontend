@@ -26,7 +26,7 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy {
     isScreenSmall: boolean;
     navigation: Navigation;
     user: User;
-    isAdmin: boolean = true;
+    isAdmin: boolean = false;
     currentNavigation: FuseNavigationItem[];
 
     private _unsubscribeAll: Subject<any> = new Subject<any>();

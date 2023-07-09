@@ -15,9 +15,10 @@ import { appRoutes } from 'app/app.routing';
 import { ReactiveFormsModule } from '@angular/forms';
 // import { HomeComponent } from './modules/home/home.component';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+import { environment } from 'environments/environment';
 
 const config: SocketIoConfig = {
-    url: 'https://d1d0-2401-4900-3601-781a-2e3-7fbf-7866-4096.ngrok-free.app',
+    url: environment.apiUrl,
     options: {},
 };
 
@@ -30,7 +31,7 @@ const routerConfig: ExtraOptions = {
     declarations: [AppComponent],
     imports: [
         SocketIoModule.forRoot({
-            url: 'https://d1d0-2401-4900-3601-781a-2e3-7fbf-7866-4096.ngrok-free.app',
+            url:environment.apiUrl,
             options: {},
         }),
         BrowserModule,

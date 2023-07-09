@@ -71,7 +71,7 @@ export class SelectTokenComponent implements OnInit {
             this.seats.push(message[i]);
         }
         for (let i = 0; i < message.length; i++) {
-            // console.log(this.userDetails.username, this.seats[i].selectedBy)
+            console.log(this.userDetails.username, this.seats[i].selectedBy)
             if (this.userDetails.name == this.seats[i].selectedBy) {
                 this.seats[i].userSelected = true;
             }

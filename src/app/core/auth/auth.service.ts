@@ -54,7 +54,7 @@ export class AuthService {
      */
     forgotPassword(data: any): Observable<any> {
         return this._httpClient.post(
-            'https://d1d0-2401-4900-3601-781a-2e3-7fbf-7866-4096.ngrok-free.app/send-otp',
+            `${environment.apiUrl}`,
             data
         );
     }
@@ -86,7 +86,7 @@ export class AuthService {
                 console.log(response);
                 // Store the access token in the local storage
                 this.accessToken = response.token;
-                this.user = JSON.stringify(response.details);
+                this.user = JSON.stringify(response.data);
                 // Set the authenticated flag to true
                 this._authenticated = true;
 
@@ -195,18 +195,19 @@ export class AuthService {
      */
     check(): Observable<boolean> {
         // Check if the user is already authenticated
-        if (this._authenticated) {
-            return of(true);
-        }
+       
 
         // Check the access token availability
-        if (this.accessToken === null || this.accessToken === 'undefined') {
+        if (this.accessToken == null || this.accessToken == 'undefined' || this.accessToken=='') {
             return of(false);
         }
 
         // Check the access token expire date
         if (AuthUtils.isTokenExpired(this.accessToken)) {
             return of(false);
+        }
+        if (this._authenticated) {
+            return of(true);
         }
 
         // If the access token exists and it hasn't expired, sign in using it
