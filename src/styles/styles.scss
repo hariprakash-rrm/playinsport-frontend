@@ -63,3 +63,12 @@
   .card--rounded {
     border-radius: 2rem;
   }
+  app-slot-token {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .bg-light-blue {
+    background-color: #f2f7fa;
+  }
+  

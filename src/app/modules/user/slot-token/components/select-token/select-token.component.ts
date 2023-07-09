@@ -23,7 +23,7 @@ export class SelectTokenComponent implements OnInit {
     seats: Seat[] = [];
     tokenData = [];
     userDetails: any;
-    round: any = 1;
+    round: any = "1";
 
     constructor(
         private socket: Socket,
@@ -107,11 +107,11 @@ export class SelectTokenComponent implements OnInit {
         this.socket.emit('userBalance', balanceQuery);
         this.socket.fromEvent('getGame').subscribe((message: any) => {
             console.log(message);
-            if (+this.round === +message.round) {
+            if (+this.round == +message.round) {
                 this.seats[message.tokenNumber - 1] = message;
                 console.log(this.seats[message.tokenNumber - 1]);
                 if (
-                    this.userDetails.name ===
+                    this.userDetails.name ==
                     this.seats[message.tokenNumber - 1].selectedBy
                 ) {
                     this.seats[message.tokenNumber - 1].userSelected = true;

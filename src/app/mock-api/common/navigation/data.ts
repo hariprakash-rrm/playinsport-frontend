@@ -13,7 +13,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
         id   : 'Token',
         title: 'Token',
         type : 'basic',
-        icon : 'heroicons_outline:book',
+        icon : 'heroicons_outline:home',
         link : '/token'
     }
 ];
