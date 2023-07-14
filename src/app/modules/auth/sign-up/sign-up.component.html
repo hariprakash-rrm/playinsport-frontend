@@ -66,44 +66,49 @@
     </div>
     <form [formGroup]="otpForm" class="flex flex-col my-12 w-full">
         <div class="relative z-0 w-full mb-6">
-            <div class="flex flex-col space-y-16">
-                <div class="flex flex-row items-center justify-between mx-auto w-full max-w-xs">
-                    <div class="w-12 h-12 ">
-                        <input
-                            class="w-full h-full flex flex-col items-center justify-center text-center px-4 outline-none rounded-lg border--primary text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
-                            type="text" formControlName="otp1" maxlength="1" type="text">
-                    </div>
-                    <div class="w-12 h-12 ">
-                        <input
-                            class="w-full h-full flex flex-col items-center justify-center text-center px-4 outline-none rounded-lg border--primary text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
-                            type="text" formControlName="otp2" maxlength="1">
-                    </div>
-                    <div class="w-12 h-12 ">
-                        <input
-                            class="w-full h-full flex flex-col items-center justify-center text-center px-4 outline-none rounded-lg border--primary text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
-                            type="text" formControlName="otp3" maxlength="1">
-                    </div>
-                    <div class="w-12 h-12 ">
-                        <input
-                            class="w-full h-full flex flex-col items-center justify-center text-center px-4 outline-none rounded-lg border--primary text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
-                            type="text" formControlName="otp4" maxlength="1">
-                    </div>
-                </div>
+          <div class="flex flex-col space-y-16">
+            <div class="flex flex-row items-center justify-between mx-auto w-full max-w-xs">
+              <div class="w-12 h-12">
+                <input
+                  #otp1Input
+                  (input)="onInputChange($event, 2)"
+                  class="w-full h-full flex flex-col items-center justify-center text-center px-4 outline-none rounded-lg border--primary text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
+                  type="text" formControlName="otp1" maxlength="1">
+              </div>
+              <div class="w-12 h-12">
+                <input
+                  #otp2Input
+                  (input)="onInputChange($event, 3)"
+                  class="w-full h-full flex flex-col items-center justify-center text-center px-4 outline-none rounded-lg border--primary text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
+                  type="text" formControlName="otp2" maxlength="1">
+              </div>
+              <div class="w-12 h-12">
+                <input
+                  #otp3Input
+                  (input)="onInputChange($event, 4)"
+                  class="w-full h-full flex flex-col items-center justify-center text-center px-4 outline-none rounded-lg border--primary text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
+                  type="text" formControlName="otp3" maxlength="1">
+              </div>
+              <div class="w-12 h-12">
+                <input
+                  #otp4Input
+                  class="w-full h-full flex flex-col items-center justify-center text-center px-4 outline-none rounded-lg border--primary text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
+                  type="text" formControlName="otp4" maxlength="1">
+              </div>
             </div>
+          </div>
         </div>
         <div *ngIf="errorMessage" class="text-red-500 text-sm mt-1">{{ errorMessage }}</div>
         <div class="h-24"></div>
-
-
+      
         <button type="button" (click)="checkOTP()"
-            class="w-full mt-20 text-white focus:outline-none bg-black rounded-md font-sans font-semibold text-sm px-5 py-2.5 text-center mr-2 uppercase mb-2">Verify
-            OTP</button>
+          class="w-full mt-20 text-white focus:outline-none bg-black rounded-md font-sans font-semibold text-sm px-5 py-2.5 text-center mr-2 uppercase mb-2">Verify
+          OTP</button>
         <div class="flex items-center mt-4 justify-between">
-            <p class="text-center text-base text--secondary font-sans font-medium"> 00:{{ countdown }}</p>
-            <a href="sign-up.html" class="font-sans text-base text--primary font-semibold ">Resend OTP?</a>
+          <p class="text-center text-base text--secondary font-sans font-medium"> 00:{{ countdown }}</p>
+          <a (click)="resendotp()" class="font-sans text-base text--primary font-semibold ">Resend OTP?</a>
         </div>
-
-    </form>
+      </form>
 </div>
 
 <!-- resetPassword -->

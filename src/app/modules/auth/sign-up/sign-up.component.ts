@@ -1,6 +1,8 @@
 import {
     Component,
+    ElementRef,
     OnInit,
+    ViewChild,
     ViewEncapsulation,
 } from '@angular/core';
 import {
@@ -22,6 +24,10 @@ import { SnackbarServiceService } from 'app/shared/snackbar-service.service';
     animations: fuseAnimations,
 })
 export class AuthSignUpComponent implements OnInit {
+    @ViewChild('otp1Input') otpInput1!: ElementRef;
+    @ViewChild('otp2Input') otpInput2!: ElementRef;
+    @ViewChild('otp3Input') otpInput3!: ElementRef;
+    @ViewChild('otp4Input') otpInput4!: ElementRef;
     alert: { type: FuseAlertType; message: string } = {
         type: 'success',
         message: '',
@@ -156,6 +162,7 @@ export class AuthSignUpComponent implements OnInit {
                     this.startCountdown();
                 }
                 console.log(response);
+                console.log(response.statusCode);
             },
             (error) => {
                 console.log(error);
@@ -237,4 +244,24 @@ export class AuthSignUpComponent implements OnInit {
         clearInterval(this.interval);
         this.countdown = 10;
     }
+
+    onInputChange(event: any, nextInput: number) {
+        const input = event.target as HTMLInputElement;
+        if (input.value.length >= input.maxLength) {
+            // Move focus to the next input field
+            switch (nextInput) {
+                case 2:
+                    this.otpInput2.nativeElement.focus();
+                    break;
+                case 3:
+                    this.otpInput3.nativeElement.focus();
+                    break;
+                case 4:
+                    this.otpInput4.nativeElement.focus();
+                    break;
+                // Add more cases for additional input fields
+            }
+        }
+    }
+
 }

@@ -1,4 +1,4 @@
-<form>
+<!-- <form>
     
         <label for="name">Name:</label>
         <input type="text" class="form-control" id="name" [(ngModel)]="name" name="name" required>
@@ -21,4 +21,31 @@
             name="totalTokenNumber" required>
 
     <button type="submit" (click)="tokenCreation()" class="btn btn-primary">Submit</button>
+</form> -->
+
+<form [formGroup]="tokenForm">
+
+    <label for="name">Name:</label>
+    <input type="text" formControlName="name"  class="form-control" id="name" name="name" required>
+
+    <label for="prize">Prize:</label>
+    <input type="text" class="form-control" id="prize" formControlName="prize" name="prize" required>
+
+    <label for="tokenPrice">Token Price:</label>
+    <input type="text" class="form-control" id="tokenPrice" formControlName="tokenPrice" name="tokenPrice" required>
+
+    <label for="date">Date:</label>
+    <input type="date" class="form-control" id="date" formControlName="date" name="date" required>
+
+    <label for="maximumTokenPerUser">Maximum Token per User:</label>
+    <input type="number" class="form-control" id="maximumTokenPerUser" formControlName="maximumTokenPerUser"
+        name="maximumTokenPerUser" required>
+
+    <label for="totalTokenNumber">Total Token Number:</label>
+    <input type="number" class="form-control" id="totalTokenNumber" formControlName="totalTokenNumber"
+        name="totalTokenNumber" required>
+
+<button type="submit" (click)="tokenCreation()" class="btn btn-primary">Submit</button>
+
+    
 </form>
