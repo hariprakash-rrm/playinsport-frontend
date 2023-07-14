@@ -16,7 +16,7 @@ import { switchMap } from 'rxjs/operators';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
 import { FuseNavigationItem } from '@fuse/components/navigation';
-
+import { SnackbarServiceService } from 'app/shared/snackbar-service.service';
 @Component({
     selector: 'classy-layout',
     templateUrl: './classy.component.html',
@@ -26,11 +26,18 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy {
     isScreenSmall: boolean;
     navigation: Navigation;
     user: User;
-    isAdmin: boolean = false;
+    isAdmin: boolean = true;
     currentNavigation: FuseNavigationItem[];
+    errorMessage: string;
+    userName: string;
+    phonenumber: number;
+    wallet: number | null;
+    txnHistory: any | null;
+    currentPage: number = 1;
 
     private _unsubscribeAll: Subject<any> = new Subject<any>();
     private apiUrl = environment.apiUrl;
+    showTxnHistory = false;
 
     /**
      * Constructor
@@ -42,7 +49,8 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy {
         private _userService: UserService,
         private _fuseMediaWatcherService: FuseMediaWatcherService,
         private _fuseNavigationService: FuseNavigationService,
-        private _httpClient: HttpClient
+        private _httpClient: HttpClient,
+        private _snackBar: SnackbarServiceService
     ) {}
 
     // -----------------------------------------------------------------------------------------------------
@@ -64,22 +72,39 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy {
      * On init
      */
     ngOnInit(): void {
-        // Subscribe to navigation data
         this._navigationService.navigation$
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((navigation: Navigation) => {
                 this.navigation = navigation;
             });
 
+
         const accessToken = localStorage.getItem('accessToken');
 
         if (accessToken) {
-            if (this.isAdmin) {
-                this.currentNavigation = this.navigation.compact;
-            } else {
-                this.currentNavigation = this.navigation.default;
-            }
-        }
+                        
+                this._userService.getUserDetails(accessToken).subscribe(
+                    (response) => {
+                        if (response.statusCode === 201) {
+                            this.errorMessage = '';
+                            this.userName = response.data.username;
+                            this.phonenumber = response.data.number;
+                            this.wallet = response.data.wallet;
+                            this.txnHistory = Object.values(response.data.txnHistory);
+                        }
+
+                        if (response.data.isAdmin) {
+                            this.currentNavigation = this.navigation.compact;
+                        } else {
+                            this.currentNavigation = this.navigation.default;
+                        }
+                    },
+                   
+                    (error) => {
+                        this._snackBar.error(error.error.message, 4000);
+                        console.log(error);
+                    }
+                ),           
 
         // Subscribe to the user service
         this._userService.user$
@@ -96,6 +121,7 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy {
                 this.isScreenSmall = !matchingAliases.includes('md');
             });
     }
+}
 
     /**
      * On destroy
@@ -126,5 +152,15 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy {
             // Toggle the opened status
             navigation.toggle();
         }
+    }
+
+    viewWallet(): void{
+        this.currentPage = 2;
+    }
+    viewTransaction(): void{
+        this.showTxnHistory = true;
+    }
+    back(): void{
+        this.currentPage = 1;
     }
 }
