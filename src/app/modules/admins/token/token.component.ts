@@ -40,6 +40,7 @@ export class TokenComponent implements OnInit {
             prize: valuesArray,
             token: accessToken,
         };
+        console.log(data)
 
         this.tokenService.createToken(data).subscribe(
             (response) => {

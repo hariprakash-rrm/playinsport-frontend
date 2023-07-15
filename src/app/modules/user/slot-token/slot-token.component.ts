@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SnackbarServiceService } from 'app/shared/snackbar-service.service';
-
+import { Router } from '@angular/router';
 
 interface CardData {
   title: string;
@@ -14,7 +14,7 @@ interface CardData {
   styleUrls: ['./slot-token.component.scss']
 })
 export class SlotTokenComponent implements OnInit {
-
+  gameId:any=1
   selectedTime: any;
   selectedDate: Date;
   cards: CardData[];
@@ -53,6 +53,13 @@ export class SlotTokenComponent implements OnInit {
 
   onDateChange(event: any) {
     console.log('Selected Date:', this.selectedDate);
+  }
+
+  activity() {
+    console.log('triggered')
+    // Handle the emitted event here
+    this.gameId=null
+    // Perform any other actions with the token value
   }
 
 

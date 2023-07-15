@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output,EventEmitter } from '@angular/core';
 import { SnackbarServiceService } from 'app/shared/snackbar-service.service';
 import { Socket } from 'ngx-socket-io';
+// import { EventEmitter } from 'stream';
 
 interface Seat {
     round: any;
@@ -16,6 +17,8 @@ interface Seat {
     styleUrls: ['./select-token.component.scss'],
 })
 export class SelectTokenComponent implements OnInit {
+    @Input() gameId: string;
+    @Output() activity: EventEmitter<string> = new EventEmitter<string>();
     message: string;
     messages: string[] = [];
     onlineUsers: number = 0;
@@ -151,4 +154,9 @@ export class SelectTokenComponent implements OnInit {
         // console.log('Seat ' + (index + 1) + ' selected:', this.seats[index].selected);
         this.socket.emit('chat', message);
     }
+
+    _activity() {
+        console.log('triggered')
+        this.activity.emit();
+      }
 }

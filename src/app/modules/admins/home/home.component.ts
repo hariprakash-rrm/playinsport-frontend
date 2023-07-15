@@ -22,6 +22,7 @@ export class HomeComponent implements OnInit {
     showTransactionHistory: boolean = false;
     accessToken: string;
     isEditing: boolean = false;
+    block: any
 
     constructor(
         private _formBuilder: FormBuilder,
@@ -32,7 +33,7 @@ export class HomeComponent implements OnInit {
         });
     }
 
-    ngOnInit(): void {}
+    ngOnInit(): void { }
 
     get searchName() {
         return this.UserForm.get('searchName');
@@ -58,6 +59,7 @@ export class HomeComponent implements OnInit {
                     this.phonenumber = response.data.number;
                     this.wallet = response.data.wallet;
                     this.txnHistory = Object.values(response.data.txnHistory);
+                    this.block = response.data.block
                 }
                 console.log(this.txnHistory);
             },
@@ -67,7 +69,7 @@ export class HomeComponent implements OnInit {
         );
     }
 
-    updateData(): void {}
+    updateData(): void { }
 
     toggleEdit(): void {
         this.isEditing = !this.isEditing;
@@ -79,7 +81,7 @@ export class HomeComponent implements OnInit {
                 username: this.userName,
                 number: this.phonenumber,
                 wallet: this.wallet,
-                block: true,
+                block: this.block,
                 token: AccessToken,
             };
             this._adminService.updateUser(updatedDetails).subscribe(

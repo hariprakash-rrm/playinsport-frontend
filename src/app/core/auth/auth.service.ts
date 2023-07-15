@@ -111,7 +111,7 @@ export class AuthService {
                 switchMap((response: any) => {
                     // Store the access token in the local storage
                     this.accessToken = response.token;
-                    this.user = JSON.stringify(response.details);
+                    this.user = JSON.stringify(response.data);
                     // Set the authenticated flag to true
                     this._authenticated = true;
 
@@ -198,7 +198,7 @@ export class AuthService {
        
 
         // Check the access token availability
-        if (this.accessToken == null || this.accessToken == 'undefined' || this.accessToken=='') {
+        if (this.accessToken == null || this.accessToken == 'undefined' || this.accessToken=='' || this.user=='undefined'||this.user==''||this.user==null) {
             return of(false);
         }
 

@@ -229,6 +229,10 @@ export class AuthSignUpComponent implements OnInit {
         );
     }
 
+    async goToLoginPage(){
+        this._router.navigate(['/sign-in']);
+    }
+
     startCountdown(): void {
         // this.countdown = 10;
         this.interval = setInterval(() => {

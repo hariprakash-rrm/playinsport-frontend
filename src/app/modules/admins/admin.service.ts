@@ -76,7 +76,7 @@ export class AdminService {
             .get(`${this.apiUrl}/user/get-user`, { params: params })
             .pipe(
                 switchMap((response: any) => {
-                    this.user = JSON.stringify(response.details);
+                    // this.user = JSON.stringify(response.details);
                     return of(response);
                 })
             );
@@ -93,7 +93,7 @@ export class AdminService {
             .post(`${this.apiUrl}/user/update-user`, data)
             .pipe(
                 switchMap((response: any) => {
-                    this.user = JSON.stringify(response.details);
+                    // this.user = JSON.stringify(response.details);
                     return of(response);
                 })
             );

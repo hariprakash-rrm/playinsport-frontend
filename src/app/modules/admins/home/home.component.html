@@ -19,8 +19,10 @@
                         <th class="py-2 px-4 bg-gray-200">Name</th>
                         <th class="py-2 px-4 bg-gray-200">Phone Number</th>
                         <th class="py-2 px-4 bg-gray-200">Wallet</th>
+                        <th class="py-2 px-4 bg-gray-200">Status</th>
                         <th class="py-2 px-4 bg-gray-200">TnxHistory</th>
                         <th class="py-2 px-4 bg-gray-200">Action</th>
+                        
                     </tr>
                 </thead>
                 <tbody>
@@ -38,6 +40,14 @@
                                 class="w-full p-2 border border-gray-300 rounded" [readonly]="!isEditing">
                         </td>
                         <td class="py-2 px-4 border">
+                            <select [(ngModel)]="block" [ngModelOptions]="{ standalone: true }"
+                                    class="w-full p-2 border border-gray-300 rounded" [disabled]="!isEditing">
+                              <option [ngValue]="true">True</option>
+                              <option [ngValue]="false">False</option>
+                            </select>
+                          </td>
+                          
+                        <td class="py-2 px-4 border">
                             <div class="flex justify-end mb-4">
                                 <button (click)="showTransactionHistory = true"
                                     class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
@@ -53,6 +63,7 @@
                                 </button>
                             </div>
                         </td>
+                        
                     </tr>
                 </tbody>
             </table>
@@ -61,13 +72,14 @@
                 <div class="p-4">
                     <!-- Display the transaction history data here -->
                     <ul>
-                        <li *ngFor="let tnxHistory of txnHistory">
+                        <li >
                             <table class="w-full border-collapse">
                                 <thead>
                                     <tr>
                                         <th class="py-2 px-4 bg-gray-200">Message</th>
                                         <th class="py-2 px-4 bg-gray-200">Amount</th>
                                         <th class="py-2 px-4 bg-gray-200">Time</th>
+                                        <th class="py-2 px-4 bg-gray-200">Balance</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -75,7 +87,8 @@
                                     <tr *ngFor="let history of txnHistory">
                                         <td class="py-2 px-4 border">{{ history.message }}</td>
                                         <td class="py-2 px-4 border">{{ history.amount }}</td>
-                                        <td class="py-2 px-4 border">{{ history.time }}</td>
+                                        <td class="py-2 px-4 border">{{ history.time | date:'dd/MM/yy HH:mm:ss a' }}</td>
+                                        <td class="py-2 px-4 border">{{ history.newBalance }}</td>
                                     </tr>
 
                                 </tbody>

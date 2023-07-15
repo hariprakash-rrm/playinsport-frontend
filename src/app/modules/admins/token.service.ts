@@ -56,14 +56,14 @@ export class TokenService {
         name: string;
         totalTokenNumber: number;
         maximumTokenPerUser: number;
-        date: Date;
+        date: any;
         tokenPrice: number;
         prize: any[];
         token: string;
     }): Observable<any> {
         return this._httpClient.post(`${this.apiUrl}/token/create`, data).pipe(
             switchMap((response: any) => {
-                this.user = JSON.stringify(response.details);
+                // this.user = JSON.stringify(response.details);
                 return of(response);
             })
         );
@@ -80,7 +80,7 @@ export class TokenService {
             .post(`${this.apiUrl}/user/update-user`, data)
             .pipe(
                 switchMap((response: any) => {
-                    this.user = JSON.stringify(response.details);
+                    // this.user = JSON.stringify(response.details);
                     return of(response);
                 })
             );
