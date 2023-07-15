@@ -10,7 +10,11 @@ import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms'
 })
 export class TokenComponent implements OnInit {
     tokenForm: FormGroup
-
+    create: boolean = true
+    isEditing: boolean = false
+    round:any=0
+    data:any
+    action:any
     constructor(
         private tokenService: TokenService,
         private snackbarServiceService: SnackbarServiceService,
@@ -26,7 +30,7 @@ export class TokenComponent implements OnInit {
         });
     }
 
-    ngOnInit(): void {}
+    ngOnInit(): void { }
 
     tokenCreation(): void {
         const accessToken = localStorage.getItem('accessToken');
@@ -55,6 +59,51 @@ export class TokenComponent implements OnInit {
         );
     }
 
-        
-    
+    updateRound(){
+        const accessToken = localStorage.getItem('accessToken');
+        const data = {
+            round:this.round,
+
+            action:this.action,
+            token:accessToken
+        };
+        console.log(data)
+
+        this.tokenService.updateRound(data).subscribe(
+            (response) => {
+                if (response.statusCode === 201) {
+                    this.snackbarServiceService.success(response.message, 4000);
+                }
+            },
+            (error) => {
+                this.snackbarServiceService.error(error.error.message, 4000);
+                console.log(error);
+            }
+        );
+    }
+
+    searchRound(){
+        this.tokenService.getRound(this.round).subscribe((res:any)=>{
+            if (res.statusCode === 201) {
+                this.snackbarServiceService.success(res.message, 4000);
+                let data={
+                    name: res.data.data.name,
+                    prize: res.data.data.prize,
+                    tokenPrice: res.data.data.tokenPrice,
+                    date: res.data.data.date,
+                    maximumTokenPerUser: res.data.data.maximumTokenPerUser,
+                    totalTokenNumber: 1,
+                    status:res.data.data.isComplete
+                  };
+                  this.data=data
+            }
+            console.log(res)
+        } ,(error) => {
+            this.snackbarServiceService.error(error.error.message, 4000);
+            console.log(error);
+        })
+    }
+
+   
+
 }

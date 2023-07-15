@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output,EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, Output,EventEmitter, OnDestroy } from '@angular/core';
 import { SnackbarServiceService } from 'app/shared/snackbar-service.service';
 import { Socket } from 'ngx-socket-io';
 // import { EventEmitter } from 'stream';
@@ -16,7 +16,7 @@ interface Seat {
     templateUrl: './select-token.component.html',
     styleUrls: ['./select-token.component.scss'],
 })
-export class SelectTokenComponent implements OnInit {
+export class SelectTokenComponent implements OnInit ,OnDestroy{
     @Input() gameId: string;
     @Output() activity: EventEmitter<string> = new EventEmitter<string>();
     message: string;
@@ -26,7 +26,7 @@ export class SelectTokenComponent implements OnInit {
     seats: Seat[] = [];
     tokenData = [];
     userDetails: any;
-    round: any = "1";
+    round: any ;
 
     constructor(
         private socket: Socket,
@@ -34,10 +34,13 @@ export class SelectTokenComponent implements OnInit {
     ) {}
 
     async ngOnInit() {
+        this.round=this.gameId
         let user = await localStorage.getItem('user');
         this.userDetails = JSON.parse(user);
         console.log(this.userDetails);
+        
         this.triggerSocket();
+        console.log('ngOnInit called');
     }
 
     async triggerSocket() {
@@ -48,6 +51,10 @@ export class SelectTokenComponent implements OnInit {
             this.handleSocketResponse();
             // You can use the socket ID for further operations
         });
+        this.socket.connect()
+        await this.socket.on('disconnect', () => {
+            console.log('Disconnected from the server');
+          });
     }
 
     handleSeats(message: any) {
@@ -155,8 +162,15 @@ export class SelectTokenComponent implements OnInit {
         this.socket.emit('chat', message);
     }
 
-    _activity() {
+   async _activity() {
+      
         console.log('triggered')
         this.activity.emit();
+       this.socket.disconnect();
+
+      }
+
+      ngOnDestroy(): void {
+      
       }
 }

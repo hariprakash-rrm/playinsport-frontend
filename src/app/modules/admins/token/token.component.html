@@ -41,8 +41,14 @@
 
     <button type="submit" (click)="tokenCreation()" class="btn btn-primary">Submit</button>
 </form> -->
-
-<form [formGroup]="tokenForm">
+<td class="py-2 px-4 border">
+    <select [(ngModel)]="create" [ngModelOptions]="{ standalone: true }"
+            class="w-full p-2 border border-gray-300 rounded" >
+      <option [ngValue]="true">True</option>
+      <option [ngValue]="false">False</option>
+    </select>
+  </td>
+<form *ngIf="create" [formGroup]="tokenForm">
 
     <label for="name">Name:</label>
     <input type="text" formControlName="name"  class="form-control" id="name" name="name" required>
@@ -68,3 +74,40 @@
 
     
 </form>
+
+<div class="">
+    <!-- <mat-icon class="mr-2">search</mat-icon> -->
+    <input type="text" [(ngModel)]="round" class=""
+        placeholder="Search user">
+    <button (click)="searchRound()" class="bg-transparent border-none ml-2">
+        <mat-icon>search</mat-icon>
+    </button>
+</div>
+
+<label>Name: {{ data?.name }}</label>
+
+<label>Total Token Number: {{ data?.totalTokenNumber }}</label>
+
+<label>Maximum Token per User: {{ data?.maximumTokenPerUser }}</label>
+
+<label>Date: {{ data?.date }}</label>
+
+<label>Token Price: {{ data?.tokenPrice }}</label>
+
+<label>Prize: {{ data?.prize }}</label>
+
+<label>Token: {{ data?.token }}</label>
+<label>Token: {{ data?.status }}</label>
+<!-- <div *ngIf="UserForm.get('searchName').hasError('minlength')" class="text-red-500 text-sm mt-1">Minimum 6
+    characters in
+    username</div> -->
+<div *ngIf="!create" >
+    <select [(ngModel)]="action" [ngModelOptions]="{ standalone: true }"
+    class="w-full p-2 border border-gray-300 rounded" >
+<option [ngValue]="'finalise'">Finalise</option>
+<option [ngValue]="'refund'">Refund</option>
+</select>
+<button type="submit" (click)="updateRound()" class="btn btn-primary">Submit</button>
+
+    
+</div>

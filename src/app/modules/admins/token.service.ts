@@ -69,6 +69,32 @@ export class TokenService {
         );
     }
 
+    updateRound(data: any): Observable<any> {
+        
+        return this._httpClient.post(`${this.apiUrl}/token/update`, data).pipe(
+            switchMap((response: any) => {
+                // this.user = JSON.stringify(response.details);
+                return of(response);
+            })
+        );
+    }
+
+    getRound(round:any): Observable<any>{
+        const params = new HttpParams()
+            .set('data', round)
+           
+        return this._httpClient.get(`${this.apiUrl}/token/get`, { params: params }).pipe(
+            switchMap((response: any) => {
+                // this.user = JSON.stringify(response.details);
+                return of(response);
+            })
+        );
+    }
+
+    updadeRound(){
+
+    }
+
     updateUser(data: {
         username: string;
         number: number;

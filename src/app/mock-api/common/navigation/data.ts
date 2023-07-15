@@ -13,7 +13,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
         id   : 'Token',
         title: 'Token',
         type : 'basic',
-        icon : 'heroicons_outline:home',
+        icon : 'heroicons_outline:clock',
         link : '/token'
     }
 ];
@@ -29,14 +29,14 @@ export const compactNavigation: FuseNavigationItem[] = [
         id: 'Game',
         title: 'Game',
         type: 'basic',
-        icon: 'heroicons_outline:game',
+        icon: 'heroicons_outline:cake',
         link: '/admin/game',
     },
     {
         id: 'Token',
         title: 'Token',
         type: 'basic',
-        icon: 'heroicons_outline:token',
+        icon: 'heroicons_outline:clock',
         link: '/admin/token',
     },
 ];

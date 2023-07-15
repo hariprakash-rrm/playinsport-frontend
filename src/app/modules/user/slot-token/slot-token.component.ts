@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SnackbarServiceService } from 'app/shared/snackbar-service.service';
 import { Router } from '@angular/router';
+import { SlotTokenService } from './service/slot-token.service';
 
 interface CardData {
   title: string;
@@ -14,49 +15,57 @@ interface CardData {
   styleUrls: ['./slot-token.component.scss']
 })
 export class SlotTokenComponent implements OnInit {
-  gameId:any=1
+  
+  gameId:any=null
   selectedTime: any;
   selectedDate: Date;
   cards: CardData[];
   defaultValue = { hour: 13, minute: 30 };
+  games:any
+  
 
   timeChangeHandler(event: any) {}
 
   invalidInputHandler() {}
 
 
-  constructor( private snackbar: SnackbarServiceService) {
+  constructor( private snackbar: SnackbarServiceService,private slotService:SlotTokenService,) {
 
     this.selectedDate = new Date();
   }
 
   async ngOnInit() {
    
-
-    this.cards = [
-      {
-        title: 'Card 1',
-        subtitle: 'Card 1 Subtitle',
-        time: '10:00 AM',
-        price: 10.99
-      },
-      {
-        title: 'Card 2',
-        subtitle: 'Card 2 Subtitle',
-        time: '2:30 PM',
-        price: 19.99
-      },
-    ];
-
   }
 
 
   onDateChange(event: any) {
     console.log('Selected Date:', this.selectedDate);
+    this.getGame()
+  }
+
+  getGame(){
+    this.slotService.getGames(this.selectedDate).subscribe(
+      (response) => {
+          if (response.statusCode === 201) {
+              this.snackbar.success(response.message, 4000);
+              // console.log(response)
+              this.games=response.data.data
+              console.log(this.games[0].date)
+          }
+      },
+      (error) => {
+        console.log(error);
+        this.games=[]
+          this.snackbar.error(error.error.message, 4000);
+          
+      }
+  );
   }
 
   activity() {
-    console.log('triggered')
+    console.log('triggered',this.gameId)
+
     // Handle the emitted event here
     this.gameId=null
     // Perform any other actions with the token value
