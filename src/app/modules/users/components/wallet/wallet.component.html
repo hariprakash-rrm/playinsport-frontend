@@ -1,0 +1,59 @@
+<div>
+    <h2>Available Balance: {{ username }}</h2>
+  
+    <div class="mt-4">
+      <ul class="flex border-b">
+        <li class="-mb-px mr-1">
+          <a
+            [class.activeTab]="activeTab === 'deposit'"
+            (click)="activeTab = 'deposit'"
+            class="bg-white inline-block py-2 px-4 font-semibold cursor-pointer"
+          >
+            Deposit
+          </a>
+        </li>
+        <li class="-mb-px mr-1">
+          <a
+            [class.activeTab]="activeTab === 'withdraw'"
+            (click)="activeTab = 'withdraw'"
+            class="bg-white inline-block py-2 px-4 font-semibold cursor-pointer"
+          >
+            Withdraw
+          </a>
+        </li>
+      </ul>
+  
+      <div [ngSwitch]="activeTab">
+        <div *ngSwitchCase="'deposit'" class="p-4">
+          <h3 class="text-lg font-semibold mb-2">Deposit</h3>
+          <div class="mb-4">
+            <label for="mobileNumber" class="block font-medium">Mobile Number</label>
+            <input type="text" id="mobileNumber" class="form-input mt-1 block w-full" [(ngModel)]="mobileNumber">
+          </div>
+          <div class="mb-4">
+            <label for="trnxId" class="block font-medium">Transaction ID</label>
+            <input type="text" id="trnxId" class="form-input mt-1 block w-full" [(ngModel)]="transactionId">
+          </div>
+          <div class="mb-4">
+            <label for="imageUpload" class="block font-medium">Upload Image</label>
+            <input type="file" id="imageUpload" class="form-input mt-1 block w-full" (change)="handleFileInput($event)">
+          </div>
+          <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" (click)="submitDeposit()">Submit</button>
+        </div>
+  
+        <div *ngSwitchCase="'withdraw'" class="p-4">
+          <h3 class="text-lg font-semibold mb-2">Withdraw</h3>
+          <div class="mb-4">
+            <label for="withdrawNumber" class="block font-medium">Number</label>
+            <input type="text" id="withdrawNumber" class="form-input mt-1 block w-full" [(ngModel)]="withdrawNumber">
+          </div>
+          <div class="mb-4">
+            <label for="withdrawAmount" class="block font-medium">Amount</label>
+            <input type="text" id="withdrawAmount" class="form-input mt-1 block w-full" [(ngModel)]="withdrawAmount">
+          </div>
+          <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" (click)="submitWithdraw()">Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  

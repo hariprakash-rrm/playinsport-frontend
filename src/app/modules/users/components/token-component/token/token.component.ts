@@ -1,15 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { SnackbarServiceService } from 'app/shared/snackbar-service.service';
-import { Router } from '@angular/router';
-import { SlotTokenService } from './service/slot-token.service';
-
+import { TokenService } from '../../token.service';
 
 @Component({
-  selector: 'app-slot-token',
-  templateUrl: './slot-token.component.html',
-  styleUrls: ['./slot-token.component.scss']
+  selector: 'app-token',
+  templateUrl: './token.component.html',
+  styleUrls: ['./token.component.scss']
 })
-export class SlotTokenComponent implements OnInit {
+export class TokenComponent implements OnInit {
+
   
   gameId:any=null
   selectedTime: any;
@@ -24,9 +23,9 @@ export class SlotTokenComponent implements OnInit {
   invalidInputHandler() {}
 
 
-  constructor( private snackbar: SnackbarServiceService,private slotService:SlotTokenService,) {
+  constructor( private snackbar: SnackbarServiceService,private service:TokenService,) {
 
-    this.selectedDate = new Date();
+    // this.selectedDate = new Date();
   }
 
   async ngOnInit() {
@@ -36,11 +35,12 @@ export class SlotTokenComponent implements OnInit {
 
   onDateChange(event: any) {
     console.log('Selected Date:', this.selectedDate);
+    
     this.getGame()
   }
 
   getGame(){
-    this.slotService.getGames(this.selectedDate).subscribe(
+    this.service.getGames(this.selectedDate).subscribe(
       (response) => {
           if (response.statusCode === 201) {
               this.snackbar.success(response.message, 4000);
@@ -65,6 +65,7 @@ export class SlotTokenComponent implements OnInit {
     this.gameId=null
     // Perform any other actions with the token value
   }
+
 
 
 }

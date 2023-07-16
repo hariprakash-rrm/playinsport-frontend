@@ -10,14 +10,16 @@ import { SlotTokenModule } from './modules/user/slot-token/slot-token.module';
 // tslint:disable:max-line-length
 export const appRoutes: Route[] = [
     // Redirect empty path to '/example'
-    { path: '', pathMatch: 'full', redirectTo: 'home' },
+  
+    // no routing redirect to user
+    { path: '', pathMatch: 'full', redirectTo: 'user' },
 
     // Redirect signed in user to the '/example'
     //
     // After the user signs in, the sign in page will redirect the user to the 'signed-in-redirect'
     // path. Below is another redirection for that path to redirect the user to the desired
     // location. This is a small convenience to keep all main routes together here on this file.
-    { path: 'signed-in-redirect', pathMatch: 'full', redirectTo: 'home' },
+    { path: 'signed-in-redirect', pathMatch: 'full', redirectTo: 'user' },
 
     // Auth routes for guests
     {
@@ -117,13 +119,13 @@ export const appRoutes: Route[] = [
             initialData: InitialDataResolver,
         },
         children: [
-            {
-                path: 'home',
-                loadChildren: () =>
-                    import('app/modules/user/home/home.module').then(
-                        (m) => m.HomeModule
-                    ),
-            },
+            // {
+            //     path: 'home',
+            //     loadChildren: () =>
+            //         import('app/modules/user/home/home.module').then(
+            //             (m) => m.HomeModule
+            //         ),
+            // },
             {
                 path: 'token',
                 loadChildren: () =>
@@ -138,6 +140,18 @@ export const appRoutes: Route[] = [
                         (m) => m.AdminsModule
                     ),
             },
+            {
+                path: 'user',
+                loadChildren: () =>
+                    import('app/modules/users/users.module').then(
+                        (m) => m.UsersModule
+                    ),
+            },
         ],
     },
+     
+
+    // no routing redirect to user
+    { path: '**', pathMatch: 'full', redirectTo: 'user' },
+   
 ];

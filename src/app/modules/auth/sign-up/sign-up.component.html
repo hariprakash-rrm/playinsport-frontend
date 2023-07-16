@@ -21,7 +21,8 @@
                 User Name</label>
             <div *ngIf="signUpForm.get('username').touched && (signUpForm.get('username').hasError('minlength') || signUpForm.get('username').hasError('required'))"
                 class="text-red-500 text-sm mt-1">Minimum 6 characters in username</div>
-
+                <div *ngIf="signUpForm.get('username').touched && (signUpForm.get('username').hasError('pattern'))"
+                class="text-red-500 text-sm mt-1">Do not enter space</div>
             <!-- <div *ngIf="errorMessage" class="text-red-500 text-sm mt-1">{{ errorMessage }}</div> -->
 
         </div>

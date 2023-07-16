@@ -102,6 +102,7 @@ export class AuthSignUpComponent implements OnInit {
             username: new FormControl('', [
                 Validators.required,
                 Validators.minLength(6),
+                Validators.pattern(/^[^\s]*$/)
             ]),
             number: new FormControl('', [
                 Validators.required,
@@ -171,6 +172,14 @@ export class AuthSignUpComponent implements OnInit {
             }
         );
     }
+
+     noSpacesValidator(control: FormControl): { [key: string]: boolean } | null {
+        const value = control.value;
+        if (value && value.indexOf(' ') >= 0) {
+          return { 'noSpaces': true };
+        }
+        return null;
+      }
 
     checkOTP(): void {
         const { otp1, otp2, otp3, otp4 } = this.otpForm.value;

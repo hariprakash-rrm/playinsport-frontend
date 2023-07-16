@@ -14,8 +14,8 @@ export const SlotTokenRouting: Route[] = [
         path: '',
         component: SlotTokenComponent,
     },
-    {
-        path:'select',
-        component:SelectTokenComponent
-      }
+    // {
+    //     path:'select',
+    //     component:SelectTokenComponent
+    //   }
 ];
