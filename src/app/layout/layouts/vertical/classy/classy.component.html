@@ -1,6 +1,6 @@
 <!-- Navigation -->
-<div *ngIf="currentPage === 1">
-    <fuse-vertical-navigation class="dark bg-gray-900 print:hidden" [mode]="isScreenSmall ? 'over' : 'side'"
+<!-- <div > -->
+    <fuse-vertical-navigation *ngIf="currentPage === 1" class="dark bg-gray-900 print:hidden" [mode]="isScreenSmall ? 'over' : 'side'"
         [name]="'mainNavigation'" [navigation]="currentNavigation" [opened]="!isScreenSmall">
         <!-- Navigation header hook -->
         <ng-container fuseVerticalNavigationContentHeader>
@@ -88,7 +88,7 @@
 
         <!-- Content -->
         <div class="flex flex-col flex-auto absolute z-99 top-48 w-full bg-black ">
-            <div class="bg-white card--rounded shadow-xl h-screen mx-3">
+            <div class="bg-white card--rounded shadow-xl h-right-screen mx-3">
                 <!-- *ngIf="true" hack is required here for router-outlet to work correctly.
              Otherwise, layout changes won't be registered and the view won't be updated! -->
                 <router-outlet *ngIf="true"></router-outlet>
@@ -102,36 +102,59 @@
 
     </div>
 
-</div>
-<div *ngIf="currentPage === 2">
-    <p>Your current balance is {{wallet}}</p>
-    <button (click)="viewTransaction()">View Transaction</button>
-    <!-- <p *ngIf="showTxnHistory">{{txnHistory}}</p> -->
-    <div *ngIf="showTxnHistory">
-        <ul>
-            <li *ngFor="let tnxHistory of txnHistory">
-                <table class="w-full border-collapse">
-                    <thead>
-                        <tr>
-                            <th class="py-2 px-4 bg-gray-200">Message</th>
-                            <th class="py-2 px-4 bg-gray-200">Amount</th>
-                            <th class="py-2 px-4 bg-gray-200">Time</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-
-                        <tr *ngFor="let history of txnHistory">
-                            <td class="py-2 px-4 border">{{ history.message }}</td>
-                            <td class="py-2 px-4 border">{{ history.amount }}</td>
-                            <td class="py-2 px-4 border">{{ history.time }}</td>
-                        </tr>
-
-                    </tbody>
-                </table>
-            </li>
-        </ul>
-
+<!-- </div> -->
+<div *ngIf="currentPage === 2" class="grid grid-cols-12">
+    <div class="col-span-12">
+        <p>Your current balance is {{wallet}}</p>
+        <button (click)="viewTransaction()">View Transaction</button>
+        <!-- <p *ngIf="showTxnHistory">{{txnHistory}}</p> -->
+        <!-- <div *ngIf="showTxnHistory">
+            <ul>
+                <li *ngFor="let tnxHistory of txnHistory">
+                    <table class="w-full border-collapse">
+                        <thead>
+                            <tr>
+                                <th class="py-2 px-4 bg-gray-200">Message</th>
+                                <th class="py-2 px-4 bg-gray-200">Amount</th>
+                                <th class="py-2 px-4 bg-gray-200">Time</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+    
+                            <tr *ngFor="let history of txnHistory">
+                                <td class="py-2 px-4 border">{{ history.message }}</td>
+                                <td class="py-2 px-4 border">{{ history.amount }}</td>
+                                <td class="py-2 px-4 border">{{ history.time }}</td>
+                            </tr>
+    
+                        </tbody>
+                    </table>
+                </li>
+            </ul>
+    
+        </div> -->
+    
+        <div class="overflow-auto" *ngIf="showTxnHistory">
+            <table class="w-full border-collapse"  *ngFor="let tnxHistory of txnHistory">
+                <thead>
+                    <tr>
+                        <th class="py-2 px-4 bg-gray-200">Message</th>
+                        <th class="py-2 px-4 bg-gray-200">Amount</th>
+                        <th class="py-2 px-4 bg-gray-200">Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+    
+                    <tr *ngFor="let history of txnHistory">
+                        <td class="py-2 px-4 border">{{ history.message }}</td>
+                        <td class="py-2 px-4 border">{{ history.amount }}</td>
+                        <td class="py-2 px-4 border">{{ history.time }}</td>
+                    </tr>
+    
+                </tbody>
+            </table>
+        </div>
+    
+        <button (click)="back()">Back</button>
     </div>
-
-    <button (click)="back()">Back</button>
 </div>

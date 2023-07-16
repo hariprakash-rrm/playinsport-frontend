@@ -12,11 +12,11 @@
     <form [formGroup]="signUpForm" class="flex flex-col my-12 w-full">
 
         <div class="relative z-0 w-full mb-6" *ngIf="currentStep === 1">
-            <input formControlName="username" type="text" placeholder=" "
+            <input id="user-name" formControlName="username" type="text" placeholder=" "
                 class="block rounded-lg font-sans px-3 pb-3 pt-4 w-full text-base font-semibold text-gray-900 bg-white border--primary appearance-none focus:outline-none focus:ring-0 focus:border-[#8544E4]"
                 [ngClass]="{ 'border-red': signUpForm.get('username').invalid && signUpForm.get('username').touched }" />
             <!-- [class.border-red-500]="signUpForm.get('username').touched && signUpForm.get('username').hasError('minlength')" -->
-            <label for="name"
+            <label for="user-name"
                 class="absolute duration-300 top-4 left-4 z-10 origin-0 text-gray-500 focus:text-grey-900 bg-white text-base">Enter
                 User Name</label>
             <div *ngIf="signUpForm.get('username').touched && (signUpForm.get('username').hasError('minlength') || signUpForm.get('username').hasError('required'))"
@@ -28,9 +28,9 @@
         </div>
 
         <div class="relative z-0 w-full mb-6">
-            <input formControlName="number" type="text" placeholder=" "
+            <input id="whatspp-no" formControlName="number" type="text" placeholder=" "
                 class="block rounded-lg font-sans px-3 pb-3 pt-4 w-full text-base font-semibold text-gray-900 bg-white border--primary appearance-none focus:outline-none focus:ring-0 focus:border-[#8544E4]" />
-            <label for="number"
+            <label for="whatspp-no"
                 class="absolute duration-300 top-4 left-4 z-10 origin-0 text-gray-500 focus:text-grey-900 bg-white text-base">Enter
                 Whatsapp Number</label>
             <mat-error
@@ -126,9 +126,9 @@
     <form [formGroup]="setPasswordForm" class="flex flex-col my-12 w-full">
 
         <div class="relative z-0 w-full mb-6">
-            <input type="password" placeholder=" " formControlName="password"
+            <input id="set-password" type="password" placeholder=" " formControlName="password"
                 class="block rounded-lg font-sans px-3 pb-3 pt-4 w-full text-base font-semibold text-gray-900 bg-white border--primary appearance-none focus:outline-none focus:ring-0 focus:border-[#8544E4]" />
-            <label for="password"
+            <label for="set-password"
                 class="absolute duration-300 top-4 left-4 z-10 origin-0 text-gray-500 focus:text-grey-900 bg-white text-base">Enter
                 Password</label>
             <mat-error
@@ -141,9 +141,9 @@
         </div>
 
         <div class="relative z-0 w-full mb-6">
-            <input type="password" placeholder=" " formControlName="confirmPassword"
+            <input id="set-confirm-password" type="password" placeholder=" " formControlName="confirmPassword"
                 class="block rounded-lg font-sans px-3 pb-3 pt-4 w-full text-base font-semibold text-gray-900 bg-white border--primary appearance-none focus:outline-none focus:ring-0 focus:border-[#8544E4]" />
-            <label for="confirm-password"
+            <label for="set-confirm-password"
                 class="absolute duration-300 top-4 left-4 z-10 origin-0 text-gray-500 focus:text-grey-900 bg-white text-base">Enter
                 Confirm Password</label>
             <mat-error

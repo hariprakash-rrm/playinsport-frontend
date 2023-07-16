@@ -1,29 +1,29 @@
 <!-- <form>
     
         <label for="name">Name:</label>
-        <input type="text" class="form-control" id="name" [(ngModel)]="name" name="name" required>
+        <input type="text" class="form-control border border-gray-300 rounded w-full" id="name" [(ngModel)]="name" name="name" required>
 
             <div class="col-span-12">
                 <label class="text-sm font-sans" for="tokenPrice">Token Price:</label>
-                <input type="text" class="form-control rounded" id="tokenPrice" [(ngModel)]="tokenPrice" name="tokenPrice" required>
+                <input type="text" class="form-control border border-gray-300 rounded w-full rounded" id="tokenPrice" [(ngModel)]="tokenPrice" name="tokenPrice" required>
         
             </div>
 
             <div class="col-span-12">
                 <label class="text-sm font-sans" for="date">Date:</label>
-                <input type="date" class="form-control w-full" id="date" [(ngModel)]="date" name="date" required>
+                <input type="date" class="form-control border border-gray-300 rounded w-full w-full" id="date" [(ngModel)]="date" name="date" required>
         
             </div>
 
             <div class="col-span-12">
                 <label class="text-sm font-sans" for="maximumTokenPerUser">Maximum Token per User:</label>
-                <input type="number" class="form-control rounded" id="maximumTokenPerUser" [(ngModel)]="maximumTokenPerUser"
+                <input type="number" class="form-control border border-gray-300 rounded w-full rounded" id="maximumTokenPerUser" [(ngModel)]="maximumTokenPerUser"
                     name="maximumTokenPerUser" required>
             </div>
 
             <div class="col-span-12">
                 <label class="text-sm font-sans" for="totalTokenNumber">Total Token Number:</label>
-            <input type="number" class="form-control rounded" id="totalTokenNumber" [(ngModel)]="totalTokenNumber"
+            <input type="number" class="form-control border border-gray-300 rounded w-full rounded" id="totalTokenNumber" [(ngModel)]="totalTokenNumber"
             name="totalTokenNumber" required>
             </div>
             <div class="col-span-12">
@@ -41,73 +41,104 @@
 
     <button type="submit" (click)="tokenCreation()" class="btn btn-primary">Submit</button>
 </form> -->
-<td class="py-2 px-4 border">
-    <select [(ngModel)]="create" [ngModelOptions]="{ standalone: true }"
-            class="w-full p-2 border border-gray-300 rounded" >
-      <option [ngValue]="true">True</option>
-      <option [ngValue]="false">False</option>
-    </select>
-  </td>
-<form *ngIf="create" [formGroup]="tokenForm">
 
-    <label for="name">Name:</label>
-    <input type="text" formControlName="name"  class="form-control" id="name" name="name" required>
+<div class="grid grid-cols-12 gap-4 p-4 pt-8">
+    <div class="col-span-12">
+        <select [(ngModel)]="create" [ngModelOptions]="{ standalone: true }"
+            class="w-full p-2 border border-gray-300 rounded">
+            <option [ngValue]="true">True</option>
+            <option [ngValue]="false">False</option>
+        </select>
+    </div>
+    <div class="col-span-12">
+        <form *ngIf="create" [formGroup]="tokenForm" class="grid grid-cols-12 gap-4">
 
-    <label for="prize">Prize:</label>
-    <input type="text" class="form-control" id="prize" formControlName="prize" name="prize" required>
+            <div class="col-span-12">
+                <label for="name">Name:</label>
+                <input type="text" formControlName="name" class="form-control border border-gray-300 rounded w-full"
+                    id="name" name="name" required>
+            </div>
 
-    <label for="tokenPrice">Token Price:</label>
-    <input type="text" class="form-control" id="tokenPrice" formControlName="tokenPrice" name="tokenPrice" required>
+            <div class="col-span-12">
+                <label for="prize">Prize:</label>
+                <input type="text" class="form-control border border-gray-300 rounded w-full" id="prize"
+                    formControlName="prize" name="prize" required>
+            </div>
 
-    <label for="date">Date:</label>
-    <input type="date" class="form-control" id="date" formControlName="date" name="date" required>
 
-    <label for="maximumTokenPerUser">Maximum Token per User:</label>
-    <input type="number" class="form-control" id="maximumTokenPerUser" formControlName="maximumTokenPerUser"
-        name="maximumTokenPerUser" required>
+            <div class="col-span-12">
+                <label for="tokenPrice">Token Price:</label>
+                <input type="text" class="form-control border border-gray-300 rounded w-full" id="tokenPrice"
+                    formControlName="tokenPrice" name="tokenPrice" required>
+            </div>
 
-    <label for="totalTokenNumber">Total Token Number:</label>
-    <input type="number" class="form-control" id="totalTokenNumber" formControlName="totalTokenNumber"
-        name="totalTokenNumber" required>
+            <div class="col-span-12">
+                <label for="date">Date:</label>
+                <input type="date" class="form-control border border-gray-300 rounded w-full" id="date"
+                    formControlName="date" name="date" required>
+            </div>
 
-<button type="submit" (click)="tokenCreation()" class="btn btn-primary">Submit</button>
+            <div class="col-span-12">
+                <label for="maximumTokenPerUser">Maximum Token per User:</label>
+                <input type="number" class="form-control border border-gray-300 rounded w-full" id="maximumTokenPerUser"
+                    formControlName="maximumTokenPerUser" name="maximumTokenPerUser" required>
 
-    
-</form>
+            </div>
+            <div class="col-span-12">
+                <div>
+                    <label for="totalTokenNumber">Total Token Number:</label>
+                    <input type="number" class="form-control border border-gray-300 rounded w-full"
+                        id="totalTokenNumber" formControlName="totalTokenNumber" name="totalTokenNumber" required>
+                </div>
+                <button type="submit" (click)="tokenCreation()" class="btn btn-primary">Submit</button>
 
-<div class="">
-    <!-- <mat-icon class="mr-2">search</mat-icon> -->
-    <input type="text" [(ngModel)]="round" class=""
-        placeholder="Search user">
-    <button (click)="searchRound()" class="bg-transparent border-none ml-2">
-        <mat-icon>search</mat-icon>
-    </button>
+            </div>
+
+
+        </form>
+    </div>
+    <div class="col-span-12">
+        <div class="flex gpa-4 items-center">
+            <!-- <mat-icon class="mr-2">search</mat-icon> -->
+            <input type="text" [(ngModel)]="round" class="border border-gray-300 rounded w-full" placeholder="Search user">
+            <button (click)="searchRound()" class="bg-black ml-2 p-2 rounded flex items-center justify-center">
+                <mat-icon class="text-white">search</mat-icon>
+            </button>
+        </div>
+
+    </div>
+    <div class="col-span-12 space-y-2">
+        <p class="text-base font-sans">Name: {{ data?.name }}</p>
+
+        <p class="text-base font-sans">Total Token Number: {{ data?.totalTokenNumber }}</p>
+
+        <p class="text-base font-sans">Maximum Token per User: {{ data?.maximumTokenPerUser }}</p>
+
+        <p class="text-base font-sans">Date: {{ data?.date }}</p>
+
+        <p class="text-base font-sans">Token Price: {{ data?.tokenPrice }}</p>
+
+        <p class="text-base font-sans">Prize: {{ data?.prize }}</p>
+
+        <p class="text-base font-sans">Token: {{ data?.token }}</p>
+        <p class="text-base font-sans">Token: {{ data?.status }}</p>
+    </div>
 </div>
 
-<label>Name: {{ data?.name }}</label>
 
-<label>Total Token Number: {{ data?.totalTokenNumber }}</label>
 
-<label>Maximum Token per User: {{ data?.maximumTokenPerUser }}</label>
 
-<label>Date: {{ data?.date }}</label>
 
-<label>Token Price: {{ data?.tokenPrice }}</label>
-
-<label>Prize: {{ data?.prize }}</label>
-
-<label>Token: {{ data?.token }}</label>
-<label>Token: {{ data?.status }}</label>
 <!-- <div *ngIf="UserForm.get('searchName').hasError('minlength')" class="text-red-500 text-sm mt-1">Minimum 6
     characters in
     username</div> -->
-<div *ngIf="!create" >
+<div *ngIf="!create">
     <select [(ngModel)]="action" [ngModelOptions]="{ standalone: true }"
-    class="w-full p-2 border border-gray-300 rounded" >
-<option [ngValue]="'finalise'">Finalise</option>
-<option [ngValue]="'refund'">Refund</option>
-</select>
-<button type="submit" (click)="updateRound()" class="btn btn-primary">Submit</button>
+        class="w-full p-2 border border-gray-300 rounded">
+        <option [ngValue]="'finalise'">Finalise</option>
+        <option [ngValue]="'refund'">Refund</option>
+    </select>
+    <button type="submit" (click)="updateRound()" class="btn btn-primary">Submit</button>
 
-    
+
 </div>

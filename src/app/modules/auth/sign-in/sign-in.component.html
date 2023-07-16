@@ -12,9 +12,9 @@
   <form [formGroup]="signInForm" class="relative z-0 w-full mb-6"
     [ngClass]="{ 'border-red-500': signInForm.get('number').invalid }" class="flex flex-col my-12 w-full">
     <div class="relative z-0 w-full mb-6">
-      <input type="text" name="number" placeholder=" " formControlName="number"
+      <input type="text" id="phone-no" name="number" placeholder=" " formControlName="number"
         class="block rounded-lg font-sans px-3 pb-3 pt-4 w-full text-base font-semibold text-gray-900 bg-white border--primary appearance-none focus:outline-none focus:ring-0 focus:border-[#8544E4]" />
-      <label for="number"
+      <label for="phone-no"
         class="absolute duration-300 top-4 left-4 z-10 origin-0 text-gray-500 focus:text-grey-900 bg-white text-base">Enter
         Phone Number</label>
 
@@ -26,7 +26,7 @@
     </div>
 
     <div class="relative z-0 w-full mb-6">
-      <input type="password" name="password" placeholder=" " formControlName="password"
+      <input id="password" type="password" name="password" placeholder=" " formControlName="password"
         class="block rounded-lg font-sans px-3 pb-3 pt-4 w-full text-base font-semibold text-gray-900 bg-white border--primary appearance-none focus:outline-none focus:ring-0 focus:border-[#8544E4]" />
       <label for="password"
         class="absolute duration-300 top-4 left-4 z-10 origin-0 text-gray-500 focus:text-grey-900 bg-white text-base">Enter
@@ -76,9 +76,9 @@
   <form [formGroup]="numberForm" class="flex flex-col my-12 w-full">
    
     <div class="relative z-0 w-full mb-6">
-      <input type="number" name="numbers" placeholder=" " formControlName="numbers"
+      <input id="phoneno" type="number" name="numbers" placeholder=" " formControlName="numbers"
         class="block rounded-lg font-sans px-3 pb-3 pt-4 w-full text-base font-semibold text-gray-900 bg-white border--primary appearance-none focus:outline-none focus:ring-0 focus:border-[#8544E4]" />
-      <label for="numbers"
+      <label for="phoneno"
         class="absolute duration-300 top-4 left-4 z-10 origin-0 text-gray-500 focus:text-grey-900 bg-white text-base">Enter Phone number</label>
         <mat-error class="text-sm mt-1"
           *ngIf="numberForm.controls['numbers'].touched && (numberForm.get('numbers').errors?.pattern || numberForm.get('numbers').errors?.required)"
@@ -169,9 +169,9 @@
   <form [formGroup]="setPasswordForm" class="flex flex-col my-12 w-full">
 
     <div class="relative z-0 w-full mb-6">
-      <input type="password" placeholder=" " formControlName="passwords"
+      <input id="pasword" type="password" placeholder=" " formControlName="passwords"
         class="block rounded-lg font-sans px-3 pb-3 pt-4 w-full text-base font-semibold text-gray-900 bg-white border--primary appearance-none focus:outline-none focus:ring-0 focus:border-[#8544E4]" />
-      <label for="passwords"
+      <label for="pasword"
         class="absolute duration-300 top-4 left-4 z-10 origin-0 text-gray-500 focus:text-grey-900 bg-white text-base">Enter
         Password</label>
       <mat-error class="text-sm mt-1"
@@ -184,7 +184,7 @@
     </div>
 
     <div class="relative z-0 w-full mb-6">
-      <input type="password" placeholder=" " formControlName="confirmPassword"
+      <input id="confirm-password" type="password" placeholder=" " formControlName="confirmPassword"
         class="block rounded-lg font-sans px-3 pb-3 pt-4 w-full text-base font-semibold text-gray-900 bg-white border--primary appearance-none focus:outline-none focus:ring-0 focus:border-[#8544E4]" />
       <label for="confirm-password"
         class="absolute duration-300 top-4 left-4 z-10 origin-0 text-gray-500 focus:text-grey-900 bg-white text-base">Enter
