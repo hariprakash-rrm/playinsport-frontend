@@ -1,9 +1,9 @@
-<div class="grid grid-cols-12 gap-4 mt-4">
+<div class="grid grid-cols-12 gap-4 mt-4 w-full">
     <div class="col-span-12">
         <form [formGroup]="UserForm">
            
             <div class="p-4">
-                <h2 class="mb-4 text-2xl font-bold">User Details</h2>
+                <h2 class="mb-4 text-xl md:text-2xl font-bold">User Details</h2>
                 <div class="mb-4 flex items-center">
                     <!-- <mat-icon class="mr-2">search</mat-icon> -->
                     <input type="text" formControlName="searchName" class="w-full p-2 border border-gray-300 rounded"
@@ -15,7 +15,45 @@
                 <div *ngIf="UserForm.get('searchName').hasError('minlength')" class="text-red-500 text-sm mt-1">Minimum 6
                     characters in
                     username</div>
-             <div class="overflow-auto">
+                    <div class="grid grid-cols-12 gap-4">
+                        <div class="col-span-12">
+                            <h4 class="md:text-lg font-bold">Name</h4>
+                            <input type="text" [(ngModel)]="userName" [ngModelOptions]="{ standalone: true }"
+                            class="w-full p-2 border border-gray-300 rounded" [readonly]="!isEditing">
+                        </div>
+                        <div class="col-span-12">
+                            <h4 class="md:text-lg font-bold">Phone Number</h4>
+                            <input type="text" [(ngModel)]="phonenumber" [ngModelOptions]="{ standalone: true }"
+                                    class="w-full p-2 border border-gray-300 rounded" [readonly]="!isEditing">
+                        </div>
+                        <div class="col-span-12">
+                            <h4 class="md:text-lg font-bold">Wallet</h4>
+                            <input type="text" [(ngModel)]="wallet" [ngModelOptions]="{ standalone: true }"
+                            class="w-full p-2 border border-gray-300 rounded" [readonly]="!isEditing">
+                        </div>
+                        <div class="col-span-12">
+                            <h4 class="md:text-lg font-bold">Status</h4>
+                            <select [(ngModel)]="block" [ngModelOptions]="{ standalone: true }"
+                                        class="w-full p-2 border border-gray-300 rounded" [disabled]="!isEditing">
+                                <option [ngValue]="true">True</option>
+                                <option [ngValue]="false">False</option>
+                            </select>
+                        </div>
+                        <div class="col-span-12">
+                            <div class="flex justify-between gap-4 items-center">
+                                <button (click)="showTransactionHistory = true"
+                                    class="px-4 py-2 bg-black text-white rounded hover:bg-blue-600 w-full whitespace-nowrap">
+                                    TnxHistory
+                                </button>
+                                <button (click)="toggleEdit()"
+                            class="px-8 py-2 bg-black text-white rounded hover:bg-blue-600 whitespace-nowrap">
+                            {{ isEditing ? 'Save' : 'Edit' }}
+                        </button>
+                            </div>
+                        </div>
+                        
+                    </div>
+             <!-- <div class="overflow-auto">
                 <table class="w-full border-collapse">
                     <thead>
                         <tr>
@@ -70,10 +108,10 @@
                         </tr>
                     </tbody>
                 </table>
-             </div>
+             </div> -->
                 <div *ngIf="showTransactionHistory">
-                    <h2 class="mb-4 text-2xl font-bold">Transaction History</h2>
-                    <div class="p-4">
+                    <h2 class="mt-6 mb-2 text-xl md:text-2xl font-bold">Transaction History</h2>
+                    <div class="">
                         <!-- Display the transaction history data here -->
                         <ul>
                             <li >
