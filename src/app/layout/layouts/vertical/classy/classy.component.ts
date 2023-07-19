@@ -34,6 +34,7 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy {
     wallet: number | null;
     txnHistory: any | null;
     currentPage: number = 1;
+    showPopup: boolean;
 
     private _unsubscribeAll: Subject<any> = new Subject<any>();
     private apiUrl = environment.apiUrl;
@@ -155,12 +156,13 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy {
     }
 
     viewWallet(): void{
-        this.currentPage = 2;
+        // this.currentPage = 2;
+        this.showPopup = true;
     }
     viewTransaction(): void{
         this.showTxnHistory = true;
     }
-    back(): void{
-        this.currentPage = 1;
+    closePopup(): void{
+        this.showPopup = false;
     }
 }

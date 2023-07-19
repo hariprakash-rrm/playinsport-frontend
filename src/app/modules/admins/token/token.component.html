@@ -46,8 +46,8 @@
     <div class="col-span-12">
         <select [(ngModel)]="create" [ngModelOptions]="{ standalone: true }"
             class="w-full p-2 border border-gray-300 rounded">
-            <option [ngValue]="true">True</option>
-            <option [ngValue]="false">False</option>
+            <option [ngValue]="true">Create</option>
+            <option [ngValue]="false">Search</option>
         </select>
     </div>
     <div class="col-span-12">
@@ -97,48 +97,50 @@
 
         </form>
     </div>
-    <div class="col-span-12">
+    <div *ngIf="!create" class="col-span-12">
         <div class="flex gpa-4 items-center">
-            <!-- <mat-icon class="mr-2">search</mat-icon> -->
-            <input type="text" [(ngModel)]="round" class="border border-gray-300 rounded w-full" placeholder="Search user">
+            <input type="text" [(ngModel)]="round" class="border border-gray-300 rounded w-full"
+                placeholder="Search round">
             <button (click)="searchRound()" class="bg-black ml-2 p-2 rounded flex items-center justify-center">
                 <mat-icon class="text-white">search</mat-icon>
             </button>
         </div>
 
+        <div class="col-span-12 space-y-2">
+            <p class="text-base font-sans">Name: {{ data?.name }}</p>
+
+            <p class="text-base font-sans">Total Token Number: {{ data?.totalTokenNumber }}</p>
+
+            <p class="text-base font-sans">Maximum Token per User: {{ data?.maximumTokenPerUser }}</p>
+
+            <p class="text-base font-sans">Date: {{ data?.date }}</p>
+
+            <p class="text-base font-sans">Token Price: {{ data?.tokenPrice }}</p>
+
+            <p class="text-base font-sans">Prize: {{ data?.prize }}</p>
+
+            <p class="text-base font-sans">Token: {{ data?.token }}</p>
+            <p class="text-base font-sans">Token: {{ data?.status }}</p>
+        </div>
+
+        <div>
+            <select [(ngModel)]="action" [ngModelOptions]="{ standalone: true }"
+                class="w-full p-2 border border-gray-300 rounded">
+                <option [ngValue]="'finalise'">Finalise</option>
+                <option [ngValue]="'refund'">Refund</option>
+            </select>
+            <button type="submit" (click)="updateRound()" class="btn btn-primary">Submit</button>
+
+
+        </div>
+
     </div>
-    <div class="col-span-12 space-y-2">
-        <p class="text-base font-sans">Name: {{ data?.name }}</p>
 
-        <p class="text-base font-sans">Total Token Number: {{ data?.totalTokenNumber }}</p>
 
-        <p class="text-base font-sans">Maximum Token per User: {{ data?.maximumTokenPerUser }}</p>
-
-        <p class="text-base font-sans">Date: {{ data?.date }}</p>
-
-        <p class="text-base font-sans">Token Price: {{ data?.tokenPrice }}</p>
-
-        <p class="text-base font-sans">Prize: {{ data?.prize }}</p>
-
-        <p class="text-base font-sans">Token: {{ data?.token }}</p>
-        <p class="text-base font-sans">Token: {{ data?.status }}</p>
-    </div>
 </div>
 
 
 
-
-
-<!-- <div *ngIf="UserForm.get('searchName').hasError('minlength')" class="text-red-500 text-sm mt-1">Minimum 6
+    <!-- <div *ngIf="UserForm.get('searchName').hasError('minlength')" class="text-red-500 text-sm mt-1">Minimum 6
     characters in
     username</div> -->
-<div *ngIf="!create">
-    <select [(ngModel)]="action" [ngModelOptions]="{ standalone: true }"
-        class="w-full p-2 border border-gray-300 rounded">
-        <option [ngValue]="'finalise'">Finalise</option>
-        <option [ngValue]="'refund'">Refund</option>
-    </select>
-    <button type="submit" (click)="updateRound()" class="btn btn-primary">Submit</button>
-
-
-</div>

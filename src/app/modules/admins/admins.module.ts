@@ -9,12 +9,13 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { AdminService } from './admin.service';
 import { TokenService } from './token.service';
-
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
     declarations: [TokenComponent, GameComponent, HomeComponent],
     imports: [
         CommonModule,
+        NgxPaginationModule,
         ReactiveFormsModule,
         FormsModule,
         AdminsRoutingModule,

@@ -16,7 +16,7 @@ export class AdminService {
     constructor(
         private _httpClient: HttpClient,
         private _userService: UserService
-    ) {}
+    ) { }
 
     // -----------------------------------------------------------------------------------------------------
     // @ Accessors
@@ -97,5 +97,25 @@ export class AdminService {
                     return of(response);
                 })
             );
+    }
+    getAllUsers(): Observable<any> {
+        return this._httpClient.get(`${this.apiUrl}/user/all-user`)
+            .pipe(
+                switchMap((response: any) => {
+                    return of(response);
+                })
+            )
+    }
+
+    getAllUsersForPage(data:any): Observable<any> {
+        const params = new HttpParams()
+            .set('currentPage', data.currentPage)
+            .set('selectedItemsPerPage', data.selectedItemsPerPage);
+        return this._httpClient.get(`${this.apiUrl}/user/all-user-for-page`,{ params } )
+            .pipe(
+                switchMap((response: any) => {
+                    return of(response);
+                })
+            )
     }
 }

@@ -15,6 +15,7 @@ export class TokenComponent implements OnInit {
     round:any=0
     data:any
     action:any
+    isSearch: boolean = false
     constructor(
         private tokenService: TokenService,
         private snackbarServiceService: SnackbarServiceService,
@@ -102,6 +103,10 @@ export class TokenComponent implements OnInit {
             this.snackbarServiceService.error(error.error.message, 4000);
             console.log(error);
         })
+    }
+
+    viewSearch(): void{
+        this.isSearch=true;
     }
 
    

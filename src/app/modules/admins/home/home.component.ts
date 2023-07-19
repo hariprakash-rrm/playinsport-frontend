@@ -6,6 +6,7 @@ import {
     Validators,
     FormControl,
 } from '@angular/forms';
+import { SnackbarServiceService } from 'app/shared/snackbar-service.service';
 
 @Component({
     selector: 'app-home',
@@ -26,14 +27,16 @@ export class HomeComponent implements OnInit {
 
     constructor(
         private _formBuilder: FormBuilder,
-        private _adminService: AdminService
+        private _adminService: AdminService,
+        private _snackBar: SnackbarServiceService,
     ) {
         this.UserForm = this._formBuilder.group({
             searchName: new FormControl('', [Validators.minLength(6)]),
         });
     }
 
-    ngOnInit(): void { }
+    ngOnInit(): void {
+    }
 
     get searchName() {
         return this.UserForm.get('searchName');
@@ -62,8 +65,15 @@ export class HomeComponent implements OnInit {
                     this.block = response.data.block
                 }
                 console.log(this.txnHistory);
+                this._snackBar.success(response.message, 4000);
             },
             (error) => {
+                this._snackBar.error(error.error.message, 4000);
+                this.userName = '';
+                this.phonenumber = '',
+                    this.wallet = null;
+                this.txnHistory = '',
+                    this.block = null;
                 console.log(error);
             }
         );
@@ -72,6 +82,10 @@ export class HomeComponent implements OnInit {
     updateData(): void { }
 
     toggleEdit(): void {
+        if (!this.userName) {
+            this._snackBar.error('User details cannot be empty', 4000);
+            return;
+        }
         this.isEditing = !this.isEditing;
         if (!this.isEditing) {
             const AccessToken = localStorage.getItem('accessToken');
@@ -88,14 +102,37 @@ export class HomeComponent implements OnInit {
                 (response) => {
                     if (response.statusCode === 201) {
                         this.errorMessage = '';
-                        //  this.isEditing = false;
                     }
                     console.log(this.txnHistory);
+                    this._snackBar.success(response.message, 4000);
                 },
                 (error) => {
                     console.log(error);
+                    this._snackBar.error(error.error.message, 4000);
                 }
             );
         }
+
     }
+    showTxnDetails(): void {
+        if (!this.userName) {
+            this._snackBar.error('User details cannot be empty', 3000);
+            return;
+        }
+        this.showTransactionHistory = true;
+    }
+    showAllUser(): void {
+
+        this._adminService.getAllUsers().subscribe(
+            (response: any[]) => {
+                
+                this.errorMessage = '';
+            },
+            (error) => {
+                this._snackBar.error(error.error.message, 4000);
+            }
+        );
+    }
+
+  
 }
