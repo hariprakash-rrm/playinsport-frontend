@@ -125,7 +125,6 @@ export class HomeComponent implements OnInit {
 
         this._adminService.getAllUsers().subscribe(
             (response: any[]) => {
-                
                 this.errorMessage = '';
             },
             (error) => {
@@ -134,5 +133,19 @@ export class HomeComponent implements OnInit {
         );
     }
 
-  
+
+    exportToExcel() {
+        this._adminService.exportToExcel().subscribe((response) => {
+            console.log(response);
+            if (response.statusCode === 201) {
+                console.log(response);
+                const blob = new Blob([response], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+                const url = window.URL.createObjectURL(blob);
+                window.open(url);
+            }
+        },
+            (error) => {
+                this._snackBar.error(error.error.message, 4000);
+            });
+    }
 }

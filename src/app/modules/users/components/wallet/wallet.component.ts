@@ -12,6 +12,7 @@ export class WalletComponent implements OnInit {
   transactionId: string = '';
   withdrawNumber: string = '';
   withdrawAmount: string = '';
+  amount: number;
   constructor() { }
 
   ngOnInit(): void {

@@ -118,4 +118,13 @@ export class AdminService {
                 })
             )
     }
+
+    exportToExcel(): Observable<any>{
+        return this._httpClient.get(`${this.apiUrl}/user/export`).
+        pipe(
+            switchMap((response: any) => {
+                return of(response);
+            })
+        )
+    }
 }

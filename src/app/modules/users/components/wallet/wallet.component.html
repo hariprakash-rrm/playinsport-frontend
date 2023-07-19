@@ -35,6 +35,10 @@
             <input type="text" id="trnxId" class="form-input mt-1 block w-full" [(ngModel)]="transactionId">
           </div>
           <div class="mb-4">
+            <label for="amount" class="block font-medium">Amount</label>
+            <input type="text" id="amount" class="form-input mt-1 block w-full" [(ngModel)]="amount">
+          </div>
+          <div class="mb-4">
             <label for="imageUpload" class="block font-medium">Upload Image</label>
             <input type="file" id="imageUpload" class="form-input mt-1 block w-full" (change)="handleFileInput($event)">
           </div>

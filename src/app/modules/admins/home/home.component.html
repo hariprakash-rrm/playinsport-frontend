@@ -4,7 +4,9 @@
 
             <div class="p-4">
                 <h2 class="mb-4 text-2xl font-bold">User Details</h2>
-                <button (click)="showAllUser()">GetAllUser</button>
+
+                <button (click)="exportToExcel()">Export to Excel</button>
+                
                 <div class="mb-4 flex items-center">
                     <!-- <mat-icon class="mr-2">search</mat-icon> -->
                     <input type="text" formControlName="searchName" class="w-full p-2 border border-gray-300 rounded"
@@ -97,7 +99,6 @@
                                             </td>
                                             <td class="py-2 px-4 border">{{ history.newBalance }}</td>
                                         </tr>
-
                                     </tbody>
                                 </table>
                             </li>
@@ -107,5 +108,4 @@
             </div>
         </form>
     </div>
-
 </div>
