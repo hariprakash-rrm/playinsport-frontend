@@ -35,6 +35,8 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy {
     txnHistory: any | null;
     currentPage: number = 1;
     showPopup: boolean;
+    private counterSubject = new Subject<any>();
+    counter$ = this.counterSubject.asObservable();
 
     private _unsubscribeAll: Subject<any> = new Subject<any>();
     private apiUrl = environment.apiUrl;
@@ -64,6 +66,9 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy {
     get currentYear(): number {
         return new Date().getFullYear();
     }
+    updateCounter(value: any) {
+        this.counterSubject.next(value);
+      }
 
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks
@@ -89,6 +94,7 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy {
                         if (response.statusCode === 201) {
                             this.errorMessage = '';
                             this.userName = response.data.username;
+                            this.updateCounter(this.userName)
                             this.phonenumber = response.data.number;
                             this.wallet = response.data.wallet;
                             this.txnHistory = Object.values(response.data.txnHistory);

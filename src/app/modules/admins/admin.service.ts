@@ -120,9 +120,10 @@ export class AdminService {
     }
 
     exportToExcel(): Observable<any>{
-        return this._httpClient.get(`${this.apiUrl}/user/export`).
+        return this._httpClient.get(`${this.apiUrl}/user/export`, { responseType: 'blob' }).
         pipe(
             switchMap((response: any) => {
+                console.log(response);
                 return of(response);
             })
         )

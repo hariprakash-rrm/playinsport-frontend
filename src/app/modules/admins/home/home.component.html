@@ -1,4 +1,4 @@
-<div class="grid grid-cols-12 gap-4 mt-4">
+<div class="grid grid-cols-12 gap-4 mt-4 w-full">
     <div class="col-span-12">
         <form [formGroup]="UserForm">
 
@@ -6,7 +6,7 @@
                 <h2 class="mb-4 text-2xl font-bold">User Details</h2>
 
                 <button (click)="exportToExcel()">Export to Excel</button>
-                
+
                 <div class="mb-4 flex items-center">
                     <!-- <mat-icon class="mr-2">search</mat-icon> -->
                     <input type="text" formControlName="searchName" class="w-full p-2 border border-gray-300 rounded"
@@ -20,65 +20,66 @@
                     6
                     characters in
                     username</div>
-                <div class="overflow-auto">
-                    <table class="w-full border-collapse">
-                        <thead>
-                            <tr>
-                                <th class="py-2 px-4 bg-gray-200">Name</th>
-                                <th class="py-2 px-4 bg-gray-200 whitespace-nowrap">Phone Number</th>
-                                <th class="py-2 px-4 bg-gray-200">Wallet</th>
-                                <th class="py-2 px-4 bg-gray-200">Status</th>
-                                <th class="py-2 px-4 bg-gray-200">TnxHistory</th>
-                                <th class="py-2 px-4 bg-gray-200">Action</th>
-
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="py-2 px-4 border">
-                                    <input type="text" [(ngModel)]="userName" [ngModelOptions]="{ standalone: true }"
-                                        class="w-full p-2 border border-gray-300 rounded" [readonly]="!isEditing">
-                                </td>
-                                <td class="py-2 px-4 border">
-                                    <input type="text" [(ngModel)]="phonenumber" [ngModelOptions]="{ standalone: true }"
-                                        class="w-full p-2 border border-gray-300 rounded" [readonly]="!isEditing">
-                                </td>
-                                <td class="py-2 px-4 border">
-                                    <input type="text" [(ngModel)]="wallet" [ngModelOptions]="{ standalone: true }"
-                                        class="w-full p-2 border border-gray-300 rounded" [readonly]="!isEditing">
-                                </td>
-                                <td class="py-2 px-4 border">
-                                    <select [(ngModel)]="block" [ngModelOptions]="{ standalone: true }"
+             <div class="overflow-auto">
+                <table class="w-full border-collapse">
+                    <thead>
+                        <tr>
+                            <th class="py-2 px-4 bg-gray-200">Name</th>
+                            <th class="py-2 px-4 bg-gray-200 whitespace-nowrap">Phone Number</th>
+                            <th class="py-2 px-4 bg-gray-200">Wallet</th>
+                            <th class="py-2 px-4 bg-gray-200">Status</th>
+                            <th class="py-2 px-4 bg-gray-200">TnxHistory</th>
+                            <th class="py-2 px-4 bg-gray-200">Action</th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="py-2 px-4 border">
+                                <input type="text" [(ngModel)]="userName" [ngModelOptions]="{ standalone: true }"
+                                    class="w-full p-2 border border-gray-300 rounded" [readonly]="!isEditing">
+                            </td>
+                            <td class="py-2 px-4 border">
+                                <input type="text" [(ngModel)]="phonenumber" [ngModelOptions]="{ standalone: true }"
+                                    class="w-full p-2 border border-gray-300 rounded" [readonly]="!isEditing">
+                            </td>
+                            <td class="py-2 px-4 border">
+                                <input type="text" [(ngModel)]="wallet" [ngModelOptions]="{ standalone: true }"
+                                    class="w-full p-2 border border-gray-300 rounded" [readonly]="!isEditing">
+                            </td>
+                            <td class="py-2 px-4 border">
+                                <select [(ngModel)]="block" [ngModelOptions]="{ standalone: true }"
                                         class="w-full p-2 border border-gray-300 rounded" [disabled]="!isEditing">
-                                        <option [ngValue]="true">Block</option>
-                                        <option [ngValue]="false">Un-Block</option>
-                                    </select>
-                                </td>
-
-                                <td class="py-2 px-4 border">
-                                    <div class="flex justify-end items-center">
-                                        <button (click)="showTxnDetails()"
-                                            class="px-4 py-2 bg-black text-white rounded hover:bg-blue-600 whitespace-nowrap">
-                                            Click here
-                                        </button>
-                                    </div>
-                                </td>
-                                <td class="py-2 px-4 border">
-                                    <div class="flex justify-end">
-                                        <button (click)="toggleEdit()"
-                                            class="px-4 py-2 bg-black text-white rounded hover:bg-blue-600 whitespace-nowrap">
-                                            {{ isEditing ? 'Save' : 'Edit' }}
-                                        </button>
-                                    </div>
-                                </td>
-
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                                  <option [ngValue]="true">Create</option>
+                                  <option [ngValue]="false">Search</option>
+                                </select>
+                              </td>
+                              
+                            <td class="py-2 px-4 border">
+                                <div class="flex justify-end items-center">
+                                    <button (click)="showTransactionHistory = true"
+                                        class="px-4 py-2 bg-black text-white rounded hover:bg-blue-600 whitespace-nowrap">
+                                        Click here
+                                    </button>
+                                </div>
+                            </td>
+                            <td class="py-2 px-4 border">
+                                <div class="flex justify-end">
+                                    <button (click)="toggleEdit()"
+                                        class="px-4 py-2 bg-black text-white rounded hover:bg-blue-600 whitespace-nowrap">
+                                        {{ isEditing ? 'Save' : 'Edit' }}
+                                    </button>
+                                </div>
+                            </td>
+                            
+                        </tr>
+                    </tbody>
+                </table>
+             </div>
                 <div *ngIf="showTransactionHistory">
                     <h2 class="mb-4 text-2xl font-bold">Transaction History</h2>
                     <div class="p-4">
+                        <!-- Display the transaction history data here -->
                         <ul>
                             <li>
                                 <table class="w-full border-collapse">
