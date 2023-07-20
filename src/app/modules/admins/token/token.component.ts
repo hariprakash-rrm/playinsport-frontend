@@ -12,10 +12,11 @@ export class TokenComponent implements OnInit {
     tokenForm: FormGroup
     create: boolean = true
     isEditing: boolean = false
-    round:any=0
-    data:any
-    action:any
+    round: any = 0
+    data: any
+    action: any
     isSearch: boolean = false
+    isAddLink: boolean = false
     constructor(
         private tokenService: TokenService,
         private snackbarServiceService: SnackbarServiceService,
@@ -28,6 +29,8 @@ export class TokenComponent implements OnInit {
             date: new FormControl('', Validators.required),
             tokenPrice: new FormControl('', Validators.required),
             prize: new FormControl('', Validators.required),
+            youtubeLink: new FormControl('', Validators.required),
+            facebookLink: new FormControl('', Validators.required)
         });
     }
 
@@ -44,6 +47,8 @@ export class TokenComponent implements OnInit {
             tokenPrice: this.tokenForm.value.tokenPrice,
             prize: valuesArray,
             token: accessToken,
+            youtubeLink: this.tokenForm.value.youtubeLink,
+            facebookLink: this.tokenForm.value.facebookLink
         };
         console.log(data)
 
@@ -60,13 +65,13 @@ export class TokenComponent implements OnInit {
         );
     }
 
-    updateRound(){
+    updateRound() {
         const accessToken = localStorage.getItem('accessToken');
         const data = {
-            round:this.round,
+            round: this.round,
 
-            action:this.action,
-            token:accessToken
+            action: this.action,
+            token: accessToken
         };
         console.log(data)
 
@@ -83,32 +88,34 @@ export class TokenComponent implements OnInit {
         );
     }
 
-    searchRound(){
-        this.tokenService.getRound(this.round).subscribe((res:any)=>{
+    searchRound() {
+        this.tokenService.getRound(this.round).subscribe((res: any) => {
             if (res.statusCode === 201) {
                 this.snackbarServiceService.success(res.message, 4000);
-                let data={
+                let data = {
                     name: res.data.data.name,
                     prize: res.data.data.prize,
                     tokenPrice: res.data.data.tokenPrice,
                     date: res.data.data.date,
                     maximumTokenPerUser: res.data.data.maximumTokenPerUser,
                     totalTokenNumber: 1,
-                    status:res.data.data.isComplete
-                  };
-                  this.data=data
+                    status: res.data.data.isComplete
+                };
+                this.data = data
             }
             console.log(res)
-        } ,(error) => {
+        }, (error) => {
             this.snackbarServiceService.error(error.error.message, 4000);
             console.log(error);
         })
     }
 
-    viewSearch(): void{
-        this.isSearch=true;
+    viewSearch(): void {
+        this.isSearch = true;
     }
 
-   
+    addLiveLink(){
+        this.isAddLink = true;
+    }
 
 }

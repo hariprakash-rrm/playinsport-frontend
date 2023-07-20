@@ -30,20 +30,24 @@ export class WalletComponent implements OnInit {
   withdrawNumber: string = '';
   withdrawAmount: string = '';
   payMethod: any;
-  names:any
+  names: any
   selectedValue: any;
+  phoneNumberOfUser: any;
 
 
   constructor(private snackBar: SnackbarServiceService,
     private formBuilder: FormBuilder,
-    private _walletService: WalletService,private pp : ClassyLayoutComponent) { }
+    private _walletService: WalletService, private _classyComponent: ClassyLayoutComponent) { }
 
   ngOnInit(): void {
-     this.pp.counter$.subscribe((res:any)=>{
-      this.names=res
-      console.log(this.names,'oioioioioioi')
+    this._classyComponent.name$.subscribe((res: any) => {
+      this.names = res
     })
-    
+
+    this._classyComponent.number$.subscribe((res:any)=> {
+      this.phoneNumberOfUser = res
+    })
+
     this.depositForm = this.formBuilder.group({
       mobileNumber: new FormControl('', [
         Validators.required,
@@ -53,7 +57,11 @@ export class WalletComponent implements OnInit {
       transactionId: ['', [Validators.required]],
     });
   }
-  
+
+  get mobileNumber() {
+    return this.depositForm.get('mobileNumber');
+}
+
 
   // handleFileInput(event: any) {
   //   // Handle file input logic here
@@ -81,25 +89,27 @@ export class WalletComponent implements OnInit {
 
   walletTransaction(): void {
 
-      if (this.depositForm.valid) {
-        let data={
-          transactionId: this.depositForm.value.transactionId,
-          amount: this.depositForm.value.amount,
-          mobileNumber: this.depositForm.value.mobileNumber,
-          method: this.selectedValue
-        }
-
-        this._walletService.walletTransaction(data).subscribe(
-          (response) => {
-            if (response.statusCode === 201) {
-              this.snackBar.success(response.message, 4000);
-            }
-          },
-          (error) => {
-            this.snackBar.error(error.error.message, 4000);
-          }
-        );
+    if (this.depositForm.valid) {
+      let data = {
+        transactionId: this.depositForm.value.transactionId,
+        amount: this.depositForm.value.amount,
+        mobileNumber: this.depositForm.value.mobileNumber,
+        paymentMethod: this.selectedValue,
+        userPhoneNumber: this.phoneNumberOfUser
       }
+      this._walletService.walletTransaction(data).subscribe(
+        (response) => {
+          console.log(response);
+          if (response.statusCode === 201) {
+            console.log(response);
+            this.snackBar.success(response.message, 4000);
+          }
+        },
+        (error) => {
+          this.snackBar.error(error.error.message, 4000);
+        }
+      );
+    }
   }
   // submitDeposit() {
   //   // Handle deposit submission logic here

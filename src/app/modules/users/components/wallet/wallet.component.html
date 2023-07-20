@@ -33,6 +33,11 @@
             <label for="mobileNumber"  class="block font-medium">{{selectedValue}} Mobile
               Number </label>
             <input type="text" formControlName="mobileNumber" id="mobileNumber" class="form-input mt-1 block w-full">
+            <mat-error
+            *ngIf="depositForm.controls['mobileNumber'].touched && (depositForm.get('mobileNumber').errors?.pattern || depositForm.get('mobileNumber').errors?.required)"
+            class="text-red-500 text-sm mt-1">
+            Please enter valid phone number
+        </mat-error>
           </div>
           <div class="mb-4">
             <label for="trnxId" class="block font-medium">Transaction ID</label>
@@ -62,4 +67,4 @@
     </div>
   </div>
 
-</div>{{names}}
+</div>

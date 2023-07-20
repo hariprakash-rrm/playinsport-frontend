@@ -12,7 +12,7 @@ export class WalletService {
   constructor(private _httpClient: HttpClient) { }
   apiUrl: string = environment.apiUrl;
 
-  walletTransaction(data:{mobileNumber: number; transactionId: string; amount: number, method: string}): Observable<any>{
+  walletTransaction(data:{mobileNumber: number; transactionId: string; amount: number; paymentMethod: string; userPhoneNumber: number;}): Observable<any>{
 
     console.log(data);
     return this._httpClient.post(`${this.apiUrl}/user/walletTransaction`, data).pipe(

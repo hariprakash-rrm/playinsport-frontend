@@ -84,6 +84,19 @@
                     formControlName="maximumTokenPerUser" name="maximumTokenPerUser" required>
 
             </div>
+
+            <div class="col-span-12">
+                <label for="youtubeLink">YouTube Link:</label>
+                <input type="text" class="form-control border border-gray-300 rounded w-full" id="youtubeLink"
+                    formControlName="youtubeLink" name="youtubeLink" required>
+            </div>
+
+            <div class="col-span-12">
+                <label for="fbLink">Facebook Link:</label>
+                <input type="text" class="form-control border border-gray-300 rounded w-full" id="fbLink"
+                    formControlName="facebookLink" name="fbLink" required>
+            </div>
+
             <div class="col-span-12">
                 <div>
                     <label for="totalTokenNumber">Total Token Number:</label>
@@ -98,49 +111,86 @@
         </form>
     </div>
     <div *ngIf="!create" class="col-span-12">
-        <div class="flex gpa-4 items-center">
-            <input type="text" [(ngModel)]="round" class="border border-gray-300 rounded w-full"
-                placeholder="Search round">
-            <button (click)="searchRound()" class="bg-black ml-2 p-2 rounded flex items-center justify-center">
-                <mat-icon class="text-white">search</mat-icon>
-            </button>
+        
+        <button type="button" (click)="addLiveLink()"
+            class="w-full mt-20 text-white focus:outline-none bg-black rounded-md font-sans font-semibold text-sm px-5 py-2.5 text-center mr-2 uppercase mb-2 cursor-pointer">Add
+            live link
+        </button>
+
+        <div *ngIf="isAddLink">
+            <div class="col-span-12">
+                <label for="facebookLiveLink">Facebook Live Link:</label>
+                <input type="text" class="form-control border border-gray-300 rounded w-full"
+                    formControlName="facebookLiveLink" required>
+            </div>
+
+            <div class="col-span-12">
+                <div>
+                    <label for="youtubeLiveLink">YouTube Live Link:</label>
+                    <input type="text" class="form-control border border-gray-300 rounded w-full" id="youtubeLiveLink"
+                        formControlName="youtubeLiveLink" name="youtubeLiveLink" required>
+                </div>
+            </div>
+
+            <button type="submit" (click)="updateRound()"
+            class="w-full mt-20 text-white focus:outline-none bg-black rounded-md font-sans font-semibold text-sm px-5 py-2.5 text-center mr-2 uppercase mb-2 cursor-pointer">Submit
+        </button>
+
         </div>
 
-        <div class="col-span-12 space-y-2">
-            <p class="text-base font-sans">Name: {{ data?.name }}</p>
+        <div *ngIf="!isAddLink">
 
-            <p class="text-base font-sans">Total Token Number: {{ data?.totalTokenNumber }}</p>
+            <div class="flex gpa-4 items-center">
+                <input type="text" [(ngModel)]="round" class="border border-gray-300 rounded w-full"
+                    placeholder="Search round">
+                <button (click)="searchRound()" class="bg-black ml-2 p-2 rounded flex items-center justify-center">
+                    <mat-icon class="text-white">search</mat-icon>
+                </button>
+            </div>
 
-            <p class="text-base font-sans">Maximum Token per User: {{ data?.maximumTokenPerUser }}</p>
+            <div class="col-span-12 space-y-2">
+                <p class="text-base font-sans">Name: {{ data?.name }}</p>
 
-            <p class="text-base font-sans">Date: {{ data?.date }}</p>
+                <p class="text-base font-sans">Total Token Number: {{ data?.totalTokenNumber }}</p>
 
-            <p class="text-base font-sans">Token Price: {{ data?.tokenPrice }}</p>
+                <p class="text-base font-sans">Maximum Token per User: {{ data?.maximumTokenPerUser }}</p>
 
-            <p class="text-base font-sans">Prize: {{ data?.prize }}</p>
+                <p class="text-base font-sans">Date: {{ data?.date }}</p>
 
-            <p class="text-base font-sans">Token: {{ data?.token }}</p>
-            <p class="text-base font-sans">Token: {{ data?.status }}</p>
-        </div>
+                <p class="text-base font-sans">Token Price: {{ data?.tokenPrice }}</p>
 
-        <div>
-            <select [(ngModel)]="action" [ngModelOptions]="{ standalone: true }"
-                class="w-full p-2 border border-gray-300 rounded">
-                <option [ngValue]="'finalise'">Finalise</option>
-                <option [ngValue]="'refund'">Refund</option>
-            </select>
-            <button type="submit" (click)="updateRound()" class="btn btn-primary">Submit</button>
+                <p class="text-base font-sans">Prize: {{ data?.prize }}</p>
+
+                <p class="text-base font-sans">Token: {{ data?.token }}</p>
+                <p class="text-base font-sans">Youtube Link: {{ data?.token }}</p>
+                <p class="text-base font-sans">Youtube Live Link: {{ data?.token }}</p>
+
+                <p class="text-base font-sans">Facebook Link: {{ data?.token }}</p>
+                <p class="text-base font-sans">Facebook Live Link: {{ data?.token }}</p>
 
 
+                <p class="text-base font-sans">Status: {{ data?.status }}</p>
+            </div>
+
+            <div>
+                <select [(ngModel)]="action" [ngModelOptions]="{ standalone: true }"
+                    class="w-full p-2 border border-gray-300 rounded">
+                    <option [ngValue]="'finalise'">Finalise</option>
+                    <option [ngValue]="'refund'">Refund</option>
+                </select>
+
+                <button type="submit" (click)="updateRound()"
+                    class="w-full mt-20 text-white focus:outline-none bg-black rounded-md font-sans font-semibold text-sm px-5 py-2.5 text-center mr-2 uppercase mb-2 cursor-pointer">Submit
+                </button>
+                <!-- <button type="submit" (click)="updateRound()" class="btn btn-primary">Submit</button> -->
+            </div>
         </div>
 
     </div>
-
-
 </div>
 
 
 
-    <!-- <div *ngIf="UserForm.get('searchName').hasError('minlength')" class="text-red-500 text-sm mt-1">Minimum 6
+<!-- <div *ngIf="UserForm.get('searchName').hasError('minlength')" class="text-red-500 text-sm mt-1">Minimum 6
     characters in
     username</div> -->
