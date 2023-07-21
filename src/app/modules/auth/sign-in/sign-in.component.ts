@@ -47,7 +47,7 @@ export class AuthSignInComponent implements OnInit {
     otpForm: FormGroup;
     tokens: any;
     setPasswordForm: FormGroup;
-    isAdmin = true;
+    isAdmin:boolean;
 
     phoneNumber: any;
     /**
@@ -156,7 +156,7 @@ export class AuthSignInComponent implements OnInit {
                     this.errorMessage = '';
                 }
 
-                if (this.isAdmin) {
+                if (response.data.isAdmin) {
                     this._router.navigate(['/admin/home']);
                 } else {
                     this._router.navigate(['/home']);

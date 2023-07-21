@@ -10,9 +10,24 @@ import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms'
 })
 export class TokenComponent implements OnInit {
     tokenForm: FormGroup
+    viewForm: FormGroup
+    name: string
+    prize: any
+    tokenPrice: any
+    date: any
+    rounds: any = 0;
+    maximumTokenPerUser: any
+    totalTokenNumber: number
+    status: any
+  youtubeLinks: string = '';
+  youtubeLiveLink: string = '';
+  facebookLinks: string = '';
+  facebookLiveLink: string = '';
+
     create: boolean = true
     isEditing: boolean = false
-    round: any = 0
+    isEditings: boolean = false
+
     data: any
     action: any
     isSearch: boolean = false
@@ -32,7 +47,30 @@ export class TokenComponent implements OnInit {
             youtubeLink: new FormControl('', Validators.required),
             facebookLink: new FormControl('', Validators.required)
         });
+
+        // this.viewForm = this._formBuilder.group({
+        //     youtubeLinks: new FormControl('', Validators.required),
+        //     facebookLinks: new FormControl('', Validators.required),
+        //     facebookLiveLink: new FormControl('', Validators.required),
+        //     youtubeLiveLink: new FormControl('', Validators.required)
+        // });
     }
+
+    // get youtubeLinks() {
+    //     return this.viewForm.get('youtubeLinks');
+    // }
+
+    // get facebookLinks() {
+    //     return this.viewForm.get('facebookLinks');
+    // }
+
+    // get youtubeLiveLink() {
+    //     return this.viewForm.get('youtubeLiveLink');
+    // }
+
+    // get facebookLiveLink() {
+    //     return this.viewForm.get('facebookLiveLink');
+    // }
 
     ngOnInit(): void { }
 
@@ -68,7 +106,7 @@ export class TokenComponent implements OnInit {
     updateRound() {
         const accessToken = localStorage.getItem('accessToken');
         const data = {
-            round: this.round,
+            round: this.rounds,
 
             action: this.action,
             token: accessToken
@@ -88,25 +126,56 @@ export class TokenComponent implements OnInit {
         );
     }
 
+    liveUpdate() {
+        console.log(this.viewForm.value.youtubeLiveLink)
+        const accessToken = localStorage.getItem('accessToken');
+        console.log("LIVEUPDATE");
+        const data = {
+            round: this.rounds,
+            action: "linkUpdate",
+            token: accessToken,
+            youtubeLink: this.viewForm.value.youtubeLinks,
+            youtubeLiveLink: this.viewForm.value.youtubeLiveLink,
+            facebookLink: this.viewForm.value.facebookLinks,
+            facebookLiveLink: this.viewForm.value.facebookLiveLink
+        };
+
+        this.tokenService.updateRound(data).subscribe(
+            (response) => {
+                console.log(response);
+                if (response.statusCode === 201) {
+                    this.snackbarServiceService.success(response.message, 4000);
+                }
+            },
+            (error) => {
+                this.snackbarServiceService.error(error.error.message, 4000);
+                console.log(error);
+            }
+        );
+    }
+
     searchRound() {
-        this.tokenService.getRound(this.round).subscribe((res: any) => {
+        this.tokenService.getRound(this.rounds).subscribe((res: any) => {
+            console.log('Value of rounds:', this.rounds);
+
             if (res.statusCode === 201) {
                 this.snackbarServiceService.success(res.message, 4000);
-                let data = {
-                    name: res.data.data.name,
-                    prize: res.data.data.prize,
-                    tokenPrice: res.data.data.tokenPrice,
-                    date: res.data.data.date,
-                    maximumTokenPerUser: res.data.data.maximumTokenPerUser,
-                    totalTokenNumber: 1,
-                    status: res.data.data.isComplete
-                };
-                this.data = data
+                this.name = res.data.data.name;
+                this.prize = res.data.data.prize;
+                this.tokenPrice = res.data.data.tokenPrice;
+                this.date = res.data.data.date;
+                this.maximumTokenPerUser = res.data.data.maximumTokenPerUser;
+                this.totalTokenNumber = 1;
+                this.status = res.data.data.status;
+                this.youtubeLinks = res.data.data.youtubeLink;
+                this.youtubeLiveLink = res.data.data.youtubeLiveLink;
+                this.facebookLinks = res.data.data.facebookLink;
+                this.facebookLiveLink = res.data.data.facebookLiveLink;
+
             }
             console.log(res)
         }, (error) => {
             this.snackbarServiceService.error(error.error.message, 4000);
-            console.log(error);
         })
     }
 
@@ -114,8 +183,47 @@ export class TokenComponent implements OnInit {
         this.isSearch = true;
     }
 
-    addLiveLink(){
+    addLiveLink() {
         this.isAddLink = true;
     }
 
+    toggleEdit(): void {
+        console.log("Toggle");
+        if (1) {
+            this.snackbarServiceService.error('Round not found', 4000);
+            return;
+        }
+        this.isEditing = !this.isEditing;
+        if (!this.isEditing) {
+            const AccessToken = localStorage.getItem('accessToken');
+            console.log(AccessToken);
+
+            const data = {
+                round: this.rounds,
+
+                action: this.action,
+                token: AccessToken,
+                youtubeLink: this.viewForm.value.youtubeLinks,
+                youtubeLiveLink: this.viewForm.value.youtubeLiveLink,
+                facebookLink: this.viewForm.value.facebookLinks,
+                facebookLiveLink: this.viewForm.value.facebookLiveLink
+            };
+            this.tokenService.liveUpdate(data).subscribe(
+                (response) => {
+                    if (response.statusCode === 201) {
+                    }
+                    this.snackbarServiceService.success(response.message, 4000);
+                },
+                (error) => {
+                    console.log(error);
+                    this.snackbarServiceService.error(error.error.message, 4000);
+                }
+            );
+        }
+
+    }
+
+    editing() {
+        this.isEditing = true;
+    }
 }
