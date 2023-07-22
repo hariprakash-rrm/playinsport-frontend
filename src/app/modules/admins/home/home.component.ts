@@ -149,4 +149,10 @@ export class HomeComponent implements OnInit {
           }
         );
       }      
+      showTnxHistory() {
+        this.showTransactionHistory = true;
+      }
+      closeTransaction() {
+        this.showTransactionHistory = false;
+      }
 }
