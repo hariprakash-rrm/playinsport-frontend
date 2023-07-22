@@ -84,6 +84,9 @@
   .bg-overlay {
     background: rgb(0 0 0/0.8);
   }
+  app-token {
+    flex-direction: column;
+  }
   @media (max-width:991px) {
     .h-right-screen {
       height: 100vh;
