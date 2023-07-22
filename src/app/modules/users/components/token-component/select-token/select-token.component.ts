@@ -197,5 +197,8 @@ export class SelectTokenComponent implements OnInit, OnDestroy {
   viewSelectedTokens() {
     this.viewSelected = !this.viewSelected
   }
+  closeSelectedTokens() {
+    this.viewSelected = false;
+  }
 
 }
