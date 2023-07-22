@@ -15,6 +15,7 @@ const routes: Routes = [
     path: 'token',
     component: TokenComponent
   },
+  
   {
     path:'wallet',
     component:WalletComponent

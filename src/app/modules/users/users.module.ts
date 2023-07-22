@@ -15,6 +15,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule } from '@angular/material/core';
 import { WalletComponent } from './components/wallet/wallet.component';
+import { SlideshowComponent } from './components/home-component/slideshow/slideshow.component';
 
 
 
@@ -24,7 +25,8 @@ import { WalletComponent } from './components/wallet/wallet.component';
     HomeComponent,
     TokenComponent,
     SelectTokenComponent,
-    WalletComponent
+    WalletComponent,
+    SlideshowComponent
   ],
   imports: [
     CommonModule,

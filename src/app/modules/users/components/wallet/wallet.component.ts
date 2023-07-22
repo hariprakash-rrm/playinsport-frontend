@@ -58,6 +58,7 @@ export class WalletComponent implements OnInit {
       amount: ['', Validators.required],
       transactionId: ['', [Validators.required]],
     });
+    
 
 
   }
@@ -93,6 +94,7 @@ export class WalletComponent implements OnInit {
 
   deposit(): void {
     let token = localStorage.getItem('accessToken')
+    this.phoneNumberOfUser=this._classyComponent.phonenumber
     if (this.depositForm.valid) {
       let data = {
         transactionId: this.depositForm.value.transactionId,
@@ -100,7 +102,7 @@ export class WalletComponent implements OnInit {
         mobileNumber: this.depositForm.value.mobileNumber,
         method: 'deposit',
         paymentMethod: this.selectedValue,
-        userPhoneNumber: this.phoneNumberOfUser,
+        userPhoneNumber: +this.phoneNumberOfUser,
         token: token
       }
       this._walletService.deposit(data).subscribe(
@@ -123,6 +125,7 @@ export class WalletComponent implements OnInit {
 
   async withdraw() {
     let userBalance = await this._classyComponent.wallet
+    this.phoneNumberOfUser=this._classyComponent.phonenumber
     if (+this.withdrawAmount == 0) {
       this.snackBar.error('enter some amount', 4000)
     }
