@@ -28,11 +28,12 @@ export class WalletComponent implements OnInit {
   depositForm: FormGroup
   activeTab: string = 'deposit';
   withdrawNumber: string = '';
-  withdrawAmount: string = '';
+  withdrawAmount: number = 0;
   payMethod: any;
   names: any
   selectedValue: any;
   phoneNumberOfUser: any;
+  transactionHistory: any[] = []; 
 
 
   constructor(private snackBar: SnackbarServiceService,
@@ -44,10 +45,10 @@ export class WalletComponent implements OnInit {
       this.names = res
     })
 
-    this._classyComponent.number$.subscribe((res:any)=> {
+    this._classyComponent.number$.subscribe((res: any) => {
       this.phoneNumberOfUser = res
     })
-
+this.getTransactionHistory()
     this.depositForm = this.formBuilder.group({
       mobileNumber: new FormControl('', [
         Validators.required,
@@ -56,11 +57,13 @@ export class WalletComponent implements OnInit {
       amount: ['', Validators.required],
       transactionId: ['', [Validators.required]],
     });
+
+    
   }
 
   get mobileNumber() {
     return this.depositForm.get('mobileNumber');
-}
+  }
 
 
   // handleFileInput(event: any) {
@@ -87,17 +90,19 @@ export class WalletComponent implements OnInit {
   //   }
   // }
 
-  walletTransaction(): void {
-
+  deposit(): void {
+    let token = localStorage.getItem('accessToken')
     if (this.depositForm.valid) {
       let data = {
         transactionId: this.depositForm.value.transactionId,
         amount: this.depositForm.value.amount,
         mobileNumber: this.depositForm.value.mobileNumber,
+        method:'deposit',
         paymentMethod: this.selectedValue,
-        userPhoneNumber: this.phoneNumberOfUser
+        userPhoneNumber: this.phoneNumberOfUser,
+        token: token
       }
-      this._walletService.walletTransaction(data).subscribe(
+      this._walletService.deposit(data).subscribe(
         (response) => {
           console.log(response);
           if (response.statusCode === 201) {
@@ -106,11 +111,61 @@ export class WalletComponent implements OnInit {
           }
         },
         (error) => {
-          this.snackBar.error(error.error.message, 4000);
+          console.log(error)
+          if(error.error.statusCode==406){
+            this.snackBar.error('Transaction id already taken',4000)
+          }else{
+            this.snackBar.error(error.error.message, 4000);
+          }
         }
       );
     }
   }
+
+  async withdraw(){
+    let userBalance=await this._classyComponent.wallet
+    if(+this.withdrawAmount==0){
+      this.snackBar.error('enter some amount',4000)
+    }
+    if(userBalance==0){
+      this.snackBar.error('Low balance',4000)
+      return
+    }
+    if(+userBalance>= +this.withdrawAmount){
+      let token = localStorage.getItem('accessToken')
+      let data = {
+        transactionId: 0,
+        amount: +this.withdrawAmount,
+        mobileNumber: 0,
+        method:'withdraw',
+        paymentMethod: 'gpay',
+        userPhoneNumber: +this.phoneNumberOfUser,
+        token: token
+      }
+      this._walletService.deposit(data).subscribe(
+        (response) => {
+          console.log(response);
+          if (response.statusCode === 201) {
+            console.log(response);
+            this.snackBar.success(response.message, 4000);
+          }
+        },
+        (error) => {
+          console.log(error)
+          if(error.error.statusCode==406){
+            this.snackBar.error('Transaction id already taken',4000)
+          }else{
+            this.snackBar.error(error.error.message, 4000);
+          }
+        }
+      );
+    }
+    else{
+      this.snackBar.error(`you can only withdraw : ${userBalance}`,4000)
+    }
+  }
+
+
   // submitDeposit() {
   //   // Handle deposit submission logic here
   // }
@@ -120,6 +175,20 @@ export class WalletComponent implements OnInit {
   // }
   selectItem() {
     this.selectedValue = this.payMethod.label;
+  }
+
+  async getTransactionHistory(){
+
+    let token:any =await localStorage.getItem('accessToken')
+    let userPhoneNumber:any=await this._classyComponent.phonenumber
+    let data ={
+      token:token,
+      userPhoneNumber:userPhoneNumber
+    }
+    this._walletService.getTxn(data).subscribe((res:any)=>{
+      this.transactionHistory = res.data.data
+      console.log(res)
+    })
   }
 
 }

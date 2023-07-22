@@ -117,6 +117,8 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy {
                     (error) => {
                         this._snackBar.error(error.error.message, 4000);
                         console.log(error);
+                        localStorage.clear()
+                        window.location.reload()
                     }
                 ),           
 
