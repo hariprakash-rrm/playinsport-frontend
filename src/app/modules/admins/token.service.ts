@@ -17,7 +17,7 @@ export class TokenService {
     constructor(
         private _httpClient: HttpClient,
         private _userService: UserService
-    ) {}
+    ) { }
 
     // -----------------------------------------------------------------------------------------------------
     // @ Accessors
@@ -72,30 +72,26 @@ export class TokenService {
     }
 
     updateRound(data: any): Observable<any> {
-        
+
         return this._httpClient.post(`${this.apiUrl}/token/update`, data).pipe(
             switchMap((response: any) => {
-                // this.user = JSON.stringify(response.details);
                 return of(response);
             })
         );
     }
 
-    getRound(round:any): Observable<any>{
+    getRound(round: any): Observable<any> {
         const params = new HttpParams()
             .set('data', round)
-           
+
         return this._httpClient.get(`${this.apiUrl}/token/get`, { params: params }).pipe(
             switchMap((response: any) => {
-                // this.user = JSON.stringify(response.details);
+                console.log(response);
                 return of(response);
             })
         );
     }
 
-    updadeRound(){
-
-    }
 
     updateUser(data: {
         username: string;
@@ -103,14 +99,31 @@ export class TokenService {
         wallet: number;
         block: boolean;
     }): Observable<any> {
-        // Throw error, if the user is already logged in
         return this._httpClient
             .post(`${this.apiUrl}/user/update-user`, data)
             .pipe(
                 switchMap((response: any) => {
-                    // this.user = JSON.stringify(response.details);
                     return of(response);
                 })
             );
+    }
+
+    liveUpdate(data: {
+        round: any;
+        action: any;
+        token: string;
+        youtubeLink: string;
+        youtubeLiveLink: string;
+        facebookLink: string;
+        facebookLiveLink: string;
+    }) {
+        console.log(data);
+        return this._httpClient
+            .post(`${this.apiUrl}/token/update`, data)
+            .pipe(
+                switchMap((response: any) => {
+                    return of(response);
+                })
+            )
     }
 }
