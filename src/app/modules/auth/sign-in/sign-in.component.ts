@@ -178,11 +178,11 @@ export class AuthSignInComponent implements OnInit {
 
     goToSendOtp() {
         if (this.numberForm.invalid) {
-            console.log(this.numberForm.value.numbers);
+            // console.log(this.numberForm.value.numbers);
             if (this.numberForm.invalid) {
                 if (!this.numberForm.value.numbers) {
                     this.numberError = 'Phone number cannot be empty';
-                    console.log(this.numberForm.valid);
+                    // console.log(this.numberForm.valid);
                 } else {
                     this.numberError = '';
                 }
@@ -199,8 +199,8 @@ export class AuthSignInComponent implements OnInit {
         const data = {
             num: this.numberForm.value.numbers,
         };
-        console.log(data.num);
-        console.log(`current step ${this.currentStep}`);
+        // console.log(data.num);
+        // console.log(`current step ${this.currentStep}`);
 
         // Sign up
         this._authService.forgotPassword(data).subscribe(
@@ -211,7 +211,7 @@ export class AuthSignInComponent implements OnInit {
                     this.startCountdown();
                     this.errorMessage = '';
                 }
-                console.log(response);
+                // console.log(response);
             },
             (error: HttpErrorResponse) => {
                 if (error.status === 0) {
@@ -270,14 +270,14 @@ export class AuthSignInComponent implements OnInit {
                 'Please wait for 45 seconds before generating a new OTP.';
         }
         if (this.countdown === 0) {
-            console.log('GOTOSENDOTP');
+            // console.log('GOTOSENDOTP');
             this.currentStep--;
             this.countdown = 10;
             this.goToSendOtp();
         }
     }
     _setpassword(): void {
-        console.log(this.setPasswordForm);
+        // console.log(this.setPasswordForm);
 
         this.tokens = localStorage.getItem('accessToken');
         if (this.setPasswordForm.controls.passwords.status === 'INVALID') {

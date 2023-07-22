@@ -17,7 +17,7 @@ interface Seat {
 })
 export class SelectTokenComponent implements OnInit, OnDestroy {
 
-  @Input() gameId: string;
+  @Input() gameId: number;
   @Output() activity: EventEmitter<string> = new EventEmitter<string>();
   message: string;
   messages: string[] = [];
@@ -26,7 +26,7 @@ export class SelectTokenComponent implements OnInit, OnDestroy {
   seats: Seat[] = [];
   tokenData = [];
   userDetails: any;
-  round: any;
+  round: number=1;
   viewSelected: boolean
 
   constructor(
@@ -42,10 +42,10 @@ export class SelectTokenComponent implements OnInit, OnDestroy {
     this.round = this.gameId
     let user = await localStorage.getItem('user');
     this.userDetails = JSON.parse(user);
-    console.log(this.userDetails);
+    // console.log(this.userDetails);
 
     this.triggerSocket();
-    console.log('ngOnInit called');
+    // console.log('ngOnInit called');
   }
 
   /**
@@ -61,7 +61,7 @@ export class SelectTokenComponent implements OnInit, OnDestroy {
     });
     this.socket.connect()
     await this.socket.on('disconnect', () => {
-      console.log('Disconnected from the server');
+      // console.log('Disconnected from the server');
     });
   }
 
@@ -72,6 +72,7 @@ export class SelectTokenComponent implements OnInit, OnDestroy {
    * @returns 
    */
   handleSeats(message: any) {
+    // console.log(message)
     if (+this.round == +message[0].round) {
       for (let i = 0; i < message.length; i++) {
         this.seats.push({
@@ -99,7 +100,7 @@ export class SelectTokenComponent implements OnInit, OnDestroy {
       this.seats.push(message[i]);
     }
     for (let i = 0; i < message.length; i++) {
-      console.log(this.userDetails.username, this.seats[i].selectedBy)
+      // console.log(this.userDetails.username, this.seats[i].selectedBy)
       if (this.userDetails.name == this.seats[i].selectedBy) {
         this.seats[i].userSelected = true;
       }
@@ -112,16 +113,16 @@ export class SelectTokenComponent implements OnInit, OnDestroy {
   handleSocketResponse() {
     let token = localStorage.getItem('accessToken');
     this.socket.fromEvent('userBalance').subscribe((message: any) => {
-      console.log('user balance ', message);
+      // console.log('user balance ', message);
     });
 
     this.socket.fromEvent('isError').subscribe((message: any) => {
-      console.log(message);
+      // console.log(message);
       this.snackbar.error(message?.message, 3000);
     });
 
     this.socket.fromEvent('game').subscribe((message: any) => {
-      console.log(message);
+      // console.log(message);
       this.handleSeats(message);
     });
 
@@ -133,10 +134,10 @@ export class SelectTokenComponent implements OnInit, OnDestroy {
     };
     this.socket.emit('userBalance', balanceQuery);
     this.socket.fromEvent('getGame').subscribe((message: any) => {
-      console.log(message);
+      // console.log(message);
       if (+this.round == +message.round) {
         this.seats[message.tokenNumber - 1] = message;
-        console.log(this.seats[message.tokenNumber - 1]);
+        // console.log(this.seats[message.tokenNumber - 1]);
         if (
           this.userDetails.name ==
           this.seats[message.tokenNumber - 1].selectedBy

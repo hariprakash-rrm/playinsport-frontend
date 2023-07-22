@@ -33,7 +33,8 @@ export class WalletComponent implements OnInit {
   names: any
   selectedValue: any;
   phoneNumberOfUser: any;
-  transactionHistory: any[] = []; 
+  transactionHistory: any[] = [];
+  
 
 
   constructor(private snackBar: SnackbarServiceService,
@@ -48,7 +49,7 @@ export class WalletComponent implements OnInit {
     this._classyComponent.number$.subscribe((res: any) => {
       this.phoneNumberOfUser = res
     })
-this.getTransactionHistory()
+    this.getTransactionHistory()
     this.depositForm = this.formBuilder.group({
       mobileNumber: new FormControl('', [
         Validators.required,
@@ -58,7 +59,7 @@ this.getTransactionHistory()
       transactionId: ['', [Validators.required]],
     });
 
-    
+
   }
 
   get mobileNumber() {
@@ -97,71 +98,63 @@ this.getTransactionHistory()
         transactionId: this.depositForm.value.transactionId,
         amount: this.depositForm.value.amount,
         mobileNumber: this.depositForm.value.mobileNumber,
-        method:'deposit',
+        method: 'deposit',
         paymentMethod: this.selectedValue,
         userPhoneNumber: this.phoneNumberOfUser,
         token: token
       }
       this._walletService.deposit(data).subscribe(
         (response) => {
-          console.log(response);
+          // console.log(response);
           if (response.statusCode === 201) {
-            console.log(response);
+            // console.log(response);
             this.snackBar.success(response.message, 4000);
           }
         },
         (error) => {
           console.log(error)
-          if(error.error.statusCode==406){
-            this.snackBar.error('Transaction id already taken',4000)
-          }else{
+          
             this.snackBar.error(error.error.message, 4000);
-          }
+          
         }
       );
     }
   }
 
-  async withdraw(){
-    let userBalance=await this._classyComponent.wallet
-    if(+this.withdrawAmount==0){
-      this.snackBar.error('enter some amount',4000)
+  async withdraw() {
+    let userBalance = await this._classyComponent.wallet
+    if (+this.withdrawAmount == 0) {
+      this.snackBar.error('enter some amount', 4000)
     }
-    if(userBalance==0){
-      this.snackBar.error('Low balance',4000)
+    if (userBalance == 0) {
+      this.snackBar.error('Low balance', 4000)
       return
     }
-    if(+userBalance>= +this.withdrawAmount){
+    if (+userBalance >= +this.withdrawAmount) {
       let token = localStorage.getItem('accessToken')
       let data = {
         transactionId: 0,
         amount: +this.withdrawAmount,
         mobileNumber: 0,
-        method:'withdraw',
+        method: 'withdraw',
         paymentMethod: 'gpay',
         userPhoneNumber: +this.phoneNumberOfUser,
         token: token
       }
       this._walletService.deposit(data).subscribe(
         (response) => {
-          console.log(response);
-          if (response.statusCode === 201) {
-            console.log(response);
-            this.snackBar.success(response.message, 4000);
-          }
+          // console.log(response);
+          this.snackBar.success(response.message, 4000);
         },
         (error) => {
           console.log(error)
-          if(error.error.statusCode==406){
-            this.snackBar.error('Transaction id already taken',4000)
-          }else{
-            this.snackBar.error(error.error.message, 4000);
-          }
+          this.snackBar.error(error.error.message, 4000);
+
         }
       );
     }
-    else{
-      this.snackBar.error(`you can only withdraw : ${userBalance}`,4000)
+    else {
+      this.snackBar.error(`you can only withdraw : ${userBalance}`, 4000)
     }
   }
 
@@ -177,15 +170,15 @@ this.getTransactionHistory()
     this.selectedValue = this.payMethod.label;
   }
 
-  async getTransactionHistory(){
+  async getTransactionHistory() {
 
-    let token:any =await localStorage.getItem('accessToken')
-    let userPhoneNumber:any=await this._classyComponent.phonenumber
-    let data ={
-      token:token,
-      userPhoneNumber:userPhoneNumber
+    let token: any = await localStorage.getItem('accessToken')
+    let userPhoneNumber: any = await this._classyComponent.phonenumber
+    let data = {
+      token: token,
+      userPhoneNumber: userPhoneNumber
     }
-    this._walletService.getTxn(data).subscribe((res:any)=>{
+    this._walletService.getTxn(data).subscribe((res: any) => {
       this.transactionHistory = res.data.data
       console.log(res)
     })

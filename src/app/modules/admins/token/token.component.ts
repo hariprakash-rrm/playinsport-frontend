@@ -88,7 +88,7 @@ export class TokenComponent implements OnInit {
             youtubeLink: this.tokenForm.value.youtubeLink,
             facebookLink: this.tokenForm.value.facebookLink
         };
-        console.log(data)
+        // console.log(data)
 
         this.tokenService.createToken(data).subscribe(
             (response) => {
@@ -98,7 +98,7 @@ export class TokenComponent implements OnInit {
             },
             (error) => {
                 this.snackbarServiceService.error(error.error.message, 4000);
-                console.log(error);
+                // console.log(error);
             }
         );
     }
@@ -111,7 +111,7 @@ export class TokenComponent implements OnInit {
             action: this.action,
             token: accessToken
         };
-        console.log(data)
+        // console.log(data)
 
         this.tokenService.updateRound(data).subscribe(
             (response) => {
@@ -121,15 +121,15 @@ export class TokenComponent implements OnInit {
             },
             (error) => {
                 this.snackbarServiceService.error(error.error.message, 4000);
-                console.log(error);
+                // console.log(error);
             }
         );
     }
 
     liveUpdate() {
-        console.log(this.viewForm.value.youtubeLiveLink)
+        // console.log(this.viewForm.value.youtubeLiveLink)
         const accessToken = localStorage.getItem('accessToken');
-        console.log("LIVEUPDATE");
+        // console.log("LIVEUPDATE");
         const data = {
             round: this.rounds,
             action: "linkUpdate",
@@ -142,21 +142,21 @@ export class TokenComponent implements OnInit {
 
         this.tokenService.updateRound(data).subscribe(
             (response) => {
-                console.log(response);
+                // console.log(response);
                 if (response.statusCode === 201) {
                     this.snackbarServiceService.success(response.message, 4000);
                 }
             },
             (error) => {
                 this.snackbarServiceService.error(error.error.message, 4000);
-                console.log(error);
+                // console.log(error);
             }
         );
     }
 
     searchRound() {
         this.tokenService.getRound(this.rounds).subscribe((res: any) => {
-            console.log('Value of rounds:', this.rounds);
+            // console.log('Value of rounds:', this.rounds);
 
             if (res.statusCode === 201) {
                 this.snackbarServiceService.success(res.message, 4000);
@@ -173,7 +173,7 @@ export class TokenComponent implements OnInit {
                 this.facebookLiveLink = res.data.data.facebookLiveLink;
 
             }
-            console.log(res)
+            // console.log(res)
         }, (error) => {
             this.snackbarServiceService.error(error.error.message, 4000);
         })
@@ -188,7 +188,7 @@ export class TokenComponent implements OnInit {
     }
 
     toggleEdit(): void {
-        console.log("Toggle");
+        // console.log("Toggle");
         if (1) {
             this.snackbarServiceService.error('Round not found', 4000);
             return;
@@ -196,7 +196,7 @@ export class TokenComponent implements OnInit {
         this.isEditing = !this.isEditing;
         if (!this.isEditing) {
             const AccessToken = localStorage.getItem('accessToken');
-            console.log(AccessToken);
+            // console.log(AccessToken);
 
             const data = {
                 round: this.rounds,
@@ -215,7 +215,7 @@ export class TokenComponent implements OnInit {
                     this.snackbarServiceService.success(response.message, 4000);
                 },
                 (error) => {
-                    console.log(error);
+                    // console.log(error);
                     this.snackbarServiceService.error(error.error.message, 4000);
                 }
             );

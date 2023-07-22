@@ -50,7 +50,7 @@ export class HomeComponent implements OnInit {
             token: this.accessToken,
         };
 
-        console.log(this.accessToken);
+        // console.log(this.accessToken);
 
         this.showTransactionHistory = false;
 
@@ -64,7 +64,7 @@ export class HomeComponent implements OnInit {
                     this.txnHistory = Object.values(response.data.txnHistory);
                     this.block = response.data.block
                 }
-                console.log(this.txnHistory);
+                // console.log(this.txnHistory);
                 this._snackBar.success(response.message, 4000);
             },
             (error) => {
@@ -74,7 +74,7 @@ export class HomeComponent implements OnInit {
                     this.wallet = null;
                 this.txnHistory = '',
                     this.block = null;
-                console.log(error);
+                // console.log(error);
             }
         );
     }
@@ -89,7 +89,7 @@ export class HomeComponent implements OnInit {
         this.isEditing = !this.isEditing;
         if (!this.isEditing) {
             const AccessToken = localStorage.getItem('accessToken');
-            console.log(AccessToken);
+            // console.log(AccessToken);
 
             const updatedDetails = {
                 username: this.userName,
@@ -103,11 +103,11 @@ export class HomeComponent implements OnInit {
                     if (response.statusCode === 201) {
                         this.errorMessage = '';
                     }
-                    console.log(this.txnHistory);
+                    // console.log(this.txnHistory);
                     this._snackBar.success(response.message, 4000);
                 },
                 (error) => {
-                    console.log(error);
+                    // console.log(error);
                     this._snackBar.error(error.error.message, 4000);
                 }
             );

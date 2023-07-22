@@ -46,11 +46,11 @@ export class TokenComponent implements OnInit {
               this.snackbar.success(response.message, 4000);
               // console.log(response)
               this.games=response.data.data
-              console.log(this.games[0].date)
+              // console.log(this.games[0].date)
           }
       },
       (error) => {
-        console.log(error);
+        // console.log(error);
         this.games=[]
           this.snackbar.error(error.error.message, 4000);
           
@@ -59,7 +59,7 @@ export class TokenComponent implements OnInit {
   }
 
   activity() {
-    console.log('triggered',this.gameId)
+    // console.log('triggered',this.gameId)
 
     // Handle the emitted event here
     this.gameId=null
