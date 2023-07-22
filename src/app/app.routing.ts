@@ -3,8 +3,6 @@ import { AuthGuard } from 'app/core/auth/guards/auth.guard';
 import { NoAuthGuard } from 'app/core/auth/guards/noAuth.guard';
 import { LayoutComponent } from 'app/layout/layout.component';
 import { InitialDataResolver } from 'app/app.resolvers';
-import { SlotTokenComponent } from './modules/user/slot-token/slot-token.component';
-import { SlotTokenModule } from './modules/user/slot-token/slot-token.module';
 
 // @formatter:off
 // tslint:disable:max-line-length
@@ -126,13 +124,7 @@ export const appRoutes: Route[] = [
             //             (m) => m.HomeModule
             //         ),
             // },
-            {
-                path: 'token',
-                loadChildren: () =>
-                    import(
-                        'app/modules/user/slot-token/slot-token.module'
-                    ).then((m) => m.SlotTokenModule),
-            },
+           
             {
                 path: 'admin',
                 loadChildren: () =>

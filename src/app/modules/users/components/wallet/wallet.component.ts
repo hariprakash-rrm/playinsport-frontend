@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { user } from 'app/mock-api/common/user/data';
 import { SnackbarServiceService } from 'app/shared/snackbar-service.service';
 import { WalletService } from '../wallet.service';
 import { ClassyLayoutComponent } from 'app/layout/layouts/vertical/classy/classy.component';
 import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 interface Option {
   label: string;
@@ -16,7 +17,7 @@ interface Option {
   templateUrl: './wallet.component.html',
   styleUrls: ['./wallet.component.scss']
 })
-export class WalletComponent implements OnInit {
+export class WalletComponent implements OnInit ,OnDestroy{
 
   options: Option[] = [
     { label: 'Gpay', value: 'gpay' },
@@ -33,7 +34,8 @@ export class WalletComponent implements OnInit {
   names: any
   selectedValue: any;
   phoneNumberOfUser: any;
-  transactionHistory: any[] = []; 
+  transactionHistory: any[] = [];
+  private _unsubscribeAll: any
 
 
   constructor(private snackBar: SnackbarServiceService,
@@ -41,14 +43,14 @@ export class WalletComponent implements OnInit {
     private _walletService: WalletService, private _classyComponent: ClassyLayoutComponent) { }
 
   ngOnInit(): void {
-    this._classyComponent.name$.subscribe((res: any) => {
+    this._unsubscribeAll=this._classyComponent.name$.subscribe((res: any) => {
       this.names = res
     })
 
-    this._classyComponent.number$.subscribe((res: any) => {
+   this._unsubscribeAll= this._classyComponent.number$.subscribe((res: any) => {
       this.phoneNumberOfUser = res
     })
-this.getTransactionHistory()
+    this.getTransactionHistory()
     this.depositForm = this.formBuilder.group({
       mobileNumber: new FormControl('', [
         Validators.required,
@@ -58,7 +60,7 @@ this.getTransactionHistory()
       transactionId: ['', [Validators.required]],
     });
 
-    
+
   }
 
   get mobileNumber() {
@@ -97,12 +99,12 @@ this.getTransactionHistory()
         transactionId: this.depositForm.value.transactionId,
         amount: this.depositForm.value.amount,
         mobileNumber: this.depositForm.value.mobileNumber,
-        method:'deposit',
+        method: 'deposit',
         paymentMethod: this.selectedValue,
         userPhoneNumber: this.phoneNumberOfUser,
         token: token
       }
-      this._walletService.deposit(data).subscribe(
+     this._unsubscribeAll= this._walletService.deposit(data).subscribe(
         (response) => {
           console.log(response);
           if (response.statusCode === 201) {
@@ -112,56 +114,48 @@ this.getTransactionHistory()
         },
         (error) => {
           console.log(error)
-          if(error.error.statusCode==406){
-            this.snackBar.error('Transaction id already taken',4000)
-          }else{
+          
             this.snackBar.error(error.error.message, 4000);
-          }
+          
         }
       );
     }
   }
 
-  async withdraw(){
-    let userBalance=await this._classyComponent.wallet
-    if(+this.withdrawAmount==0){
-      this.snackBar.error('enter some amount',4000)
+  async withdraw() {
+    let userBalance = await this._classyComponent.wallet
+    if (+this.withdrawAmount == 0) {
+      this.snackBar.error('enter some amount', 4000)
     }
-    if(userBalance==0){
-      this.snackBar.error('Low balance',4000)
+    if (userBalance == 0) {
+      this.snackBar.error('Low balance', 4000)
       return
     }
-    if(+userBalance>= +this.withdrawAmount){
+    if (+userBalance >= +this.withdrawAmount) {
       let token = localStorage.getItem('accessToken')
       let data = {
         transactionId: 0,
         amount: +this.withdrawAmount,
         mobileNumber: 0,
-        method:'withdraw',
+        method: 'withdraw',
         paymentMethod: 'gpay',
         userPhoneNumber: +this.phoneNumberOfUser,
         token: token
       }
-      this._walletService.deposit(data).subscribe(
+     this._unsubscribeAll= this._walletService.deposit(data).subscribe(
         (response) => {
           console.log(response);
-          if (response.statusCode === 201) {
-            console.log(response);
-            this.snackBar.success(response.message, 4000);
-          }
+          this.snackBar.success(response.message, 4000);
         },
         (error) => {
           console.log(error)
-          if(error.error.statusCode==406){
-            this.snackBar.error('Transaction id already taken',4000)
-          }else{
-            this.snackBar.error(error.error.message, 4000);
-          }
+          this.snackBar.error(error.error.message, 4000);
+
         }
       );
     }
-    else{
-      this.snackBar.error(`you can only withdraw : ${userBalance}`,4000)
+    else {
+      this.snackBar.error(`you can only withdraw : ${userBalance}`, 4000)
     }
   }
 
@@ -177,18 +171,23 @@ this.getTransactionHistory()
     this.selectedValue = this.payMethod.label;
   }
 
-  async getTransactionHistory(){
+  async getTransactionHistory() {
 
-    let token:any =await localStorage.getItem('accessToken')
-    let userPhoneNumber:any=await this._classyComponent.phonenumber
-    let data ={
-      token:token,
-      userPhoneNumber:userPhoneNumber
+    let token: any = await localStorage.getItem('accessToken')
+    let userPhoneNumber: any = await this._classyComponent.phonenumber
+    let data = {
+      token: token,
+      userPhoneNumber: userPhoneNumber
     }
-    this._walletService.getTxn(data).subscribe((res:any)=>{
+    this._unsubscribeAll=this._walletService.getTxn(data).subscribe((res: any) => {
       this.transactionHistory = res.data.data
       console.log(res)
     })
   }
 
+  ngOnDestroy(): void {
+    this._unsubscribeAll.Unsubscribe()
+    this._unsubscribeAll.next()
+    this._unsubscribeAll.complete()
+  }
 }

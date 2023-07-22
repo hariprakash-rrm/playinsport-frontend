@@ -17,7 +17,7 @@ interface Seat {
 })
 export class SelectTokenComponent implements OnInit, OnDestroy {
 
-  @Input() gameId: string;
+  @Input() gameId: number;
   @Output() activity: EventEmitter<string> = new EventEmitter<string>();
   message: string;
   messages: string[] = [];
@@ -26,7 +26,7 @@ export class SelectTokenComponent implements OnInit, OnDestroy {
   seats: Seat[] = [];
   tokenData = [];
   userDetails: any;
-  round: any;
+  round: number=1;
   viewSelected: boolean
 
   constructor(
@@ -72,6 +72,7 @@ export class SelectTokenComponent implements OnInit, OnDestroy {
    * @returns 
    */
   handleSeats(message: any) {
+    console.log(message)
     if (+this.round == +message[0].round) {
       for (let i = 0; i < message.length; i++) {
         this.seats.push({
