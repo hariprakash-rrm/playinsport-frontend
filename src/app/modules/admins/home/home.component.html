@@ -5,60 +5,67 @@
             <div class="p-4">
                 <h2 class="mb-4 text-2xl font-bold">User Details</h2>
 
-                <button (click)="exportToExcel()">Export to Excel</button>
 
-                <div class="mb-4 flex items-center">
-                    <!-- <mat-icon class="mr-2">search</mat-icon> -->
-                    <input type="text" formControlName="searchName" class="w-full p-2 border border-gray-300 rounded"
-                        placeholder="Search user">
-                    <button (click)="searchUser()"
-                        class="bg-black h-6 w-6 p-5 flex items-center justify-center rounded-md border-none ml-2">
-                        <mat-icon class="text-white">search</mat-icon>
-                    </button>
-                </div>
-                <div *ngIf="UserForm.get('searchName').hasError('minlength')" class="text-red-500 text-sm mt-1">Minimum
-                    6
-                    characters in
-                    username</div>
-                    <div class="grid grid-cols-12 gap-4">
-                        <div class="col-span-12">
-                            <h4 class="md:text-lg font-bold">Name</h4>
-                            <input type="text" [(ngModel)]="userName" [ngModelOptions]="{ standalone: true }"
-                            class="w-full p-2 border border-gray-300 rounded" [readonly]="!isEditing">
+
+                <div class="grid grid-cols-12 gap-4">
+                    <div class="col-span-12">
+                        <div class="flex items-center">
+                            <input type="text" formControlName="searchName"
+                                class="w-full p-2 border border-gray-300 rounded" placeholder="Search user">
+                            <button (click)="searchUser()"
+                                class="bg-black h-6 w-6 p-5 flex items-center justify-center rounded border-none ml-2">
+                                <mat-icon class="text-white">search</mat-icon>
+                            </button>
                         </div>
-                        <div class="col-span-12">
-                            <h4 class="md:text-lg font-bold">Phone Number</h4>
-                            <input type="text" [(ngModel)]="phonenumber" [ngModelOptions]="{ standalone: true }"
-                                    class="w-full p-2 border border-gray-300 rounded" [readonly]="!isEditing">
-                        </div>
-                        <div class="col-span-12">
-                            <h4 class="md:text-lg font-bold">Wallet</h4>
-                            <input type="text" [(ngModel)]="wallet" [ngModelOptions]="{ standalone: true }"
-                            class="w-full p-2 border border-gray-300 rounded" [readonly]="!isEditing">
-                        </div>
-                        <div class="col-span-12">
-                            <h4 class="md:text-lg font-bold">Status</h4>
-                            <select [(ngModel)]="block" [ngModelOptions]="{ standalone: true }"
-                                        class="w-full p-2 border border-gray-300 rounded" [disabled]="!isEditing">
-                                <option [ngValue]="true">True</option>
-                                <option [ngValue]="false">False</option>
-                            </select>
-                        </div>
-                        <div class="col-span-12">
-                            <div class="flex justify-between gap-4 items-center">
-                                <button (click)="showTransactionHistory = true"
-                                    class="px-4 py-2 bg-black text-white rounded hover:bg-blue-600 w-full whitespace-nowrap">
-                                    TnxHistory
-                                </button>
-                                <button (click)="toggleEdit()"
-                            class="px-8 py-2 bg-black text-white rounded hover:bg-blue-600 whitespace-nowrap">
-                            {{ isEditing ? 'Save' : 'Edit' }}
-                        </button>
-                            </div>
-                        </div>
-                        
+                        <div *ngIf="UserForm.get('searchName').hasError('minlength')" class="text-red-500 text-sm mt-1">
+                            Minimum
+                            6
+                            characters in
+                            username</div>
                     </div>
-             <!-- <div class="overflow-auto">
+                    <div class="col-span-12">
+                        <h4 class="text-base md:text-lg font-bold">Name</h4>
+                        <input type="text" [(ngModel)]="userName" [ngModelOptions]="{ standalone: true }"
+                            class="w-full p-2 border border-gray-300 rounded" [readonly]="!isEditing">
+                    </div>
+                    <div class="col-span-12">
+                        <h4 class="text-base md:text-lg font-bold">Phone Number</h4>
+                        <input type="text" [(ngModel)]="phonenumber" [ngModelOptions]="{ standalone: true }"
+                            class="w-full p-2 border border-gray-300 rounded" [readonly]="!isEditing">
+                    </div>
+                    <div class="col-span-12">
+                        <h4 class="text-base md:text-lg font-bold">Wallet</h4>
+                        <input type="text" [(ngModel)]="wallet" [ngModelOptions]="{ standalone: true }"
+                            class="w-full p-2 border border-gray-300 rounded" [readonly]="!isEditing">
+                    </div>
+                    <div class="col-span-12">
+                        <h4 class="text-base md:text-lg font-bold">Status</h4>
+                        <select [(ngModel)]="block" [ngModelOptions]="{ standalone: true }"
+                            class="w-full p-2 border border-gray-300 rounded" [disabled]="!isEditing">
+                            <option [ngValue]="true">True</option>
+                            <option [ngValue]="false">False</option>
+                        </select>
+                    </div>
+                    <div class="col-span-12">
+                        <div class="flex justify-between gap-4 items-center">
+                            <button (click)="showTnxHistory()"
+                                class="px-4 py-2 bg-black text-white font-sans font-medium rounded hover:bg-white hover:text-black border-black border-2 border-solid w-full whitespace-nowrap">
+                                TnxHistory
+                            </button>
+                            <button (click)="toggleEdit()"
+                                class="px-8 py-2 bg-black text-white font-sans font-medium rounded hover:bg-white hover:text-black border-black border-2 border-solid whitespace-nowrap">
+                                {{ isEditing ? 'Save' : 'Edit' }}
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-span-12">
+                        <button
+                            class="px-8 py-2 border-2 border-solid border-black rounded text-black font-medium w-full hover:bg-black hover:text-white transition-all ease-in-out duration-300"
+                            (click)="exportToExcel()">Export to Excel</button>
+
+                    </div>
+                </div>
+                <!-- <div class="overflow-auto">
                 <table class="w-full border-collapse">
                     <thead>
                         <tr>
@@ -114,36 +121,62 @@
                     </tbody>
                 </table>
              </div> -->
-                <div *ngIf="showTransactionHistory">
-                    <h2 class="mt-6 mb-2 text-xl md:text-2xl font-bold">Transaction History</h2>
-                    <div class="">
-                        <!-- Display the transaction history data here -->
-                        <ul>
-                            <li>
-                                <table class="w-full border-collapse">
-                                    <thead>
-                                        <tr>
-                                            <th class="py-2 px-4 bg-gray-200">Message</th>
-                                            <th class="py-2 px-4 bg-gray-200">Amount</th>
-                                            <th class="py-2 px-4 bg-gray-200">Time</th>
-                                            <th class="py-2 px-4 bg-gray-200">Balance</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
 
-                                        <tr *ngFor="let history of txnHistory">
-                                            <td class="py-2 px-4 border">{{ history.message }}</td>
-                                            <td class="py-2 px-4 border">{{ history.amount }}</td>
-                                            <td class="py-2 px-4 border">{{ history.time | date:'dd/MM/yy HH:mm:ss a' }}
-                                            </td>
-                                            <td class="py-2 px-4 border">{{ history.newBalance }}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </li>
-                        </ul>
+
+                <!-- Main modal -->
+                <div *ngIf="showTransactionHistory == true" id="defaultModal" tabindex="-1" aria-hidden="true"
+                    class="fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0  min-h-screen flex justify-center items-center bg-overlay">
+                    <div class="relative w-full max-w-2xl max-h-full ">
+                        <!-- Modal content -->
+                        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                            <div class="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
+                                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                                    Transaction History
+                                </h3>
+                                <button (click)="closeTransaction()" type="button"
+                                    class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                                    data-modal-hide="defaultModal">
+                                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                        fill="none" viewBox="0 0 14 14">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                                    </svg>
+                                    <span class="sr-only">Close modal</span>
+                                </button>
+                            </div>
+                            <!-- Modal body -->
+                            <div class="grid grid-cols-12 gap-4 p-4 space-y-6">
+                                <div class="col-span-12">
+                                    <!-- Display the transaction history data here -->
+                                    <div class="overflow-auto h-96">
+                                        <table class="w-full border-collapse">
+                                            <thead>
+                                                <tr>
+                                                    <th class="py-2 px-4 bg-gray-200">Message</th>
+                                                    <th class="py-2 px-4 bg-gray-200">Amount</th>
+                                                    <th class="py-2 px-4 bg-gray-200">Time</th>
+                                                    <th class="py-2 px-4 bg-gray-200">Balance</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                                <tr *ngFor="let history of txnHistory">
+                                                    <td class="py-2 px-4 border">{{ history.message }}</td>
+                                                    <td class="py-2 px-4 border">{{ history.amount }}</td>
+                                                    <td class="py-2 px-4 border">{{ history.time | date:'dd/MM/yy
+                                                        HH:mm:ss a' }}
+                                                    </td>
+                                                    <td class="py-2 px-4 border">{{ history.newBalance }}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
+
             </div>
         </form>
     </div>
