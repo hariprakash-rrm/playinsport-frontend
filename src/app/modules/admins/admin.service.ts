@@ -123,7 +123,7 @@ export class AdminService {
         return this._httpClient.get(`${this.apiUrl}/user/export`, { responseType: 'blob' }).
         pipe(
             switchMap((response: any) => {
-                console.log(response);
+                // console.log(response);
                 return of(response);
             })
         )

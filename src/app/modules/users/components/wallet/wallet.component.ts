@@ -1,11 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { user } from 'app/mock-api/common/user/data';
 import { SnackbarServiceService } from 'app/shared/snackbar-service.service';
 import { WalletService } from '../wallet.service';
 import { ClassyLayoutComponent } from 'app/layout/layouts/vertical/classy/classy.component';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 
 interface Option {
   label: string;
@@ -17,7 +16,7 @@ interface Option {
   templateUrl: './wallet.component.html',
   styleUrls: ['./wallet.component.scss']
 })
-export class WalletComponent implements OnInit ,OnDestroy{
+export class WalletComponent implements OnInit {
 
   options: Option[] = [
     { label: 'Gpay', value: 'gpay' },
@@ -35,7 +34,7 @@ export class WalletComponent implements OnInit ,OnDestroy{
   selectedValue: any;
   phoneNumberOfUser: any;
   transactionHistory: any[] = [];
-  private _unsubscribeAll: any
+  
 
 
   constructor(private snackBar: SnackbarServiceService,
@@ -43,11 +42,11 @@ export class WalletComponent implements OnInit ,OnDestroy{
     private _walletService: WalletService, private _classyComponent: ClassyLayoutComponent) { }
 
   ngOnInit(): void {
-    this._unsubscribeAll=this._classyComponent.name$.subscribe((res: any) => {
+    this._classyComponent.name$.subscribe((res: any) => {
       this.names = res
     })
 
-   this._unsubscribeAll= this._classyComponent.number$.subscribe((res: any) => {
+    this._classyComponent.number$.subscribe((res: any) => {
       this.phoneNumberOfUser = res
     })
     this.getTransactionHistory()
@@ -104,11 +103,11 @@ export class WalletComponent implements OnInit ,OnDestroy{
         userPhoneNumber: this.phoneNumberOfUser,
         token: token
       }
-     this._unsubscribeAll= this._walletService.deposit(data).subscribe(
+      this._walletService.deposit(data).subscribe(
         (response) => {
-          console.log(response);
+          // console.log(response);
           if (response.statusCode === 201) {
-            console.log(response);
+            // console.log(response);
             this.snackBar.success(response.message, 4000);
           }
         },
@@ -142,9 +141,9 @@ export class WalletComponent implements OnInit ,OnDestroy{
         userPhoneNumber: +this.phoneNumberOfUser,
         token: token
       }
-     this._unsubscribeAll= this._walletService.deposit(data).subscribe(
+      this._walletService.deposit(data).subscribe(
         (response) => {
-          console.log(response);
+          // console.log(response);
           this.snackBar.success(response.message, 4000);
         },
         (error) => {
@@ -179,15 +178,10 @@ export class WalletComponent implements OnInit ,OnDestroy{
       token: token,
       userPhoneNumber: userPhoneNumber
     }
-    this._unsubscribeAll=this._walletService.getTxn(data).subscribe((res: any) => {
+    this._walletService.getTxn(data).subscribe((res: any) => {
       this.transactionHistory = res.data.data
       console.log(res)
     })
   }
 
-  ngOnDestroy(): void {
-    this._unsubscribeAll.Unsubscribe()
-    this._unsubscribeAll.next()
-    this._unsubscribeAll.complete()
-  }
 }

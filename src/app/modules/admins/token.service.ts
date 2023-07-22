@@ -63,7 +63,7 @@ export class TokenService {
         youtubeLink: string;
         facebookLink: string
     }): Observable<any> {
-        console.log(data);
+        // console.log(data);
         return this._httpClient.post(`${this.apiUrl}/token/create`, data).pipe(
             switchMap((response: any) => {
                 return of(response);
@@ -86,7 +86,7 @@ export class TokenService {
 
         return this._httpClient.get(`${this.apiUrl}/token/get`, { params: params }).pipe(
             switchMap((response: any) => {
-                console.log(response);
+                // console.log(response);
                 return of(response);
             })
         );
@@ -117,7 +117,7 @@ export class TokenService {
         facebookLink: string;
         facebookLiveLink: string;
     }) {
-        console.log(data);
+        // console.log(data);
         return this._httpClient
             .post(`${this.apiUrl}/token/update`, data)
             .pipe(

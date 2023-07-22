@@ -1,6 +1,7 @@
 import {
     Component,
     ElementRef,
+    OnDestroy,
     OnInit,
     ViewChild,
     ViewEncapsulation,
@@ -23,7 +24,7 @@ import { SnackbarServiceService } from 'app/shared/snackbar-service.service';
     encapsulation: ViewEncapsulation.None,
     animations: fuseAnimations,
 })
-export class AuthSignUpComponent implements OnInit {
+export class AuthSignUpComponent implements OnInit,OnDestroy {
     @ViewChild('otp1Input') otpInput1!: ElementRef;
     @ViewChild('otp2Input') otpInput2!: ElementRef;
     @ViewChild('otp3Input') otpInput3!: ElementRef;
@@ -130,8 +131,8 @@ export class AuthSignUpComponent implements OnInit {
      */
     signUp(): void {
         if (this.signUpForm.invalid) {
-            console.log(this.signUpForm);
-            console.log(this.signUpForm.controls.username.status);
+            // console.log(this.signUpForm);
+            // console.log(this.signUpForm.controls.username.status);
 
             if (this.signUpForm.invalid) {
                 if (
@@ -162,11 +163,11 @@ export class AuthSignUpComponent implements OnInit {
                     this.phoneNumber = this.signUpForm.value.number;
                     this.startCountdown();
                 }
-                console.log(response);
-                console.log(response.statusCode);
+                // console.log(response);
+                // console.log(response.statusCode);
             },
             (error) => {
-                console.log(error);
+                // console.log(error);
                 this.signUpForm.enable();
                 this.errorMessage = error.error.message;
             }
@@ -198,7 +199,7 @@ export class AuthSignUpComponent implements OnInit {
                     this.currentStep++;
                     this.errorMessage = '';
                 }
-                console.log(response);
+                // console.log(response);
             },
             (error) => {
                 this.errorMessage = error.error.message;
@@ -207,7 +208,7 @@ export class AuthSignUpComponent implements OnInit {
     }
 
     _setpassword(): void {
-        console.log(this.setPasswordForm);
+        // console.log(this.setPasswordForm);
 
         this.tokens = localStorage.getItem('accessToken');
         if (this.setPasswordForm.controls.password.status === 'INVALID') {
@@ -246,7 +247,7 @@ export class AuthSignUpComponent implements OnInit {
         // this.countdown = 10;
         this.interval = setInterval(() => {
             this.countdown--;
-            console.log(this.countdown);
+            // console.log(this.countdown);
             if (this.countdown === 0) {
                 clearInterval(this.interval);
             }
@@ -275,6 +276,9 @@ export class AuthSignUpComponent implements OnInit {
                 // Add more cases for additional input fields
             }
         }
+    }
+    ngOnDestroy(): void {
+        clearInterval(this.interval);
     }
 
 }

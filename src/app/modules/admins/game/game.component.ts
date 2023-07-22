@@ -49,7 +49,7 @@ export class GameComponent implements OnInit {
         this.depositTransactions = []
         try {
             this.gameService.getDepositTransactions(data).subscribe((res: any) => {
-                console.log('resposnseeee', res)
+                // console.log('resposnseeee', res)
                 this.depositTransactions = res.data.data
             }, (error: any) => {
 
@@ -57,7 +57,7 @@ export class GameComponent implements OnInit {
             })
         }
         catch (error) {
-            console.log(error)
+            // console.log(error)
             this.snack.error(error.error.message, 4000)
         }
     }
@@ -70,7 +70,7 @@ export class GameComponent implements OnInit {
         }
         this.withdrawalTransactions = []
         this.gameService.getWithdrawTransaction(data).subscribe((res: any) => {
-            console.log('resposnseeee', res)
+            // console.log('resposnseeee', res)
             this.withdrawalTransactions = res.data.data
         }, (error: any) => {
 
@@ -105,7 +105,7 @@ export class GameComponent implements OnInit {
         }
         try {
             this.gameService.updatePayment(data).subscribe((res: any) => {
-                console.log('resposnseeee', res)
+                // console.log('resposnseeee', res)
                 this.snack.success('success', 2000);
                 if (this.activeTab == 'deposit') {
                     this.getDepositData()
