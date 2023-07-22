@@ -70,13 +70,13 @@
         </form>
     </div>
     <div *ngIf="!create" class="col-span-12 mt-4">
-        <form [formGroup]="viewForm">
+        
             <div class="grid grid-cols-12 gap-4">
                 <div class="col-span-12">
                     <div class="flex gap-4 items-center">
-                        <input type="text" [(ngModel)]="rounds" class="border border-gray-300 rounded w-full"
+                        <input type="number" [(ngModel)]="rounds" class="border border-gray-300 rounded w-full"
                             placeholder="Search round">
-                        <button (click)="searchRound()"
+                        <button (click)="searchRound(rounds)"
                             class="bg-black p-2 rounded flex items-center justify-center">
                             <mat-icon class="text-white">search</mat-icon>
                         </button>
@@ -205,6 +205,6 @@
 
 
         
-        </form>
+   
     </div>
 </div>

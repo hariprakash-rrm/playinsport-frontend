@@ -15,7 +15,7 @@ export class TokenComponent implements OnInit {
     prize: any
     tokenPrice: any
     date: any
-    rounds: any = 0;
+    rounds: number = 0;
     maximumTokenPerUser: any
     totalTokenNumber: number
     status: any

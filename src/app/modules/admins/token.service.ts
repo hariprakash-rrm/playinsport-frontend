@@ -80,7 +80,7 @@ export class TokenService {
         );
     }
 
-    getRound(round: any): Observable<any> {
+    getRound(round: number): Observable<any> {
         const params = new HttpParams()
             .set('data', round)
 
