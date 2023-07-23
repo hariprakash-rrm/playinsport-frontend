@@ -210,18 +210,18 @@
 <div class="grid grid-cols-12 gap-4 p-4 mt-4 mb-8">
     <div class="col-span-12 relative h-10">
         <select [(ngModel)]="create" [ngModelOptions]="{ standalone: true }"
-            class="w-full p-2 border border-gray-300 rounded absolute">
+            class="w-full p-2 border border-gray-300 rounded absolute mt-2">
             <option [ngValue]="true">Create</option>
             <option [ngValue]="false">Search</option>
         </select>
     </div>
     <div class="col-span-12" *ngIf="create">
-        <form  [formGroup]="tokenForm" class="grid grid-cols-12 gap-4">
+        <form [formGroup]="tokenForm" class="grid grid-cols-12 gap-4">
 
             <div class="col-span-12">
                 <label for="name" class="text-base md:text-lg font-medium font-sans">Name</label>
-                <input type="text" formControlName="name" class="form-control border border-gray-300 rounded w-full mt-2"
-                    id="name" name="name" required>
+                <input type="text" formControlName="name"
+                    class="form-control border border-gray-300 rounded w-full mt-2" id="name" name="name" required>
             </div>
 
             <div class="col-span-12">
@@ -246,8 +246,8 @@
             <div class="col-span-12">
                 <label for="maximumTokenPerUser" class="text-base md:text-lg font-medium font-sans">Maximum Token per
                     User</label>
-                <input type="number" class="form-control border border-gray-300 rounded w-full mt-2" id="maximumTokenPerUser"
-                    formControlName="maximumTokenPerUser" name="maximumTokenPerUser" required>
+                <input type="number" class="form-control border border-gray-300 rounded w-full mt-2"
+                    id="maximumTokenPerUser" formControlName="maximumTokenPerUser" name="maximumTokenPerUser" required>
 
             </div>
 
@@ -279,154 +279,176 @@
         </form>
     </div>
     <div *ngIf="!create" class="col-span-12 mt-4">
-        
-            <div class="grid grid-cols-12 gap-4">
-                <div class="col-span-12">
-                    <div class="flex gap-4 items-center">
-                        <input [disabled]="isFetched" type="number" [(ngModel)]="rounds" class="border border-gray-300 rounded w-full"
-                            placeholder="Search round">
-                        <button *ngIf="!isFetched" (click)="searchRound(rounds)"
-                            class="bg-black p-2 rounded flex items-center justify-center">
-                            <mat-icon class="text-white">search</mat-icon>
-                        </button>
-                        <button *ngIf="isFetched" (click)="clear()"
-                            class="bg-black p-2 rounded flex items-center justify-center">
-                            <mat-icon class="text-white">clear</mat-icon>
-                        </button>
-                    </div>
-                   
-                </div>
-                <div>
-                    <p (click)="changeTab(1)">1</p>
-                    <p (click)="changeTab(2)">2</p>
-                    <p (click)="changeTab(3)">3</p>
-                </div>
-                <div *ngIf="tab==1">
-                <div class="col-span-12">
-                    <label for="name" class="text-base md:text-lg font-medium font-sans">Name</label>
-                    <input type="text" [(ngModel)]="name" [ngModelOptions]="{ standalone: true }"
-                        class="w-full p-2 border border-gray-300 rounded" [readonly]="!isEditings">
-                </div>
 
-                <div class="col-span-12">
-                    <label for="totalTokenNumber" class="text-base md:text-lg font-medium font-sans">Total Token
-                        Number</label>
-                    <input type="text" [(ngModel)]="totalTokenNumber" [ngModelOptions]="{ standalone: true }"
-                        class="w-full p-2 border border-gray-300 rounded" [readonly]="!isEditings">
-                </div>
-
-                <div class="col-span-12">
-                    <label for="maximumTokenPerUser" class="text-base md:text-lg font-medium font-sans">Maximum Token
-                        Per User</label>
-                    <input type="text" [(ngModel)]="maximumTokenPerUser" [ngModelOptions]="{ standalone: true }"
-                        class="w-full p-2 border border-gray-300 rounded" [readonly]="!isEditings">
-                </div>
-
-                <div class="col-span-12">
-                    <label for="date" class="text-base md:text-lg font-medium font-sans">Date</label>
-                    <input type="text" [(ngModel)]="date" [ngModelOptions]="{ standalone: true }"
-                        class="w-full p-2 border border-gray-300 rounded" [readonly]="!isEditings">
-                </div>
-
-
-                <div class="col-span-12">
-                    <label for="tokenPrice" class="text-base md:text-lg font-medium font-sans">Token Price</label>
-                    <input type="text" [(ngModel)]="tokenPrice" [ngModelOptions]="{ standalone: true }"
-                        class="w-full p-2 border border-gray-300 rounded" [readonly]="!isEditings">
-                </div>
-
-                <div class="col-span-12">
-                    <label for="prize" class="text-base md:text-lg font-medium font-sans">Number of Prize</label>
-                    <input type="text" [(ngModel)]="prize" [ngModelOptions]="{ standalone: true }"
-                        class="w-full p-2 border border-gray-300 rounded" [readonly]="!isEditings">
-                </div>
-
-                <div class="col-span-12">
-                    <label for="token" class="text-base md:text-lg font-medium font-sans">Token</label>
-                    <input type="text" [(ngModel)]="token" [ngModelOptions]="{ standalone: true }"
-                        class="w-full p-2 border border-gray-300 rounded" [readonly]="!isEditings">
-                </div>
-
-                <div class="col-span-12">
-                    <label for="status" class="text-base md:text-lg font-medium font-sans">Status</label>
-                    <input type="text" [(ngModel)]="status" [ngModelOptions]="{ standalone: true }"
-                        class="w-full p-2 border border-gray-300 rounded" [readonly]="!isEditings">
-                </div>
-                
-            </div>
-            <div *ngIf="tab==2">
-                <div class="col-span-12">
-                    <div class="flex gap-4 items-center">
-                        <input type="text" class="border border-gray-300 rounded w-full" placeholder="Facebook Link"
-                            [(ngModel)]="facebookLinks" [ngModelOptions]="{ standalone: true }"
-                            [readonly]=" !isEditing">
-                        <!-- <button (click)="editing()" class="bg-black p-2 rounded flex items-center justify-center">
-                            <mat-icon class="text-white">edit</mat-icon>
-                        </button> -->
-                    </div>
-                </div>
-
-                <div class="col-span-12">
-                    <div class="flex gap-4 items-center">
-                        <input type="text" class="border border-gray-300 rounded w-full"
-                            placeholder="Facebook Live Link" [(ngModel)]="facebookLiveLink"
-                            [ngModelOptions]="{ standalone: true }" [readonly]=" !isEditing">
-                        <!-- <button (click)="editing()" class="bg-black p-2 rounded flex items-center justify-center">
-                            <mat-icon class="text-white">edit</mat-icon>
-                        </button> -->
-                    </div>
-                </div>
-
-                <div class="col-span-12">
-                    <div class="flex gap-4 items-center">
-                        <input type="text" class="border border-gray-300 rounded w-full" placeholder="YouTube Link"
-                            [readonly]="!isEditing" [(ngModel)]="youtubeLinks" [ngModelOptions]="{ standalone: true }">
-                        <!-- <button (click)=" editing()" class="bg-black p-2 rounded flex items-center justify-center">
-                            <mat-icon class="text-white">edit</mat-icon>
-                        </button> -->
-                    </div>
-                </div>
-                <div class="col-span-12">
-                    <div class="flex gap-4 items-center">
-                        <input type="text" class="border border-gray-300 rounded w-full" placeholder="YouTube Live Link"
-                            [readonly]="!isEditing" [(ngModel)]="youtubeLiveLink"
-                            [ngModelOptions]="{ standalone: true }">
-                       
-                    </div>
-                </div>
-                <div class="col-span-12">
-                    <button type="submit"  (click)="liveUpdate()" [(ngModel)]="action"
-                        class="w-full mt-8 text-white focus:outline-none bg-black rounded-md font-sans font-semibold text-sm px-5 py-2.5 text-center mr-2 uppercase mb-2 cursor-pointer">
-                        Submit
+        <div class="grid grid-cols-12 gap-4">
+            <div class="col-span-12">
+                <div class="flex gap-4 items-center">
+                    <input [disabled]="isFetched" type="number" [(ngModel)]="rounds"
+                        class="border border-gray-300 rounded w-full" placeholder="Search round">
+                    <button *ngIf="!isFetched" (click)="searchRound(rounds)"
+                        class="bg-black p-2 rounded flex items-center justify-center">
+                        <mat-icon class="text-white">search</mat-icon>
                     </button>
+                    <button *ngIf="isFetched" (click)="clear()"
+                        class="bg-black p-2 rounded flex items-center justify-center">
+                        <mat-icon class="text-white">clear</mat-icon>
+                    </button>
+                </div>
+
+            </div>
+            <div class="col-span-12">
+
+                <ul class="flex gap-4 items-center justify-center border-b">
+                    <li class="w-full text-center">
+                        <a (click)="changeTab(1)"
+                            class="bg-white inline-block py-2 px-4 font-semibold cursor-pointer">Details</a>
+                    </li>
+                    <li class="w-full text-center">
+                        <a (click)="changeTab(2)"
+                            class="bg-white inline-block py-2 px-4 font-semibold cursor-pointer whitespace-nowrap">Update
+                            Link</a>
+                    </li>
+                    <li class="w-full text-center">
+                        <a (click)="changeTab(3)"
+                            class="bg-white inline-block py-2 px-4 font-semibold cursor-pointer">Finalize</a>
+                    </li>
+                </ul>
+
+                <!-- <p (click)="changeTab(1)">1</p>
+                    <p (click)="changeTab(2)">2</p>
+                    <p (click)="changeTab(3)">3</p> -->
+                <div *ngIf="tab==1" class="grid grid-cols-12 gap-4 mt-6">
+                    <div class="col-span-12">
+                        <label for="name" class="text-base md:text-lg font-medium font-sans">Name</label>
+                        <input type="text" [(ngModel)]="name" [ngModelOptions]="{ standalone: true }"
+                            class="w-full p-2 border border-gray-300 rounded" [readonly]="!isEditings">
+                    </div>
+
+                    <div class="col-span-12">
+                        <label for="totalTokenNumber" class="text-base md:text-lg font-medium font-sans">Total Token
+                            Number</label>
+                        <input type="text" [(ngModel)]="totalTokenNumber" [ngModelOptions]="{ standalone: true }"
+                            class="w-full p-2 border border-gray-300 rounded" [readonly]="!isEditings">
+                    </div>
+
+                    <div class="col-span-12">
+                        <label for="maximumTokenPerUser" class="text-base md:text-lg font-medium font-sans">Maximum
+                            Token
+                            Per User</label>
+                        <input type="text" [(ngModel)]="maximumTokenPerUser" [ngModelOptions]="{ standalone: true }"
+                            class="w-full p-2 border border-gray-300 rounded" [readonly]="!isEditings">
+                    </div>
+
+                    <div class="col-span-12">
+                        <label for="date" class="text-base md:text-lg font-medium font-sans">Date</label>
+                        <input type="text" [(ngModel)]="date" [ngModelOptions]="{ standalone: true }"
+                            class="w-full p-2 border border-gray-300 rounded" [readonly]="!isEditings">
+                    </div>
+
+
+                    <div class="col-span-12">
+                        <label for="tokenPrice" class="text-base md:text-lg font-medium font-sans">Token Price</label>
+                        <input type="text" [(ngModel)]="tokenPrice" [ngModelOptions]="{ standalone: true }"
+                            class="w-full p-2 border border-gray-300 rounded" [readonly]="!isEditings">
+                    </div>
+
+                    <div class="col-span-12">
+                        <label for="prize" class="text-base md:text-lg font-medium font-sans">Number of Prize</label>
+                        <input type="text" [(ngModel)]="prize" [ngModelOptions]="{ standalone: true }"
+                            class="w-full p-2 border border-gray-300 rounded" [readonly]="!isEditings">
+                    </div>
+
+                    <div class="col-span-12">
+                        <label for="token" class="text-base md:text-lg font-medium font-sans">Token</label>
+                        <input type="text" [(ngModel)]="token" [ngModelOptions]="{ standalone: true }"
+                            class="w-full p-2 border border-gray-300 rounded" [readonly]="!isEditings">
+                    </div>
+
+                    <div class="col-span-12">
+                        <label for="status" class="text-base md:text-lg font-medium font-sans">Status</label>
+                        <input type="text" [(ngModel)]="status" [ngModelOptions]="{ standalone: true }"
+                            class="w-full p-2 border border-gray-300 rounded" [readonly]="!isEditings">
+                    </div>
 
                 </div>
-                </div>
+                <div *ngIf="tab==2" class="grid grid-cols-12 gap-4 mt-6">
+                    <div class="col-span-12">
+                        <div class="flex gap-4 items-center">
+                            <input type="text" class="border border-gray-300 rounded w-full" placeholder="Facebook Link"
+                                [(ngModel)]="facebookLinks" [ngModelOptions]="{ standalone: true }"
+                                [readonly]=" !isEditing">
+                            <!-- <button (click)="editing()" class="bg-black p-2 rounded flex items-center justify-center">
+                                    <mat-icon class="text-white">edit</mat-icon>
+                                </button> -->
+                        </div>
+                    </div>
 
-                <div *ngIf="tab==3">
-                <div >
-                    <label class="text-base md:text-lg font-medium font-sans">
-                        Select Action
-                    </label>
-                    <select [(ngModel)]="action" [ngModelOptions]="{ standalone: true }"
-                        class="w-full p-2 border border-gray-300 rounded">
-                        <option [ngValue]="'finalise'">Finalise</option>
-                        <option [ngValue]="'refund'">Refund</option>
-                    </select>
-                   
-                   
-                </div>
-                <!-- <button *ngIf="!isEditing" (click)=" editing()" class="bg-black p-2 rounded flex items-center justify-center">
-                    <mat-icon class="text-white">edit</mat-icon>
-                </button> -->
-               
-                <div class="col-span-12">
-                        <button  type="submit" (click)="updateRound()"
+                    <div class="col-span-12">
+                        <div class="flex gap-4 items-center">
+                            <input type="text" class="border border-gray-300 rounded w-full"
+                                placeholder="Facebook Live Link" [(ngModel)]="facebookLiveLink"
+                                [ngModelOptions]="{ standalone: true }" [readonly]=" !isEditing">
+                            <!-- <button (click)="editing()" class="bg-black p-2 rounded flex items-center justify-center">
+                                    <mat-icon class="text-white">edit</mat-icon>
+                                </button> -->
+                        </div>
+                    </div>
+
+                    <div class="col-span-12">
+                        <div class="flex gap-4 items-center">
+                            <input type="text" class="border border-gray-300 rounded w-full" placeholder="YouTube Link"
+                                [readonly]="!isEditing" [(ngModel)]="youtubeLinks"
+                                [ngModelOptions]="{ standalone: true }">
+                            <!-- <button (click)=" editing()" class="bg-black p-2 rounded flex items-center justify-center">
+                                    <mat-icon class="text-white">edit</mat-icon>
+                                </button> -->
+                        </div>
+                    </div>
+                    <div class="col-span-12">
+                        <div class="flex gap-4 items-center">
+                            <input type="text" class="border border-gray-300 rounded w-full"
+                                placeholder="YouTube Live Link" [readonly]="!isEditing" [(ngModel)]="youtubeLiveLink"
+                                [ngModelOptions]="{ standalone: true }">
+
+                        </div>
+                    </div>
+                    <div class="col-span-12">
+                        <button type="submit" (click)="liveUpdate()" [(ngModel)]="action"
                             class="w-full mt-8 text-white focus:outline-none bg-black rounded-md font-sans font-semibold text-sm px-5 py-2.5 text-center mr-2 uppercase mb-2 cursor-pointer">
                             Submit
                         </button>
+
+                    </div>
+                </div>
+
+                <div *ngIf="tab==3" class="grid grid-cols-12 gap-4 mt-6">
+                    <div class="col-span-12">
+                        <div>
+                            <label class="text-base md:text-lg font-medium font-sans">
+                                Select Action
+                            </label>
+                            <select [(ngModel)]="action" [ngModelOptions]="{ standalone: true }"
+                                class="w-full p-2 border border-gray-300 rounded">
+                                <option [ngValue]="'finalise'">Finalise</option>
+                                <option [ngValue]="'refund'">Refund</option>
+                            </select>
+
+
+                        </div>
+                    </div>
+                    <!-- <button *ngIf="!isEditing" (click)=" editing()" class="bg-black p-2 rounded flex items-center justify-center">
+                            <mat-icon class="text-white">edit</mat-icon>
+                        </button> -->
+
+                    <div class="col-span-12">
+                        <button type="submit" (click)="updateRound()"
+                            class="w-full mt-8 text-white focus:outline-none bg-black rounded-md font-sans font-semibold text-sm px-5 py-2.5 text-center mr-2 uppercase mb-2 cursor-pointer">
+                            Submit
+                        </button>
+                    </div>
                 </div>
             </div>
-            </div>
+
+        </div>
     </div>
 </div>
