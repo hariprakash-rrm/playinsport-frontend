@@ -1,14 +1,16 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable, ReplaySubject } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Observable, ReplaySubject, of, throwError } from 'rxjs';
+import { map, switchMap, tap } from 'rxjs/operators';
 import { User } from 'app/core/user/user.types';
+import { environment } from 'environments/environment';
 
 @Injectable({
     providedIn: 'root'
 })
 export class UserService
 {
+    apiUrl = environment.apiUrl;
     private _user: ReplaySubject<User> = new ReplaySubject<User>(1);
 
     /**
@@ -53,6 +55,23 @@ export class UserService
             })
         );
     }
+
+    getUserDetails(token: string): Observable<any> {
+        if (!token) {
+          return throwError('Token is empty');
+        }
+    
+        const params = new HttpParams()
+          .set('token', token);
+    
+        return this._httpClient
+          .get(`${this.apiUrl}/user/get-user-details`, { params: params })
+          .pipe(
+            switchMap((response: any) => {
+              return of(response);
+            })
+          );
+      }
 
     /**
      * Update the user

@@ -1,0 +1,57 @@
+<!-- transaction.component.html -->
+<div class="container mx-auto px-4 py-8">
+    <!-- Tabs to switch between Deposit and Withdrawal transactions -->
+    <ul class="flex border-b">
+      <li class="-mb-px mr-1">
+        <a class="bg-white inline-block py-2 px-4 font-semibold cursor-pointer"
+          [class.active]="activeTab === 'deposit'" (click)="switchTab('deposit')">Deposit</a>
+      </li>
+      <li class="-mb-px mr-1">
+        <a class="bg-white inline-block py-2 px-4 font-semibold cursor-pointer"
+          [class.active]="activeTab === 'withdrawal'" (click)="switchTab('withdrawal')">Withdrawal</a>
+      </li>
+    </ul>
+  
+    <!-- Display transactions based on activeTab -->
+    <div *ngIf="activeTab === 'deposit'" class="p-4">
+      <h3 class="text-lg font-semibold mb-2">Deposit Transactions</h3>
+      <div *ngFor="let transaction of depositTransactions" class="my-4 border p-4">
+        <p class="text-lg">Amount: {{ transaction.amount }}</p>
+        <p class="text-gray-600">Status: {{ transaction.status }}</p>
+        <p class="text-gray-600">Method: {{ transaction.method }}</p>
+        <button *ngIf="transaction.status === 'pending'" (click)="acceptTransaction(transaction,'deposit')"
+          class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-2">Accept</button>
+        <button *ngIf="transaction.status === 'pending'" (click)="declineTransaction(transaction,'declineDeposit')"
+          class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-2">Decline</button>
+      </div>
+    </div>
+  
+    <div *ngIf="activeTab === 'withdrawal'" class="p-4">
+      <h3 class="text-lg font-semibold mb-2">Withdrawal Transactions</h3>
+      <div *ngFor="let transaction of withdrawalTransactions" class="my-4 border p-4">
+        <p class="text-lg">Amount: {{ transaction.amount }}</p>
+        <p class="text-gray-600">Status: {{ transaction.status }}</p>
+        <p class="text-gray-600">Method: {{ transaction.method }}</p>
+        <button *ngIf="transaction.status === 'pending'" (click)="acceptTransaction(transaction,'withdraw')"
+          class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-2">Accept</button>
+        <button *ngIf="transaction.status === 'pending'" (click)="declineTransaction(transaction,'declineWithdraw')"
+          class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-2">Decline</button>
+      </div>
+    </div>
+  
+    <!-- Modal for entering decline message -->
+    <div *ngIf="showDeclineModal" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
+      <div class="bg-white rounded p-4">
+        <h4 class="text-lg font-semibold mb-2">Enter Decline Message</h4>
+        <textarea [(ngModel)]="declineMessage" rows="3" cols="30"
+          class="w-full p-2 border border-gray-300 rounded"></textarea>
+        <button (click)="confirmDecline(transaction)"
+          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2">Confirm</button>
+          <button (click)="closeModal()"
+          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2">Close</button>
+      </div>
+      
+     
+    </div>
+  </div>
+  

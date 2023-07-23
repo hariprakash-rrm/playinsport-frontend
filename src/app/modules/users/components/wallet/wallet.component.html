@@ -1,0 +1,101 @@
+<div>
+  <h2>Available Balance: </h2>
+
+  <div class="mt-4">
+    <ul class="flex border-b">
+      <li class="-mb-px mr-1">
+        <a [class.activeTab]="activeTab === 'deposit'" (click)="activeTab = 'deposit'"
+          class="bg-white inline-block py-2 px-4 font-semibold cursor-pointer">
+          Deposit
+        </a>
+      </li>
+      <li class="-mb-px mr-1">
+        <a [class.activeTab]="activeTab === 'withdraw'" (click)="activeTab = 'withdraw'"
+          class="bg-white inline-block py-2 px-4 font-semibold cursor-pointer">
+          Withdraw
+        </a>
+      </li>
+    </ul>
+
+
+    <div [ngSwitch]="activeTab">
+      <div *ngSwitchCase="'deposit'" class="p-4">
+        <h3 class="text-lg font-semibold mb-2">Deposit</h3>
+
+        <form [formGroup]="depositForm">
+
+          <select [(ngModel)]="payMethod" [ngModelOptions]="{ standalone: true } " (click)="selectItem()"
+            class="w-full p-2 border border-gray-300 rounded">
+            <option *ngFor="let option of options" [ngValue]="option">{{ option.label }}</option>
+          </select>
+
+          <div class="mb-4">
+            <label for="mobileNumber"  class="block font-medium">{{selectedValue}} Mobile
+              Number </label>
+            <input type="text" formControlName="mobileNumber" id="mobileNumber" class="form-input mt-1 block w-full">
+            <mat-error
+            *ngIf="depositForm.controls['mobileNumber'].touched && (depositForm.get('mobileNumber').errors?.pattern || depositForm.get('mobileNumber').errors?.required)"
+            class="text-red-500 text-sm mt-1">
+            Please enter valid phone number
+        </mat-error>
+          </div>
+          <div class="mb-4">
+            <label for="trnxId" class="block font-medium">Transaction ID</label>
+            <input type="text" formControlName="transactionId" id="trnxId" class="form-input mt-1 block w-full">
+          </div>
+          <div class="mb-4">
+            <label for="amount" class="block font-medium">Amount</label>
+            <input type="text" formControlName="amount" id="amount" class="form-input mt-1 block w-full">
+          </div>
+
+          <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            (click)="deposit()">Submit</button>
+        </form>
+      </div>
+
+
+      <div *ngSwitchCase="'withdraw'" class="p-4">
+        <h3 class="text-lg font-semibold mb-2">Withdraw</h3>
+
+        <div class="mb-4">
+          <label for="withdrawAmount" class="block font-medium">Amount</label>
+          <input type="text" id="withdrawAmount" class="form-input mt-1 block w-full" [(ngModel)]="withdrawAmount">
+        </div>
+        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          (click)="withdraw()">Submit</button>
+      </div>
+    </div>
+  </div>
+
+
+  <ul class="flex border-b">
+    <!-- ... (existing code) ... -->
+    <!-- New tab for History -->
+    <li class="-mb-px mr-1">
+      <a [class.activeTab]="activeTab === 'history'" (click)="activeTab = 'history';getTransactionHistory()"
+        class="bg-white inline-block py-2 px-4 font-semibold cursor-pointer">
+        History
+      </a>
+    </li>
+  </ul>
+
+  <div [ngSwitch]="activeTab">
+    <!-- ... (existing code) ... -->
+    <!-- New content for History -->
+    <div *ngSwitchCase="'history'" class="p-4">
+      <h3 class="text-lg font-semibold mb-2">History</h3>
+
+      <!-- Display deposit and withdraw history here -->
+      <ul>
+        <li *ngFor="let transaction of transactionHistory">
+          {{transaction?.transactionId}}
+          {{transaction?.method}}
+           {{ transaction?.amount }}
+           {{transaction?.status}}
+           {{transaction?.message}}
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+

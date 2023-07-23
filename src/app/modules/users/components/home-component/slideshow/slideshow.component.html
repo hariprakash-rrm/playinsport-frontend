@@ -1,0 +1,10 @@
+<div class="slideshow-container">
+    <img
+      [src]="currentBanner"
+      class="slide cursor-pointer"
+      *ngFor="let banner of banners"
+      [class.active]="banner === currentBanner"
+      (click)="navigateToDestination()"
+    >
+  </div>
+  

@@ -57,3 +57,46 @@
   .border--primary {
     border: 2px solid #999999;
   }
+  fuse-vertical-navigation .fuse-vertical-navigation-wrapper {
+    background-color: #000 !important;
+  }
+  .card--rounded {
+    border-radius: 2rem;
+  }
+  app-slot-token {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .bg-light-blue {
+    background-color: #f2f7fa;
+  }
+  
+  [type='text']:focus, [type='email']:focus, [type='url']:focus, [type='password']:focus, [type='number']:focus, [type='date']:focus, [type='datetime-local']:focus, [type='month']:focus, [type='search']:focus, [type='tel']:focus, [type='time']:focus, [type='week']:focus, [multiple]:focus, textarea:focus, select:focus {
+    box-shadow: none;
+  }
+  .mat-form-field.mat-form-field-appearance-fill .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix .mat-input-element  {
+    outline: none !important;
+  }
+  app-token > div {
+    width: 100% !important;
+  }
+  .bg-overlay {
+    background: rgb(0 0 0/0.8);
+  }
+  app-token {
+    flex-direction: column;
+  }
+  @media (max-width:991px) {
+    .h-right-screen {
+      height: 100vh;
+    }
+    .h-user-token {
+      height: 80vh;
+    }
+  }
+  @media (min-width:1024px) {
+    .h-right-screen {
+      height: 788px;
+    }
+  }

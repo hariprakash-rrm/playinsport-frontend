@@ -1,24 +1,22 @@
 import {
     Component,
-    OnInit,
     ElementRef,
+    OnDestroy,
+    OnInit,
     ViewChild,
     ViewEncapsulation,
 } from '@angular/core';
 import {
     FormBuilder,
     FormGroup,
-    NgForm,
     Validators,
     FormControl,
-    ReactiveFormsModule
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseAlertType } from '@fuse/components/alert';
 import { AuthService } from 'app/core/auth/auth.service';
 import { SnackbarServiceService } from 'app/shared/snackbar-service.service';
-import { Subscription, interval } from 'rxjs';
 
 @Component({
     selector: 'auth-sign-up',
@@ -26,7 +24,11 @@ import { Subscription, interval } from 'rxjs';
     encapsulation: ViewEncapsulation.None,
     animations: fuseAnimations,
 })
-export class AuthSignUpComponent implements OnInit {
+export class AuthSignUpComponent implements OnInit,OnDestroy {
+    @ViewChild('otp1Input') otpInput1!: ElementRef;
+    @ViewChild('otp2Input') otpInput2!: ElementRef;
+    @ViewChild('otp3Input') otpInput3!: ElementRef;
+    @ViewChild('otp4Input') otpInput4!: ElementRef;
     alert: { type: FuseAlertType; message: string } = {
         type: 'success',
         message: '',
@@ -101,6 +103,7 @@ export class AuthSignUpComponent implements OnInit {
             username: new FormControl('', [
                 Validators.required,
                 Validators.minLength(6),
+                Validators.pattern(/^[^\s]*$/)
             ]),
             number: new FormControl('', [
                 Validators.required,
@@ -128,8 +131,8 @@ export class AuthSignUpComponent implements OnInit {
      */
     signUp(): void {
         if (this.signUpForm.invalid) {
-            console.log(this.signUpForm);
-            console.log(this.signUpForm.controls.username.status);
+            // console.log(this.signUpForm);
+            // console.log(this.signUpForm.controls.username.status);
 
             if (this.signUpForm.invalid) {
                 if (
@@ -155,19 +158,29 @@ export class AuthSignUpComponent implements OnInit {
         this._authService.signUp(this.signUpForm.value).subscribe(
             (response) => {
                 if (response.statusCode === 201) {
+                    this.errorMessage = '';
                     this.currentStep++;
                     this.phoneNumber = this.signUpForm.value.number;
                     this.startCountdown();
                 }
-                console.log(response);
+                // console.log(response);
+                // console.log(response.statusCode);
             },
             (error) => {
-                console.log(error);
+                // console.log(error);
                 this.signUpForm.enable();
                 this.errorMessage = error.error.message;
             }
         );
     }
+
+     noSpacesValidator(control: FormControl): { [key: string]: boolean } | null {
+        const value = control.value;
+        if (value && value.indexOf(' ') >= 0) {
+          return { 'noSpaces': true };
+        }
+        return null;
+      }
 
     checkOTP(): void {
         const { otp1, otp2, otp3, otp4 } = this.otpForm.value;
@@ -186,7 +199,7 @@ export class AuthSignUpComponent implements OnInit {
                     this.currentStep++;
                     this.errorMessage = '';
                 }
-                console.log(response);
+                // console.log(response);
             },
             (error) => {
                 this.errorMessage = error.error.message;
@@ -195,7 +208,7 @@ export class AuthSignUpComponent implements OnInit {
     }
 
     _setpassword(): void {
-        console.log(this.setPasswordForm);
+        // console.log(this.setPasswordForm);
 
         this.tokens = localStorage.getItem('accessToken');
         if (this.setPasswordForm.controls.password.status === 'INVALID') {
@@ -205,7 +218,7 @@ export class AuthSignUpComponent implements OnInit {
             this.setPasswordForm.value.password !==
             this.setPasswordForm.value.confirmPassword
         ) {
-            this.errorMessage  = 'Confirm password doesn\'t match password';
+            this.errorMessage = "Confirm password doesn't match password";
             return;
         }
         let validation = {
@@ -216,6 +229,7 @@ export class AuthSignUpComponent implements OnInit {
             (response) => {
                 if (response.statusCode === 201) {
                     this.currentStep++;
+                    this.snackbar.success('Password updated', 4000);
                 }
                 this._router.navigate(['/home']);
             },
@@ -225,11 +239,15 @@ export class AuthSignUpComponent implements OnInit {
         );
     }
 
+    async goToLoginPage(){
+        this._router.navigate(['/sign-in']);
+    }
+
     startCountdown(): void {
         // this.countdown = 10;
         this.interval = setInterval(() => {
             this.countdown--;
-            console.log(this.countdown);
+            // console.log(this.countdown);
             if (this.countdown === 0) {
                 clearInterval(this.interval);
             }
@@ -240,4 +258,27 @@ export class AuthSignUpComponent implements OnInit {
         clearInterval(this.interval);
         this.countdown = 10;
     }
+
+    onInputChange(event: any, nextInput: number) {
+        const input = event.target as HTMLInputElement;
+        if (input.value.length >= input.maxLength) {
+            // Move focus to the next input field
+            switch (nextInput) {
+                case 2:
+                    this.otpInput2.nativeElement.focus();
+                    break;
+                case 3:
+                    this.otpInput3.nativeElement.focus();
+                    break;
+                case 4:
+                    this.otpInput4.nativeElement.focus();
+                    break;
+                // Add more cases for additional input fields
+            }
+        }
+    }
+    ngOnDestroy(): void {
+        clearInterval(this.interval);
+    }
+
 }

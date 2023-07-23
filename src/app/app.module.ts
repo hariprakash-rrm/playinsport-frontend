@@ -12,23 +12,28 @@ import { mockApiServices } from 'app/mock-api';
 import { LayoutModule } from 'app/layout/layout.module';
 import { AppComponent } from 'app/app.component';
 import { appRoutes } from 'app/app.routing';
+import { ReactiveFormsModule } from '@angular/forms';
 // import { HomeComponent } from './modules/home/home.component';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+import { environment } from 'environments/environment';
 
-const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
+const config: SocketIoConfig = {
+    url: environment.apiUrl,
+    options: {},
+};
 
 const routerConfig: ExtraOptions = {
-    preloadingStrategy       : PreloadAllModules,
-    scrollPositionRestoration: 'enabled'
+    preloadingStrategy: PreloadAllModules,
+    scrollPositionRestoration: 'enabled',
 };
 
 @NgModule({
-    declarations: [
-        AppComponent,
-        
-    ],
-    imports     : [
-        SocketIoModule.forRoot({ url: 'http://localhost:3000', options: {} }),
+    declarations: [AppComponent],
+    imports: [
+        SocketIoModule.forRoot({
+            url:environment.apiUrl,
+            options: {},
+        }),
         BrowserModule,
         BrowserAnimationsModule,
         RouterModule.forRoot(appRoutes, routerConfig),
@@ -44,13 +49,11 @@ const routerConfig: ExtraOptions = {
         // Layout module of your application
         LayoutModule,
 
+        ReactiveFormsModule,
+
         // 3rd party modules that require global configuration via forRoot
-        MarkdownModule.forRoot({})
+        MarkdownModule.forRoot({}),
     ],
-    bootstrap   : [
-        AppComponent
-    ]
+    bootstrap: [AppComponent],
 })
-export class AppModule
-{
-}
+export class AppModule {}
