@@ -88,7 +88,7 @@ export class GameComponent implements OnInit {
             method: transaction.method,
             amount: transaction.amount,
             message: message,
-            userPhoneNumber: number
+            userPhoneNumber: transaction.userPhoneNumber
         }
         this.updatePayment(data)
 
