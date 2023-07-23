@@ -87,6 +87,9 @@
   app-token {
     flex-direction: column;
   }
+  .activeTab {
+    border-bottom: 2px solid #000;
+}
   @media (max-width:991px) {
     .h-right-screen {
       height: 100vh;
