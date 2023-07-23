@@ -18,12 +18,14 @@ export class TokenComponent implements OnInit {
     rounds: number = 0;
     maximumTokenPerUser: any
     totalTokenNumber: number
+    tab:any=1
     status: any
+    isFetched:boolean=false
   youtubeLinks: string = '';
   youtubeLiveLink: string = '';
   facebookLinks: string = '';
   facebookLiveLink: string = '';
-
+  showDetails:boolean=false
     create: boolean = true
     isEditing: boolean = false
     isEditings: boolean = false
@@ -73,6 +75,14 @@ export class TokenComponent implements OnInit {
     // }
 
     ngOnInit(): void { }
+
+    clear(){
+        console.log(this.tokenForm.value.name,)
+        this.tokenForm.reset()
+        this.rounds=0
+        this.showDetails=false
+        console.log(this.tokenForm.value.name,)
+    }
 
     tokenCreation(): void {
         const accessToken = localStorage.getItem('accessToken');
@@ -154,12 +164,17 @@ export class TokenComponent implements OnInit {
         );
     }
 
+    changeTab(tab:any){
+        this.tab=tab
+    }
+
     searchRound() {
         this.tokenService.getRound(this.rounds).subscribe((res: any) => {
             // console.log('Value of rounds:', this.rounds);
 
             if (res.statusCode === 201) {
                 this.snackbarServiceService.success(res.message, 4000);
+                this.isFetched=true
                 this.name = res.data.data.name;
                 this.prize = res.data.data.prize;
                 this.tokenPrice = res.data.data.tokenPrice;
@@ -224,6 +239,6 @@ export class TokenComponent implements OnInit {
     }
 
     editing() {
-        this.isEditing = true;
+        this.isEditing = !this.isEditing
     }
 }
