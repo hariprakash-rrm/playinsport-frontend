@@ -301,7 +301,7 @@
                     <p (click)="changeTab(2)">2</p>
                     <p (click)="changeTab(3)">3</p>
                 </div>
-                <div *ngIf="tab==1">
+                <div *ngIf="tab==1 && isFetched">
                 <div class="col-span-12">
                     <label for="name" class="text-base md:text-lg font-medium font-sans">Name</label>
                     <input type="text" [(ngModel)]="name" [ngModelOptions]="{ standalone: true }"
@@ -354,7 +354,7 @@
                 </div>
                 
             </div>
-            <div *ngIf="tab==2">
+            <div *ngIf="tab==2 && isFetched">
                 <div class="col-span-12">
                     <div class="flex gap-4 items-center">
                         <input type="text" class="border border-gray-300 rounded w-full" placeholder="Facebook Link"
@@ -403,7 +403,7 @@
                 </div>
                 </div>
 
-                <div *ngIf="tab==3">
+                <div *ngIf="tab==3 && isFetched">
                 <div >
                     <label class="text-base md:text-lg font-medium font-sans">
                         Select Action

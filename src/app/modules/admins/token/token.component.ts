@@ -80,7 +80,7 @@ export class TokenComponent implements OnInit {
         console.log(this.tokenForm.value.name,)
         this.tokenForm.reset()
         this.rounds=0
-        this.showDetails=false
+        this.isFetched=false
         console.log(this.tokenForm.value.name,)
     }
 
