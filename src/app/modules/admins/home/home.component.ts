@@ -24,6 +24,7 @@ export class HomeComponent implements OnInit {
     accessToken: string;
     isEditing: boolean = false;
     block: any
+    totalSupply: any;
 
     constructor(
         private _formBuilder: FormBuilder,
@@ -36,6 +37,7 @@ export class HomeComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.accessToken = localStorage.getItem('accessToken');
     }
 
     get searchName() {
@@ -103,11 +105,9 @@ export class HomeComponent implements OnInit {
                     if (response.statusCode === 201) {
                         this.errorMessage = '';
                     }
-                    // console.log(this.txnHistory);
                     this._snackBar.success(response.message, 4000);
                 },
                 (error) => {
-                    // console.log(error);
                     this._snackBar.error(error.error.message, 4000);
                 }
             );
@@ -135,7 +135,10 @@ export class HomeComponent implements OnInit {
 
 
     exportToExcel() {
-        this._adminService.exportToExcel().subscribe(
+        let data={
+            token : this.accessToken
+        }
+        this._adminService.exportToExcel(data).subscribe(
           (response: Blob) => {
             const blob = new Blob([response], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
             const url = window.URL.createObjectURL(blob);
@@ -154,5 +157,19 @@ export class HomeComponent implements OnInit {
       }
       closeTransaction() {
         this.showTransactionHistory = false;
+      }
+      viewTotelsupply(){
+        let data={
+            token: this.accessToken
+        }
+        this._adminService.viewTotalSupply(data).subscribe(
+            (response: any) => {
+                this.totalSupply = response.data.data;
+                console.log(response);
+            },
+            (error) => {
+              this._snackBar.error(error.error.message, 4000);
+            }
+          );
       }
 }

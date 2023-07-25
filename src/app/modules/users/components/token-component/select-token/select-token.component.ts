@@ -13,7 +13,6 @@ interface Seat {
 @Component({
   selector: 'app-select-token',
   templateUrl: './select-token.component.html',
-  styleUrls: ['./select-token.component.scss']
 })
 export class SelectTokenComponent implements OnInit, OnDestroy {
 
@@ -54,14 +53,11 @@ export class SelectTokenComponent implements OnInit, OnDestroy {
   async triggerSocket() {
     this.socket.on('connect', async () => {
       const socketId = this.socket.ioSocket.id;
-      // console.log(`Socket ID: ${socketId}`);
       this.userDetails.socketId = await socketId;
       this.handleSocketResponse();
-      // You can use the socket ID for further operations
     });
     this.socket.connect()
     await this.socket.on('disconnect', () => {
-      // console.log('Disconnected from the server');
     });
   }
 
@@ -113,16 +109,13 @@ export class SelectTokenComponent implements OnInit, OnDestroy {
   handleSocketResponse() {
     let token = localStorage.getItem('accessToken');
     this.socket.fromEvent('userBalance').subscribe((message: any) => {
-      // console.log('user balance ', message);
     });
 
     this.socket.fromEvent('isError').subscribe((message: any) => {
-      // console.log(message);
       this.snackbar.error(message?.message, 3000);
     });
 
     this.socket.fromEvent('game').subscribe((message: any) => {
-      // console.log(message);
       this.handleSeats(message);
     });
 
@@ -134,10 +127,8 @@ export class SelectTokenComponent implements OnInit, OnDestroy {
     };
     this.socket.emit('userBalance', balanceQuery);
     this.socket.fromEvent('getGame').subscribe((message: any) => {
-      // console.log(message);
       if (+this.round == +message.round) {
         this.seats[message.tokenNumber - 1] = message;
-        // console.log(this.seats[message.tokenNumber - 1]);
         if (
           this.userDetails.name ==
           this.seats[message.tokenNumber - 1].selectedBy
@@ -161,7 +152,7 @@ export class SelectTokenComponent implements OnInit, OnDestroy {
    * @param isSelected 
    * @returns 
    */
-  toggleSeatSelection(index: number, isSelected: any): void {
+  toggleSeatSelection(index: number, isSelected: boolean): void {
     if (isSelected) {
       this.snackbar.error(
         `This token is selected by ${this.seats[index - 1].selectedBy}`,

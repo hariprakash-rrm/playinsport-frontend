@@ -44,7 +44,7 @@ export class TokenComponent implements OnInit {
       (response) => {
           if (response.statusCode === 201) {
               this.snackbar.success(response.message, 4000);
-              // console.log(response)
+              console.log(response)
               this.games=response.data.data
               // console.log(this.games[0].date)
           }

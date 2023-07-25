@@ -306,7 +306,7 @@
                     <li class="w-full text-center">
                         <a (click)="changeTab(2)"
                             class="bg-white inline-block py-2 px-4 font-semibold cursor-pointer whitespace-nowrap">Update
-                            Link</a>
+                            Round</a>
                     </li>
                     <li class="w-full text-center">
                         <a (click)="changeTab(3)"
@@ -370,16 +370,46 @@
                             class="w-full p-2 border border-gray-300 rounded" [readonly]="!isEditings">
                     </div>
 
+                    <div class="col-span-12">
+                        <label for="facebookLink" class="text-base md:text-lg font-medium font-sans">Facebook
+                            Link</label>
+                        <input type="text" [(ngModel)]="facebookLink" [ngModelOptions]="{ standalone: true }"
+                            class="w-full p-2 border border-gray-300 rounded" [readonly]="!isEditings">
+                    </div>
+
+                    <div class="col-span-12">
+                        <label for="facebookLiveLink" class="text-base md:text-lg font-medium font-sans">Facebook Live
+                            Link</label>
+                        <input type="text" [(ngModel)]="facebookLiveLink" [ngModelOptions]="{ standalone: true }"
+                            class="w-full p-2 border border-gray-300 rounded" [readonly]="!isEditings">
+                    </div>
+
+                    <div class="col-span-12">
+                        <label for="youtubeLink" class="text-base md:text-lg font-medium font-sans">YouTube Link</label>
+                        <input type="text" [(ngModel)]="youtubeLink" [ngModelOptions]="{ standalone: true }"
+                            class="w-full p-2 border border-gray-300 rounded" [readonly]="!isEditings">
+                    </div>
+
+                    <div class="col-span-12">
+                        <label for="youtubeLiveLink" class="text-base md:text-lg font-medium font-sans">YouTube Live
+                            Link</label>
+                        <input type="text" [(ngModel)]="youtubeLiveLink" [ngModelOptions]="{ standalone: true }"
+                            class="w-full p-2 border border-gray-300 rounded" [readonly]="!isEditings">
+                    </div>
+
+                    <div class="col-span-12">
+                        <label for="winnerList" class="text-base md:text-lg font-medium font-sans">Winner List</label>
+                        <input type="text" [(ngModel)]="winnerList" [ngModelOptions]="{ standalone: true }"
+                            class="w-full p-2 border border-gray-300 rounded" [readonly]="!isEditings">
+                    </div>
+
                 </div>
                 <div *ngIf="tab==2" class="grid grid-cols-12 gap-4 mt-6">
+
                     <div class="col-span-12">
                         <div class="flex gap-4 items-center">
                             <input type="text" class="border border-gray-300 rounded w-full" placeholder="Facebook Link"
-                                [(ngModel)]="facebookLinks" [ngModelOptions]="{ standalone: true }"
-                                [readonly]=" !isEditing">
-                            <!-- <button (click)="editing()" class="bg-black p-2 rounded flex items-center justify-center">
-                                    <mat-icon class="text-white">edit</mat-icon>
-                                </button> -->
+                                [(ngModel)]="facebookLinks" [ngModelOptions]="{ standalone: true }">
                         </div>
                     </div>
 
@@ -387,31 +417,27 @@
                         <div class="flex gap-4 items-center">
                             <input type="text" class="border border-gray-300 rounded w-full"
                                 placeholder="Facebook Live Link" [(ngModel)]="facebookLiveLink"
-                                [ngModelOptions]="{ standalone: true }" [readonly]=" !isEditing">
-                            <!-- <button (click)="editing()" class="bg-black p-2 rounded flex items-center justify-center">
-                                    <mat-icon class="text-white">edit</mat-icon>
-                                </button> -->
+                                [ngModelOptions]="{ standalone: true }">
+
                         </div>
                     </div>
 
                     <div class="col-span-12">
                         <div class="flex gap-4 items-center">
                             <input type="text" class="border border-gray-300 rounded w-full" placeholder="YouTube Link"
-                                [readonly]="!isEditing" [(ngModel)]="youtubeLinks"
-                                [ngModelOptions]="{ standalone: true }">
-                            <!-- <button (click)=" editing()" class="bg-black p-2 rounded flex items-center justify-center">
-                                    <mat-icon class="text-white">edit</mat-icon>
-                                </button> -->
+                                [(ngModel)]="youtubeLinks" [ngModelOptions]="{ standalone: true }">
+
                         </div>
                     </div>
                     <div class="col-span-12">
                         <div class="flex gap-4 items-center">
                             <input type="text" class="border border-gray-300 rounded w-full"
-                                placeholder="YouTube Live Link" [readonly]="!isEditing" [(ngModel)]="youtubeLiveLink"
+                                placeholder="YouTube Live Link" [(ngModel)]="youtubeLiveLink"
                                 [ngModelOptions]="{ standalone: true }">
 
                         </div>
                     </div>
+
                     <div class="col-span-12">
                         <button type="submit" (click)="liveUpdate()" [(ngModel)]="action"
                             class="w-full mt-8 text-white focus:outline-none bg-black rounded-md font-sans font-semibold text-sm px-5 py-2.5 text-center mr-2 uppercase mb-2 cursor-pointer">
@@ -420,35 +446,82 @@
 
                     </div>
                 </div>
-
+                <!-- 
+                    <div *ngIf="tab==3" class="grid grid-cols-12 gap-4 mt-6">
+                        <div class="col-span-12">
+                            <div>
+                                <label class="text-base md:text-lg font-medium font-sans">
+                                    Select Tab
+                                </label>
+                                <select [(ngModel)]="chooseTab" [ngModelOptions]="{ standalone: true }"
+                                    class="w-full p-2 border border-gray-300 rounded">
+                                    <option [ngValue]="'Action'">Action</option>
+                                    <option [ngValue]="'Reward'">Reward</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-span-12">
+                            <button type="submit" (click)="choosetab()"
+                                class="w-full mt-8 text-white focus:outline-none bg-black rounded-md font-sans font-semibold text-sm px-5 py-2.5 text-center mr-2 uppercase mb-2 cursor-pointer">
+                                Submit
+                            </button>
+                        </div>
+                    </div> -->
                 <div *ngIf="tab==3" class="grid grid-cols-12 gap-4 mt-6">
-                    <div class="col-span-12">
-                        <div>
-                            <label class="text-base md:text-lg font-medium font-sans">
-                                Select Action
-                            </label>
-                            <select [(ngModel)]="action" [ngModelOptions]="{ standalone: true }"
-                                class="w-full p-2 border border-gray-300 rounded">
-                                <option [ngValue]="'finalise'">Finalise</option>
-                                <option [ngValue]="'refund'">Refund</option>
-                            </select>
 
-
+                    <div *ngIf="status === 'live'" class="grid grid-cols-12 gap-4 mt-6">
+                        <div class="col-span-12">
+                            <div>
+                                <label class="text-base md:text-lg font-medium font-sans">
+                                    Select Action
+                                </label>
+                                <select [(ngModel)]="action" [ngModelOptions]="{ standalone: true }"
+                                    class="w-full p-2 border border-gray-300 rounded">
+                                    <option [ngValue]="'finalise'">Finalise</option>
+                                    <option [ngValue]="'refund'">Refund</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-span-12">
+                            <button type="submit" (click)="updateRound()"
+                                class="w-full mt-8 text-white focus:outline-none bg-black rounded-md font-sans font-semibold text-sm px-5 py-2.5 text-center mr-2 uppercase mb-2 cursor-pointer">
+                                Submit
+                            </button>
                         </div>
                     </div>
-                    <!-- <button *ngIf="!isEditing" (click)=" editing()" class="bg-black p-2 rounded flex items-center justify-center">
-                            <mat-icon class="text-white">edit</mat-icon>
-                        </button> -->
 
-                    <div class="col-span-12">
-                        <button type="submit" (click)="updateRound()"
-                            class="w-full mt-8 text-white focus:outline-none bg-black rounded-md font-sans font-semibold text-sm px-5 py-2.5 text-center mr-2 uppercase mb-2 cursor-pointer">
-                            Submit
-                        </button>
+
+                    <div *ngIf="status ==='finalise'" class="grid grid-cols-12 gap-4 mt-6">
+
+                        <div class="col-span-12">
+                            <div class="flex gap-4 items-center">
+                                <input type="text" class="border border-gray-300 rounded w-full"
+                                    placeholder="Winner list" [(ngModel)]="winnerList"
+                                    [ngModelOptions]="{ standalone: true }">
+
+                            </div>
+                        </div>
+                        <div class="col-span-12">
+                            <div>
+                                <label class="text-base md:text-lg font-medium font-sans">
+                                    Select Reward Type
+                                </label>
+                                <select [(ngModel)]="reward" [ngModelOptions]="{ standalone: true }"
+                                    class="w-full p-2 border border-gray-300 rounded">
+                                    <option [ngValue]="'cash'">Cash</option>
+                                    <option [ngValue]="'other'">Other</option>
+                                </select>
+                            </div>
+
+                        </div>
+                        <div class="col-span-12">
+                            <button type="submit" (click)="updateRewardType()"
+                                class="w-full mt-8 text-white focus:outline-none bg-black rounded-md font-sans font-semibold text-sm px-5 py-2.5 text-center mr-2 uppercase mb-2 cursor-pointer">
+                                Submit
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
-</div>

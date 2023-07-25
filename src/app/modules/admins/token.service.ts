@@ -80,6 +80,16 @@ export class TokenService {
         );
     }
 
+    updateRewardType(data: any): Observable<any> {
+        console.log(data);
+
+        return this._httpClient.post(`${this.apiUrl}/token/update-reward-type`, data).pipe(
+            switchMap((response: any) => {
+                return of(response);
+            })
+        );
+    }
+
     getRound(round: number): Observable<any> {
         const params = new HttpParams()
             .set('data', round)

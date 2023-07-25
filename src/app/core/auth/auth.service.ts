@@ -52,9 +52,9 @@ export class AuthService {
      *
      * @param number
      */
-    forgotPassword(data: any): Observable<any> {
+    forgotPassword(data:any): Observable<any> {
         return this._httpClient.post(
-            `${environment.apiUrl}`,
+            `${environment.apiUrl}/send-otp`,
             data
         );
     }
@@ -65,7 +65,7 @@ export class AuthService {
      * @param password
      */
     resetPassword(validation: {
-        token: any;
+        token: string;
         password: string;
     }): Observable<any> {
         return this._httpClient.post(`${this.apiUrl}/set-password`, validation);
@@ -76,7 +76,7 @@ export class AuthService {
      *
      * @param credentials
      */
-    signIn(credentials: { number: string; password: string }): Observable<any> {
+    signIn(credentials: { number: number; password: string }): Observable<any> {
         // Throw error, if the user is already logged in
         if (this._authenticated) {
             return throwError('User is already logged in.');
@@ -100,7 +100,7 @@ export class AuthService {
         );
     }
 
-    submitOTP(OTPValidation: { otp: any; number: Number }): Observable<any> {
+    submitOTP(OTPValidation: { otp: number; number: Number }): Observable<any> {
         // Throw error, if the user is already logged in
         if (this._authenticated) {
             return throwError('User is already logged in.');
@@ -174,7 +174,7 @@ export class AuthService {
      *
      * @param user
      */
-    signUp(user: { username: string; number: Number }): Observable<any> {
+    signUp(user: { username: string; number: number }): Observable<any> {
         return this._httpClient.post(`${this.apiUrl}/signup`, user);
     }
 

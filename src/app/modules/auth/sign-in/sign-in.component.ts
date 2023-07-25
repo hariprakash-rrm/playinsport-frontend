@@ -4,6 +4,7 @@ import {
     ViewChild,
     ElementRef,
     ViewEncapsulation,
+    OnDestroy,
 } from '@angular/core';
 import {
     FormBuilder,
@@ -25,7 +26,7 @@ import { HttpErrorResponse } from '@angular/common/http';
     encapsulation: ViewEncapsulation.None,
     animations: fuseAnimations,
 })
-export class AuthSignInComponent implements OnInit {
+export class AuthSignInComponent implements OnInit, OnDestroy {
     @ViewChild('signInNgForm') signInNgForm: NgForm;
     @ViewChild('otp1Input') otpInput1!: ElementRef;
     @ViewChild('otp2Input') otpInput2!: ElementRef;
@@ -42,7 +43,7 @@ export class AuthSignInComponent implements OnInit {
     numberError: string = '';
     currentStep: number = 1;
     numberForm: FormGroup;
-    countdown: number = 10;
+    countdown: number = 45;
     interval: any;
     otpForm: FormGroup;
     tokens: any;
@@ -154,6 +155,7 @@ export class AuthSignInComponent implements OnInit {
                 if (response.statusCode === 201) {
                     this.phoneNumber = this.signInForm.value.number;
                     this.errorMessage = '';
+                    console.log(response);
                 }
 
                 if (response.data.isAdmin) {
@@ -178,11 +180,9 @@ export class AuthSignInComponent implements OnInit {
 
     goToSendOtp() {
         if (this.numberForm.invalid) {
-            // console.log(this.numberForm.value.numbers);
             if (this.numberForm.invalid) {
                 if (!this.numberForm.value.numbers) {
                     this.numberError = 'Phone number cannot be empty';
-                    // console.log(this.numberForm.valid);
                 } else {
                     this.numberError = '';
                 }
@@ -193,16 +193,10 @@ export class AuthSignInComponent implements OnInit {
         // Disable the form
         this.numberForm.disable();
 
-        // Hide the alert
-        this.showAlert = false;
-
-        const data = {
-            num: this.numberForm.value.numbers,
+            const data = {
+            number: this.numberForm.value.numbers,
         };
-        // console.log(data.num);
-        // console.log(`current step ${this.currentStep}`);
-
-        // Sign up
+       
         this._authService.forgotPassword(data).subscribe(
             (response) => {
                 if (response.statusCode === 201) {
@@ -211,7 +205,6 @@ export class AuthSignInComponent implements OnInit {
                     this.startCountdown();
                     this.errorMessage = '';
                 }
-                // console.log(response);
             },
             (error: HttpErrorResponse) => {
                 if (error.status === 0) {
@@ -235,6 +228,7 @@ export class AuthSignInComponent implements OnInit {
                 clearInterval(this.interval);
                 this.countdown = 0;
             }
+            console.log(this.countdown);
         }, 1000); // Changed interval to 1000 milliseconds (1 second)
     }
 
@@ -272,13 +266,13 @@ export class AuthSignInComponent implements OnInit {
         if (this.countdown === 0) {
             // console.log('GOTOSENDOTP');
             this.currentStep--;
-            this.countdown = 10;
+            this.countdown = 45;
             this.goToSendOtp();
+
         }
     }
     _setpassword(): void {
-        // console.log(this.setPasswordForm);
-
+        this.errorMessage = '';
         this.tokens = localStorage.getItem('accessToken');
         if (this.setPasswordForm.controls.passwords.status === 'INVALID') {
             return;
@@ -327,4 +321,11 @@ export class AuthSignInComponent implements OnInit {
             }
         }
     }
+    ngOnDestroy(): void {
+        clearInterval(this.interval);
+    }
+
+    // clearInterval(interval: any){
+    //     this.countdown = 0;
+    // }
 }

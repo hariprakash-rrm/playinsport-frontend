@@ -18,20 +18,23 @@ export class TokenComponent implements OnInit {
     rounds: number = 0;
     maximumTokenPerUser: any
     totalTokenNumber: number
-    tab:any=1
+    tab: any = 1
     status: any
-    isFetched:boolean=false
-  youtubeLinks: string = '';
-  youtubeLiveLink: string = '';
-  facebookLinks: string = '';
-  facebookLiveLink: string = '';
-  showDetails:boolean=false
+    isFetched: boolean = false
+    youtubeLinks: string = '';
+    youtubeLiveLink: string = '';
+    facebookLinks: string = '';
+    facebookLiveLink: string = '';
+    showDetails: boolean = false
     create: boolean = true
     isEditing: boolean = false
     isEditings: boolean = false
+    winnerList: any;
 
     data: any
-    action: any
+    action: string = 'undefined'
+    chooseTab: string
+    reward: string = null
     isSearch: boolean = false
     isAddLink: boolean = false
     constructor(
@@ -74,13 +77,15 @@ export class TokenComponent implements OnInit {
     //     return this.viewForm.get('facebookLiveLink');
     // }
 
-    ngOnInit(): void { }
+    ngOnInit(): void {
+        this.searchRound();
+     }
 
-    clear(){
+    clear() {
         console.log(this.tokenForm.value.name,)
         this.tokenForm.reset()
-        this.rounds=0
-        this.isFetched=false
+        this.rounds = 0
+        this.isFetched = false
         console.log(this.tokenForm.value.name,)
     }
 
@@ -136,18 +141,61 @@ export class TokenComponent implements OnInit {
         );
     }
 
-    liveUpdate() {
-        // console.log(this.viewForm.value.youtubeLiveLink)
+    updateRewardType() {
+
+        // if (this.hasDuplicates(this.winnerList)) {
+        //     this.snackbarServiceService.error("Getting dupplicate winner list", 4000);
+        //     return
+        // }
+        const valuesArray: string[] = this.winnerList.split(',');
+
+        console.log(valuesArray);
+        console.log(valuesArray.length);
+        console.log(this.prize.length);
+
+        if (this.prize.length != valuesArray.length) {
+            this.snackbarServiceService.error(`Total winning prize for this round is ${this.prize.length}, please check the winner list`, 5000)
+            return
+        }
+
         const accessToken = localStorage.getItem('accessToken');
-        // console.log("LIVEUPDATE");
+        const data = {
+            round: this.rounds,
+
+            rewardType: this.reward,
+            token: accessToken,
+            winnerList: valuesArray
+        };
+
+        console.log(data);
+
+        this.tokenService.updateRewardType(data).subscribe(
+            (response) => {
+                if (response.statusCode === 201) {
+                    this.snackbarServiceService.success(response.message, 4000);
+                }
+            },
+            (error) => {
+                this.snackbarServiceService.error(error.error.message, 4000);
+            }
+        );
+    }
+
+    liveUpdate() {
+        // if (this.hasDuplicates(this.winnerList)) {
+        //     this.snackbarServiceService.error("Check winning list", 4000);
+        //     return
+        // }
+
+        const accessToken = localStorage.getItem('accessToken');
         const data = {
             round: this.rounds,
             action: "linkUpdate",
             token: accessToken,
-            youtubeLink: this.viewForm.value.youtubeLinks,
-            youtubeLiveLink: this.viewForm.value.youtubeLiveLink,
-            facebookLink: this.viewForm.value.facebookLinks,
-            facebookLiveLink: this.viewForm.value.facebookLiveLink
+            youtubeLink: this.youtubeLinks,
+            youtubeLiveLink: this.youtubeLiveLink,
+            facebookLink: this.facebookLinks,
+            facebookLiveLink: this.facebookLiveLink,
         };
 
         this.tokenService.updateRound(data).subscribe(
@@ -159,22 +207,32 @@ export class TokenComponent implements OnInit {
             },
             (error) => {
                 this.snackbarServiceService.error(error.error.message, 4000);
-                // console.log(error);
             }
         );
     }
 
-    changeTab(tab:any){
-        this.tab=tab
+    changeTab(tab: any) {
+        this.tab = tab
     }
 
     searchRound() {
+        
         this.tokenService.getRound(this.rounds).subscribe((res: any) => {
-            // console.log('Value of rounds:', this.rounds);
-
+            this.snackbarServiceService.success(res.message, 4000);
+                this.name = '';
+                this.prize = '';
+                this.tokenPrice = '';
+                this.date = '';
+                this.maximumTokenPerUser = 0;
+                this.totalTokenNumber = 0;
+                this.status = '';
+                this.youtubeLinks = '';
+                this.youtubeLiveLink = '';
+                this.facebookLinks = '';
+                this.facebookLiveLink = '';
             if (res.statusCode === 201) {
                 this.snackbarServiceService.success(res.message, 4000);
-                this.isFetched=true
+                this.isFetched = true
                 this.name = res.data.data.name;
                 this.prize = res.data.data.prize;
                 this.tokenPrice = res.data.data.tokenPrice;
@@ -186,9 +244,8 @@ export class TokenComponent implements OnInit {
                 this.youtubeLiveLink = res.data.data.youtubeLiveLink;
                 this.facebookLinks = res.data.data.facebookLink;
                 this.facebookLiveLink = res.data.data.facebookLiveLink;
-
+                this.winnerList = res.data.data.winnerList;
             }
-            // console.log(res)
         }, (error) => {
             this.snackbarServiceService.error(error.error.message, 4000);
         })
@@ -202,43 +259,19 @@ export class TokenComponent implements OnInit {
         this.isAddLink = true;
     }
 
-    toggleEdit(): void {
-        // console.log("Toggle");
-        if (1) {
-            this.snackbarServiceService.error('Round not found', 4000);
-            return;
-        }
-        this.isEditing = !this.isEditing;
-        if (!this.isEditing) {
-            const AccessToken = localStorage.getItem('accessToken');
-            // console.log(AccessToken);
+    // choosetab(status: string) {
+    //     console.log(status);
+    //     console.log(status === 'finalise');
+    //     if (status === 'finalise' || status === 'refund') {
+    //         this.tab = 4;
+    //     }
+    //     else {
+    //         this.tab = 3;
+    //     }
+    // }
 
-            const data = {
-                round: this.rounds,
+    // hasDuplicates(array: any[]): boolean {
+    //     return new Set(array).size !== array.length;
+    // }
 
-                action: this.action,
-                token: AccessToken,
-                youtubeLink: this.viewForm.value.youtubeLinks,
-                youtubeLiveLink: this.viewForm.value.youtubeLiveLink,
-                facebookLink: this.viewForm.value.facebookLinks,
-                facebookLiveLink: this.viewForm.value.facebookLiveLink
-            };
-            this.tokenService.liveUpdate(data).subscribe(
-                (response) => {
-                    if (response.statusCode === 201) {
-                    }
-                    this.snackbarServiceService.success(response.message, 4000);
-                },
-                (error) => {
-                    // console.log(error);
-                    this.snackbarServiceService.error(error.error.message, 4000);
-                }
-            );
-        }
-
-    }
-
-    editing() {
-        this.isEditing = !this.isEditing
-    }
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { UserService } from 'app/core/user/user.service';
@@ -107,11 +107,11 @@ export class AdminService {
             )
     }
 
-    getAllUsersForPage(data:any): Observable<any> {
+    getAllUsersForPage(data: any): Observable<any> {
         const params = new HttpParams()
             .set('currentPage', data.currentPage)
             .set('selectedItemsPerPage', data.selectedItemsPerPage);
-        return this._httpClient.get(`${this.apiUrl}/user/all-user-for-page`,{ params } )
+        return this._httpClient.get(`${this.apiUrl}/user/all-user-for-page`, { params })
             .pipe(
                 switchMap((response: any) => {
                     return of(response);
@@ -119,13 +119,31 @@ export class AdminService {
             )
     }
 
-    exportToExcel(): Observable<any>{
-        return this._httpClient.get(`${this.apiUrl}/user/export`, { responseType: 'blob' }).
-        pipe(
-            switchMap((response: any) => {
-                // console.log(response);
-                return of(response);
-            })
-        )
+    exportToExcel(data: {
+        token: string
+    }): Observable<any> {
+        const headers = new HttpHeaders().set('Authorization', `${data.token}`);
+
+        return this._httpClient.get(`${this.apiUrl}/user/export`, {
+            headers: headers,
+            responseType: 'blob'
+        }).
+            pipe(
+                switchMap((response: any) => {
+                    console.log(response);
+                    return of(response);
+                })
+            )
+    }
+
+    viewTotalSupply(data: { token: string }): Observable<any> {
+        const params = new HttpParams()
+            .set('token', data.token);
+        return this._httpClient.get(`${this.apiUrl}/user/totalSupply`, { params: params }).
+            pipe(
+                switchMap((response: any) => {
+                    return of(response);
+                })
+            )
     }
 }

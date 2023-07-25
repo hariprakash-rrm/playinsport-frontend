@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import {
     Component,
     ElementRef,
@@ -39,7 +40,7 @@ export class AuthSignUpComponent implements OnInit,OnDestroy {
     otpForm: FormGroup;
     setPasswordForm: FormGroup;
     tokens: any;
-    phoneNumber: any;
+    phoneNumber: number;
     errorMessage: string = '';
     numberError: string = '';
 
@@ -131,8 +132,7 @@ export class AuthSignUpComponent implements OnInit,OnDestroy {
      */
     signUp(): void {
         if (this.signUpForm.invalid) {
-            // console.log(this.signUpForm);
-            // console.log(this.signUpForm.controls.username.status);
+            this.errorMessage = '';
 
             if (this.signUpForm.invalid) {
                 if (
@@ -163,8 +163,7 @@ export class AuthSignUpComponent implements OnInit,OnDestroy {
                     this.phoneNumber = this.signUpForm.value.number;
                     this.startCountdown();
                 }
-                // console.log(response);
-                // console.log(response.statusCode);
+                
             },
             (error) => {
                 // console.log(error);
@@ -185,6 +184,7 @@ export class AuthSignUpComponent implements OnInit,OnDestroy {
     checkOTP(): void {
         const { otp1, otp2, otp3, otp4 } = this.otpForm.value;
         const enteredOTP = otp1 + otp2 + otp3 + otp4;
+        this.errorMessage = '';
 
         if (this.otpForm.invalid) {
             return;
@@ -208,7 +208,6 @@ export class AuthSignUpComponent implements OnInit,OnDestroy {
     }
 
     _setpassword(): void {
-        // console.log(this.setPasswordForm);
 
         this.tokens = localStorage.getItem('accessToken');
         if (this.setPasswordForm.controls.password.status === 'INVALID') {
@@ -279,6 +278,18 @@ export class AuthSignUpComponent implements OnInit,OnDestroy {
     }
     ngOnDestroy(): void {
         clearInterval(this.interval);
+    }
+
+    resendotp() {
+        if (this.countdown !== 0) {
+            this.errorMessage =
+                'Please wait for 45 seconds before generating a new OTP.';
+        }
+        if (this.countdown === 0) {
+            this.currentStep--;
+            this.countdown = 45;
+            this.signUp();
+        }
     }
 
 }

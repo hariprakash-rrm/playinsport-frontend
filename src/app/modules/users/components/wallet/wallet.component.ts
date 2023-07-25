@@ -105,19 +105,16 @@ export class WalletComponent implements OnInit {
         userPhoneNumber: +this.phoneNumberOfUser,
         token: token
       }
+      console.log(data);
       this._walletService.deposit(data).subscribe(
         (response) => {
-          // console.log(response);
           if (response.statusCode === 201) {
-            // console.log(response);
             this.snackBar.success(response.message, 4000);
           }
         },
         (error) => {
           console.log(error)
-          
             this.snackBar.error(error.error.message, 4000);
-          
         }
       );
     }

@@ -29,6 +29,17 @@
         <h2 class="text-sm text-grey-600 font-sans">Method</h2>
         <p class="text-lg font-medium font-sans text-black"> {{ transaction.method }}</p>
       </div>
+
+      <div>
+        <h2 class="text-sm text-grey-600 font-sans">TransactionId</h2>
+        <p class="text-lg font-medium font-sans text-black"> {{ transaction.transactionId }}</p>
+      </div>
+
+      <div>
+        <h2 class="text-sm text-grey-600 font-sans">Phone Number</h2>
+        <p class="text-lg font-medium font-sans text-black"> {{ transaction.userPhoneNumber }}</p>
+      </div>
+      <button (click)="clickToCopy(transaction.userPhoneNumber)">Click here to copy phonenumber</button>
       <!-- <p class="text-lg">Amount: {{ transaction.amount }}</p>
         <p class="text-gray-600">Status: {{ transaction.status }}</p>
         <p class="text-gray-600">Method: {{ transaction.method }}</p> -->
@@ -61,9 +72,21 @@
         <h2 class="text-sm text-grey-600 font-sans">Method</h2>
         <p class="text-lg font-medium font-sans text-black"> {{ transaction.method }}</p>
       </div>
+
+      <div>
+        <h2 class="text-sm text-grey-600 font-sans">Phone Number</h2>
+        <p class="text-lg font-medium font-sans text-black"> {{ transaction.userPhoneNumber }}</p>
+      </div>
+      <button (click)="clickToCopy(transaction.userPhoneNumber)">Click here to copy phonenumber</button>
+
       <div class="flex items-center gap-4">
-        <button *ngIf="transaction.status === 'pending'" (click)="acceptTransaction(transaction,'withdraw')"
+        <button *ngIf="transaction.status === 'pending' && isStatus" (click)="acceptTransaction(transaction,'withdraw')"
           class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-2">Accept</button>
+
+        <button *ngIf="transaction.status === 'pending' && !isStatus" (click)="acceptTransactionForWithdraw()"
+          class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-2">Accept</button>
+
+
         <button *ngIf="transaction.status === 'pending'" (click)="declineTransaction(transaction,'declineWithdraw')"
           class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-2">Decline</button>
       </div>
@@ -87,4 +110,58 @@
 
 
   </div>
+
+  <div *ngIf="showPopup" id="popup" tabindex="-1" aria-hidden="true"
+    class="fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0  min-h-screen flex justify-center items-center bg-overlay">
+    <div class="relative w-full max-w-2xl max-h-full ">
+      <!-- Modal content -->
+      <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+
+        <!-- Modal body -->
+        <div class="grid grid-cols-12 gap-4 p-4 space-y-6">
+          <div class="col-span-12">
+            <!-- Display the transaction history data here -->
+            <div class="close-button" (click)="closePopup()">
+              <i class="fas fa-times"></i>
+            </div>
+            <div class="overflow-auto h-24 flex justify-center items-center">
+              <p class="font-sans text-base">Have you sent the withdraw amount to the user? Please send the amount
+                before accept this transaction.</p> &nbsp;
+              <!-- <p class="text-xl font-medium font-sans">Accept</p> -->
+              <button (click)="closePopup()">Ok</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    #popup {
+      /* position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: white;
+        width: 400px;
+        height: 300px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        padding: 20px; */
+      z-index: 9999 !important;
+      /* display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center; */
+    }
+
+    .close-button {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      cursor: pointer;
+      color: #999;
+    }
+  </style>
+
 </div>

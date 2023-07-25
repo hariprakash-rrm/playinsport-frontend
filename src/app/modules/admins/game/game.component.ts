@@ -3,6 +3,7 @@ import { GameService } from './service/game.service';
 import { ClassyLayoutComponent } from 'app/layout/layouts/vertical/classy/classy.component';
 import { AnyKindOfDictionary } from 'lodash';
 import { SnackbarServiceService } from 'app/shared/snackbar-service.service';
+import { Clipboard } from '@angular/cdk/clipboard';
 
 @Component({
     selector: 'app-game',
@@ -19,11 +20,13 @@ export class GameComponent implements OnInit {
     selectedTransaction: any
     declineMessage = '';
     selectedTxn: any
+    phonenumber: any;
+    showPopup: boolean = false;
+    isStatus: boolean = false;
 
-    constructor(private gameService: GameService, private classy: ClassyLayoutComponent, private snack: SnackbarServiceService) {
-        // Fetch transactions from the service or API
+    constructor(private gameService: GameService, private classy: ClassyLayoutComponent, private snack: SnackbarServiceService,
+        private clipboard: Clipboard) {
 
-        //   this.withdrawalTransactions = this.gameService.getWithdrawalTransactions();
     }
 
     ngOnInit(): void {
@@ -49,7 +52,6 @@ export class GameComponent implements OnInit {
         this.depositTransactions = []
         try {
             this.gameService.getDepositTransactions(data).subscribe((res: any) => {
-                // console.log('resposnseeee', res)
                 this.depositTransactions = res.data.data
             }, (error: any) => {
 
@@ -57,7 +59,6 @@ export class GameComponent implements OnInit {
             })
         }
         catch (error) {
-            // console.log(error)
             this.snack.error(error.error.message, 4000)
         }
     }
@@ -70,19 +71,24 @@ export class GameComponent implements OnInit {
         }
         this.withdrawalTransactions = []
         this.gameService.getWithdrawTransaction(data).subscribe((res: any) => {
-            // console.log('resposnseeee', res)
             this.withdrawalTransactions = res.data.data
         }, (error: any) => {
 
-            this.snack.error(error.error.message, 4000)
+            this.snack.error(error.error.message, 4000)            // console.log('resposnseeee', res)
+
         })
     }
 
+    acceptTransactionForWithdraw(){
+        this.showPopup = true;
+        this.isStatus = true;
+    }
 
     acceptTransaction(transaction: any, message: any) {
         // Implement accept logic here and update the transaction status
         let token = localStorage.getItem('accessToken')
         let number = this.classy.phonenumber
+        this.isStatus = false;
         let data = {
             token: token,
             method: transaction.method,
@@ -90,6 +96,7 @@ export class GameComponent implements OnInit {
             message: message,
             userPhoneNumber: transaction.userPhoneNumber
         }
+        this.phonenumber = data.userPhoneNumber;
         this.updatePayment(data)
 
     }
@@ -103,13 +110,13 @@ export class GameComponent implements OnInit {
             message: message,
             userPhoneNumber: userPhoneNumber
         }
+        this.phonenumber = data.userPhoneNumber;
         try {
             this.gameService.updatePayment(data).subscribe((res: any) => {
-                // console.log('resposnseeee', res)
                 this.snack.success('success', 2000);
                 if (this.activeTab == 'deposit') {
                     this.getDepositData()
-                    
+
                 }
                 else if (this.activeTab == 'withdrawal') {
                     this.getWithdrawData()
@@ -142,11 +149,23 @@ export class GameComponent implements OnInit {
             message: this.declineMessage,
             userPhoneNumber: number
         }
+        this.phonenumber = data.userPhoneNumber;
         this.updatePayment(data)
     }
 
     closeModal() {
         this.showDeclineModal = false;
         this.declineMessage = ''
+    }
+
+    clickToCopy(number: any){
+        this.clipboard.copy(number);
+    }
+
+    closePopup(){
+        this.showPopup = false;
+    }
+    status(){
+        this.isStatus = true;
     }
 }
