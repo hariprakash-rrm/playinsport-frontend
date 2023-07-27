@@ -54,7 +54,6 @@ export class GameComponent implements OnInit {
             this.gameService.getDepositTransactions(data).subscribe((res: any) => {
                 this.depositTransactions = res.data.data
             }, (error: any) => {
-
                 this.snack.error(error.error.message, 4000)
             })
         }
@@ -79,7 +78,7 @@ export class GameComponent implements OnInit {
         })
     }
 
-    acceptTransactionForWithdraw(){
+    acceptTransactionForWithdraw() {
         this.showPopup = true;
         this.isStatus = true;
     }
@@ -158,14 +157,14 @@ export class GameComponent implements OnInit {
         this.declineMessage = ''
     }
 
-    clickToCopy(number: any){
+    clickToCopy(number: any) {
         this.clipboard.copy(number);
     }
 
-    closePopup(){
+    closePopup() {
         this.showPopup = false;
     }
-    status(){
+    status() {
         this.isStatus = true;
     }
 }

@@ -40,9 +40,7 @@
         <p class="text-lg font-medium font-sans text-black"> {{ transaction.userPhoneNumber }}</p>
       </div>
       <button (click)="clickToCopy(transaction.userPhoneNumber)">Click here to copy phonenumber</button>
-      <!-- <p class="text-lg">Amount: {{ transaction.amount }}</p>
-        <p class="text-gray-600">Status: {{ transaction.status }}</p>
-        <p class="text-gray-600">Method: {{ transaction.method }}</p> -->
+     
       <div class="flex items-center gap-4">
         <button *ngIf="transaction.status === 'pending'" (click)="acceptTransaction(transaction,'deposit')"
           class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-2">Accept</button>
@@ -57,9 +55,7 @@
     <h3 class="text-lg font-semibold">Withdrawal Transactions</h3>
     <div *ngFor="let transaction of withdrawalTransactions"
       class="my-2 border space-y-4 p-4 inline-block overflow-hidden rounded-md w-full cursor-pointer">
-      <!-- <p class="text-lg">Amount: {{ transaction.amount }}</p>
-      <p class="text-gray-600">Status: {{ transaction.status }}</p>
-      <p class="text-gray-600">Method: {{ transaction.method }}</p> -->
+      
       <div>
         <h2 class="text-sm text-grey-600 font-sans">Amount</h2>
         <p class="text-lg font-medium font-sans text-black"> {{ transaction.amount }}</p>

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TokenService } from '../token.service';
 import { SnackbarServiceService } from 'app/shared/snackbar-service.service';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { round } from 'lodash';
 
 @Component({
     selector: 'app-tokens',
@@ -79,7 +80,7 @@ export class TokenComponent implements OnInit {
 
     ngOnInit(): void {
         this.searchRound();
-     }
+    }
 
     clear() {
         console.log(this.tokenForm.value.name,)
@@ -109,6 +110,7 @@ export class TokenComponent implements OnInit {
             (response) => {
                 if (response.statusCode === 201) {
                     this.snackbarServiceService.success(response.message, 4000);
+                    this.tokenForm.reset();
                 }
             },
             (error) => {
@@ -132,6 +134,7 @@ export class TokenComponent implements OnInit {
             (response) => {
                 if (response.statusCode === 201) {
                     this.snackbarServiceService.success(response.message, 4000);
+                    this.refresh();
                 }
             },
             (error) => {
@@ -203,6 +206,12 @@ export class TokenComponent implements OnInit {
                 // console.log(response);
                 if (response.statusCode === 201) {
                     this.snackbarServiceService.success(response.message, 4000);
+                    this.rounds = 0;
+                    this.youtubeLinks = '';
+                    this.youtubeLiveLink = '';
+                    this.facebookLinks = '';
+                    this.facebookLiveLink = ''
+
                 }
             },
             (error) => {
@@ -216,20 +225,20 @@ export class TokenComponent implements OnInit {
     }
 
     searchRound() {
-        
+
         this.tokenService.getRound(this.rounds).subscribe((res: any) => {
             this.snackbarServiceService.success(res.message, 4000);
-                this.name = '';
-                this.prize = '';
-                this.tokenPrice = '';
-                this.date = '';
-                this.maximumTokenPerUser = 0;
-                this.totalTokenNumber = 0;
-                this.status = '';
-                this.youtubeLinks = '';
-                this.youtubeLiveLink = '';
-                this.facebookLinks = '';
-                this.facebookLiveLink = '';
+            this.name = '';
+            this.prize = '';
+            this.tokenPrice = '';
+            this.date = '';
+            this.maximumTokenPerUser = 0;
+            this.totalTokenNumber = 0;
+            this.status = '';
+            this.youtubeLinks = '';
+            this.youtubeLiveLink = '';
+            this.facebookLinks = '';
+            this.facebookLiveLink = '';
             if (res.statusCode === 201) {
                 this.snackbarServiceService.success(res.message, 4000);
                 this.isFetched = true
@@ -273,5 +282,9 @@ export class TokenComponent implements OnInit {
     // hasDuplicates(array: any[]): boolean {
     //     return new Set(array).size !== array.length;
     // }
+
+    refresh(): void {
+        window.location.reload();
+    }
 
 }

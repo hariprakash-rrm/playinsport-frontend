@@ -5,67 +5,91 @@ import { TokenService } from '../../token.service';
 @Component({
   selector: 'app-token',
   templateUrl: './token.component.html',
-  styleUrls: ['./token.component.scss']
 })
 export class TokenComponent implements OnInit {
 
-  
-  gameId:any=null
+
+  gameId: any = null
+  youtubeLink: string = null;
+  youtubeLiveLink: string = null;
+  facebookLink: string = null;
+  facebookLiveLink: string = null;
+
   selectedTime: any;
   selectedDate: Date;
 
   defaultValue = { hour: 13, minute: 30 };
-  games:any
-  
+  games: any
 
-  timeChangeHandler(event: any) {}
-
-  invalidInputHandler() {}
+  winner: string = 'Not yet updated'
+  winners: any;
 
 
-  constructor( private snackbar: SnackbarServiceService,private service:TokenService,) {
+  timeChangeHandler(event: any) { }
+
+  invalidInputHandler() { }
+
+
+  constructor(private snackbar: SnackbarServiceService, private service: TokenService,) {
 
     // this.selectedDate = new Date();
   }
 
   async ngOnInit() {
-   
+
   }
 
 
   onDateChange(event: any) {
     console.log('Selected Date:', this.selectedDate);
-    
+
     this.getGame()
   }
 
-  getGame(){
+  getGame() {
     this.service.getGames(this.selectedDate).subscribe(
       (response) => {
-          if (response.statusCode === 201) {
-              this.snackbar.success(response.message, 4000);
-              console.log(response)
-              this.games=response.data.data
-              // console.log(this.games[0].date)
-          }
+        if (response.statusCode === 201) {
+          this.snackbar.success(response.message, 4000);
+          this.games = response.data.data
+          this.youtubeLink = response.data.data.youtubeLink;
+          this.youtubeLiveLink = response.data.data.youtubeLiveLink;
+          this.facebookLink = response.data.data.facebookLink;
+          this.facebookLiveLink = response.data.data.facebookLiveLink;
+          this.winners = response.data.data.winnerList
+          console.log(response.data.data);
+        }
       },
       (error) => {
-        // console.log(error);
-        this.games=[]
-          this.snackbar.error(error.error.message, 4000);
-          
+        this.games = []
+        this.snackbar.error(error.error.message, 4000);
       }
-  );
+    );
   }
 
   activity() {
     // console.log('triggered',this.gameId)
 
     // Handle the emitted event here
-    this.gameId=null
+    this.gameId = null
     // Perform any other actions with the token value
+    this.youtubeLink = null;
+    this.youtubeLiveLink = null;
+    this.facebookLink = null;
+    this.facebookLiveLink = null;
   }
 
+  getLink(roundNumber: number) {
+    this.games.forEach((element: any) => {
+      if (element.round == roundNumber) {
+        console.log(element);
+        this.youtubeLiveLink = element?.youtubeLiveLink;
+        this.youtubeLink = element?.youtubeLink;
+        this.facebookLiveLink = element?.facebookLiveLink;
+        this.facebookLink = element?.facebookLink;
+      }
+    });
+  }
 
 
 }

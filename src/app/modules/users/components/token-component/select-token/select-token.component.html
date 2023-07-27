@@ -5,7 +5,32 @@
         View selected tokens
     </button>
 </div>
-<!-- <input [(ngModel)]="round" type="text"> -->
+
+
+<!-- Note -->
+<!-- you can work on design -->
+<!-- Dont need to add 'a' tag in the below form -->
+
+<form>
+    <mat-form-field>
+      <mat-label>Links</mat-label>
+      <mat-select (selectionChange)="onLinkSelected($event.value)">
+        <mat-option *ngIf="youtubeLink" [value]="youtubeLink">
+            YouTube Link
+        </mat-option>
+        <mat-option *ngIf="youtubeLiveLink" [value]="youtubeLiveLink">
+            YouTube Live Link
+        </mat-option>
+        <mat-option *ngIf="facebookLink" [value]="facebookLink">
+          Facebook Link
+        </mat-option>
+        <mat-option *ngIf="facebookLiveLink" [value]="facebookLiveLink">
+          Facebook Live Link
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+
 <div class="pt-8 p-4 w-full max-w-xs mx-auto justify-center items-center space-y-8 h-user-token overflow-y-scroll">
 
 
@@ -43,7 +68,6 @@
     </div>
 </div>
 
-
 <!-- Main modal -->
 <div *ngIf="viewSelected == true" id="defaultModal" tabindex="-1" aria-hidden="true"
     class="fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0  min-h-screen flex justify-center items-center bg-overlay">
@@ -54,7 +78,7 @@
                 <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
                     View Selected Tokens
                 </h3>
-                <button (click)="closeSelectedTokens()" type="button"
+                <button (click)="viewSelectedTokens()" type="button"
                     class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
                     data-modal-hide="defaultModal">
                     <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
@@ -99,7 +123,6 @@
                                         {{seat?.tokenNumber}}</td>
                                     <td class="py-2 px-4 border text-left font-sans" *ngIf="seat?.isSelected">
                                         {{seat?.selectedBy}}</td>
-
                                 </tr>
                             </tbody>
                         </table>
@@ -108,4 +131,9 @@
             </div>
         </div>
     </div>
+
+    
 </div>
+
+
+

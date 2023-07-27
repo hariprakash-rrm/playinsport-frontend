@@ -15,10 +15,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule } from '@angular/material/core';
 import { WalletComponent } from './components/wallet/wallet.component';
+import {MatSelectModule} from '@angular/material/select';
 import { SlideshowComponent } from './components/home-component/slideshow/slideshow.component';
-
-
-
 
 @NgModule({
   declarations: [
@@ -31,7 +29,7 @@ import { SlideshowComponent } from './components/home-component/slideshow/slides
   imports: [
     CommonModule,
     UsersRoutingModule,
-    MatFormFieldModule, MatDatepickerModule, MatInputModule, MatNativeDateModule, ReactiveFormsModule, FormsModule,
+    MatFormFieldModule, MatDatepickerModule, MatInputModule, MatNativeDateModule, ReactiveFormsModule, FormsModule, MatSelectModule
   ],
   providers: [TokenService],
 })

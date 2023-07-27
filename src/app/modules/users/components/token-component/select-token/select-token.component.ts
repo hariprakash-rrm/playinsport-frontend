@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import { SnackbarServiceService } from 'app/shared/snackbar-service.service';
 import { Socket } from 'ngx-socket-io';
 
@@ -13,6 +14,8 @@ interface Seat {
 @Component({
   selector: 'app-select-token',
   templateUrl: './select-token.component.html',
+  styleUrls: ['./select-token.component.css']
+
 })
 export class SelectTokenComponent implements OnInit, OnDestroy {
 
@@ -25,12 +28,18 @@ export class SelectTokenComponent implements OnInit, OnDestroy {
   seats: Seat[] = [];
   tokenData = [];
   userDetails: any;
-  round: number=1;
+  round: number = 1;
   viewSelected: boolean
+  @Input() youtubeLink: string;
+  @Input() youtubeLiveLink: string;
+  @Input() facebookLink: string;
+  @Input() facebookLiveLink: string;
+
 
   constructor(
     private socket: Socket,
-    private snackbar: SnackbarServiceService
+    private snackbar: SnackbarServiceService,
+    private router: Router
   ) { }
 
   /**
@@ -41,10 +50,12 @@ export class SelectTokenComponent implements OnInit, OnDestroy {
     this.round = this.gameId
     let user = await localStorage.getItem('user');
     this.userDetails = JSON.parse(user);
-    // console.log(this.userDetails);
 
     this.triggerSocket();
-    // console.log('ngOnInit called');
+    console.log(this.youtubeLink);
+    console.log('facebooklink', this.facebookLink);
+
+
   }
 
   /**
@@ -109,14 +120,19 @@ export class SelectTokenComponent implements OnInit, OnDestroy {
   handleSocketResponse() {
     let token = localStorage.getItem('accessToken');
     this.socket.fromEvent('userBalance').subscribe((message: any) => {
+      console.log('token', message);
+
     });
 
     this.socket.fromEvent('isError').subscribe((message: any) => {
       this.snackbar.error(message?.message, 3000);
+
     });
 
     this.socket.fromEvent('game').subscribe((message: any) => {
       this.handleSeats(message);
+
+      console.log('handleseat', message);
     });
 
     this.socket.emit('getGame', this.round);
@@ -191,6 +207,13 @@ export class SelectTokenComponent implements OnInit, OnDestroy {
   }
   closeSelectedTokens() {
     this.viewSelected = false;
+  }
+
+  onLinkSelected(selectedLink: string) {
+    if (selectedLink) {
+      window.open(selectedLink, '_blank');
+    }
+
   }
 
 }

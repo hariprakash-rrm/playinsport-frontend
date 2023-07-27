@@ -28,7 +28,9 @@
         class="rounded-3xl inline-block overflow-hidden shadow-xl w-full cursor-pointer transition ease-in-out hover:-translate-y-1 hover:scale-102 duration-300">
 
         <div class="bg-white" *ngFor="let card of games;let i = index">
-          <div (click)="gameId=card.round">
+          <div
+            (click)="gameId=card.round">
+            <div (click) = "getLink(card.round)" >
             <div class="relative group w-full overflow-hidden bg-black h-32 rounded-t-3xl">
               <img
                 src="https://images.unsplash.com/photo-1642764984362-54cae93c71b8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2276&q=80"
@@ -46,9 +48,9 @@
                 <h2 class="text-black text-base font-normal font-sans">Round </h2>
                 <p class="text-black text-xl font-semibold font-sans">{{ card?.round }}</p>
               </div>
-              <div class="col-span-6">
-                <p class="text-black text-base font-normal font-sans">Date: </p>
-                <p class="text-black text-xl font-semibold font-sans">{{ card?.date | date }}</p>
+              <div class="col-span-6" *ngIf="card?.winnerList != ''">
+                <p class="text-black text-base font-normal font-sans">Winner Token: </p>
+                <p class="text-black text-xl font-semibold font-sans">{{ card?.winnerList }}</p>
               </div>
 
               <div class="col-span-6">
@@ -61,6 +63,7 @@
               </div>
             </div>
           </div>
+          </div>
         </div>
       </a>
 
@@ -70,5 +73,6 @@
 
   </div>
 </div>
-<div #container><app-select-token *ngIf="gameId!=null" (activity)="activity($event)"
-    [gameId]="gameId"></app-select-token></div>
+<div #container><app-select-token *ngIf="gameId!=null" (activity)="activity($event)" [gameId]="gameId"
+    [youtubeLink]="youtubeLink" [youtubeLiveLink]="youtubeLiveLink" [facebookLink]="facebookLink"
+    [facebookLiveLink]="facebookLiveLink"></app-select-token></div>
