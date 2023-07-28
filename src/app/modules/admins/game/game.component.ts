@@ -4,6 +4,7 @@ import { ClassyLayoutComponent } from 'app/layout/layouts/vertical/classy/classy
 import { AnyKindOfDictionary } from 'lodash';
 import { SnackbarServiceService } from 'app/shared/snackbar-service.service';
 import { Clipboard } from '@angular/cdk/clipboard';
+import { DatePipe } from '@angular/common';
 
 @Component({
     selector: 'app-game',
@@ -11,9 +12,13 @@ import { Clipboard } from '@angular/cdk/clipboard';
     styleUrls: ['./game.component.css'],
 })
 export class GameComponent implements OnInit {
-    activeTab: 'deposit' | 'withdrawal' = 'deposit';
+    activeTab: 'deposit' | 'withdrawal' | 'txnHis' = 'deposit';
     depositTransactions: any = [];
     withdrawalTransactions: [] = [];
+    newTab: 'deposit' | 'withdraw' = 'deposit'
+    show: boolean;
+    searchTransactionId: number;
+
 
     // For handling decline action
     showDeclineModal = false;
@@ -25,34 +30,57 @@ export class GameComponent implements OnInit {
     isStatus: boolean = false;
 
     constructor(private gameService: GameService, private classy: ClassyLayoutComponent, private snack: SnackbarServiceService,
-        private clipboard: Clipboard) {
+        private clipboard: Clipboard,
+        private datePipe: DatePipe) {
 
     }
 
     ngOnInit(): void {
-        this.getDepositData()
+        this.getDepositData('pending')
+        this.show = false;
 
     }
 
-    switchTab(tab: 'deposit' | 'withdrawal') {
+    switchTab(tab: 'deposit' | 'withdrawal' | 'txnHis') {
+        this.withdrawalTransactions = [];
+        this.depositTransactions = [];
+        this.searchTransactionId = 0;
         this.activeTab = tab;
+        this.show = false;
         if (this.activeTab == 'deposit') {
-            this.getDepositData()
-        } else {
-            this.getWithdrawData()
+            this.getDepositData('pending')
+        } else if (this.activeTab == 'withdrawal') {
+            this.getWithdrawData('pending')
+        }
+        else {
+            this.getDepositData('deposit')
         }
     }
 
-    getDepositData() {
+    switchNewTab(tab: 'deposit' | 'withdraw') {
+        this.withdrawalTransactions = [];
+        this.depositTransactions = [];
+        this.newTab = tab;
+        this.show = true;
+        if (this.newTab === 'deposit') {
+            this.getDepositData('deposited');
+        } 
+        else {
+            this.getWithdrawData('withdrawn');
+        }
+    }
+
+    getDepositData(method: string) {
         let token = localStorage.getItem('accessToken')
         let data = {
             token: token,
-            method: "pending"
+            method: method
         }
         this.depositTransactions = []
         try {
             this.gameService.getDepositTransactions(data).subscribe((res: any) => {
                 this.depositTransactions = res.data.data
+                console.log(res.data.data);
             }, (error: any) => {
                 this.snack.error(error.error.message, 4000)
             })
@@ -62,21 +90,25 @@ export class GameComponent implements OnInit {
         }
     }
 
-    getWithdrawData() {
+    getWithdrawData(method: string) {
         let token = localStorage.getItem('accessToken')
         let data = {
             token: token,
-            method: "pending"
+            method: method
         }
         this.withdrawalTransactions = []
         this.gameService.getWithdrawTransaction(data).subscribe((res: any) => {
             this.withdrawalTransactions = res.data.data
+            console.log(res.data.data);
+
         }, (error: any) => {
 
             this.snack.error(error.error.message, 4000)            // console.log('resposnseeee', res)
 
         })
     }
+
+
 
     acceptTransactionForWithdraw() {
         this.showPopup = true;
@@ -114,11 +146,11 @@ export class GameComponent implements OnInit {
             this.gameService.updatePayment(data).subscribe((res: any) => {
                 this.snack.success('success', 2000);
                 if (this.activeTab == 'deposit') {
-                    this.getDepositData()
+                    this.getDepositData('pending')
 
                 }
                 else if (this.activeTab == 'withdrawal') {
-                    this.getWithdrawData()
+                    this.getWithdrawData('pending')
                 }
                 this.showDeclineModal = false;
             }, (error: any) => {
@@ -167,4 +199,31 @@ export class GameComponent implements OnInit {
     status() {
         this.isStatus = true;
     }
+    formatDate(dateString: string): string {
+        const date = new Date(dateString);
+        return this.datePipe.transform(date, 'MMM d, y, h:mm:ss a');
+      }
+
+      searchTransaction(method: string, transactionId: number){
+        this.withdrawalTransactions = [];
+        this.depositTransactions = [];
+        let token = localStorage.getItem('accessToken')
+        let data = {
+            token: token,
+            method: method,
+            transactionId: transactionId
+        }
+        this.gameService.searchTransaction(data).subscribe((res: any) => {
+            
+            if(method === 'withdraw'){
+                console.log(res.data.data);
+                this.withdrawalTransactions = res.data.data
+            }else{
+                this.depositTransactions = res.data.data
+            }
+        }, (error: any) => {
+
+            this.snack.error(error.error.message, 4000)          
+        })
+      }
 }

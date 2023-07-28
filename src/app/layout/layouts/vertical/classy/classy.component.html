@@ -17,7 +17,8 @@
         <!-- User -->
         <div class="flex flex-col items-center w-full p-4">
             <div class="relative w-24 h-24">
-                <img class="w-full h-full rounded-full" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMrd-dZ-Zvivo68RGRl5SgUgAPZTL_9RC7Sg">
+                <img class="w-full h-full rounded-full"
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMrd-dZ-Zvivo68RGRl5SgUgAPZTL_9RC7Sg">
                 <mat-icon class="icon-size-24" *ngIf="!user?.avatar"
                     [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>
             </div>
@@ -62,10 +63,11 @@
                         <line x1="1" y1="10" x2="23" y2="10"></line>
                     </svg>
                     <svg viewBox="0 0 24 24" width="24" height="24" stroke="#ffff" stroke-width="2" fill="none"
-                        stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
+                        stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1" (click)="viewUserDetails()">
                         <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                         <circle cx="12" cy="7" r="4"></circle>
                     </svg>
+                    <mat-icon (click)="refresh()" [svgIcon]="'heroicons_solid:refresh'"></mat-icon>
                     <!-- <notifications></notifications> -->
                     <!-- <user [userEmail] = "userEmail"[showAvatar]="false"></user> -->
                 </div>
@@ -146,7 +148,7 @@
     <div class="relative w-full max-w-2xl max-h-full ">
         <!-- Modal content -->
         <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-            
+
             <!-- Modal body -->
             <div class="grid grid-cols-12 gap-4 p-4 space-y-6">
                 <div class="col-span-12">
@@ -157,6 +159,34 @@
                     <div class="overflow-auto h-24 flex justify-center items-center">
                         <p class="font-sans text-base">Your Balance </p> &nbsp;
                         <p class="text-xl font-medium font-sans">{{wallet}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="showPopupForUser" id="popup" tabindex="-1" aria-hidden="true"
+    class="fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0  min-h-screen flex justify-center items-center bg-overlay">
+    <div class="relative w-full max-w-2xl max-h-full ">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+
+            <!-- Modal body -->
+            <div class="grid grid-cols-12 gap-4 p-4 space-y-6">
+                <div class="col-span-12">
+                    <!-- Display the transaction history data here -->
+                    <div class="close-button" (click)="viewUserDetails()">
+                        <i class="fas fa-times"></i>
+                    </div>
+                    <div class="overflow-auto h-24 flex justify-center items-center">
+                        <h4 class="font-sans text-base">User Name </h4> &nbsp;
+                        <p class="text-xl font-medium font-sans">{{userName}}</p>
+                    </div>
+
+                    <div class="overflow-auto h-24 flex justify-center items-center">
+                        <h4 class="font-sans text-base">Phone Number </h4> &nbsp;
+                        <p class="text-xl font-medium font-sans">{{phonenumber}}</p>
                     </div>
                 </div>
             </div>

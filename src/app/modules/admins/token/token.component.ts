@@ -83,11 +83,24 @@ export class TokenComponent implements OnInit {
     }
 
     clear() {
-        console.log(this.tokenForm.value.name,)
+        console.log("CLEARED");
+        this.name = '';
+            this.prize = '';
+            this.tokenPrice = '';
+            this.date = '';
+            this.maximumTokenPerUser = 0;
+            this.totalTokenNumber = 0;
+            this.status = '';
+            this.youtubeLinks = '';
+            this.youtubeLiveLink = '';
+            this.facebookLinks = '';
+            this.facebookLiveLink = '';
         this.tokenForm.reset()
+
+        console.log(this.tokenForm.value.name)
         this.rounds = 0
         this.isFetched = false
-        console.log(this.tokenForm.value.name,)
+        console.log(this.tokenForm.value.name)
     }
 
     tokenCreation(): void {
@@ -228,17 +241,7 @@ export class TokenComponent implements OnInit {
 
         this.tokenService.getRound(this.rounds).subscribe((res: any) => {
             this.snackbarServiceService.success(res.message, 4000);
-            this.name = '';
-            this.prize = '';
-            this.tokenPrice = '';
-            this.date = '';
-            this.maximumTokenPerUser = 0;
-            this.totalTokenNumber = 0;
-            this.status = '';
-            this.youtubeLinks = '';
-            this.youtubeLiveLink = '';
-            this.facebookLinks = '';
-            this.facebookLiveLink = '';
+            
             if (res.statusCode === 201) {
                 this.snackbarServiceService.success(res.message, 4000);
                 this.isFetched = true

@@ -10,10 +10,14 @@
       <a class="bg-white inline-block py-2 px-4 font-semibold cursor-pointer"
         [class.active]="activeTab === 'withdrawal'" (click)="switchTab('withdrawal')">Withdrawal</a>
     </li>
+    <li class="w-full text-center">
+      <a class="bg-white inline-block py-2 px-4 font-semibold cursor-pointer" [class.active]="activeTab === 'txnHis'"
+        (click)="switchTab('txnHis')">Transaction History</a>
+    </li>
   </ul>
 
   <!-- Display transactions based on activeTab -->
-  <div *ngIf="activeTab === 'deposit'" class="p-4 pt-8">
+  <div *ngIf="activeTab === 'deposit' && !show" class="p-4 pt-8">
     <h3 class="text-lg font-semibold">Deposit Transactions</h3>
     <div *ngFor="let transaction of depositTransactions"
       class="my-2 border space-y-4 p-4 inline-block overflow-hidden rounded-md w-full cursor-pointer">
@@ -39,8 +43,13 @@
         <h2 class="text-sm text-grey-600 font-sans">Phone Number</h2>
         <p class="text-lg font-medium font-sans text-black"> {{ transaction.userPhoneNumber }}</p>
       </div>
-      <button (click)="clickToCopy(transaction.userPhoneNumber)">Click here to copy phonenumber</button>
+
+      <!-- Need to place this icon near the phone number << priyanka >> -->
      
+      <button (click)="clickToCopy(transaction.userPhoneNumber)" class="bg-white p-2 rounded flex items-center justify-center">
+        <span class="material-icons">content_copy</span>
+      </button>
+
       <div class="flex items-center gap-4">
         <button *ngIf="transaction.status === 'pending'" (click)="acceptTransaction(transaction,'deposit')"
           class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-2">Accept</button>
@@ -51,11 +60,11 @@
     </div>
   </div>
 
-  <div *ngIf="activeTab === 'withdrawal'" class="p-4 pt-8">
+  <div *ngIf="activeTab === 'withdrawal' && !show" class="p-4 pt-8">
     <h3 class="text-lg font-semibold">Withdrawal Transactions</h3>
     <div *ngFor="let transaction of withdrawalTransactions"
       class="my-2 border space-y-4 p-4 inline-block overflow-hidden rounded-md w-full cursor-pointer">
-      
+
       <div>
         <h2 class="text-sm text-grey-600 font-sans">Amount</h2>
         <p class="text-lg font-medium font-sans text-black"> {{ transaction.amount }}</p>
@@ -131,6 +140,101 @@
       </div>
     </div>
   </div>
+
+  <div *ngIf="activeTab === 'txnHis'" class="p-4 pt-8">
+
+    <button *ngIf="activeTab === 'txnHis'" (click)="switchNewTab('withdraw')"
+      class="bg-blue-500 hover:bg-black-700 text-white font-bold py-2 px-4 rounded mt-2">Withdraw</button>
+
+    <button *ngIf="activeTab === 'txnHis'" (click)="switchNewTab('deposit')"
+      class="bg-blue-500 align-items:right hover:bg-black-700 text-white font-bold py-2 px-4 rounded mt-2">Deposit</button>
+
+    <div *ngIf="newTab === 'withdraw'">
+      <h3 class="text-lg font-semibold">Withdrawal History</h3>
+
+      <input type="number" [(ngModel)]="searchTransactionId" class="border border-gray-300 rounded w-full"
+        placeholder="Search withdraw transaction id">
+      <button (click)="searchTransaction('withdraw', searchTransactionId)"
+        class="bg-black p-2 rounded flex items-center justify-center">
+        <mat-icon class="text-white">search</mat-icon>
+      </button>
+
+      <div *ngFor="let transaction of withdrawalTransactions"
+        class="my-2 border space-y-4 p-4 inline-block overflow-hidden rounded-md w-full cursor-pointer">
+
+        <div>
+          <h2 class="text-sm text-grey-600 font-sans">Withdraw Transaction Id</h2>
+          <p class="text-lg font-medium font-sans text-black"> {{ transaction.withdrawTransactionId }}</p>
+        </div>
+        <div>
+          <h2 class="text-sm text-grey-600 font-sans">Amount</h2>
+          <p class="text-lg font-medium font-sans text-black"> {{ transaction.amount }}</p>
+        </div>
+        <div>
+          <h2 class="text-sm text-grey-600 font-sans">Status</h2>
+          <p class="text-lg font-medium font-sans text-black"> {{ transaction.status }}</p>
+        </div>
+        <div>
+          <h2 class="text-sm text-grey-600 font-sans">Date</h2>
+          <p class="text-lg font-medium font-sans text-black"> {{ formatDate(transaction.createdAt) }}</p>
+        </div>
+        <div>
+          <h2 class="text-sm text-grey-600 font-sans">Method</h2>
+          <p class="text-lg font-medium font-sans text-black"> {{ transaction.method }}</p>
+        </div>
+
+        <div>
+          <h2 class="text-sm text-grey-600 font-sans">Phone Number</h2>
+          <p class="text-lg font-medium font-sans text-black"> {{ transaction.userPhoneNumber }}</p>
+        </div>
+
+      </div>
+    </div>
+
+    <div *ngIf="newTab === 'deposit' ">
+      <h3 class="text-lg font-semibold">Deposit History</h3>
+
+      <input type="number" [(ngModel)]="transactionId" class="border border-gray-300 rounded w-full"
+        placeholder="Search deposit transaction id">
+      <button (click)="searchTransaction('deposit', transactionId)"
+        class="bg-black p-2 rounded flex items-center justify-center">
+        <mat-icon class="text-white">search</mat-icon>
+      </button>
+
+      <div *ngFor="let transaction of depositTransactions"
+        class="my-2 border space-y-4 p-4 inline-block overflow-hidden rounded-md w-full cursor-pointer">
+
+        <div>
+          <h2 class="text-sm text-grey-600 font-sans">Deposit Transaction Id</h2>
+          <p class="text-lg font-medium font-sans text-black"> {{ transaction.DepositTransactionId }}</p>
+        </div>
+
+        <div>
+          <h2 class="text-sm text-grey-600 font-sans">Amount</h2>
+          <p class="text-lg font-medium font-sans text-black"> {{ transaction.amount }}</p>
+        </div>
+        <div>
+          <h2 class="text-sm text-grey-600 font-sans">Status</h2>
+          <p class="text-lg font-medium font-sans text-black"> {{ transaction.status }}</p>
+        </div>
+        <div>
+          <h2 class="text-sm text-grey-600 font-sans">Date</h2>
+          <p class="text-lg font-medium font-sans text-black"> {{ formatDate(transaction.createdAt) }}</p>
+        </div>
+        <div>
+          <h2 class="text-sm text-grey-600 font-sans">Method</h2>
+          <p class="text-lg font-medium font-sans text-black"> {{ transaction.method }}</p>
+        </div>
+
+        <div>
+          <h2 class="text-sm text-grey-600 font-sans">Phone Number</h2>
+          <p class="text-lg font-medium font-sans text-black"> {{ transaction.userPhoneNumber }}</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
 
   <style>
     #popup {

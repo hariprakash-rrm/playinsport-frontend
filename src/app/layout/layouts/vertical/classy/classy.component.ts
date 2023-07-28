@@ -37,6 +37,7 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy {
     showPopup: boolean;
     private nameSubject = new Subject<any>();
     name$ = this.nameSubject.asObservable();
+    showPopupForUser: boolean;
 
     private numberSubject = new Subject<any>();
     number$ = this.numberSubject.asObservable();
@@ -179,5 +180,11 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy {
     }
     closePopup(): void{
         this.showPopup = false;
+    }
+    viewUserDetails(): void{
+        this.showPopupForUser = !this.showPopupForUser;
+    }
+    refresh(): void {
+        window.location.reload();
     }
 }
