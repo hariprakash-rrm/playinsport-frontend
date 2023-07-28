@@ -165,10 +165,12 @@ export class AuthSignUpComponent implements OnInit,OnDestroy {
                 }
                 
             },
-            (error) => {
-                // console.log(error);
-                this.signUpForm.enable();
-                this.errorMessage = error.error.message;
+            (error: HttpErrorResponse) => {
+                if (error.status === 0) {
+                    this.errorMessage = 'Error: Backend server not connected';
+                } else {
+                    this.errorMessage = error.error.message;
+                }
             }
         );
     }
