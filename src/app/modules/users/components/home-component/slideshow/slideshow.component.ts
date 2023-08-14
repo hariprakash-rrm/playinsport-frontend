@@ -11,7 +11,7 @@ export class SlideshowComponent implements OnInit {
 
   
   banners = [
-    'https://cdnb.artstation.com/p/assets/images/images/005/807/499/large/dope-pope-ztuscan-raider-ks-by-dp.jpg?1493909716',
+    'https://t4.ftcdn.net/jpg/04/59/48/15/360_F_459481536_QyHEGtoIASEBK49fdg5ZhuOEfOGnOYaS.jpg',
     'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq_oQ4_ahQzI2vzj82NVvmO6YH30uTgJpmUw',
     'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzWm2CY-FGrg9RYPsRREm32A-VHsfphPn3Lg'
   ];
