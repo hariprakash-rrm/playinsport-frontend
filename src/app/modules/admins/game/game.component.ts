@@ -133,6 +133,7 @@ export class GameComponent implements OnInit {
     }
 
     updatePayment(details: any) {
+        console.log("**********", details);
         let { token, method, amount, message, userPhoneNumber } = details
         let data = {
             token: token,
@@ -155,6 +156,7 @@ export class GameComponent implements OnInit {
                 this.showDeclineModal = false;
             }, (error: any) => {
 
+                console.log(error);
                 this.snack.error(error.error.message, 4000)
             });
         } catch (error) {
@@ -163,6 +165,7 @@ export class GameComponent implements OnInit {
     }
 
     declineTransaction(transaction: any, method: any) {
+        console.log(method);
         this.showDeclineModal = true;
         this.selectedTransaction = transaction;
         this.selectedTransaction.method = method
@@ -180,6 +183,7 @@ export class GameComponent implements OnInit {
             message: this.declineMessage,
             userPhoneNumber: number
         }
+        console.log(this.selectedTransaction.method);
         this.phonenumber = data.userPhoneNumber;
         this.updatePayment(data)
     }
