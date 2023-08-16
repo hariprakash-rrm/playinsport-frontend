@@ -11,9 +11,10 @@ import { AdminService } from './admin.service';
 import { TokenService } from './token.service';
 import { NgxPaginationModule } from 'ngx-pagination';
 import {  DatePipe } from '@angular/common';
+import { QrCodeComponent } from './qr-code/qr-code.component';
 
 @NgModule({
-    declarations: [TokenComponent, GameComponent, HomeComponent],
+    declarations: [TokenComponent, GameComponent, HomeComponent, QrCodeComponent],
     imports: [
         CommonModule,
         NgxPaginationModule,

@@ -5,6 +5,7 @@ import { switchMap } from 'rxjs/operators';
 import { UserService } from 'app/core/user/user.service';
 import { environment } from 'environments/environment';
 import { HttpParams } from '@angular/common/http';
+import { Accordion } from 'flowbite';
 @Injectable()
 export class AdminService {
     private _authenticated: boolean = false;
@@ -145,5 +146,16 @@ export class AdminService {
                     return of(response);
                 })
             )
+    }
+
+    getQr(accessToken:any){
+        console.log(accessToken)
+        let data={
+            token:accessToken
+        }
+        return this._httpClient.post(`${this.apiUrl}/qr`,data).pipe(switchMap((res:any)=>{
+            console.log((res))
+            return of((res.data))
+        }))
     }
 }
