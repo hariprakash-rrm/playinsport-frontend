@@ -61,7 +61,7 @@ export const compactNavigation: FuseNavigationItem[] = [
         link: '/admin/token',
     },
     {
-        id: 'Token',
+        id: 'Wallet',
         title: 'Admin Wallet',
         type: 'basic',
         icon: 'heroicons_outline:document',
