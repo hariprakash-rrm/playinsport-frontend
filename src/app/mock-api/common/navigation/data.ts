@@ -60,6 +60,20 @@ export const compactNavigation: FuseNavigationItem[] = [
         icon: 'heroicons_outline:document',
         link: '/admin/token',
     },
+    {
+        id: 'Token',
+        title: 'Admin Wallet',
+        type: 'basic',
+        icon: 'heroicons_outline:document',
+        link: '/admin/wallet',
+    },
+    {
+        id: 'qr',
+        title: 'Admin qr',
+        type: 'basic',
+        icon: 'heroicons_outline:document',
+        link: '/admin/qr',
+    },
 ];
 export const futuristicNavigation: FuseNavigationItem[] = [
     {
