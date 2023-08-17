@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { GameComponent } from './game/game.component';
 import { TokenComponent } from './token/token.component';
-import { QrCodeComponent } from './qr-code/qr-code.component';
+
 
 const routes: Routes = [
   {
@@ -11,17 +11,14 @@ const routes: Routes = [
     component: HomeComponent
   },
   {
-    path: 'game',
+    path: 'wallet',
     component: GameComponent
   },
   {
     path: 'token',
     component: TokenComponent
   }
-  ,{
-    path:'qr',
-    component:QrCodeComponent
-  }
+
 ];
 
 @NgModule({
