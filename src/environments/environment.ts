@@ -6,7 +6,7 @@ export const environment = {
     production: false,
 
     //dont add '/' at end
-    apiUrl: 'https://backend-sigma-virid.vercel.app',
+    apiUrl: 'http://localhost:3000',
 };
 
 /*
