@@ -6,7 +6,7 @@ export const environment = {
     production: false,
 
     //dont add '/' at end
-    apiUrl: '3000',
+    apiUrl: 'http://157.245.99.18:3000',
 };
 
 /*
