@@ -1,0 +1,267 @@
+<!-- transaction.component.html -->
+<div class="container w-full mx-auto px-4 py-8">
+  <!-- Tabs to switch between Deposit and Withdrawal transactions -->
+  <ul class="flex gap-4 items-center justify-center border-b">
+    <li class="w-full text-center">
+      <a class="bg-white inline-block py-2 px-4 font-semibold cursor-pointer" [class.active]="activeTab === 'deposit'"
+        (click)="switchTab('deposit')">Deposit</a>
+    </li>
+    <li class="w-full text-center">
+      <a class="bg-white inline-block py-2 px-4 font-semibold cursor-pointer"
+        [class.active]="activeTab === 'withdrawal'" (click)="switchTab('withdrawal')">Withdrawal</a>
+    </li>
+    <li class="w-full text-center">
+      <a class="bg-white inline-block py-2 px-4 font-semibold cursor-pointer" [class.active]="activeTab === 'txnHis'"
+        (click)="switchTab('txnHis')">Transaction History</a>
+    </li>
+  </ul>
+
+  <!-- Display transactions based on activeTab -->
+  <div *ngIf="activeTab === 'deposit' && !show" class="p-4 pt-8">
+    <h3 class="text-lg font-semibold">Deposit Transactions</h3>
+    <div *ngFor="let transaction of depositTransactions"
+      class="my-2 border space-y-4 p-4 inline-block overflow-hidden rounded-md w-full cursor-pointer">
+      <div>
+        <h2 class="text-sm text-grey-600 font-sans">Amount</h2>
+        <p class="text-lg font-medium font-sans text-black"> {{ transaction.amount }}</p>
+      </div>
+      <div>
+        <h2 class="text-sm text-grey-600 font-sans">Status</h2>
+        <p class="text-lg font-medium font-sans text-black"> {{ transaction.status }}</p>
+      </div>
+      <div>
+        <h2 class="text-sm text-grey-600 font-sans">Method</h2>
+        <p class="text-lg font-medium font-sans text-black"> {{ transaction.method }}</p>
+      </div>
+
+      <div>
+        <h2 class="text-sm text-grey-600 font-sans">TransactionId</h2>
+        <p class="text-lg font-medium font-sans text-black"> {{ transaction.transactionId }}</p>
+      </div>
+
+      <div>
+        <h2 class="text-sm text-grey-600 font-sans">Phone Number</h2>
+        <p class="text-lg font-medium font-sans text-black"> {{ transaction.userPhoneNumber }}</p>
+      </div>
+
+      <!-- Need to place this icon near the phone number << priyanka >> -->
+     
+      <button (click)="clickToCopy(transaction.userPhoneNumber)" class="bg-white p-2 rounded flex items-center justify-center">
+        <span class="material-icons">content_copy</span>
+      </button>
+
+      <div class="flex items-center gap-4">
+        <button *ngIf="transaction.status === 'pending'" (click)="acceptTransaction(transaction,'deposit')"
+          class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-2">Accept</button>
+        <button *ngIf="transaction.status === 'pending'" (click)="declineTransaction(transaction,'declineDeposit')"
+          class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-2">Decline</button>
+      </div>
+
+    </div>
+  </div>
+
+  <div *ngIf="activeTab === 'withdrawal' && !show" class="p-4 pt-8">
+    <h3 class="text-lg font-semibold">Withdrawal Transactions</h3>
+    <div *ngFor="let transaction of withdrawalTransactions"
+      class="my-2 border space-y-4 p-4 inline-block overflow-hidden rounded-md w-full cursor-pointer">
+
+      <div>
+        <h2 class="text-sm text-grey-600 font-sans">Amount</h2>
+        <p class="text-lg font-medium font-sans text-black"> {{ transaction.amount }}</p>
+      </div>
+      <div>
+        <h2 class="text-sm text-grey-600 font-sans">Status</h2>
+        <p class="text-lg font-medium font-sans text-black"> {{ transaction.status }}</p>
+      </div>
+      <div>
+        <h2 class="text-sm text-grey-600 font-sans">Method</h2>
+        <p class="text-lg font-medium font-sans text-black"> {{ transaction.method }}</p>
+      </div>
+
+      <div>
+        <h2 class="text-sm text-grey-600 font-sans">Phone Number</h2>
+        <p class="text-lg font-medium font-sans text-black"> {{ transaction.userPhoneNumber }}</p>
+      </div>
+      <button (click)="clickToCopy(transaction.userPhoneNumber)">Click here to copy phonenumber</button>
+
+      <div class="flex items-center gap-4">
+        <button *ngIf="transaction.status === 'pending' && isStatus" (click)="acceptTransaction(transaction,'withdraw')"
+          class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-2">Accept</button>
+
+        <button *ngIf="transaction.status === 'pending' && !isStatus" (click)="acceptTransactionForWithdraw()"
+          class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-2">Accept</button>
+
+
+        <button *ngIf="transaction.status === 'pending'" (click)="declineTransaction(transaction,'declineWithdraw')"
+          class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-2">Decline</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Modal for entering decline message -->
+  <div *ngIf="showDeclineModal" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 ">
+    <div class="bg-white rounded-md p-4 m-4">
+      <h4 class="text-lg font-semibold mb-2">Enter Decline Message</h4>
+      <textarea [(ngModel)]="declineMessage" rows="3" cols="30"
+        class="w-full p-2 border border-gray-300 rounded"></textarea>
+      <div class="flex justify-end items-center gap-4 mt-4">
+        <button (click)="confirmDecline(transaction)"
+          class="px-4 py-2 bg-black text-white font-sans font-medium rounded hover:bg-white hover:text-black border-black border-2 border-solid w-full whitespace-nowrap mt-2">Confirm</button>
+        <button (click)="closeModal()"
+          class="px-8 py-2 border-2 border-solid border-black rounded text-black font-medium w-full hover:bg-black hover:text-white transition-all ease-in-out duration-300 mt-2">Close</button>
+      </div>
+    </div>
+
+
+  </div>
+
+  <div *ngIf="showPopup" id="popup" tabindex="-1" aria-hidden="true"
+    class="fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0  min-h-screen flex justify-center items-center bg-overlay">
+    <div class="relative w-full max-w-2xl max-h-full ">
+      <!-- Modal content -->
+      <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+
+        <!-- Modal body -->
+        <div class="grid grid-cols-12 gap-4 p-4 space-y-6">
+          <div class="col-span-12">
+            <!-- Display the transaction history data here -->
+            <div class="close-button" (click)="closePopup()">
+              <i class="fas fa-times"></i>
+            </div>
+            <div class="overflow-auto h-24 flex justify-center items-center">
+              <p class="font-sans text-base">Have you sent the withdraw amount to the user? Please send the amount
+                before accept this transaction.</p> &nbsp;
+              <!-- <p class="text-xl font-medium font-sans">Accept</p> -->
+              <button (click)="closePopup()">Ok</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="activeTab === 'txnHis'" class="p-4 pt-8">
+
+    <button *ngIf="activeTab === 'txnHis'" (click)="switchNewTab('withdraw')"
+      class="bg-blue-500 hover:bg-black-700 text-white font-bold py-2 px-4 rounded mt-2">Withdraw</button>
+
+    <button *ngIf="activeTab === 'txnHis'" (click)="switchNewTab('deposit')"
+      class="bg-blue-500 align-items:right hover:bg-black-700 text-white font-bold py-2 px-4 rounded mt-2">Deposit</button>
+
+    <div *ngIf="newTab === 'withdraw'">
+      <h3 class="text-lg font-semibold">Withdrawal History</h3>
+
+      <input type="number" [(ngModel)]="searchTransactionId" class="border border-gray-300 rounded w-full"
+        placeholder="Search withdraw transaction id">
+      <button (click)="searchTransaction('withdraw', searchTransactionId)"
+        class="bg-black p-2 rounded flex items-center justify-center">
+        <mat-icon class="text-white">search</mat-icon>
+      </button>
+
+      <div *ngFor="let transaction of withdrawalTransactions"
+        class="my-2 border space-y-4 p-4 inline-block overflow-hidden rounded-md w-full cursor-pointer">
+
+        <div>
+          <h2 class="text-sm text-grey-600 font-sans">Withdraw Transaction Id</h2>
+          <p class="text-lg font-medium font-sans text-black"> {{ transaction.withdrawTransactionId }}</p>
+        </div>
+        <div>
+          <h2 class="text-sm text-grey-600 font-sans">Amount</h2>
+          <p class="text-lg font-medium font-sans text-black"> {{ transaction.amount }}</p>
+        </div>
+        <div>
+          <h2 class="text-sm text-grey-600 font-sans">Status</h2>
+          <p class="text-lg font-medium font-sans text-black"> {{ transaction.status }}</p>
+        </div>
+        <div>
+          <h2 class="text-sm text-grey-600 font-sans">Date</h2>
+          <p class="text-lg font-medium font-sans text-black"> {{ formatDate(transaction.createdAt) }}</p>
+        </div>
+        <div>
+          <h2 class="text-sm text-grey-600 font-sans">Method</h2>
+          <p class="text-lg font-medium font-sans text-black"> {{ transaction.method }}</p>
+        </div>
+
+        <div>
+          <h2 class="text-sm text-grey-600 font-sans">Phone Number</h2>
+          <p class="text-lg font-medium font-sans text-black"> {{ transaction.userPhoneNumber }}</p>
+        </div>
+
+      </div>
+    </div>
+
+    <div *ngIf="newTab === 'deposit' ">
+      <h3 class="text-lg font-semibold">Deposit History</h3>
+
+      <input type="number" [(ngModel)]="transactionId" class="border border-gray-300 rounded w-full"
+        placeholder="Search deposit transaction id">
+      <button (click)="searchTransaction('deposit', transactionId)"
+        class="bg-black p-2 rounded flex items-center justify-center">
+        <mat-icon class="text-white">search</mat-icon>
+      </button>
+
+      <div *ngFor="let transaction of depositTransactions"
+        class="my-2 border space-y-4 p-4 inline-block overflow-hidden rounded-md w-full cursor-pointer">
+
+        <div>
+          <h2 class="text-sm text-grey-600 font-sans">Deposit Transaction Id</h2>
+          <p class="text-lg font-medium font-sans text-black"> {{ transaction.DepositTransactionId }}</p>
+        </div>
+
+        <div>
+          <h2 class="text-sm text-grey-600 font-sans">Amount</h2>
+          <p class="text-lg font-medium font-sans text-black"> {{ transaction.amount }}</p>
+        </div>
+        <div>
+          <h2 class="text-sm text-grey-600 font-sans">Status</h2>
+          <p class="text-lg font-medium font-sans text-black"> {{ transaction.status }}</p>
+        </div>
+        <div>
+          <h2 class="text-sm text-grey-600 font-sans">Date</h2>
+          <p class="text-lg font-medium font-sans text-black"> {{ formatDate(transaction.createdAt) }}</p>
+        </div>
+        <div>
+          <h2 class="text-sm text-grey-600 font-sans">Method</h2>
+          <p class="text-lg font-medium font-sans text-black"> {{ transaction.method }}</p>
+        </div>
+
+        <div>
+          <h2 class="text-sm text-grey-600 font-sans">Phone Number</h2>
+          <p class="text-lg font-medium font-sans text-black"> {{ transaction.userPhoneNumber }}</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <style>
+    #popup {
+      /* position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: white;
+        width: 400px;
+        height: 300px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        padding: 20px; */
+      z-index: 9999 !important;
+      /* display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center; */
+    }
+
+    .close-button {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      cursor: pointer;
+      color: #999;
+    }
+  </style>
+
+</div>

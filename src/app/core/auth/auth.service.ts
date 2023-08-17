@@ -4,10 +4,13 @@ import { Observable, of, throwError } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
 import { AuthUtils } from 'app/core/auth/auth.utils';
 import { UserService } from 'app/core/user/user.service';
+import { environment } from 'environments/environment';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Injectable()
 export class AuthService {
     private _authenticated: boolean = false;
+    private apiUrl = environment.apiUrl;
 
     /**
      * Constructor
@@ -15,8 +18,7 @@ export class AuthService {
     constructor(
         private _httpClient: HttpClient,
         private _userService: UserService
-    ) {
-    }
+    ) {}
 
     // -----------------------------------------------------------------------------------------------------
     // @ Accessors
@@ -50,8 +52,11 @@ export class AuthService {
      *
      * @param number
      */
-    forgotPassword(data: any): Observable<any> {
-        return this._httpClient.post('https://d1d0-2401-4900-3601-781a-2e3-7fbf-7866-4096.ngrok-free.app/send-otp', data);
+    forgotPassword(data:any): Observable<any> {
+        return this._httpClient.post(
+            `${environment.apiUrl}/send-otp`,
+            data
+        );
     }
 
     /**
@@ -59,8 +64,11 @@ export class AuthService {
      *
      * @param password
      */
-    resetPassword(validation: { token: any, password: string; }): Observable<any> {
-        return this._httpClient.post('https://d1d0-2401-4900-3601-781a-2e3-7fbf-7866-4096.ngrok-free.app/set-password', validation);
+    resetPassword(validation: {
+        token: string;
+        password: string;
+    }): Observable<any> {
+        return this._httpClient.post(`${this.apiUrl}/set-password`, validation);
     }
 
     /**
@@ -68,23 +76,23 @@ export class AuthService {
      *
      * @param credentials
      */
-    signIn(credentials: { number: string; password: string }): Observable<any> {
+    signIn(credentials: { number: number; password: string }): Observable<any> {
         // Throw error, if the user is already logged in
         if (this._authenticated) {
             return throwError('User is already logged in.');
         }
-
-        return this._httpClient.post('https://d1d0-2401-4900-3601-781a-2e3-7fbf-7866-4096.ngrok-free.app/signin', credentials).pipe(
+        return this._httpClient.post(`${this.apiUrl}/signin`, credentials).pipe(
             switchMap((response: any) => {
-                console.log(response);
+                // console.log(response);
                 // Store the access token in the local storage
                 this.accessToken = response.token;
-                this.user=JSON.stringify(response.details)
+                this.user = JSON.stringify(response.data);
                 // Set the authenticated flag to true
                 this._authenticated = true;
 
                 // Store the user on the user service
                 this._userService.user = response.user;
+                // console.log(response);
 
                 // Return a new observable with the response
                 return of(response);
@@ -92,28 +100,28 @@ export class AuthService {
         );
     }
 
-
-    submitOTP(OTPValidation: { otp: any, number: Number; }): Observable<any> {
+    submitOTP(OTPValidation: { otp: number; number: Number }): Observable<any> {
         // Throw error, if the user is already logged in
         if (this._authenticated) {
             return throwError('User is already logged in.');
         }
-        return this._httpClient.post('https://d1d0-2401-4900-3601-781a-2e3-7fbf-7866-4096.ngrok-free.app/submit-otp', OTPValidation).pipe(
-            switchMap((response: any) => {
+        return this._httpClient
+            .post(`${this.apiUrl}/submit-otp`, OTPValidation)
+            .pipe(
+                switchMap((response: any) => {
+                    // Store the access token in the local storage
+                    this.accessToken = response.token;
+                    this.user = JSON.stringify(response.data);
+                    // Set the authenticated flag to true
+                    this._authenticated = true;
 
-                // Store the access token in the local storage
-                this.accessToken = response.token;
-                this.user=JSON.stringify(response.details)
-                // Set the authenticated flag to true
-                this._authenticated = true;
+                    // Store the user on the user service
+                    this._userService.user = response.user;
 
-                // Store the user on the user service
-                this._userService.user = response.user;
-
-                // Return a new observable with the response
-                return of(response);
-            })
-        );
+                    // Return a new observable with the response
+                    return of(response);
+                })
+            );
     }
 
     /**
@@ -122,29 +130,29 @@ export class AuthService {
     signInUsingToken(): Observable<any> {
         // Renew token
         return of(true);
-        return this._httpClient.post('api/auth/refresh-access-token', {
-            accessToken: this.accessToken
-        }).pipe(
-            catchError(() =>
-
-                // Return false
-                of(false)
-            ),
-            switchMap((response: any) => {
-
-                // Store the access token in the local storage
-                this.accessToken = response.accessToken;
-
-                // Set the authenticated flag to true
-                this._authenticated = true;
-
-                // Store the user on the user service
-                this._userService.user = response.user;
-
-                // Return true
-                return of(true);
+        return this._httpClient
+            .post('api/auth/refresh-access-token', {
+                accessToken: this.accessToken,
             })
-        );
+            .pipe(
+                catchError(() =>
+                    // Return false
+                    of(false)
+                ),
+                switchMap((response: any) => {
+                    // Store the access token in the local storage
+                    this.accessToken = response.accessToken;
+
+                    // Set the authenticated flag to true
+                    this._authenticated = true;
+
+                    // Store the user on the user service
+                    this._userService.user = response.user;
+
+                    // Return true
+                    return of(true);
+                })
+            );
     }
 
     /**
@@ -166,8 +174,8 @@ export class AuthService {
      *
      * @param user
      */
-    signUp(user: { username: string; number: Number; }): Observable<any> {
-        return this._httpClient.post('https://d1d0-2401-4900-3601-781a-2e3-7fbf-7866-4096.ngrok-free.app/signup', user);
+    signUp(user: { username: string; number: number }): Observable<any> {
+        return this._httpClient.post(`${this.apiUrl}/signup`, user);
     }
 
     /**
@@ -175,21 +183,22 @@ export class AuthService {
      *
      * @param credentials
      */
-    unlockSession(credentials: { number: Number; password: string }): Observable<any> {
-        return this._httpClient.post('https://d1d0-2401-4900-3601-781a-2e3-7fbf-7866-4096.ngrok-free.app/login', credentials);
+    unlockSession(credentials: {
+        number: Number;
+        password: string;
+    }): Observable<any> {
+        return this._httpClient.post(`${this.apiUrl}/login`, credentials);
     }
 
     /**
      * Check the authentication status
      */
     check(): Observable<boolean> {
-        // Check if the user is logged in
-        if (this._authenticated) {
-            return of(true);
-        }
+        // Check if the user is already authenticated
+       
 
         // Check the access token availability
-        if (!this.accessToken) {
+        if (this.accessToken == null || this.accessToken == 'undefined' || this.accessToken=='' || this.user=='undefined'||this.user==''||this.user==null) {
             return of(false);
         }
 
@@ -197,8 +206,11 @@ export class AuthService {
         if (AuthUtils.isTokenExpired(this.accessToken)) {
             return of(false);
         }
+        if (this._authenticated) {
+            return of(true);
+        }
 
-        // If the access token exists and it didn't expire, sign in using it
+        // If the access token exists and it hasn't expired, sign in using it
         return this.signInUsingToken();
     }
 }

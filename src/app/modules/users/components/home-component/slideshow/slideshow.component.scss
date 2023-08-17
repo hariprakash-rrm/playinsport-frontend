@@ -1,0 +1,16 @@
+.slideshow-container {
+    max-width: 100%;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .slide {
+    display: none;
+    width: 100%;
+    height: auto;
+  }
+  
+  .slide.active {
+    display: block;
+  }
+  

@@ -1,44 +1,34 @@
-<!-- Navigation -->
-<fuse-vertical-navigation
-    class="dark bg-gray-900 print:hidden"
-    [mode]="isScreenSmall ? 'over' : 'side'"
-    [name]="'mainNavigation'"
-    [navigation]="navigation.default"
-    [opened]="!isScreenSmall">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+</head>
+<fuse-vertical-navigation class="dark bg-gray-900 print:hidden" [mode]="isScreenSmall ? 'over' : 'side'"
+    [name]="'mainNavigation'" [navigation]="currentNavigation" [opened]="!isScreenSmall">
     <!-- Navigation header hook -->
     <ng-container fuseVerticalNavigationContentHeader>
         <div class="flex items-center w-full p-4 pl-6">
             <!-- Logo -->
             <div class="flex items-center justify-center">
-                <img
-                    class="w-8"
-                    src="">
+                <mat-icon>close</mat-icon>
             </div>
             <div class="flex items-center ml-auto">
-                <notifications></notifications>
                 <user [showAvatar]="false"></user>
-                
             </div>
-           
         </div>
         <!-- User -->
         <div class="flex flex-col items-center w-full p-4">
             <div class="relative w-24 h-24">
-                <img
-                    class="w-full h-full rounded-full"
-                    *ngIf="user?.avatar"
-                    [src]="user?.avatar"
-                    alt="User avatar">
-                <mat-icon
-                    class="icon-size-24"
-                    *ngIf="!user?.avatar"
+                <img class="w-full h-full rounded-full"
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMrd-dZ-Zvivo68RGRl5SgUgAPZTL_9RC7Sg">
+                <mat-icon class="icon-size-24" *ngIf="!user?.avatar"
                     [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>
             </div>
             <div class="flex flex-col items-center justify-center w-full mt-6">
-                <div class="w-full whitespace-nowrap overflow-ellipsis overflow-hidden text-center leading-normal font-medium">
+                <div
+                    class="w-full whitespace-nowrap overflow-ellipsis overflow-hidden text-center leading-normal font-medium">
                     <!-- {{ this.userName }} -->
                 </div>
-                <div class="w-full mt-0.5 whitespace-nowrap overflow-ellipsis overflow-hidden text-center text-md leading-normal font-medium text-secondary">
+                <div
+                    class="w-full mt-0.5 whitespace-nowrap overflow-ellipsis overflow-hidden text-center text-md leading-normal font-medium text-secondary">
                     <!-- {{ this.userEmail }} -->
                 </div>
             </div>
@@ -47,9 +37,7 @@
     <!-- Navigation footer hook -->
     <ng-container fuseVerticalNavigationContentFooter>
         <div class="flex flex-0 items-center justify-center h-16 pr-6 pl-2 mt-2 mb-4 opacity-12">
-            <img
-                class="max-w-36"
-                src="a">
+            <!-- <img class="max-w-36" src="a"> -->
         </div>
     </ng-container>
 </fuse-vertical-navigation>
@@ -58,45 +46,55 @@
 <div class="flex flex-col flex-auto w-full min-w-0 relative">
 
     <!-- Header -->
-    <div class="relative flex flex-0 items-start w-full h-64 p-4 md:p-6 z-49 shadow dark:shadow-none dark:border-b bg-black dark:bg-transparent print:hidden">
+    <div
+        class="relative flex flex-0 items-start w-full h-64 p-4 md:p-6 z-49 shadow dark:shadow-none dark:border-b bg-black dark:bg-transparent print:hidden">
         <!-- Navigation toggle button -->
-        <button
-            mat-icon-button
-            (click)="toggleNavigation('mainNavigation')">
+        <button mat-icon-button (click)="toggleNavigation('mainNavigation')">
             <mat-icon [svgIcon]="'heroicons_outline:menu'"></mat-icon>
         </button>
         <!-- Components -->
-        <div class="flex items-start pl-2 ml-auto space-x-1 sm:space-x-2 relative">
+        <div class="flex items-start pl-2 ml-auto space-x-1 sm:space-x-2 w-full relative">
             <div class="flex items-center w-full px-4">
-                 <!-- Components -->
+                <!-- Components -->
                 <div class="flex items-center ml-auto absolute right-0 top-2 space-x-6">
-                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="#ffff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
-                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="#ffff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="#ffff" stroke-width="2" fill="none"
+                        stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1" (click)="viewWallet()">
+                        <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+                        <line x1="1" y1="10" x2="23" y2="10"></line>
+                    </svg>
+                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="#ffff" stroke-width="2" fill="none"
+                        stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1" (click)="viewUserDetails()">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    <mat-icon (click)="refresh()" [svgIcon]="'heroicons_solid:refresh'"></mat-icon>
                     <!-- <notifications></notifications> -->
                     <!-- <user [userEmail] = "userEmail"[showAvatar]="false"></user> -->
                 </div>
-            </div> 
+            </div>
             <!-- <languages></languages>
             <fuse-fullscreen class="hidden md:block"></fuse-fullscreen>
             <search [appearance]="'bar'"></search>
             <shortcuts></shortcuts>
             <messages></messages> -->
             <!-- User -->
-           
-           
-            <img src="../../../../../assets/images/new-ui/Frame.png" class="h-64 w-full mt-16" alt="">
-            <div class="absolute -left-72 top-20">
-                <h1 class=" text-white text-4xl font-bold">Hello Hari</h1>
+
+
+            <img src="../../../../../assets/images/new-ui/Frame.png" class="h-64 w-64 object-contain mt-16" alt="">
+            <div class="absolute top-20 -left-8">
+                <h1 class=" text-white text-4xl font-bold">Hello {{userName}}</h1>
                 <p class="text-white text-base">How was your day</p>
             </div>
         </div>
     </div>
 
     <!-- Content -->
-    <div class="flex flex-col flex-auto absolute z-999 top-48 w-full bg-white card--rounded">
-        <!-- *ngIf="true" hack is required here for router-outlet to work correctly.
+    <div class="flex flex-col flex-auto absolute z-99 top-48 w-full bg-black ">
+        <div class="bg-white card--rounded shadow-xl min-h-screen mx-3">
+            <!-- *ngIf="true" hack is required here for router-outlet to work correctly.
              Otherwise, layout changes won't be registered and the view won't be updated! -->
-        <router-outlet *ngIf="true"></router-outlet>
+            <router-outlet *ngIf="true"></router-outlet>
+        </div>
     </div>
 
     <!-- Footer -->
@@ -105,3 +103,121 @@
     </div>-->
 
 </div>
+
+<!-- </div> -->
+<!-- <div *ngIf="currentPage === 2" class="grid grid-cols-12"> -->
+<!-- <div class="col-span-12">
+        <p>Your current balance is {{wallet}}</p>
+        <button (click)="viewTransaction()">View Transaction</button>
+    
+        <div class="overflow-auto" *ngIf="showTxnHistory">
+            <table class="w-full border-collapse"  *ngFor="let tnxHistory of txnHistory">
+                <thead>
+                    <tr>
+                        <th class="py-2 px-4 bg-gray-200">Message</th>
+                        <th class="py-2 px-4 bg-gray-200">Amount</th>
+                        <th class="py-2 px-4 bg-gray-200">Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+    
+                    <tr *ngFor="let history of txnHistory">
+                        <td class="py-2 px-4 border">{{ history.message }}</td>
+                        <td class="py-2 px-4 border">{{ history.amount }}</td>
+                        <td class="py-2 px-4 border">{{ history.time }}</td>
+                    </tr>
+    
+                </tbody>
+            </table>
+        </div>
+    
+        <button (click)="back()">Back</button> -->
+
+<!-- <div id="popup" *ngIf="showPopup"> -->
+<!-- <div>
+    <div *ngIf="showPopup" id="popup">
+        <div class="close-button" (click)="closePopup()">
+            <i class="fas fa-times"></i>
+        </div>
+        Your balance: {{wallet}}
+    </div>
+</div> -->
+
+<div *ngIf="showPopup" id="popup" tabindex="-1" aria-hidden="true"
+    class="fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0  min-h-screen flex justify-center items-center bg-overlay">
+    <div class="relative w-full max-w-2xl max-h-full ">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+
+            <!-- Modal body -->
+            <div class="grid grid-cols-12 gap-4 p-4 space-y-6">
+                <div class="col-span-12">
+                    <!-- Display the transaction history data here -->
+                    <div class="close-button" (click)="closePopup()">
+                        <i class="fas fa-times"></i>
+                    </div>
+                    <div class="overflow-auto h-24 flex justify-center items-center">
+                        <p class="font-sans text-base">Your Balance </p> &nbsp;
+                        <p class="text-xl font-medium font-sans">{{wallet}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="showPopupForUser" id="popup" tabindex="-1" aria-hidden="true"
+    class="fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0  min-h-screen flex justify-center items-center bg-overlay">
+    <div class="relative w-full max-w-2xl max-h-full ">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+
+            <!-- Modal body -->
+            <div class="grid grid-cols-12 gap-4 p-4 space-y-6">
+                <div class="col-span-12">
+                    <!-- Display the transaction history data here -->
+                    <div class="close-button" (click)="viewUserDetails()">
+                        <i class="fas fa-times"></i>
+                    </div>
+                    <div class="overflow-auto h-24 flex justify-center items-center">
+                        <h4 class="font-sans text-base">User Name </h4> &nbsp;
+                        <p class="text-xl font-medium font-sans">{{userName}}</p>
+                    </div>
+
+                    <div class="overflow-auto h-24 flex justify-center items-center">
+                        <h4 class="font-sans text-base">Phone Number </h4> &nbsp;
+                        <p class="text-xl font-medium font-sans">{{phonenumber}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    #popup {
+        /* position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: white;
+        width: 400px;
+        height: 300px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        padding: 20px; */
+        z-index: 9999 !important;
+        /* display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center; */
+    }
+
+    .close-button {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        cursor: pointer;
+        color: #999;
+    }
+</style>

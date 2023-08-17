@@ -1,4 +1,11 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import {
+    Component,
+    OnInit,
+    ViewChild,
+    ElementRef,
+    ViewEncapsulation,
+    OnDestroy,
+} from '@angular/core';
 import {
     FormBuilder,
     FormGroup,
@@ -10,9 +17,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseAlertType } from '@fuse/components/alert';
 import { AuthService } from 'app/core/auth/auth.service';
-import { Subscription, interval } from 'rxjs';
 import { SnackbarServiceService } from 'app/shared/snackbar-service.service';
-
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
     selector: 'auth-sign-in',
@@ -20,8 +26,12 @@ import { SnackbarServiceService } from 'app/shared/snackbar-service.service';
     encapsulation: ViewEncapsulation.None,
     animations: fuseAnimations,
 })
-export class AuthSignInComponent implements OnInit {
+export class AuthSignInComponent implements OnInit, OnDestroy {
     @ViewChild('signInNgForm') signInNgForm: NgForm;
+    @ViewChild('otp1Input') otpInput1!: ElementRef;
+    @ViewChild('otp2Input') otpInput2!: ElementRef;
+    @ViewChild('otp3Input') otpInput3!: ElementRef;
+    @ViewChild('otp4Input') otpInput4!: ElementRef;
 
     alert: { type: FuseAlertType; message: string } = {
         type: 'success',
@@ -33,11 +43,12 @@ export class AuthSignInComponent implements OnInit {
     numberError: string = '';
     currentStep: number = 1;
     numberForm: FormGroup;
-    countdown: number = 10;
+    countdown: number = 45;
     interval: any;
     otpForm: FormGroup;
     tokens: any;
     setPasswordForm: FormGroup;
+    isAdmin:boolean;
 
     phoneNumber: any;
     /**
@@ -113,6 +124,7 @@ export class AuthSignInComponent implements OnInit {
     get confirmPassword() {
         return this.setPasswordForm.get('confirmPassword');
     }
+
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
@@ -121,15 +133,18 @@ export class AuthSignInComponent implements OnInit {
      * Sign in
      */
     signIn(): void {
-        console.log(!this.signInForm.value.number === true);
-
         // Return if the form is invalid
         if (this.signInForm.invalid) {
-            this.numberError = 'Phone number or password cannot be empty';
+            if (
+                !this.signInForm.value.number ||
+                !this.signInForm.value.password
+            ) {
+                this.numberError = 'Phone number or password cannot be empty';
+            }
             return;
         }
 
-        let credentials = {
+        const credentials = {
             number: this.signInForm.value.number,
             password: this.signInForm.value.password,
         };
@@ -140,13 +155,21 @@ export class AuthSignInComponent implements OnInit {
                 if (response.statusCode === 201) {
                     this.phoneNumber = this.signInForm.value.number;
                     this.errorMessage = '';
+                    console.log(response);
                 }
-                this._router.navigate(['/home']);
+
+                if (response.data.isAdmin) {
+                    this._router.navigate(['/admin/home']);
+                } else {
+                    this._router.navigate(['/home']);
+                }
             },
-            (error) => {
-                console.log(error.error.message);
-                this.signInForm.enable();
-                this.errorMessage = error.error.message;
+            (error: HttpErrorResponse) => {
+                if (error.status === 0) {
+                    this.errorMessage = 'Error: Backend server not connected';
+                } else {
+                    this.errorMessage = error.error.message;
+                }
             }
         );
     }
@@ -157,11 +180,9 @@ export class AuthSignInComponent implements OnInit {
 
     goToSendOtp() {
         if (this.numberForm.invalid) {
-            console.log(this.numberForm.value.numbers);
             if (this.numberForm.invalid) {
                 if (!this.numberForm.value.numbers) {
                     this.numberError = 'Phone number cannot be empty';
-                    console.log(this.numberForm.valid);
                 } else {
                     this.numberError = '';
                 }
@@ -172,16 +193,10 @@ export class AuthSignInComponent implements OnInit {
         // Disable the form
         this.numberForm.disable();
 
-        // Hide the alert
-        this.showAlert = false;
-
-        const data = {
-            num: this.numberForm.value.numbers,
+            const data = {
+            number: this.numberForm.value.numbers,
         };
-        console.log(data.num);
-        console.log(`current step ${this.currentStep}`);
-
-        // Sign up
+       
         this._authService.forgotPassword(data).subscribe(
             (response) => {
                 if (response.statusCode === 201) {
@@ -190,12 +205,13 @@ export class AuthSignInComponent implements OnInit {
                     this.startCountdown();
                     this.errorMessage = '';
                 }
-                console.log(response);
             },
-            (error) => {
-                console.log(error);
-                this.numberForm.enable();
-                this.errorMessage = error.error.message;
+            (error: HttpErrorResponse) => {
+                if (error.status === 0) {
+                    this.errorMessage = 'Error: Backend server not connected';
+                } else {
+                    this.errorMessage = error.error.message;
+                }
             }
         );
     }
@@ -208,17 +224,16 @@ export class AuthSignInComponent implements OnInit {
         // this.countdown = 10;
         this.interval = setInterval(() => {
             this.countdown--;
-            console.log(this.countdown);
             if (this.countdown === 0) {
                 clearInterval(this.interval);
                 this.countdown = 0;
             }
+            console.log(this.countdown);
         }, 1000); // Changed interval to 1000 milliseconds (1 second)
     }
 
     checkOTP(): void {
         const { otp1, otp2, otp3, otp4 } = this.otpForm.value;
-        console.log(otp1);
         const enteredOTP = otp1 + otp2 + otp3 + otp4;
 
         if (this.otpForm.invalid) {
@@ -234,12 +249,14 @@ export class AuthSignInComponent implements OnInit {
                     this.currentStep++;
                     this.errorMessage = '';
                 }
-                console.log(response);
             },
-            (error) => {
-                this.errorMessage = error.error.message;
-            }
-        );
+            (error: HttpErrorResponse) => {
+                if (error.status === 0) {
+                    this.errorMessage = 'Error: Backend server not connected';
+                } else {
+                    this.errorMessage = error.error.message;
+                }
+            });
     }
     resendotp() {
         if (this.countdown !== 0) {
@@ -247,15 +264,15 @@ export class AuthSignInComponent implements OnInit {
                 'Please wait for 45 seconds before generating a new OTP.';
         }
         if (this.countdown === 0) {
-            console.log('GOTOSENDOTP');
+            // console.log('GOTOSENDOTP');
             this.currentStep--;
-            this.countdown = 10;
+            this.countdown = 45;
             this.goToSendOtp();
+
         }
     }
     _setpassword(): void {
-        console.log(this.setPasswordForm);
-
+        this.errorMessage = '';
         this.tokens = localStorage.getItem('accessToken');
         if (this.setPasswordForm.controls.passwords.status === 'INVALID') {
             return;
@@ -275,14 +292,40 @@ export class AuthSignInComponent implements OnInit {
             (response) => {
                 if (response.statusCode === 201) {
                     this.currentStep++;
-                    console.log('response')
-                    console.log(response.statusCode === 201);
                 }
                 this._router.navigate(['/home']);
             },
-            (error) => {
-                this.errorMessage = error.error.message;
+            (error: HttpErrorResponse) => {
+                if (error.status === 0) {
+                    this.errorMessage = 'Error: Backend server not connected';
+                } else {
+                    this.errorMessage = error.error.message;
+                }
+    });
+}
+    onInputChange(event: any, nextInput: number) {
+        const input = event.target as HTMLInputElement;
+        if (input.value.length >= input.maxLength) {
+            // Move focus to the next input field
+            switch (nextInput) {
+                case 2:
+                    this.otpInput2.nativeElement.focus();
+                    break;
+                case 3:
+                    this.otpInput3.nativeElement.focus();
+                    break;
+                case 4:
+                    this.otpInput4.nativeElement.focus();
+                    break;
+                // Add more cases for additional input fields
             }
-        );
+        }
     }
+    ngOnDestroy(): void {
+        clearInterval(this.interval);
+    }
+
+    // clearInterval(interval: any){
+    //     this.countdown = 0;
+    // }
 }

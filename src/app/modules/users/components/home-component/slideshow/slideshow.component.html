@@ -1,0 +1,9 @@
+<div class="slideshow-container">
+    <img
+      [src]="currentBanner"
+      class="slide cursor-pointer h-48 rounded-lg object-cover transition-all ease-in-out delay-150"
+      *ngFor="let banner of banners"
+      [class.active]="banner === currentBanner"
+      (click)="navigateToDestination()"    >
+  </div>
+  

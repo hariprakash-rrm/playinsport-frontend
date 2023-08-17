@@ -7,30 +7,30 @@
         <img class="w-auto mb-6" src="assets/images/logo/logoipsium.svg" alt="Logo image">
         <h1 class="font-bold text-3xl text--primary font-sans text-left">Welcome, Sign Up Here </h1>
         <p class="font-medium text--secondary text-lg font-sans text-left mt-2">Hi there! Please enter your details.
-
         </p>
     </div>
     <form [formGroup]="signUpForm" class="flex flex-col my-12 w-full">
 
         <div class="relative z-0 w-full mb-6" *ngIf="currentStep === 1">
-            <input formControlName="username" type="text" placeholder=" "
+            <input id="user-name" formControlName="username" type="text" placeholder=" "
                 class="block rounded-lg font-sans px-3 pb-3 pt-4 w-full text-base font-semibold text-gray-900 bg-white border--primary appearance-none focus:outline-none focus:ring-0 focus:border-[#8544E4]"
                 [ngClass]="{ 'border-red': signUpForm.get('username').invalid && signUpForm.get('username').touched }" />
             <!-- [class.border-red-500]="signUpForm.get('username').touched && signUpForm.get('username').hasError('minlength')" -->
-            <label for="name"
+            <label for="user-name"
                 class="absolute duration-300 top-4 left-4 z-10 origin-0 text-gray-500 focus:text-grey-900 bg-white text-base">Enter
                 User Name</label>
             <div *ngIf="signUpForm.get('username').touched && (signUpForm.get('username').hasError('minlength') || signUpForm.get('username').hasError('required'))"
                 class="text-red-500 text-sm mt-1">Minimum 6 characters in username</div>
-
-            <div *ngIf="errorMessage" class="text-red-500 text-sm mt-1">{{ errorMessage }}</div>
+                <div *ngIf="signUpForm.get('username').touched && (signUpForm.get('username').hasError('pattern'))"
+                class="text-red-500 text-sm mt-1">Do not enter space</div>
+            <!-- <div *ngIf="errorMessage" class="text-red-500 text-sm mt-1">{{ errorMessage }}</div> -->
 
         </div>
 
         <div class="relative z-0 w-full mb-6">
-            <input formControlName="number" type="text" placeholder=" "
+            <input id="whatspp-no" formControlName="number" type="text" placeholder=" "
                 class="block rounded-lg font-sans px-3 pb-3 pt-4 w-full text-base font-semibold text-gray-900 bg-white border--primary appearance-none focus:outline-none focus:ring-0 focus:border-[#8544E4]" />
-            <label for="number"
+            <label for="whatspp-no"
                 class="absolute duration-300 top-4 left-4 z-10 origin-0 text-gray-500 focus:text-grey-900 bg-white text-base">Enter
                 Whatsapp Number</label>
             <mat-error
@@ -38,19 +38,18 @@
                 class="text-red-500 text-sm mt-1">
                 Please enter valid phone number
             </mat-error>
-            <div *ngIf="errorMessage || signUpForm.invalid" class="text-red-500 text-sm mt-1">{{ errorMessage }}</div>
+            <div *ngIf="errorMessage" class="text-red-500 text-sm mt-1">{{ errorMessage }}</div>
 
         </div>
-
         <div *ngIf="signUpForm.invalid || (!signUpForm.get('username').value || !signUpForm.get('number').value)"
             class="text-red-500 text-sm mt-1">{{numberError}}</div>
 
         <div class="h-20"></div>
         <button type="button" (click)="signUp()"
-            class="w-full mt-20 text-white focus:outline-none bg-black rounded-md font-sans font-semibold text-sm px-5 py-2.5 text-center mr-2 uppercase mb-2">Send
+            class="w-full mt-20 text-white focus:outline-none bg-black rounded-md font-sans font-semibold text-sm px-5 py-2.5 text-center mr-2 uppercase mb-2 cursor-pointer">Send
             OTP</button>
         <span class="text-center text-base text--secondary font-sans pt-2 font-medium">Already have an account? <a
-                href="sign-up.html" class="font-sans text-base text--primary font-semibold ">Log in</a></span>
+                (click)="goToLoginPage()" class="font-sans text-base text--primary font-semibold cursor-pointer">Log in</a></span>
     </form>
 </div>
 <!-- </div> -->
@@ -67,44 +66,49 @@
     </div>
     <form [formGroup]="otpForm" class="flex flex-col my-12 w-full">
         <div class="relative z-0 w-full mb-6">
-            <div class="flex flex-col space-y-16">
-                <div class="flex flex-row items-center justify-between mx-auto w-full max-w-xs">
-                    <div class="w-12 h-12 ">
-                        <input
-                            class="w-full h-full flex flex-col items-center justify-center text-center px-4 outline-none rounded-lg border--primary text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
-                            type="text" formControlName="otp1" maxlength="1" type="text">
-                    </div>
-                    <div class="w-12 h-12 ">
-                        <input
-                            class="w-full h-full flex flex-col items-center justify-center text-center px-4 outline-none rounded-lg border--primary text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
-                            type="text" formControlName="otp2" maxlength="1">
-                    </div>
-                    <div class="w-12 h-12 ">
-                        <input
-                            class="w-full h-full flex flex-col items-center justify-center text-center px-4 outline-none rounded-lg border--primary text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
-                            type="text" formControlName="otp3" maxlength="1">
-                    </div>
-                    <div class="w-12 h-12 ">
-                        <input
-                            class="w-full h-full flex flex-col items-center justify-center text-center px-4 outline-none rounded-lg border--primary text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
-                            type="text" formControlName="otp4" maxlength="1">
-                    </div>
-                </div>
+          <div class="flex flex-col space-y-16">
+            <div class="flex flex-row items-center justify-between mx-auto w-full max-w-xs">
+              <div class="w-12 h-12">
+                <input
+                  #otp1Input
+                  (input)="onInputChange($event, 2)"
+                  class="w-full h-full flex flex-col items-center justify-center text-center px-4 outline-none rounded-lg border--primary text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
+                  type="text" formControlName="otp1" maxlength="1">
+              </div>
+              <div class="w-12 h-12">
+                <input
+                  #otp2Input
+                  (input)="onInputChange($event, 3)"
+                  class="w-full h-full flex flex-col items-center justify-center text-center px-4 outline-none rounded-lg border--primary text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
+                  type="text" formControlName="otp2" maxlength="1">
+              </div>
+              <div class="w-12 h-12">
+                <input
+                  #otp3Input
+                  (input)="onInputChange($event, 4)"
+                  class="w-full h-full flex flex-col items-center justify-center text-center px-4 outline-none rounded-lg border--primary text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
+                  type="text" formControlName="otp3" maxlength="1">
+              </div>
+              <div class="w-12 h-12">
+                <input
+                  #otp4Input
+                  class="w-full h-full flex flex-col items-center justify-center text-center px-4 outline-none rounded-lg border--primary text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
+                  type="text" formControlName="otp4" maxlength="1">
+              </div>
             </div>
+          </div>
         </div>
         <div *ngIf="errorMessage" class="text-red-500 text-sm mt-1">{{ errorMessage }}</div>
         <div class="h-24"></div>
-
-
+      
         <button type="button" (click)="checkOTP()"
-            class="w-full mt-20 text-white focus:outline-none bg-black rounded-md font-sans font-semibold text-sm px-5 py-2.5 text-center mr-2 uppercase mb-2">Verify
+            class="w-full mt-20 text-white focus:outline-none bg-black rounded-md font-sans font-semibold text-sm px-5 py-2.5 text-center mr-2 uppercase mb-2 cursor-pointer">Verify
             OTP</button>
         <div class="flex items-center mt-4 justify-between">
-            <p class="text-center text-base text--secondary font-sans font-medium"> 00:{{ countdown }}</p>
-            <a href="sign-up.html" class="font-sans text-base text--primary font-semibold ">Resend OTP?</a>
+          <p class="text-center text-base text--secondary font-sans font-medium"> 00:{{ countdown }}</p>
+          <a (click)="resendotp()" class="font-sans text-base text--primary font-semibold ">Resend OTP?</a>
         </div>
-
-    </form>
+      </form>
 </div>
 
 <!-- resetPassword -->
@@ -122,9 +126,9 @@
     <form [formGroup]="setPasswordForm" class="flex flex-col my-12 w-full">
 
         <div class="relative z-0 w-full mb-6">
-            <input type="password" placeholder=" " formControlName="password"
+            <input id="set-password" type="password" placeholder=" " formControlName="password"
                 class="block rounded-lg font-sans px-3 pb-3 pt-4 w-full text-base font-semibold text-gray-900 bg-white border--primary appearance-none focus:outline-none focus:ring-0 focus:border-[#8544E4]" />
-            <label for="password"
+            <label for="set-password"
                 class="absolute duration-300 top-4 left-4 z-10 origin-0 text-gray-500 focus:text-grey-900 bg-white text-base">Enter
                 Password</label>
             <mat-error
@@ -137,9 +141,9 @@
         </div>
 
         <div class="relative z-0 w-full mb-6">
-            <input type="password" placeholder=" " formControlName="confirmPassword"
+            <input id="set-confirm-password" type="password" placeholder=" " formControlName="confirmPassword"
                 class="block rounded-lg font-sans px-3 pb-3 pt-4 w-full text-base font-semibold text-gray-900 bg-white border--primary appearance-none focus:outline-none focus:ring-0 focus:border-[#8544E4]" />
-            <label for="confirm-password"
+            <label for="set-confirm-password"
                 class="absolute duration-300 top-4 left-4 z-10 origin-0 text-gray-500 focus:text-grey-900 bg-white text-base">Enter
                 Confirm Password</label>
             <mat-error
@@ -153,7 +157,7 @@
         </div>
         <div class="h-20"></div>
         <button type="button" (click)="_setpassword()"
-            class="w-full mt-20 text-white focus:outline-none bg-black rounded-md font-sans font-semibold text-sm px-5 py-2.5 text-center mr-2 uppercase mb-2">Log
+            class="w-full mt-20 text-white focus:outline-none bg-black rounded-md font-sans font-semibold text-sm px-5 py-2.5 text-center mr-2 uppercase mb-2 cursor-pointer">Log
             In</button>
     </form>
 </div>

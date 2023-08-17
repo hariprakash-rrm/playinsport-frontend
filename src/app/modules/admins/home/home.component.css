@@ -1,0 +1,20 @@
+.user {
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.user:hover {
+  background-color: #45a049;
+}
+
+.user:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px #7a7a7a;
+}
