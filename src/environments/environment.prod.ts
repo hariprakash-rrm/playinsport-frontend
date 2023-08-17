@@ -1,4 +1,6 @@
 export const environment = {
     production: true,
-    apiUrl: 'https://backend-sigma-virid.vercel.app/',
+    
+    //dont add '/' at end
+    apiUrl: 'https://backend-sigma-virid.vercel.app',
 };
