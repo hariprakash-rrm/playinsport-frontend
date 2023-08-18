@@ -15,16 +15,13 @@
             <input id="user-name" formControlName="username" type="text" placeholder=" "
                 class="block rounded-lg font-sans px-3 pb-3 pt-4 w-full text-base font-semibold text-gray-900 bg-white border--primary appearance-none focus:outline-none focus:ring-0 focus:border-[#8544E4]"
                 [ngClass]="{ 'border-red': signUpForm.get('username').invalid && signUpForm.get('username').touched }" />
-            <!-- [class.border-red-500]="signUpForm.get('username').touched && signUpForm.get('username').hasError('minlength')" -->
             <label for="user-name"
                 class="absolute duration-300 top-4 left-4 z-10 origin-0 text-gray-500 focus:text-grey-900 bg-white text-base">Enter
                 User Name</label>
             <div *ngIf="signUpForm.get('username').touched && (signUpForm.get('username').hasError('minlength') || signUpForm.get('username').hasError('required'))"
                 class="text-red-500 text-sm mt-1">Minimum 6 characters in username</div>
-                <div *ngIf="signUpForm.get('username').touched && (signUpForm.get('username').hasError('pattern'))"
+            <div *ngIf="signUpForm.get('username').touched && signUpForm.get('username').hasError('pattern')"
                 class="text-red-500 text-sm mt-1">Do not enter space</div>
-            <!-- <div *ngIf="errorMessage" class="text-red-500 text-sm mt-1">{{ errorMessage }}</div> -->
-
         </div>
 
         <div class="relative z-0 w-full mb-6">
@@ -36,20 +33,20 @@
             <mat-error
                 *ngIf="signUpForm.controls['number'].touched && (signUpForm.get('number').errors?.pattern || signUpForm.get('number').errors?.required)"
                 class="text-red-500 text-sm mt-1">
-                Please enter valid phone number
+                Please enter a valid phone number
             </mat-error>
             <div *ngIf="errorMessage" class="text-red-500 text-sm mt-1">{{ errorMessage }}</div>
-
         </div>
-        <div *ngIf="signUpForm.invalid || (!signUpForm.get('username').value || !signUpForm.get('number').value)"
-            class="text-red-500 text-sm mt-1">{{numberError}}</div>
+        <div *ngIf="(signUpForm.get('username').touched || signUpForm.get('number').touched) && (signUpForm.invalid || (!signUpForm.get('username').value || !signUpForm.get('number').value))"
+            class="text-red-500 text-sm mt-1">{{ numberError }}</div>
 
         <div class="h-20"></div>
         <button type="button" (click)="signUp()"
             class="w-full mt-20 text-white focus:outline-none bg-black rounded-md font-sans font-semibold text-sm px-5 py-2.5 text-center mr-2 uppercase mb-2 cursor-pointer">Send
             OTP</button>
         <span class="text-center text-base text--secondary font-sans pt-2 font-medium">Already have an account? <a
-                (click)="goToLoginPage()" class="font-sans text-base text--primary font-semibold cursor-pointer">Log in</a></span>
+                (click)="goToLoginPage()" class="font-sans text-base text--primary font-semibold cursor-pointer">Log
+                in</a></span>
     </form>
 </div>
 <!-- </div> -->
@@ -66,49 +63,42 @@
     </div>
     <form [formGroup]="otpForm" class="flex flex-col my-12 w-full">
         <div class="relative z-0 w-full mb-6">
-          <div class="flex flex-col space-y-16">
-            <div class="flex flex-row items-center justify-between mx-auto w-full max-w-xs">
-              <div class="w-12 h-12">
-                <input
-                  #otp1Input
-                  (input)="onInputChange($event, 2)"
-                  class="w-full h-full flex flex-col items-center justify-center text-center px-4 outline-none rounded-lg border--primary text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
-                  type="tel" formControlName="otp1" maxlength="1">
-              </div>
-              <div class="w-12 h-12">
-                <input
-                  #otp2Input
-                  (input)="onInputChange($event, 3)"
-                  class="w-full h-full flex flex-col items-center justify-center text-center px-4 outline-none rounded-lg border--primary text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
-                  type="tel" formControlName="otp2" maxlength="1">
-              </div>
-              <div class="w-12 h-12">
-                <input
-                  #otp3Input
-                  (input)="onInputChange($event, 4)"
-                  class="w-full h-full flex flex-col items-center justify-center text-center px-4 outline-none rounded-lg border--primary text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
-                  type="tel" formControlName="otp3" maxlength="1">
-              </div>
-              <div class="w-12 h-12">
-                <input
-                  #otp4Input
-                  class="w-full h-full flex flex-col items-center justify-center text-center px-4 outline-none rounded-lg border--primary text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
-                  type="tel" formControlName="otp4" maxlength="1">
-              </div>
+            <div class="flex flex-col space-y-16">
+                <div class="flex flex-row items-center justify-between mx-auto w-full max-w-xs">
+                    <div class="w-12 h-12">
+                        <input #otp1Input (input)="onInputChange($event, 2)"
+                            class="w-full h-full flex flex-col items-center justify-center text-center px-4 outline-none rounded-lg border--primary text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
+                            type="tel" formControlName="otp1" maxlength="1">
+                    </div>
+                    <div class="w-12 h-12">
+                        <input #otp2Input (input)="onInputChange($event, 3)"
+                            class="w-full h-full flex flex-col items-center justify-center text-center px-4 outline-none rounded-lg border--primary text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
+                            type="tel" formControlName="otp2" maxlength="1">
+                    </div>
+                    <div class="w-12 h-12">
+                        <input #otp3Input (input)="onInputChange($event, 4)"
+                            class="w-full h-full flex flex-col items-center justify-center text-center px-4 outline-none rounded-lg border--primary text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
+                            type="tel" formControlName="otp3" maxlength="1">
+                    </div>
+                    <div class="w-12 h-12">
+                        <input #otp4Input
+                            class="w-full h-full flex flex-col items-center justify-center text-center px-4 outline-none rounded-lg border--primary text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
+                            type="tel" formControlName="otp4" maxlength="1">
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
         <div *ngIf="errorMessage" class="text-red-500 text-sm mt-1">{{ errorMessage }}</div>
         <div class="h-24"></div>
-      
+
         <button type="button" (click)="checkOTP()"
             class="w-full mt-20 text-white focus:outline-none bg-black rounded-md font-sans font-semibold text-sm px-5 py-2.5 text-center mr-2 uppercase mb-2 cursor-pointer">Verify
             OTP</button>
         <div class="flex items-center mt-4 justify-between">
-          <p class="text-center text-base text--secondary font-sans font-medium"> 00:{{ countdown }}</p>
-          <a (click)="resendotp()" class="font-sans text-base text--primary font-semibold ">Resend OTP?</a>
+            <p class="text-center text-base text--secondary font-sans font-medium"> 00:{{ countdown }}</p>
+            <a (click)="resendotp()" class="font-sans text-base text--primary font-semibold ">Resend OTP?</a>
         </div>
-      </form>
+    </form>
 </div>
 
 <!-- resetPassword -->

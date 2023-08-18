@@ -149,8 +149,6 @@ export class AuthSignUpComponent implements OnInit,OnDestroy {
             }
             return;
         }
-        // Disable the form
-        this.signUpForm.disable();
 
         // Hide the alert
         this.showAlert = false;
@@ -177,6 +175,15 @@ export class AuthSignUpComponent implements OnInit,OnDestroy {
         );
     }
 
+    clearOtpFields() {
+        console.log(this.otpForm.value.otp1);
+        this.otpForm.value.otp1 = '';
+        this.otpForm.value.otp2 = '';
+        this.otpForm.value.otp3 = '';
+        this.otpForm.value.otp4 = '';
+
+      }
+
      noSpacesValidator(control: FormControl): { [key: string]: boolean } | null {
         const value = control.value;
         if (value && value.indexOf(' ') >= 0) {
@@ -193,6 +200,7 @@ export class AuthSignUpComponent implements OnInit,OnDestroy {
         this.errorMessage = '';
 
         if (this.otpForm.invalid) {
+            this.clearOtpFields();
             return;
         }
         let OTPValidation = {
@@ -208,6 +216,8 @@ export class AuthSignUpComponent implements OnInit,OnDestroy {
                 // console.log(response);
             },
             (error) => {
+                console.log("NOTVALID");
+                this.clearOtpFields();
                 this.errorMessage = error.error.message;
             }
         );
@@ -305,11 +315,7 @@ export class AuthSignUpComponent implements OnInit,OnDestroy {
         if (this.countdown === 0) {
             this.countdown = 45;
             this.currentStep--;
-            this.otpForm.value.otp1 = '';
-            this.otpForm.value.otp2 = '';
-            this.otpForm.value.otp3 = '';
-            this.otpForm.value.otp4 = '';
-            // this.signUp();
+            this.clearOtpFields();
         }
     }
 
