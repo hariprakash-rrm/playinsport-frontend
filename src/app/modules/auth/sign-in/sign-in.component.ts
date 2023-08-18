@@ -249,8 +249,8 @@ export class AuthSignInComponent implements OnInit, OnDestroy {
             return;
         }
         let OTPValidation = {
-            otp: enteredOTP,
-            number: this.numberForm.value.numbers,
+            otp: +enteredOTP,
+            number: +this.numberForm.value.numbers,
         };
         this._authService.submitOTP(OTPValidation).subscribe(
             (response) => {
