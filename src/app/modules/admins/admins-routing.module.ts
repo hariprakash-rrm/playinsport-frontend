@@ -4,19 +4,21 @@ import { HomeComponent } from './home/home.component';
 import { GameComponent } from './game/game.component';
 import { TokenComponent } from './token/token.component';
 
+
 const routes: Routes = [
   {
     path:'home',
     component: HomeComponent
   },
   {
-    path: 'game',
+    path: 'wallet',
     component: GameComponent
   },
   {
     path: 'token',
     component: TokenComponent
   }
+
 ];
 
 @NgModule({

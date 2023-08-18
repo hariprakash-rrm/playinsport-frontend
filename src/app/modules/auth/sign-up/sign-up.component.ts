@@ -131,8 +131,9 @@ export class AuthSignUpComponent implements OnInit,OnDestroy {
      * Sign up
      */
     signUp(): void {
+        this.errorMessage ='';
+
         if (this.signUpForm.invalid) {
-            this.errorMessage = '';
 
             if (this.signUpForm.invalid) {
                 if (
@@ -157,6 +158,7 @@ export class AuthSignUpComponent implements OnInit,OnDestroy {
         // Sign up
         this._authService.signUp(this.signUpForm.value).subscribe(
             (response) => {
+                console.log(this.signUpForm.value);
                 if (response.statusCode === 201) {
                     this.errorMessage = '';
                     this.currentStep++;
@@ -184,6 +186,8 @@ export class AuthSignUpComponent implements OnInit,OnDestroy {
       }
 
     checkOTP(): void {
+        this.errorMessage ='';
+
         const { otp1, otp2, otp3, otp4 } = this.otpForm.value;
         const enteredOTP = otp1 + otp2 + otp3 + otp4;
         this.errorMessage = '';
@@ -210,6 +214,8 @@ export class AuthSignUpComponent implements OnInit,OnDestroy {
     }
 
     _setpassword(): void {
+        this.errorMessage ='';
+
 
         this.tokens = localStorage.getItem('accessToken');
         if (this.setPasswordForm.controls.password.status === 'INVALID') {
@@ -245,6 +251,8 @@ export class AuthSignUpComponent implements OnInit,OnDestroy {
     }
 
     startCountdown(): void {
+        this.errorMessage ='';
+
         // this.countdown = 10;
         this.interval = setInterval(() => {
             this.countdown--;
@@ -256,11 +264,15 @@ export class AuthSignUpComponent implements OnInit,OnDestroy {
     }
 
     resetCountdown(): void {
+        this.errorMessage ='';
+
         clearInterval(this.interval);
         this.countdown = 10;
     }
 
     onInputChange(event: any, nextInput: number) {
+        this.errorMessage ='';
+
         const input = event.target as HTMLInputElement;
         if (input.value.length >= input.maxLength) {
             // Move focus to the next input field
@@ -283,6 +295,8 @@ export class AuthSignUpComponent implements OnInit,OnDestroy {
     }
 
     resendotp() {
+
+        this.errorMessage ='';
 
         if (this.countdown !== 0) {
             this.errorMessage =
