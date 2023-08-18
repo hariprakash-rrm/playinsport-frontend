@@ -89,6 +89,9 @@
                     "defaultConfiguration": "production"
                 },
                 "serve": {
+                    "options": {
+                        "allowedHosts": ["www.teamquantum.in","teamquantum.in"]
+                      },
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "configurations": {
                         "production": {

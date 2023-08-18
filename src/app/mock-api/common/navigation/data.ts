@@ -40,19 +40,20 @@ export const compactNavigation: FuseNavigationItem[] = [
         link: '/user/token'
     },
     {
+        id: 'Wallet',
+        title: 'User Wallet',
+        type: 'basic',
+        icon: 'heroicons_outline:chart-pie',
+        link: '/user/wallet'
+    },
+    {
         id: 'Home',
         title: 'Admin Home',
         type: 'basic',
         icon: 'heroicons_outline:home',
         link: '/admin/home',
     },
-    {
-        id: 'Game',
-        title: 'Admin Wallet',
-        type: 'basic',
-        icon: 'heroicons_outline:cake',
-        link: '/admin/game',
-    },
+    
     {
         id: 'Token',
         title: 'Admin Token',
@@ -67,13 +68,7 @@ export const compactNavigation: FuseNavigationItem[] = [
         icon: 'heroicons_outline:document',
         link: '/admin/wallet',
     },
-    {
-        id: 'qr',
-        title: 'Admin qr',
-        type: 'basic',
-        icon: 'heroicons_outline:document',
-        link: '/admin/qr',
-    },
+    
 ];
 export const futuristicNavigation: FuseNavigationItem[] = [
     {

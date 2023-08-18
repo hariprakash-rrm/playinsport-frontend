@@ -49,6 +49,7 @@ export class AuthSignInComponent implements OnInit, OnDestroy {
     tokens: any;
     setPasswordForm: FormGroup;
     isAdmin:boolean;
+    isOtpSent:boolean
 
     phoneNumber: any;
     /**
@@ -145,7 +146,7 @@ export class AuthSignInComponent implements OnInit, OnDestroy {
         }
 
         const credentials = {
-            number: this.signInForm.value.number,
+            number: +this.signInForm.value.number,
             password: this.signInForm.value.password,
         };
 
@@ -184,9 +185,12 @@ export class AuthSignInComponent implements OnInit, OnDestroy {
         this.errorMessage = '';
 
             const data = {
-            number: this.numberForm.value.numbers,
+            number: +this.numberForm.value.numbers,
         };
-       
+       if(this.isOtpSent){
+        this.errorMessage=`Please wait ${this.countdown} seconds and try again`
+        return
+       }
         this._authService.forgotPassword(data).subscribe(
             (response) => {
                 if (response.statusCode === 201) {
@@ -195,6 +199,7 @@ export class AuthSignInComponent implements OnInit, OnDestroy {
                     this.phoneNumber = this.numberForm.value.numbers;
                     this.startCountdown();
                     this.errorMessage = '';
+                    this.isOtpSent=true
                 }
             },
             (error: HttpErrorResponse) => {
@@ -212,15 +217,27 @@ export class AuthSignInComponent implements OnInit, OnDestroy {
         this.currentStep++;
     }
 
+    goBack(){
+        this.errorMessage=''
+        this.currentStep--;
+        this.otpForm.value.otp1='';
+        this.otpForm.value.otp2='';
+        this.otpForm.value.otp3='';
+        this.otpForm.value.otp4='';
+        this.countdown = 0;
+    }
+
     startCountdown(): void {
+        this.countdown=45
         this.errorMessage = '';
 
         // this.countdown = 10;
         this.interval = setInterval(() => {
             this.countdown--;
-            if (this.countdown === 0) {
+            if (this.countdown <= 0) {
                 clearInterval(this.interval);
                 this.countdown = 0;
+                this.isOtpSent=false
             }
             console.log(this.countdown);
         }, 1000); // Changed interval to 1000 milliseconds (1 second)
@@ -237,8 +254,8 @@ export class AuthSignInComponent implements OnInit, OnDestroy {
             return;
         }
         let OTPValidation = {
-            otp: enteredOTP,
-            number: this.numberForm.value.numbers,
+            otp: +enteredOTP,
+            number: +this.numberForm.value.numbers,
         };
         this._authService.submitOTP(OTPValidation).subscribe(
             (response) => {
@@ -262,7 +279,7 @@ export class AuthSignInComponent implements OnInit, OnDestroy {
             this.errorMessage =
                 'Please wait for 45 seconds before generating a new OTP.';
         }
-        if (this.countdown === 0) {
+        if (this.countdown <= 0) {
             // console.log('GOTOSENDOTP');
             this.currentStep--;
             this.countdown = 45;

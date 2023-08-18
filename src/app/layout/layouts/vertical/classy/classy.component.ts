@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -45,6 +45,10 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy {
     private _unsubscribeAll: Subject<any> = new Subject<any>();
     private apiUrl = environment.apiUrl;
     showTxnHistory = false;
+
+    private inactivityTimeout: number = 3 * 60 * 1000; // 30 minutes
+
+    private inactivityTimer: any;
 
     /**
      * Constructor
@@ -188,3 +192,4 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy {
         window.location.reload();
     }
 }
+
