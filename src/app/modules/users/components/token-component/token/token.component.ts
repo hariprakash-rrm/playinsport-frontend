@@ -36,7 +36,7 @@ export class TokenComponent implements OnInit {
   }
 
   async ngOnInit() {
-
+    this.getGame()
   }
 
 
@@ -47,7 +47,10 @@ export class TokenComponent implements OnInit {
   }
 
   getGame() {
-    this.service.getGames(this.selectedDate).subscribe(
+    //testing purpose
+    console.log('trigger')
+    let tDate='Thu Aug 17 2023 00:00:00 GMT+0530 (India Standard Time)'
+    this.service.getGames(tDate).subscribe(
       (response) => {
         if (response.statusCode === 201) {
           this.snackbar.success(response.message, 4000);
