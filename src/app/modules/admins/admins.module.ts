@@ -12,6 +12,7 @@ import { TokenService } from './token.service';
 import { NgxPaginationModule } from 'ngx-pagination';
 import {  DatePipe } from '@angular/common';
 
+
 @NgModule({
     declarations: [TokenComponent, GameComponent, HomeComponent],
     imports: [
