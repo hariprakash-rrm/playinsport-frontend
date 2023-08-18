@@ -5,7 +5,9 @@ import {
     FormGroup,
     Validators,
     FormControl,
+    FormsModule
 } from '@angular/forms';
+
 import { SnackbarServiceService } from 'app/shared/snackbar-service.service';
 
 @Component({
@@ -76,7 +78,6 @@ export class HomeComponent implements OnInit {
                     this.wallet = null;
                 this.txnHistory = '',
                     this.block = null;
-                // console.log(error);
             }
         );
     }
@@ -91,7 +92,6 @@ export class HomeComponent implements OnInit {
         this.isEditing = !this.isEditing;
         if (!this.isEditing) {
             const AccessToken = localStorage.getItem('accessToken');
-            // console.log(AccessToken);
 
             const updatedDetails = {
                 username: this.userName,
@@ -112,7 +112,6 @@ export class HomeComponent implements OnInit {
                 }
             );
         }
-
     }
     showTxnDetails(): void {
         if (!this.userName) {

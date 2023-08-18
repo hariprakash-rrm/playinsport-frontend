@@ -42,7 +42,7 @@
               <div>
                 <label for="mobileNumber" class="text-base md:text-lg font-medium font-sans">{{selectedValue}} Mobile
                   Number </label>
-                <input type="text" formControlName="mobileNumber" id="mobileNumber"
+                <input type="number" formControlName="mobileNumber" id="mobileNumber"
                   class="w-full p-2 border border-gray-300 rounded mt-1">
                 <mat-error
                   *ngIf="depositForm.controls['mobileNumber'].touched && (depositForm.get('mobileNumber').errors?.pattern || depositForm.get('mobileNumber').errors?.required)"

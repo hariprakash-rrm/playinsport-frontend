@@ -283,14 +283,19 @@ export class AuthSignUpComponent implements OnInit,OnDestroy {
     }
 
     resendotp() {
+
         if (this.countdown !== 0) {
             this.errorMessage =
                 'Please wait for 45 seconds before generating a new OTP.';
         }
         if (this.countdown === 0) {
-            this.currentStep--;
             this.countdown = 45;
-            this.signUp();
+            this.currentStep--;
+            this.otpForm.value.otp1 = '';
+            this.otpForm.value.otp2 = '';
+            this.otpForm.value.otp3 = '';
+            this.otpForm.value.otp4 = '';
+            // this.signUp();
         }
     }
 

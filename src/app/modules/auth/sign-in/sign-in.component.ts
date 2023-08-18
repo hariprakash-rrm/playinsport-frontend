@@ -119,7 +119,7 @@ export class AuthSignInComponent implements OnInit, OnDestroy {
     }
 
     get passwords() {
-        return this.setPasswordForm.get('password');
+        return this.setPasswordForm.get('passwords');
     }
     get confirmPassword() {
         return this.setPasswordForm.get('confirmPassword');
@@ -175,23 +175,13 @@ export class AuthSignInComponent implements OnInit, OnDestroy {
     }
 
     goToSignUpForm() {
+        this.errorMessage = '';
+
         this._router.navigate(['/sign-up']);
     }
 
     goToSendOtp() {
-        if (this.numberForm.invalid) {
-            if (this.numberForm.invalid) {
-                if (!this.numberForm.value.numbers) {
-                    this.numberError = 'Phone number cannot be empty';
-                } else {
-                    this.numberError = '';
-                }
-                return;
-            }
-            return;
-        }
-        // Disable the form
-        this.numberForm.disable();
+        this.errorMessage = '';
 
             const data = {
             number: this.numberForm.value.numbers,
@@ -200,6 +190,7 @@ export class AuthSignInComponent implements OnInit, OnDestroy {
         this._authService.forgotPassword(data).subscribe(
             (response) => {
                 if (response.statusCode === 201) {
+                    console.log(response);
                     this.currentStep++;
                     this.phoneNumber = this.numberForm.value.numbers;
                     this.startCountdown();
@@ -217,10 +208,13 @@ export class AuthSignInComponent implements OnInit, OnDestroy {
     }
 
     goToForgotPassword() {
+        this.errorMessage = '';
         this.currentStep++;
     }
 
     startCountdown(): void {
+        this.errorMessage = '';
+
         // this.countdown = 10;
         this.interval = setInterval(() => {
             this.countdown--;
@@ -233,8 +227,11 @@ export class AuthSignInComponent implements OnInit, OnDestroy {
     }
 
     checkOTP(): void {
+        this.errorMessage = '';
+
         const { otp1, otp2, otp3, otp4 } = this.otpForm.value;
         const enteredOTP = otp1 + otp2 + otp3 + otp4;
+        console.log(enteredOTP);
 
         if (this.otpForm.invalid) {
             return;
@@ -259,6 +256,8 @@ export class AuthSignInComponent implements OnInit, OnDestroy {
             });
     }
     resendotp() {
+        this.errorMessage = '';
+
         if (this.countdown !== 0) {
             this.errorMessage =
                 'Please wait for 45 seconds before generating a new OTP.';
@@ -304,9 +303,10 @@ export class AuthSignInComponent implements OnInit, OnDestroy {
     });
 }
     onInputChange(event: any, nextInput: number) {
+        this.errorMessage = '';
+
         const input = event.target as HTMLInputElement;
         if (input.value.length >= input.maxLength) {
-            // Move focus to the next input field
             switch (nextInput) {
                 case 2:
                     this.otpInput2.nativeElement.focus();
@@ -323,9 +323,7 @@ export class AuthSignInComponent implements OnInit, OnDestroy {
     }
     ngOnDestroy(): void {
         clearInterval(this.interval);
+        this.countdown = 0;
     }
 
-    // clearInterval(interval: any){
-    //     this.countdown = 0;
-    // }
 }
