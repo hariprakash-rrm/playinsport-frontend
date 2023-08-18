@@ -100,7 +100,7 @@ export class AuthService {
         );
     }
 
-    submitOTP(OTPValidation:any): Observable<any> {
+    submitOTP(OTPValidation: { otp: number; number: Number }): Observable<any> {
         // Throw error, if the user is already logged in
         if (this._authenticated) {
             return throwError('User is already logged in.');
@@ -174,7 +174,7 @@ export class AuthService {
      *
      * @param user
      */
-    signUp(user: any): Observable<any> {
+    signUp(user: { username: string; number: number }): Observable<any> {
         return this._httpClient.post(`${this.apiUrl}/signup`, user);
     }
 

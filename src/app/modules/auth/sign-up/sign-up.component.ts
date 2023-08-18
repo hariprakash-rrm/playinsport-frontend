@@ -155,12 +155,8 @@ export class AuthSignUpComponent implements OnInit,OnDestroy {
         // Hide the alert
         this.showAlert = false;
 
-        // Sign 
-        let credentils = {
-            username : this.signUpForm.value.username,
-            number : +this.signUpForm.value.number
-        }
-        this._authService.signUp(credentils).subscribe(
+        // Sign up
+        this._authService.signUp(this.signUpForm.value).subscribe(
             (response) => {
                 console.log(this.signUpForm.value);
                 if (response.statusCode === 201) {
@@ -200,8 +196,8 @@ export class AuthSignUpComponent implements OnInit,OnDestroy {
             return;
         }
         let OTPValidation = {
-            otp: +enteredOTP,
-            number: +this.signUpForm.value.number,
+            otp: enteredOTP,
+            number: this.signUpForm.value.number,
         };
         this._authService.submitOTP(OTPValidation).subscribe(
             (response) => {
