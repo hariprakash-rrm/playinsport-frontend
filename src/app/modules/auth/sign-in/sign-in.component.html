@@ -12,7 +12,7 @@
   <form [formGroup]="signInForm" class="relative z-0 w-full mb-6"
     [ngClass]="{ 'border-red-500': signInForm.get('number').invalid }" class="flex flex-col my-12 w-full">
     <div class="relative z-0 w-full mb-6">
-      <input type="number" id="phone-no" name="number" placeholder=" " formControlName="number"
+      <input type="tel" id="phone-no" name="number" placeholder=" " formControlName="number"
         class="block rounded-lg font-sans px-3 pb-3 pt-4 w-full text-base font-semibold text-gray-900 bg-white border--primary appearance-none focus:outline-none focus:ring-0 focus:border-[#8544E4]" />
       <label for="phone-no"
         class="absolute duration-300 top-4 left-4 z-10 origin-0 text-gray-500 focus:text-grey-900 bg-white text-base">Enter
@@ -76,7 +76,7 @@
   <form [formGroup]="numberForm" class="flex flex-col my-12 w-full">
    
     <div class="relative z-0 w-full mb-6">
-      <input id="phoneno" type="number" name="numbers" placeholder=" " formControlName="numbers"
+      <input id="phoneno" type="tel" name="numbers" placeholder=" " formControlName="numbers"
         class="block rounded-lg font-sans px-3 pb-3 pt-4 w-full text-base font-semibold text-gray-900 bg-white border--primary appearance-none focus:outline-none focus:ring-0 focus:border-[#8544E4]" />
       <label for="phoneno"
         class="absolute duration-300 top-4 left-4 z-10 origin-0 text-gray-500 focus:text-grey-900 bg-white text-base">Enter Phone number</label>
