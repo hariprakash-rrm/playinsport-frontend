@@ -40,6 +40,13 @@ export const compactNavigation: FuseNavigationItem[] = [
         link: '/user/token'
     },
     {
+        id: 'Wallet',
+        title: 'User Wallet',
+        type: 'basic',
+        icon: 'heroicons_outline:chart-pie',
+        link: '/user/wallet'
+    },
+    {
         id: 'Home',
         title: 'Admin Home',
         type: 'basic',
