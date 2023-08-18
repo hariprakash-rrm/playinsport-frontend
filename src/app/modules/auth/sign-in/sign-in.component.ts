@@ -146,7 +146,7 @@ export class AuthSignInComponent implements OnInit, OnDestroy {
         }
 
         const credentials = {
-            number: +this.signInForm.value.number,
+            number: this.signInForm.value.number ,
             password: this.signInForm.value.password,
         };
 
@@ -185,7 +185,7 @@ export class AuthSignInComponent implements OnInit, OnDestroy {
         this.errorMessage = '';
 
             const data = {
-            number: +this.numberForm.value.numbers,
+            number: this.numberForm.value.numbers,
         };
        if(this.isOtpSent){
         this.errorMessage=`Please wait ${this.countdown} seconds and try again`
@@ -249,8 +249,8 @@ export class AuthSignInComponent implements OnInit, OnDestroy {
             return;
         }
         let OTPValidation = {
-            otp: +enteredOTP,
-            number: +this.numberForm.value.numbers,
+            otp: enteredOTP,
+            number: this.numberForm.value.numbers,
         };
         this._authService.submitOTP(OTPValidation).subscribe(
             (response) => {
