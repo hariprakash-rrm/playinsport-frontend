@@ -12,7 +12,7 @@
   <form [formGroup]="signInForm" class="relative z-0 w-full mb-6"
     [ngClass]="{ 'border-red-500': signInForm.get('number').invalid }" class="flex flex-col my-12 w-full">
     <div class="relative z-0 w-full mb-6">
-      <input type="text" id="phone-no" name="number" placeholder=" " formControlName="number"
+      <input type="number" id="phone-no" name="number" placeholder=" " formControlName="number"
         class="block rounded-lg font-sans px-3 pb-3 pt-4 w-full text-base font-semibold text-gray-900 bg-white border--primary appearance-none focus:outline-none focus:ring-0 focus:border-[#8544E4]" />
       <label for="phone-no"
         class="absolute duration-300 top-4 left-4 z-10 origin-0 text-gray-500 focus:text-grey-900 bg-white text-base">Enter
@@ -169,13 +169,13 @@
   <form [formGroup]="setPasswordForm" class="flex flex-col my-12 w-full">
 
     <div class="relative z-0 w-full mb-6">
-      <input id="pasword" type="password" placeholder=" " formControlName="passwords"
+      <input id="passwords" type="password" placeholder=" " formControlName="passwords"
         class="block rounded-lg font-sans px-3 pb-3 pt-4 w-full text-base font-semibold text-gray-900 bg-white border--primary appearance-none focus:outline-none focus:ring-0 focus:border-[#8544E4]" />
       <label for="pasword"
         class="absolute duration-300 top-4 left-4 z-10 origin-0 text-gray-500 focus:text-grey-900 bg-white text-base">Enter
         Password</label>
       <mat-error class="text-sm mt-1"
-        *ngIf="setPasswordForm.controls['password'].touched && (setPasswordForm.get('password').errors?.minlength || setPasswordForm.get('password').errors?.required)"
+        *ngIf="setPasswordForm.controls['passwords'].touched && (setPasswordForm.get('passwords').errors?.minlength || setPasswordForm.get('passwords').errors?.required)"
         class="text-red-500 text-sm mt-1">
         Password should have minimum 6 characters
       </mat-error>
