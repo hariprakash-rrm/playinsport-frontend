@@ -19,7 +19,7 @@
         Phone Number</label>
 
       <mat-error class="text-sm mt-1"
-        *ngIf="signInForm.controls['number'].touched && (signInForm.get('number').errors?.pattern || signInForm.get('number').errors?.required)">
+        *ngIf="signInForm.controls['number']?.touched && (signInForm.get('number')?.errors?.pattern || signInForm.get('number')?.errors?.required)">
         Please enter valid phone number
       </mat-error>
 
@@ -27,12 +27,12 @@
 
     <div class="relative z-0 w-full mb-6">
       <input id="password" type="password" name="password" placeholder=" " formControlName="password"
-        class="block rounded-lg font-sans px-3 pb-3 pt-4 w-full text-base font-semibold text-gray-900 bg-white border--primary appearance-none focus:outline-none focus:ring-0 focus:border-[#8544E4]" />
+        class="block rounded-lg font-sans px-3 pb-3 pt-4 w-full text-base font-semibold text-gray-900 bg-white border--primary appearance-none focus:outline-none focus:ring-0 focus:border-[#8544E4]"  autocomplete="new-password"/>
       <label for="password"
         class="absolute duration-300 top-4 left-4 z-10 origin-0 text-gray-500 focus:text-grey-900 bg-white text-base">Enter
         Password</label>
       <mat-error class="text-sm mt-1"
-        *ngIf="signInForm.controls['password'].touched && (signInForm.get('password').errors?.required || signInForm.get('password').errors?.minlength)">
+        *ngIf="signInForm.controls['password']?.touched && (signInForm.get('password').errors?.required || signInForm.get('password').errors?.minlength)">
         Password should have minimum 6 characters
       </mat-error>
 
@@ -194,7 +194,7 @@
         class="text-red-500 text-sm mt-1">
         Password should have minimum 6 characters
       </mat-error>
-      <div *ngIf="errorMessage || setPasswordForm.get(passwords).value !== setPasswordForm.get(confirmPassword).value" class="text-red-500 text-sm mt-1">{{ errorMessage }}</div>
+      <div *ngIf="errorMessage || setPasswordForm.get(passwords)?.value !== setPasswordForm.get(confirmPassword)?.value" class="text-red-500 text-sm mt-1">{{ errorMessage }}</div>
 
     </div>
     <div class="h-20"></div>
