@@ -42,7 +42,7 @@ export class SelectTokenComponent implements OnInit, OnDestroy {
     private router: Router
   ) { }
 
-  /**
+  /**git ou
    * Calls when page loads
    */
   async ngOnInit() {
