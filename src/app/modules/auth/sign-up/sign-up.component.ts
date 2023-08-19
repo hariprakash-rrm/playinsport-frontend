@@ -119,6 +119,8 @@ export class AuthSignUpComponent implements OnInit,OnDestroy {
         this.route.queryParams.subscribe(params => {
         this.refCode = params['ref'];
           });
+
+          console.log(this.refCode);
     }
     get username() {
         return this.signUpForm.get('username');
@@ -163,6 +165,7 @@ export class AuthSignUpComponent implements OnInit,OnDestroy {
 
         // Sign up
 
+        console.log(this.refCode);
         let data = {
             username: this.signUpForm.value.username,
             number: this.signUpForm.value.number,

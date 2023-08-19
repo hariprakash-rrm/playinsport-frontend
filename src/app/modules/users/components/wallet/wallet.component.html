@@ -42,7 +42,7 @@
               <div>
                 <label for="mobileNumber" class="text-base md:text-lg font-medium font-sans">{{selectedValue}} Mobile
                   Number </label>
-                <input type="number" formControlName="mobileNumber" id="mobileNumber"
+                <input type="tel" formControlName="mobileNumber" id="mobileNumber"
                   class="w-full p-2 border border-gray-300 rounded mt-1">
                 <mat-error
                   *ngIf="depositForm.controls['mobileNumber'].touched && (depositForm.get('mobileNumber').errors?.pattern || depositForm.get('mobileNumber').errors?.required)"
@@ -57,7 +57,7 @@
               </div>
               <div>
                 <label for="amount" class="text-base md:text-lg font-medium font-sans">Amount</label>
-                <input type="text" formControlName="amount" id="amount"
+                <input type="tel" formControlName="amount" id="amount"
                   class="w-full p-2 border border-gray-300 rounded mt-1">
               </div>
             </div>
@@ -74,7 +74,7 @@
 
           <div>
             <label for="withdrawAmount" class="text-base md:text-lg font-medium font-sans">Amount</label>
-            <input type="text" id="withdrawAmount" class="w-full p-2 border border-gray-300 rounded mt-1"
+            <input type="tel" id="withdrawAmount" class="w-full p-2 border border-gray-300 rounded mt-1"
               [(ngModel)]="withdrawAmount">
           </div>
           <button
