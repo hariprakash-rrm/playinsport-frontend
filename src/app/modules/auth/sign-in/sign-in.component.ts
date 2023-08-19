@@ -166,6 +166,7 @@ export class AuthSignInComponent implements OnInit, OnDestroy {
                 }
             },
             (error: HttpErrorResponse) => {
+                console.log(error);
                 if (error.status === 0) {
                     this.errorMessage = 'Error: Backend server not connected';
                 } else {

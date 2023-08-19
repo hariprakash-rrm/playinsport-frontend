@@ -142,8 +142,8 @@
                 Password should have minimum 6 characters
             </mat-error>
 
-            <div *ngIf="errorMessage" class="text-red-500 text-sm mt-1">{{ errorMessage }}</div>
-
+            <div *ngIf="setPasswordForm.controls['confirmPassword'].dirty && setPasswordForm.get('password').value !== setPasswordForm.get('confirmPassword').value"
+                class="text-red-500 text-sm mt-1">{{ errorMessage }}</div>
         </div>
         <div class="h-20"></div>
         <button type="button" (click)="_setpassword()"

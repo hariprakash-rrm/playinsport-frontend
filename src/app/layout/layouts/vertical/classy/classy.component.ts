@@ -50,6 +50,8 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy {
 
     private inactivityTimer: any;
 
+    private referralCode: any;
+
     /**
      * Constructor
      */
@@ -62,7 +64,7 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy {
         private _fuseNavigationService: FuseNavigationService,
         private _httpClient: HttpClient,
         private _snackBar: SnackbarServiceService
-    ) {}
+    ) { }
 
     // -----------------------------------------------------------------------------------------------------
     // @ Accessors
@@ -76,10 +78,10 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy {
     }
     updateName(value: any) {
         this.nameSubject.next(value);
-      }
-      updateNumber(value:any){
+    }
+    updateNumber(value: any) {
         this.numberSubject.next(value);
-      }
+    }
 
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks
@@ -89,6 +91,7 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy {
      * On init
      */
     ngOnInit(): void {
+
         this._navigationService.navigation$
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((navigation: Navigation) => {
@@ -99,50 +102,53 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy {
         const accessToken = localStorage.getItem('accessToken');
 
         if (accessToken) {
-                        
-                this._userService.getUserDetails(accessToken).subscribe(
-                    (response) => {
-                        if (response.statusCode === 201) {
-                            this.errorMessage = '';
-                            this.userName = response.data.username;
-                            this.phonenumber = response.data.number;
-                            this.wallet = response.data.wallet;
-                            this.txnHistory = Object.values(response.data.txnHistory);
-                            this.updateName(this.userName)
-                            this.updateNumber(this.phonenumber);
-                        }
 
-                        if (response.data.isAdmin) {
-                            this.currentNavigation = this.navigation.compact;
-                        } else {
-                            this.currentNavigation = this.navigation.default;
-                        }
-                    },
-                   
-                    (error) => {
-                        this._snackBar.error(error.error.message, 4000);
-                        // console.log(error);
-                        localStorage.clear()
-                        window.location.reload()
+            this._userService.getUserDetails(accessToken).subscribe(
+                (response) => {
+                    console.log(response);
+                    if (response.statusCode === 201) {
+                        this.errorMessage = '';
+                        this.userName = response.data.username;
+                        this.phonenumber = response.data.number;
+                        this.wallet = response.data.wallet;
+                        this.referralCode= response.data.referralCode;
+                        this.txnHistory = Object.values(response.data.txnHistory);
+                        this.updateName(this.userName)
+                        this.updateNumber(this.phonenumber);
+
                     }
-                ),           
 
-        // Subscribe to the user service
-        this._userService.user$
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((user: User) => {
-                this.user = user;
-            });
+                    if (response.data.isAdmin) {
+                        this.currentNavigation = this.navigation.compact;
+                    } else {
+                        this.currentNavigation = this.navigation.default;
+                    }
+                },
 
-        // Subscribe to media changes
-        this._fuseMediaWatcherService.onMediaChange$
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe(({ matchingAliases }) => {
-                // Check if the screen is small
-                this.isScreenSmall = !matchingAliases.includes('md');
-            });
+                (error) => {
+                    this._snackBar.error(error.error.message, 4000);
+                    // console.log(error);
+                    localStorage.clear()
+                    window.location.reload()
+                }
+            ),
+
+                // Subscribe to the user service
+                this._userService.user$
+                    .pipe(takeUntil(this._unsubscribeAll))
+                    .subscribe((user: User) => {
+                        this.user = user;
+                    });
+
+            // Subscribe to media changes
+            this._fuseMediaWatcherService.onMediaChange$
+                .pipe(takeUntil(this._unsubscribeAll))
+                .subscribe(({ matchingAliases }) => {
+                    // Check if the screen is small
+                    this.isScreenSmall = !matchingAliases.includes('md');
+                });
+        }
     }
-}
 
     /**
      * On destroy
@@ -175,21 +181,40 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy {
         }
     }
 
-    viewWallet(): void{
+    viewWallet(): void {
         // this.currentPage = 2;
         this.showPopup = true;
     }
-    viewTransaction(): void{
+    viewTransaction(): void {
         this.showTxnHistory = true;
     }
-    closePopup(): void{
+    closePopup(): void {
         this.showPopup = false;
     }
-    viewUserDetails(): void{
+    viewUserDetails(): void {
         this.showPopupForUser = !this.showPopupForUser;
     }
     refresh(): void {
         window.location.reload();
+    }
+
+    copyToClipboard() {
+        // Create a temporary input element
+        const input = document.createElement('input');
+        input.value = this.referralCode;
+
+        // Append the input element to the body
+        document.body.appendChild(input);
+
+        // Select the input text and copy it to the clipboard
+        input.select();
+        document.execCommand('copy');
+
+        // Remove the input element from the DOM
+        document.body.removeChild(input);
+
+        // Notify the user that the link has been copied
+        alert('Referral link copied to clipboard');
     }
 }
 

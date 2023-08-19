@@ -20,8 +20,15 @@ export const defaultNavigation: FuseNavigationItem[] = [
         id: 'Wallet',
         title: 'Wallet',
         type: 'basic',
-        icon: 'heroicons_outline:color-swatch',
+        icon: 'heroicons_outline:credit-card',
         link: '/user/wallet'
+    },
+    {
+        id: 'Rewards',
+        title: 'User Rewards',
+        type: 'basic',
+        icon: 'heroicons_outline:gift',
+        link: '/user/rewards'
     },
 ];
 export const compactNavigation: FuseNavigationItem[] = [
@@ -43,8 +50,15 @@ export const compactNavigation: FuseNavigationItem[] = [
         id: 'Wallet',
         title: 'User Wallet',
         type: 'basic',
-        icon: 'heroicons_outline:chart-pie',
+        icon: 'heroicons_outline:wallet',
         link: '/user/wallet'
+    },
+    {
+        id: 'Rewards',
+        title: 'User Rewards',
+        type: 'basic',
+        icon: 'heroicons_outline:chart-pie',
+        link: '/user/rewards'
     },
     {
         id: 'Home',
