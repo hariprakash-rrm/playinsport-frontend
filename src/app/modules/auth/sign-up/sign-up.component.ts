@@ -18,6 +18,8 @@ import { fuseAnimations } from '@fuse/animations';
 import { FuseAlertType } from '@fuse/components/alert';
 import { AuthService } from 'app/core/auth/auth.service';
 import { SnackbarServiceService } from 'app/shared/snackbar-service.service';
+import { ActivatedRoute } from '@angular/router';
+
 
 @Component({
     selector: 'auth-sign-up',
@@ -43,6 +45,7 @@ export class AuthSignUpComponent implements OnInit,OnDestroy {
     phoneNumber: number;
     errorMessage: string = '';
     numberError: string = '';
+    refCode: string | '';
 
     // errorMessage1 : string;
 
@@ -56,7 +59,8 @@ export class AuthSignUpComponent implements OnInit,OnDestroy {
         private _authService: AuthService,
         private _formBuilder: FormBuilder,
         private _router: Router,
-        private snackbar: SnackbarServiceService
+        private snackbar: SnackbarServiceService,
+        private route: ActivatedRoute
     ) {
         this.setPasswordForm = this._formBuilder.group({
             password: new FormControl('', [
@@ -111,6 +115,10 @@ export class AuthSignUpComponent implements OnInit,OnDestroy {
                 Validators.pattern('[0-9]{10}'),
             ]),
         });
+
+        this.route.queryParams.subscribe(params => {
+        this.refCode = params['ref'];
+          });
     }
     get username() {
         return this.signUpForm.get('username');
@@ -154,7 +162,13 @@ export class AuthSignUpComponent implements OnInit,OnDestroy {
         this.showAlert = false;
 
         // Sign up
-        this._authService.signUp(this.signUpForm.value).subscribe(
+
+        let data = {
+            username: this.signUpForm.value.username,
+            number: this.signUpForm.value.number,
+            referredBy: this.refCode 
+        }
+        this._authService.signUp(data).subscribe(
             (response) => {
                 console.log(this.signUpForm.value);
                 if (response.statusCode === 201) {
