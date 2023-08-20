@@ -46,11 +46,11 @@ export const defaultNavigation: FuseNavigationItem[] = [
         ]
     },
     {
-        id: 'Signout',
+        id: 'Sign out',
         title: 'Sign Out',
         type: 'basic',
         icon: 'heroicons_outline:logout',
-        link: '/signout'
+        link: '/sign-out'
     }
 ];
 export const compactNavigation: FuseNavigationItem[] = [
