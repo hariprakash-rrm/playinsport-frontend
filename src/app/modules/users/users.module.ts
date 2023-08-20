@@ -17,6 +17,8 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { WalletComponent } from './components/wallet/wallet.component';
 import {MatSelectModule} from '@angular/material/select';
 import { SlideshowComponent } from './components/home-component/slideshow/slideshow.component';
+import { RewardComponent } from './components/reward/reward.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,9 @@ import { SlideshowComponent } from './components/home-component/slideshow/slides
     TokenComponent,
     SelectTokenComponent,
     WalletComponent,
-    SlideshowComponent
+    SlideshowComponent,
+    RewardComponent,
+    ProfileComponent
   ],
   imports: [
     CommonModule,

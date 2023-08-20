@@ -24,12 +24,34 @@ export const defaultNavigation: FuseNavigationItem[] = [
         link: '/user/wallet'
     },
     {
-        id: 'Rewards',
-        title: 'User Rewards',
-        type: 'basic',
-        icon: 'heroicons_outline:gift',
-        link: '/user/rewards'
+        id: 'UserProfile',
+        title: 'User Profile',
+        type: 'collapsable', // Change type to 'collapsable' to create a dropdown
+        icon: 'heroicons_outline:user-circle',
+        children: [ // Nest the items within the 'children' property
+            {
+                id: 'Profile',
+                title: 'Profile',
+                type: 'basic',
+                icon: 'heroicons_outline:user',
+                link: '/user/profile'
+            },
+            {
+                id: 'Reward',
+                title: 'Rewards',
+                type: 'basic',
+                icon: 'heroicons_outline:star',
+                link: '/user/reward'
+            }
+        ]
     },
+    {
+        id: 'Signout',
+        title: 'Sign Out',
+        type: 'basic',
+        icon: 'heroicons_outline:logout',
+        link: '/signout'
+    }
 ];
 export const compactNavigation: FuseNavigationItem[] = [
     {
@@ -58,7 +80,7 @@ export const compactNavigation: FuseNavigationItem[] = [
         title: 'User Rewards',
         type: 'basic',
         icon: 'heroicons_outline:chart-pie',
-        link: '/user/rewards'
+        link: '/user/reward'
     },
     {
         id: 'Home',
@@ -67,7 +89,7 @@ export const compactNavigation: FuseNavigationItem[] = [
         icon: 'heroicons_outline:home',
         link: '/admin/home',
     },
-    
+
     {
         id: 'Token',
         title: 'Admin Token',
@@ -82,7 +104,7 @@ export const compactNavigation: FuseNavigationItem[] = [
         icon: 'heroicons_outline:document',
         link: '/admin/wallet',
     },
-    
+
 ];
 export const futuristicNavigation: FuseNavigationItem[] = [
     {

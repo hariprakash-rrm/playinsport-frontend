@@ -5,6 +5,7 @@ import {
     ElementRef,
     ViewEncapsulation,
     OnDestroy,
+    ChangeDetectorRef
 } from '@angular/core';
 import {
     FormBuilder,
@@ -49,7 +50,8 @@ export class AuthSignInComponent implements OnInit, OnDestroy {
     tokens: any;
     setPasswordForm: FormGroup;
     isAdmin:boolean;
-    isOtpSent:boolean
+    isOtpSent:boolean;
+    passwordEdited: boolean;
 
     phoneNumber: any;
     /**
@@ -60,7 +62,8 @@ export class AuthSignInComponent implements OnInit, OnDestroy {
         private _authService: AuthService,
         private _formBuilder: FormBuilder,
         private _router: Router,
-        private snackbar: SnackbarServiceService
+        private snackbar: SnackbarServiceService,
+        private cdRef: ChangeDetectorRef
     ) {
         this.otpForm = this._formBuilder.group({
             otp1: [''],
@@ -105,6 +108,15 @@ export class AuthSignInComponent implements OnInit, OnDestroy {
                 Validators.required,
                 Validators.pattern('[0-9]{10}'),
             ]),
+        });
+
+        this.signInForm.get('password').valueChanges.subscribe(() => {
+            // Set passwordEdited to true when the user starts editing
+            this.passwordEdited = true;
+            // Clear the error message
+            this.errorMessage = '';
+            // Trigger change detection to update the template
+            this.cdRef.detectChanges();
         });
     }
 

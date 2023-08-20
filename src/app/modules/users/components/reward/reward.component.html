@@ -1,0 +1,10 @@
+<div>
+    <div>
+        <label for="coupenCode" class="text-base md:text-lg font-medium font-sans">Enter coupen code</label>
+        <input type="text" id="coupenCode" class="w-full p-2 border border-gray-300 rounded mt-1"
+            [(ngModel)]="coupenCode">
+    </div>
+    <button
+        class="px-4 py-2 bg-black text-white font-sans font-medium rounded hover:bg-white hover:text-black border-black border-2 border-solid w-full whitespace-nowrap mt-8"
+        (click)="claimReward()">Submit</button>
+</div>

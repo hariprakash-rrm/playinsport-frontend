@@ -1,0 +1,18 @@
+<div>
+    <div>
+        <h2 class="text-sm text-grey-600 font-sans">User Name</h2>
+        <p class="text-lg font-medium font-sans text-black"> {{userName}}</p>
+    </div>
+    <div>
+        <h2 class="text-sm text-grey-600 font-sans">Phone Number</h2>
+        <p class="text-lg font-medium font-sans text-black"> {{phonenumber}}</p>
+    </div>
+
+    <div>
+        <h2 class="text-sm text-grey-600 font-sans">Referral Code</h2>
+        <p class="text-lg font-medium font-sans text-black"> {{referralCode}}</p>
+    </div>
+    <button (click)="copyToClipboard()" class="ml-2 px-2 py-1 bg-blue-500 text-white rounded">
+        Copy
+    </button>
+</div>
