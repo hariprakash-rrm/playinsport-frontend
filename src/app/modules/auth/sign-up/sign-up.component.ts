@@ -114,10 +114,15 @@ export class AuthSignUpComponent implements OnInit,OnDestroy {
                 Validators.required,
                 Validators.pattern('[0-9]{10}'),
             ]),
+            refNumber:new FormControl('', [
+                Validators.required,
+                Validators.pattern('[0-9]{10}'),
+            ]),
         });
 
         this.route.queryParams.subscribe(params => {
         this.refCode = params['ref'];
+        this.signUpForm.get('refNumber').setValue(this.refCode);
           });
 
           console.log(this.refCode);
@@ -169,7 +174,7 @@ export class AuthSignUpComponent implements OnInit,OnDestroy {
         let data = {
             username: this.signUpForm.value.username,
             number: this.signUpForm.value.number,
-            referredBy: this.refCode 
+            referredBy: this.signUpForm.value.refNumber ?? ''
         }
         this._authService.signUp(data).subscribe(
             (response) => {

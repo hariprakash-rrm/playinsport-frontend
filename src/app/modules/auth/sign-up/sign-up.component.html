@@ -37,8 +37,24 @@
             </mat-error>
             <div *ngIf="errorMessage" class="text-red-500 text-sm mt-1">{{ errorMessage }}</div>
         </div>
+
+        <div class="relative z-0 w-full mb-6">
+            <input id="whatspp-no" type="tel" formControlName="refNumber" placeholder=" "
+                class="block rounded-lg font-sans px-3 pb-3 pt-4 w-full text-base font-semibold text-gray-900 bg-white border--primary appearance-none focus:outline-none focus:ring-0 focus:border-[#8544E4]" />
+            <label for="whatspp-no"
+                class="absolute duration-300 top-4 left-4 z-10 origin-0 text-gray-500 focus:text-grey-900 bg-white text-base">Enter
+                Referer Whatsapp Number</label>
+            <mat-error
+                *ngIf="signUpForm.controls['refNumber'].touched && (signUpForm.get('refNumber').errors?.pattern || signUpForm.get('refNumber').errors?.required)"
+                class="text-red-500 text-sm mt-1">
+                Please enter a valid phone number
+            </mat-error>
+            <div *ngIf="errorMessage" class="text-red-500 text-sm mt-1">{{ errorMessage }}</div>
+        </div>
+
         <div *ngIf="(signUpForm.get('username').touched || signUpForm.get('number').touched) && (signUpForm.invalid || (!signUpForm.get('username').value || !signUpForm.get('number').value))"
             class="text-red-500 text-sm mt-1">{{ numberError }}</div>
+            
 
         <div class="h-20"></div>
         <button type="button" (click)="signUp()"
