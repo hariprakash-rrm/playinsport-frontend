@@ -32,6 +32,7 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy {
     userName: string;
     phonenumber: number;
     wallet: number | null;
+    reward:number | null;
     txnHistory: any | null;
     currentPage: number = 1;
     showPopup: boolean;
@@ -111,6 +112,7 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy {
                         this.userName = response.data.username;
                         this.phonenumber = response.data.number;
                         this.wallet = response.data.wallet;
+                        this.reward = response.data.reward;
                         this.referralCode= response.data.referralCode;
                         this.txnHistory = Object.values(response.data.txnHistory);
                         this.updateName(this.userName)
