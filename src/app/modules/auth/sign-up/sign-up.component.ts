@@ -174,7 +174,7 @@ export class AuthSignUpComponent implements OnInit,OnDestroy {
         let data = {
             username: this.signUpForm.value.username,
             number: this.signUpForm.value.number,
-            referredBy: this.signUpForm.value.refNumber ?? ''
+            referredBy: this.signUpForm.value.refNumber ?? undefined
         }
         this._authService.signUp(data).subscribe(
             (response) => {
