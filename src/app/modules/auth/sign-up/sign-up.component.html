@@ -45,7 +45,7 @@
                 class="absolute duration-300 top-4 left-4 z-10 origin-0 text-gray-500 focus:text-grey-900 bg-white text-base">Enter
                 Referer Whatsapp Number</label>
             <mat-error
-                *ngIf="signUpForm.controls['refNumber'].touched && (signUpForm.get('refNumber').errors?.pattern || signUpForm.get('refNumber').errors?.required)"
+                *ngIf="signUpForm.controls['refNumber'].touched && (signUpForm.get('refNumber').errors?.pattern )"
                 class="text-red-500 text-sm mt-1">
                 Please enter a valid phone number
             </mat-error>

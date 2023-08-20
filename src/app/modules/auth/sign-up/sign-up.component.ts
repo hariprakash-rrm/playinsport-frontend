@@ -115,7 +115,7 @@ export class AuthSignUpComponent implements OnInit,OnDestroy {
                 Validators.pattern('[0-9]{10}'),
             ]),
             refNumber:new FormControl('', [
-                Validators.required,
+                
                 Validators.pattern('[0-9]{10}'),
             ]),
         });
