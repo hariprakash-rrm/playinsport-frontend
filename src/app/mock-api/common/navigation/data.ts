@@ -42,6 +42,13 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 type: 'basic',
                 icon: 'heroicons_outline:star',
                 link: '/user/reward'
+            },
+            {
+                id: 'Transaction History',
+                title: 'Transaction History',
+                type: 'basic',
+                icon: 'heroicons_outline:wallet',
+                link: '/user/transaction-history'
             }
         ]
     },

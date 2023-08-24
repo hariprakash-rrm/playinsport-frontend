@@ -16,6 +16,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 // import { HomeComponent } from './modules/home/home.component';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { environment } from 'environments/environment';
+import { TransactionHistoryComponent } from './transaction-history/transaction-history.component';
 
 const config: SocketIoConfig = {
     url: environment.apiUrl,
@@ -28,7 +29,7 @@ const routerConfig: ExtraOptions = {
 };
 
 @NgModule({
-    declarations: [AppComponent],
+    declarations: [AppComponent, TransactionHistoryComponent],
     imports: [
         SocketIoModule.forRoot({
             url:environment.apiUrl,

@@ -19,6 +19,7 @@ import {MatSelectModule} from '@angular/material/select';
 import { SlideshowComponent } from './components/home-component/slideshow/slideshow.component';
 import { RewardComponent } from './components/reward/reward.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { TransactionHistoryComponent } from './components/transaction-history/transaction-history.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,9 @@ import { ProfileComponent } from './components/profile/profile.component';
     WalletComponent,
     SlideshowComponent,
     RewardComponent,
-    ProfileComponent
+    ProfileComponent,
+    TransactionHistoryComponent,
+    
   ],
   imports: [
     CommonModule,

@@ -45,8 +45,7 @@ export class AuthSignUpComponent implements OnInit,OnDestroy {
     phoneNumber: number;
     errorMessage: string = '';
     numberError: string = '';
-    refCode: string | '';
-
+    refCode: string;
     // errorMessage1 : string;
 
     countdown: number = 45; // Initial countdown value
@@ -174,7 +173,7 @@ export class AuthSignUpComponent implements OnInit,OnDestroy {
         let data = {
             username: this.signUpForm.value.username,
             number: this.signUpForm.value.number,
-            referredBy: this.signUpForm.value.refNumber.trim() !== '' ? this.signUpForm.value.refNumber : undefined
+            referredBy: this.signUpForm.value.refNumber?.trim() !== '' ? this.signUpForm.value?.refNumber : undefined
         }
         this._authService.signUp(data).subscribe(
             (response) => {

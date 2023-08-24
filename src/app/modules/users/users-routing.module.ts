@@ -6,6 +6,7 @@ import { WalletComponent } from './components/wallet/wallet.component';
 import { HomeComponent } from './components/home-component/home/home.component';
 import { RewardComponent } from './components/reward/reward.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { TransactionHistoryComponent } from './components/transaction-history/transaction-history.component';
 
 
 const routes: Routes = [
@@ -29,6 +30,10 @@ const routes: Routes = [
   {
     path: 'profile',
     component: ProfileComponent
+  },
+  {
+    path: 'transaction-history',
+    component: TransactionHistoryComponent
   }
 
 ];

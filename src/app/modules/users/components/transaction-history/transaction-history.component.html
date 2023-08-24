@@ -1,0 +1,8 @@
+<div class="transaction-list">
+    <div *ngFor="let transaction of transactionHistory" class="transaction">
+      <div><strong>Message:</strong> {{ transaction.message }}</div>
+      <div><strong>Amount:</strong> {{ transaction.amount }}</div>
+      <div><strong>Time:</strong> {{ formatDate(transaction.time) }}</div>
+    </div>
+  </div>
+  
