@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { RewardService } from '../reward.service';
+import { SnackbarServiceService } from 'app/shared/snackbar-service.service';
 
 @Component({
   selector: 'app-reward',
@@ -7,15 +9,26 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RewardComponent implements OnInit {
 
-  coupenCode: string;
+  couponCode: string;
 
-  constructor() { }
+  constructor(private _rewardService: RewardService,
+    private _snackbar: SnackbarServiceService) { }
 
   ngOnInit(): void {
+
   }
 
-  claimReward(){
-    
+  async claimReward() {
+    let accessToken: any = await localStorage.getItem('accessToken')
+    let data = {
+      token: accessToken,
+      coupon: this.couponCode
+    }
+    this._rewardService.claimCoupom(data).subscribe((res: any) => {
+      this._snackbar.success("Claimed", 4000);
+    },
+      (error) => {
+        this._snackbar.error(error.message, 4000);
+      })
   }
-
 }

@@ -181,6 +181,9 @@ export class WalletComponent implements OnInit {
     this._walletService.getTxn(data).subscribe((res: any) => {
       this.transactionHistory = res.data.data
       console.log(res)
+    },
+    (error) => {
+      this.snackBar.error(error.error.message, 4000);
     })
   }
 
