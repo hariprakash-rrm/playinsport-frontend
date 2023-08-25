@@ -12,7 +12,7 @@ export class RewardService {
   apiUrl:any=environment.apiUrl;
   constructor(private _httpClient: HttpClient) { }
 
-  claimCoupom(data:any): Observable<any>{
+  claimCoupom(data:{token: string; coupon: string;}): Observable<any>{
     return this._httpClient.post(`${this.apiUrl}/coupon/claim`, data)
     .pipe(
       switchMap((res: any) => {

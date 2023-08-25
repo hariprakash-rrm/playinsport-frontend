@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { TokenService } from '../token.service';
 import { SnackbarServiceService } from 'app/shared/snackbar-service.service';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
-import { round } from 'lodash';
 
 @Component({
     selector: 'app-tokens',

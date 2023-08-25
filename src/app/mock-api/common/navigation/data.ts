@@ -44,8 +44,8 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 link: '/user/reward'
             },
             {
-                id: 'Transaction History',
-                title: 'Transaction History',
+                id: 'TransactionHistory',
+                title: 'TransactionHistory',
                 type: 'basic',
                 icon: 'heroicons_outline:wallet',
                 link: '/user/transaction-history'
@@ -110,6 +110,13 @@ export const compactNavigation: FuseNavigationItem[] = [
         type: 'basic',
         icon: 'heroicons_outline:document',
         link: '/admin/wallet',
+    },
+    {
+        id: 'Create coupon',
+        title: 'Create coupon',
+        type: 'basic',
+        icon: 'heroicons_outline:cube-transparent',
+        link: '/admin/create-coupon',
     },
 
 ];

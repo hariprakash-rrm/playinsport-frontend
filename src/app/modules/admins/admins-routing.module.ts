@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { GameComponent } from './game/game.component';
 import { TokenComponent } from './token/token.component';
+import { CouponComponent } from './coupon/coupon.component';
 
 
 const routes: Routes = [
@@ -17,6 +18,10 @@ const routes: Routes = [
   {
     path: 'token',
     component: TokenComponent
+  },
+  {
+    path: 'create-coupon',
+    component: CouponComponent
   }
 
 ];
