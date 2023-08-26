@@ -4,36 +4,34 @@
     <button (click)="viewSelectedTokens()" class="px-4 py-2 bg-black text-white rounded w-full">
         View selected tokens
     </button>
-</div>
+    <form class="w-full mt-4">
+        <mat-form-field class="w-full">
+            <mat-label>Links</mat-label>
+            <mat-select class="w-full" (selectionChange)="onLinkSelected($event.value)">
+                <mat-option *ngIf="youtubeLink" [value]="youtubeLink">
+                    YouTube Link
+                </mat-option>
+                <mat-option *ngIf="youtubeLiveLink" [value]="youtubeLiveLink">
+                    YouTube Live Link
+                </mat-option>
+                <mat-option *ngIf="facebookLink" [value]="facebookLink">
+                    Facebook Link
+                </mat-option>
+                <mat-option *ngIf="facebookLiveLink" [value]="facebookLiveLink">
+                    Facebook Live Link
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </form>
 
 
 <!-- Note -->
 <!-- you can work on design -->
 <!-- Dont need to add 'a' tag in the below form -->
 
-<form>
-    <mat-form-field>
-      <mat-label>Links</mat-label>
-      <mat-select (selectionChange)="onLinkSelected($event.value)">
-        <mat-option *ngIf="youtubeLink" [value]="youtubeLink">
-            YouTube Link
-        </mat-option>
-        <mat-option *ngIf="youtubeLiveLink" [value]="youtubeLiveLink">
-            YouTube Live Link
-        </mat-option>
-        <mat-option *ngIf="facebookLink" [value]="facebookLink">
-          Facebook Link
-        </mat-option>
-        <mat-option *ngIf="facebookLiveLink" [value]="facebookLiveLink">
-          Facebook Live Link
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-  </form>
-
-<div class="pt-8 p-4 w-full max-w-xs mx-auto justify-center items-center space-y-8 h-user-token overflow-y-scroll">
 
 
+<div class="w-full max-w-xs mx-auto justify-center items-center space-y-8 h-user-token overflow-y-scroll">
     <div class="flex gap-4 items-center justify-between">
         <div>
             <div class="flex gap-2 items-center">
@@ -66,6 +64,7 @@
 
         </div>
     </div>
+</div>
 </div>
 
 <!-- Main modal -->

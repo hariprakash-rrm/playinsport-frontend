@@ -11,8 +11,8 @@
         [class.active]="activeTab === 'withdrawal'" (click)="switchTab('withdrawal')">Withdrawal</a>
     </li>
     <li class="w-full text-center">
-      <a class="bg-white inline-block py-2 px-4 font-semibold cursor-pointer" [class.active]="activeTab === 'txnHis'"
-        (click)="switchTab('txnHis')">Transaction History</a>
+      <a class="bg-white inline-block py-2 px-4 font-semibold cursor-pointer whitespace-nowrap" [class.active]="activeTab === 'txnHis'"
+        (click)="switchTab('txnHis')">Tranx History</a>
     </li>
   </ul>
 
@@ -39,16 +39,19 @@
         <p class="text-lg font-medium font-sans text-black"> {{ transaction.transactionId }}</p>
       </div>
 
-      <div>
-        <h2 class="text-sm text-grey-600 font-sans">Phone Number</h2>
-        <p class="text-lg font-medium font-sans text-black"> {{ transaction.userPhoneNumber }}</p>
+      <div class="flex items-end gap-4">
+        <div>
+          <h2 class="text-sm text-grey-600 font-sans">Phone Number</h2>
+          <p class="text-lg font-medium font-sans text-black"> {{ transaction.userPhoneNumber }}</p>
+        </div>
+        
+        <!-- Need to place this icon near the phone number << priyanka >> -->
+        
+        <button (click)="clickToCopy(transaction.userPhoneNumber)"
+          class="bg-white pb-1 rounded flex items-center justify-center">
+          <span class="material-icons text-lg">content_copy</span>
+        </button>
       </div>
-
-      <!-- Need to place this icon near the phone number << priyanka >> -->
-     
-      <button (click)="clickToCopy(transaction.userPhoneNumber)" class="bg-white p-2 rounded flex items-center justify-center">
-        <span class="material-icons">content_copy</span>
-      </button>
 
       <div class="flex items-center gap-4">
         <button *ngIf="transaction.status === 'pending'" (click)="acceptTransaction(transaction,'deposit')"
@@ -141,23 +144,33 @@
     </div>
   </div>
 
-  <div *ngIf="activeTab === 'txnHis'" class="p-4 pt-8">
+  <div *ngIf="activeTab === 'txnHis'" class="p-4 space-y-4">
 
-    <button *ngIf="activeTab === 'txnHis'" (click)="switchNewTab('withdraw')"
-      class="bg-blue-500 hover:bg-black-700 text-white font-bold py-2 px-4 rounded mt-2">Withdraw</button>
+   <div class="flex w-full border-black border-solid border-2 rounded">
+      <button *ngIf="activeTab === 'txnHis'" (click)="switchNewTab('withdraw')"  [ngClass]="{'bg-black text-white': newTab === 'withdraw'}"
+        class=" text-white font-bold py-2 px-4 w-full">Withdraw</button>
+      
+      <button *ngIf="activeTab === 'txnHis'" (click)="switchNewTab('deposit')"  [ngClass]="{'bg-black text-white': newTab === 'deposit'}"
+        class="align-items:right hover:bg-black-700 text-white font-bold py-2 px-4 w-full">Deposit</button>
 
-    <button *ngIf="activeTab === 'txnHis'" (click)="switchNewTab('deposit')"
-      class="bg-blue-500 align-items:right hover:bg-black-700 text-white font-bold py-2 px-4 rounded mt-2">Deposit</button>
-
+   </div>
     <div *ngIf="newTab === 'withdraw'">
       <h3 class="text-lg font-semibold">Withdrawal History</h3>
 
-      <input type="number" [(ngModel)]="searchTransactionId" class="border border-gray-300 rounded w-full"
-        placeholder="Search withdraw transaction id">
-      <button (click)="searchTransaction('withdraw', searchTransactionId)"
-        class="bg-black p-2 rounded flex items-center justify-center">
-        <mat-icon class="text-white">search</mat-icon>
-      </button>
+          <div class="flex items-end gap-4 w-full mt-4">
+            <div class="w-full">
+              <h4 class="text-base md:text-lg font-bold pb-1">Search Withdraw Transaction Id</h4>
+              <input type="number" [(ngModel)]="searchTransactionId" class="border border-gray-300 rounded w-full">
+            </div>
+          
+          <button (click)="searchTransaction('withdraw', searchTransactionId)"
+            class="bg-black p-2 rounded flex items-center justify-center">
+            <mat-icon class="text-white">search</mat-icon>
+          </button>
+          </div>
+
+    
+     
 
       <div *ngFor="let transaction of withdrawalTransactions"
         class="my-2 border space-y-4 p-4 inline-block overflow-hidden rounded-md w-full cursor-pointer">
@@ -194,12 +207,17 @@
     <div *ngIf="newTab === 'deposit' ">
       <h3 class="text-lg font-semibold">Deposit History</h3>
 
-      <input type="number" [(ngModel)]="transactionId" class="border border-gray-300 rounded w-full"
-        placeholder="Search deposit transaction id">
-      <button (click)="searchTransaction('deposit', transactionId)"
-        class="bg-black p-2 rounded flex items-center justify-center">
-        <mat-icon class="text-white">search</mat-icon>
-      </button>
+        <div class="flex items-end gap-4 w-full my-4">
+          <div class="w-full">
+            <h4 class="text-base md:text-lg font-bold pb-1">Search Deposit Transaction Id</h4>
+            <input type="number" [(ngModel)]="transactionId" class="border border-gray-300 rounded w-full">
+              </div>
+            
+            <button (click)="searchTransaction('deposit', transactionId)"
+              class="bg-black p-2 rounded flex items-center justify-center">
+              <mat-icon class="text-white">search</mat-icon>
+            </button>
+        </div>
 
       <div *ngFor="let transaction of depositTransactions"
         class="my-2 border space-y-4 p-4 inline-block overflow-hidden rounded-md w-full cursor-pointer">
