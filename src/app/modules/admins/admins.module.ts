@@ -10,19 +10,20 @@ import { MatIconModule } from '@angular/material/icon';
 import { AdminService } from './admin.service';
 import { TokenService } from './token.service';
 import { NgxPaginationModule } from 'ngx-pagination';
-import {  DatePipe } from '@angular/common';
+import { DatePipe } from '@angular/common';
+import { CouponComponent } from './coupon/coupon.component';
 
 
 @NgModule({
-    declarations: [TokenComponent, GameComponent, HomeComponent],
+    declarations: [TokenComponent, GameComponent, HomeComponent, CouponComponent],
     imports: [
         CommonModule,
         NgxPaginationModule,
         ReactiveFormsModule,
         FormsModule,
         AdminsRoutingModule,
-        MatIconModule,
+        MatIconModule
     ],
     providers: [AdminService, TokenService, DatePipe],
 })
-export class AdminsModule {}
+export class AdminsModule { }

@@ -148,14 +148,33 @@ export class AdminService {
             )
     }
 
-    getQr(accessToken:any){
+    getQr(accessToken: any) {
         console.log(accessToken)
-        let data={
-            token:accessToken
+        let data = {
+            token: accessToken
         }
-        return this._httpClient.post(`${this.apiUrl}/qr`,data).pipe(switchMap((res:any)=>{
+        return this._httpClient.post(`${this.apiUrl}/qr`, data).pipe(switchMap((res: any) => {
             console.log((res))
             return of((res.data))
         }))
+    }
+
+    /**
+     * 
+     * @param data coupon: this.createCouponDto.coupon,
+      value: this.createCouponDto.value,
+      validFor: this.createCouponDto.validFor,
+      validFrom: this.createCouponDto.validFrom,
+      validUpto: this.createCouponDto.validUpto,
+      token: accessToken
+     * @returns 
+     */
+    createCoupon(data: { coupon: string; value: string; validFor: any; validFrom: string; validUpto: string; token: string; }): Observable<any> {
+        return this._httpClient.post(`${this.apiUrl}/coupon/create`, data)
+            .pipe(
+                switchMap((response: any) => {
+                    return of(response);
+                })
+            )
     }
 }

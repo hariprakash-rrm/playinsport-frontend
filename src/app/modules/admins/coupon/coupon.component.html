@@ -1,0 +1,32 @@
+<div>
+    <h2>Create Coupon</h2>
+    <form (ngSubmit)="onSubmit()">
+      
+      <div class="form-group">
+        <label for="coupon">Coupon:</label>
+        <input type="text" id="coupon" [(ngModel)]="createCouponDto.coupon" name="coupon" required>
+      </div>
+      <div class="form-group">
+        <label for="value">Value:</label>
+        <input type="tel" id="value" [(ngModel)]="createCouponDto.value" name="value" required>
+      </div>
+      <div class="form-group">
+        <label for="canUse">canUse:</label>
+        <input type="text" id="canUse" [(ngModel)]="createCouponDto.canUse" name="canUse" required>
+      </div>
+      <div class="form-group">
+        <label for="validFor">Valid For (comma-separated numbers):</label>
+        <input type="text" id="validFor" [(ngModel)]="validForInput" name="validFor" required>
+      </div>
+      <div class="form-group">
+        <label for="validFrom">Valid From:</label>
+        <input type="datetime" id="validFrom" [(ngModel)]="createCouponDto.validFrom" name="validFrom" required>
+      </div>
+      <div class="form-group">
+        <label for="validUpto">Valid Upto:</label>
+        <input type="datetime" id="validUpto" [(ngModel)]="createCouponDto.validUpto" name="validUpto" required>
+      </div>
+      <button type="submit">Create Coupon</button>
+    </form>
+  </div>
+  
