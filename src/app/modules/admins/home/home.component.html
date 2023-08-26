@@ -4,17 +4,23 @@
 
             <div class="p-4">
                 <h2 class="mb-4 text-2xl font-bold">User Details</h2>
-
-                <button (click)="viewTotelsupply()">Total supply</button>
-                <h4>{{totalSupply}}</h4>
-
+              
                 <div class="grid grid-cols-12 gap-4">
                     <div class="col-span-12">
-                        <div class="flex items-center">
-                            <input type="text" formControlName="searchName"
-                                class="w-full p-2 border border-gray-300 rounded" placeholder="Search user">
+                        <div class="flex items-center gap-4">
+                            <button class="text-black underline font-bold" (click)="viewTotelsupply()">Total supply</button>
+                            <h4 class="text-green-700 text-lg font-bold">{{totalSupply}}</h4>
+                        </div>
+                    </div>
+                    <div class="col-span-12">
+                        <div class="flex items-end gap-4 w-full">
+                            <div class="w-full">
+                                <h4 class="text-base md:text-lg font-bold">Search User</h4>
+                                <input type="text" formControlName="searchName" class="w-full p-2 border border-gray-300 rounded">
+                            </div>
+                         
                             <button (click)="searchUser()"
-                                class="bg-black h-6 w-6 p-5 flex items-center justify-center rounded border-none ml-2">
+                                class="bg-black h-7 w-7 p-5 flex items-center justify-center rounded border-none">
                                 <mat-icon class="text-white">search</mat-icon>
                             </button>
                         </div>

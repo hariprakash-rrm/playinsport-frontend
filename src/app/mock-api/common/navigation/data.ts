@@ -66,28 +66,58 @@ export const compactNavigation: FuseNavigationItem[] = [
         title: 'User Home',
         type: 'basic',
         icon: 'heroicons_outline:home',
-        link: '/user'
+        link: '/user',
     },
     {
         id: 'Token',
         title: 'User Token',
         type: 'basic',
         icon: 'heroicons_outline:chart-pie',
-        link: '/user/token'
+        link: '/user/token',
     },
     {
         id: 'Wallet',
         title: 'User Wallet',
         type: 'basic',
         icon: 'heroicons_outline:wallet',
-        link: '/user/wallet'
+        link: '/user/wallet',
+    },
+    {
+        id: 'UserProfile',
+        title: 'User Profile',
+        type: 'collapsable', // Change type to 'collapsable' to create a dropdown
+        icon: 'heroicons_outline:user-circle',
+        children: [
+            // Nest the items within the 'children' property
+            {
+                id: 'Profile',
+                title: 'Profile',
+                type: 'basic',
+                icon: 'heroicons_outline:user',
+                link: '/user/profile',
+            },
+            {
+                id: 'Reward',
+                title: 'Rewards',
+                type: 'basic',
+                icon: 'heroicons_outline:star',
+                link: '/user/reward',
+            },
+            {
+                id: 'Transaction History',
+                title: 'Transaction History',
+                type: 'basic',
+                icon: 'heroicons_outline:wallet',
+                link: '/user/transaction-history',
+            },
+        ],
     },
     {
         id: 'Rewards',
         title: 'User Rewards',
         type: 'basic',
         icon: 'heroicons_outline:chart-pie',
-        link: '/user/reward'
+        link: '/user/reward',
     },
     {
         id: 'Home',
@@ -112,13 +142,12 @@ export const compactNavigation: FuseNavigationItem[] = [
         link: '/admin/wallet',
     },
     {
-        id: 'Create coupon',
-        title: 'Create coupon',
+        id: 'Sign out',
+        title: 'Sign Out',
         type: 'basic',
-        icon: 'heroicons_outline:cube-transparent',
-        link: '/admin/create-coupon',
+        icon: 'heroicons_outline:logout',
+        link: '/sign-out',
     },
-
 ];
 export const futuristicNavigation: FuseNavigationItem[] = [
     {
