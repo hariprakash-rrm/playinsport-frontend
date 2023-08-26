@@ -105,12 +105,30 @@
                 <div>
                   <h2 class="text-sm text-grey-600 font-sans">Status</h2>
                   <p class="text-lg font-medium font-sans text-black"> {{transaction?.status}}</p>
+             
                 </div>
                 <div>
                   <h2 class="text-sm text-grey-600 font-sans">Message</h2>
                   <p class="text-lg font-medium font-sans text-black">{{transaction?.message}}</p>
                 </div>
               </div>
+            </div>
+            <div class="flex flex-col gap-4">
+                  <div
+                    class="flex items-center w-24 gap-2 bg-red-100 text-red-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300">
+                    <span class="w-1.5 h-1.5 bg-red-900 rounded-full"></span>
+                    Pending
+                  </div>
+                  <div
+                    class="flex items-center w-24 gap-2 bg-green-100 text-green-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300">
+                    <span class="w-1.5 h-1.5 bg-green-900 rounded-full"></span>
+                    Success
+                  </div>
+                  <div
+                    class="flex items-center w-24 gap-2 bg-yellow-100 text-yellow-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300">
+                    <span class="w-1.5 h-1.5 bg-yellow-900 rounded-full"></span>
+                    Decline
+                  </div>
             </div>
           </div>
         </div>
