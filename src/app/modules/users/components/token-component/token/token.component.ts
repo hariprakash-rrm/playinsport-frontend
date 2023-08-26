@@ -49,7 +49,7 @@ export class TokenComponent implements OnInit {
   getGame() {
     //testing purpose
     console.log('trigger')
-    let tDate='Thu Aug 17 2023 00:00:00 GMT+0530 (India Standard Time)'
+    let tDate='Thu Aug 26 2023 00:00:00 GMT+0530 (India Standard Time)'
     this.service.getGames(tDate).subscribe(
       (response) => {
         if (response.statusCode === 201) {
