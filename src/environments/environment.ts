@@ -4,8 +4,8 @@
 
 export const environment = {
     production: false,
-    // apiUrl: 'http://teamquantum.in:3000',
-    apiUrl: 'http://localhost:3000'
+    apiUrl: 'http://teamquantum.in:3000',
+    // apiUrl: 'http://localhost:3000'
 };
 
 /*
