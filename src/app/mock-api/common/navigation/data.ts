@@ -3,65 +3,6 @@ import { FuseNavigationItem } from '@fuse/components/navigation';
 
 export const defaultNavigation: FuseNavigationItem[] = [
     {
-        id: 'Home',
-        title: 'Home',
-        type: 'basic',
-        icon: 'heroicons_outline:home',
-        link: '/'
-    },
-    {
-        id: 'Token',
-        title: 'Token',
-        type: 'basic',
-        icon: 'heroicons_outline:chart-pie',
-        link: '/user/token'
-    },
-    {
-        id: 'Wallet',
-        title: 'Wallet',
-        type: 'basic',
-        icon: 'heroicons_outline:credit-card',
-        link: '/user/wallet'
-    },
-    {
-        id: 'UserProfile',
-        title: 'User Profile',
-        type: 'collapsable', // Change type to 'collapsable' to create a dropdown
-        icon: 'heroicons_outline:user-circle',
-        children: [ // Nest the items within the 'children' property
-            {
-                id: 'Profile',
-                title: 'Profile',
-                type: 'basic',
-                icon: 'heroicons_outline:user',
-                link: '/user/profile'
-            },
-            {
-                id: 'Reward',
-                title: 'Rewards',
-                type: 'basic',
-                icon: 'heroicons_outline:star',
-                link: '/user/reward'
-            },
-            {
-                id: 'TransactionHistory',
-                title: 'TransactionHistory',
-                type: 'basic',
-                icon: 'heroicons_outline:wallet',
-                link: '/user/transaction-history'
-            }
-        ]
-    },
-    {
-        id: 'Sign out',
-        title: 'Sign Out',
-        type: 'basic',
-        icon: 'heroicons_outline:logout',
-        link: '/sign-out'
-    }
-];
-export const compactNavigation: FuseNavigationItem[] = [
-    {
         id: 'User',
         title: 'User Home',
         type: 'basic',
@@ -72,14 +13,14 @@ export const compactNavigation: FuseNavigationItem[] = [
         id: 'Token',
         title: 'User Token',
         type: 'basic',
-        icon: 'heroicons_outline:chart-pie',
+        icon: 'heroicons_outline:cube',
         link: '/user/token',
     },
     {
         id: 'Wallet',
         title: 'User Wallet',
         type: 'basic',
-        icon: 'heroicons_outline:wallet',
+        icon: 'heroicons_outline:currency-rupee',
         link: '/user/wallet',
     },
     {
@@ -107,18 +48,72 @@ export const compactNavigation: FuseNavigationItem[] = [
                 id: 'Transaction History',
                 title: 'Transaction History',
                 type: 'basic',
-                icon: 'heroicons_outline:wallet',
+                icon: 'heroicons_outline:clock',
                 link: '/user/transaction-history',
             },
         ],
     },
     {
-        id: 'Rewards',
-        title: 'User Rewards',
+        id: 'Sign out',
+        title: 'Sign Out',
         type: 'basic',
-        icon: 'heroicons_outline:chart-pie',
-        link: '/user/reward',
+        icon: 'heroicons_outline:logout',
+        link: '/sign-out'
+    }
+];
+export const compactNavigation: FuseNavigationItem[] = [
+    {
+        id: 'User',
+        title: 'User Home',
+        type: 'basic',
+        icon: 'heroicons_outline:home',
+        link: '/user',
     },
+    {
+        id: 'Token',
+        title: 'User Token',
+        type: 'basic',
+        icon: 'heroicons_outline:cube',
+        link: '/user/token',
+    },
+    {
+        id: 'Wallet',
+        title: 'User Wallet',
+        type: 'basic',
+        icon: 'heroicons_outline:currency-rupee',
+        link: '/user/wallet',
+    },
+    {
+        id: 'UserProfile',
+        title: 'User Profile',
+        type: 'collapsable', // Change type to 'collapsable' to create a dropdown
+        icon: 'heroicons_outline:user-circle',
+        children: [
+            // Nest the items within the 'children' property
+            {
+                id: 'Profile',
+                title: 'Profile',
+                type: 'basic',
+                icon: 'heroicons_outline:user',
+                link: '/user/profile',
+            },
+            {
+                id: 'Reward',
+                title: 'Rewards',
+                type: 'basic',
+                icon: 'heroicons_outline:star',
+                link: '/user/reward',
+            },
+            {
+                id: 'Transaction History',
+                title: 'Transaction History',
+                type: 'basic',
+                icon: 'heroicons_outline:clock',
+                link: '/user/transaction-history',
+            },
+        ],
+    },
+  
     {
         id: 'Home',
         title: 'Admin Home',
@@ -131,15 +126,22 @@ export const compactNavigation: FuseNavigationItem[] = [
         id: 'Token',
         title: 'Admin Token',
         type: 'basic',
-        icon: 'heroicons_outline:document',
+        icon: 'heroicons_outline:cube',
         link: '/admin/token',
     },
     {
         id: 'Wallet',
         title: 'Admin Wallet',
         type: 'basic',
-        icon: 'heroicons_outline:document',
+        icon: 'heroicons_outline:currency-rupee',
         link: '/admin/wallet',
+    },
+    {
+        id: 'Reward',
+        title: 'Admin Reward',
+        type: 'basic',
+        icon: 'heroicons_outline:key',
+        link: '/admin/create-coupon',
     },
     {
         id: 'Sign out',

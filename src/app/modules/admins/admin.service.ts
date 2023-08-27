@@ -169,7 +169,7 @@ export class AdminService {
       token: accessToken
      * @returns 
      */
-    createCoupon(data: { coupon: string; value: string; validFor: any; validFrom: string; validUpto: string; token: string; }): Observable<any> {
+    createCoupon(data: { code: string; value: string; validFor: any; validFrom: string; validUpto: string; token: string; }): Observable<any> {
         return this._httpClient.post(`${this.apiUrl}/coupon/create`, data)
             .pipe(
                 switchMap((response: any) => {

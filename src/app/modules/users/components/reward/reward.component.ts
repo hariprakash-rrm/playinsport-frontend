@@ -22,13 +22,14 @@ export class RewardComponent implements OnInit {
     let accessToken: any = await localStorage.getItem('accessToken')
     let data = {
       token: accessToken,
-      coupon: this.couponCode
+      code: this.couponCode
     }
     this._rewardService.claimCoupom(data).subscribe((res: any) => {
       this._snackbar.success("Claimed", 4000);
     },
       (error) => {
-        this._snackbar.error(error.message, 4000);
+        console.log(error)
+        this._snackbar.error(error.error.message, 4000);
       })
   }
 }

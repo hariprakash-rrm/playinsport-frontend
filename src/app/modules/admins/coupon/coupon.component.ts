@@ -27,9 +27,10 @@ export class CouponComponent implements OnInit {
 
   async onSubmit() {
     let accessToken: any = await localStorage.getItem('accessToken')
-
+    const validForArray = this.validForInput.split(',').map(item => parseInt(item.trim(), 10));
+    this.createCouponDto.validFor = validForArray;
     let data = {
-      coupon: this.createCouponDto.coupon,
+      code: this.createCouponDto.coupon,
       value: this.createCouponDto.value,
       validFor: this.createCouponDto.validFor,
       validFrom: this.createCouponDto.validFrom,
@@ -37,7 +38,7 @@ export class CouponComponent implements OnInit {
       token: accessToken,
       canUse: this.createCouponDto.canUse
     }
-
+console.log(data)
     this._adminService.createCoupon(data).subscribe((res: any) => {
       this._snackBar.success(res.data.message, 4000);
     }, (error: any) => {

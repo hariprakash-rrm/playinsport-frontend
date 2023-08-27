@@ -12,19 +12,19 @@
       </div>
       <div class="form-group">
         <label for="canUse">canUse:</label>
-        <input type="text" id="canUse" [(ngModel)]="createCouponDto.canUse" name="canUse" required>
+        <input type="tel" id="canUse" [(ngModel)]="createCouponDto.canUse" name="canUse" required>
       </div>
       <div class="form-group">
         <label for="validFor">Valid For (comma-separated numbers):</label>
-        <input type="text" id="validFor" [(ngModel)]="validForInput" name="validFor" required>
+        <input type="tel" id="validFor" [(ngModel)]="validForInput" name="validFor" required>
       </div>
       <div class="form-group">
         <label for="validFrom">Valid From:</label>
-        <input type="datetime" id="validFrom" [(ngModel)]="createCouponDto.validFrom" name="validFrom" required>
+        <input type="datetime-local" id="validFrom" [(ngModel)]="createCouponDto.validFrom" name="validFrom" required>
       </div>
       <div class="form-group">
         <label for="validUpto">Valid Upto:</label>
-        <input type="datetime" id="validUpto" [(ngModel)]="createCouponDto.validUpto" name="validUpto" required>
+        <input type="datetime-local" id="validUpto" [(ngModel)]="createCouponDto.validUpto" name="validUpto" required>
       </div>
       <button type="submit">Create Coupon</button>
     </form>
