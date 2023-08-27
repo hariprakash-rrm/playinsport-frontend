@@ -1,1 +1,21 @@
 @import '~@angular/material/prebuilt-themes/indigo-pink.css';
+@keyframes glow {
+    0%, 100% {
+      text-shadow: 0 0 10px rgba(0, 0, 255, 0.8);
+    }
+    50% {
+      text-shadow: 0 0 20px rgba(0, 0, 255, 0.8);
+    }
+  }
+  
+  .font-sans.text-sm.glowing {
+    color: #1e1e1e; /* Dark text color */
+    animation: glow 1s infinite;
+    transition: text-shadow 0.3s ease-in-out; /* Add transition effect */
+  }
+  
+  .font-sans.text-sm.glowing:hover {
+    animation: none; /* Disable the animation on hover */
+    text-shadow: 0 0 10px rgba(0, 0, 255, 0.8); /* Apply a static shadow on hover */
+  }
+  
