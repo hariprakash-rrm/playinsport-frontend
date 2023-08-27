@@ -181,7 +181,7 @@ export class GameComponent implements OnInit {
             method: this.selectedTransaction.method,
             amount: this.selectedTransaction.amount,
             message: this.declineMessage,
-            userPhoneNumber: number
+            userPhoneNumber: this.selectedTransaction.userPhoneNumber
         }
         console.log(this.selectedTransaction.method);
         this.phonenumber = data.userPhoneNumber;
