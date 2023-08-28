@@ -90,7 +90,7 @@
                 },
                 "serve": {
                     "options": {
-                        "allowedHosts": ["www.teamquantum.in","teamquantum.in"]
+                        "allowedHosts": ["www.teamquantum.in","teamquantum.in","playinsport.com","www.playinsport.com"]
                       },
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "configurations": {

@@ -33,11 +33,13 @@
             <div class="space-y-4">
               <div>
                 <h3 class="text-base md:text-lg font-medium font-sans">Deposit</h3>
-                <select [(ngModel)]="payMethod" [ngModelOptions]="{ standalone: true } " (click)="selectItem()"
+                <select [(ngModel)]="payMethod" [ngModelOptions]="{ standalone: true }" (change)="selectItem()" (input)="selectItem()"
                   class="w-full p-2 border border-gray-300 rounded mt-1">
                   <option *ngFor="let option of options" [ngValue]="option">{{ option.label }}</option>
                 </select>
               </div>
+              
+              
 
               <div>
                 <label for="mobileNumber" class="text-base md:text-lg font-medium font-sans">{{selectedValue}} Mobile

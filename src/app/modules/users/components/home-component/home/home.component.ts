@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -7,13 +8,18 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit ,OnDestroy{
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
   }
 
   ngOnDestroy(): void {
     console.log('destroyed')
+  }
+
+   navigateToDestination() {
+   
+    this.router.navigate(['/user/token']);
   }
 
 }
