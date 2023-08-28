@@ -306,15 +306,15 @@
 
                 <ul class="flex gap-4 items-center justify-center border-b">
                     <li class="w-full text-center">
-                        <a (click)="changeTab(1)"
+                        <a (click)="changeTab(1)"  [ngClass]="{'activeTab': tab==1}"
                             class="bg-white inline-block py-2 px-4 font-semibold cursor-pointer">Details</a>
                     </li>
                     <li class="w-full text-center">
-                        <a (click)="changeTab(2)"
+                        <a (click)="changeTab(2)" [ngClass]="{'activeTab': tab==2}"
                             class="bg-white inline-block py-2 px-4 font-semibold cursor-pointer whitespace-nowrap">Update Link</a>
                     </li>
                     <li class="w-full text-center">
-                        <a (click)="changeTab(3)"
+                        <a (click)="changeTab(3)" [ngClass]="{'activeTab': tab==3}"
                             class="bg-white inline-block py-2 px-4 font-semibold cursor-pointer">Finalize</a>
                     </li>
                 </ul>
@@ -474,10 +474,10 @@
                     </div> -->
                 <div *ngIf="tab==3" class="grid grid-cols-12 gap-4 mt-6">
 
-                    <div *ngIf="status === 'live'" class="grid grid-cols-12 gap-4 mt-6">
-                        <div class="col-span-12">
+                    <div *ngIf="status === 'live'" class="col-span-12">
+                        <div>
                             <div>
-                                <label class="text-base md:text-lg font-medium font-sans">
+                                <label class="text-base md:text-lg font-medium font-sans mb-1">
                                     Select Action
                                 </label>
                                 <select [(ngModel)]="action" [ngModelOptions]="{ standalone: true }"
@@ -487,7 +487,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-span-12">
+                        <div>
                             <button type="submit" (click)="updateRound()"
                                 class="w-full mt-8 text-white focus:outline-none bg-black rounded-md font-sans font-semibold text-sm px-5 py-2.5 text-center mr-2 uppercase mb-2 cursor-pointer">
                                 Submit

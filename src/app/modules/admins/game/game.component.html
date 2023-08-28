@@ -144,9 +144,9 @@
     </div>
   </div>
 
-  <div *ngIf="activeTab === 'txnHis'" class="p-4 space-y-4">
+  <div *ngIf="activeTab === 'txnHis'" class="p-2 space-y-4">
 
-   <div class="flex w-full border-black border-solid border-2 rounded">
+   <div class="flex w-full border-black border-solid border-2 rounded mt-8">
       <button *ngIf="activeTab === 'txnHis'" (click)="switchNewTab('withdraw')"  [ngClass]="{'bg-black text-white': newTab === 'withdraw'}"
         class=" text-white font-bold py-2 px-4 w-full">Withdraw</button>
       
