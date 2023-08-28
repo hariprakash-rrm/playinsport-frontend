@@ -43,6 +43,7 @@ export class TokenComponent implements OnInit {
         private _formBuilder: FormBuilder
     ) {
         this.tokenForm = this._formBuilder.group({
+            image:new FormControl('', [Validators.required]),
             name: new FormControl('', [Validators.minLength(6)]),
             totalTokenNumber: new FormControl('', [Validators.required]),
             maximumTokenPerUser: new FormControl('', [Validators.required]),
@@ -107,6 +108,7 @@ export class TokenComponent implements OnInit {
         const valuesArray: string[] = this.tokenForm.value.prize.split(',');
         const data = {
             name: this.tokenForm.value.name,
+            image:this.tokenForm.value.image,
             totalTokenNumber: this.tokenForm.value.totalTokenNumber,
             maximumTokenPerUser: this.tokenForm.value.maximumTokenPerUser,
             date: this.tokenForm.value.date,
