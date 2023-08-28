@@ -1,7 +1,25 @@
 
-<div i class="relative w-full h-40 m-4 mt-6" >
-   
-  <app-slideshow></app-slideshow>
-
+  <div class="relative w-full h-40 m-4 mt-6">
+    <app-slideshow class="mb-4"></app-slideshow>
+    <!-- Add any other content related to the slideshow here -->
+    <div class="flex flex-wrap mt-4 -m-4">
+      <div (click)="navigateToDestination()" class="w-full md:w-1/2 p-4">
+        <div class="bg-white shadow-md p-6 rounded-md text-center">
+          <h5 class="text-lg font-semibold animate-pulse text-orange-500">Cash Back Token</h5>
+          <p class="text-gray-600 animate-pulse">Click here to join and win big</p>
+        </div>
+      </div>
+      
+      
+  
+      <div class="w-full md:w-1/2 p-4">
+        <div class="bg-white shadow-md p-6 rounded-md text-center">
+          <h5 class="text-lg font-semibold ">Cricket Toss Prediction</h5>
+          <p class="text-gray-600 animate-pulse">Coming soon...</p>
+        </div>
+      </div>
+    </div>
   </div>
-  <!-- <app-slideshow></app-slideshow> -->
+
+  
+
