@@ -39,7 +39,7 @@ export class SlideshowComponent implements OnInit {
   }
 
   navigateToDestination() {
-    console.log('triggered',this.currentBannerIndex)
+    // console.log('triggered',this.currentBannerIndex)
     this.router.navigate(['/user/token']);
   }
 

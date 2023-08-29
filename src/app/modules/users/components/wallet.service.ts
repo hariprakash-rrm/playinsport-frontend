@@ -14,7 +14,7 @@ export class WalletService {
 
   deposit(data:any): Observable<any>{
 
-    // console.log(data);
+    // // console.log(data);
     return this._httpClient.post(`${this.apiUrl}/user/deposit`, data).pipe(
         switchMap((response: any) => {
             return of(response);

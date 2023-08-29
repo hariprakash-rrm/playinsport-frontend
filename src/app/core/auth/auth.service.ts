@@ -83,7 +83,7 @@ export class AuthService {
         }
         return this._httpClient.post(`${this.apiUrl}/signin`, credentials).pipe(
             switchMap((response: any) => {
-                // console.log(response);
+                // // console.log(response);
                 // Store the access token in the local storage
                 this.accessToken = response.token;
                 this.user = JSON.stringify(response.data);
@@ -92,7 +92,7 @@ export class AuthService {
 
                 // Store the user on the user service
                 this._userService.user = response.user;
-                // console.log(response);
+                // // console.log(response);
 
                 // Return a new observable with the response
                 return of(response);

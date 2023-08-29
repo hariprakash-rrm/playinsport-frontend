@@ -54,7 +54,7 @@ export class HomeComponent implements OnInit {
             token: this.accessToken,
         };
 
-        // console.log(this.accessToken);
+        // // console.log(this.accessToken);
 
         this.showTransactionHistory = false;
 
@@ -68,7 +68,7 @@ export class HomeComponent implements OnInit {
                     this.txnHistory = Object.values(response.data.txnHistory);
                     this.block = response.data.block
                 }
-                // console.log(this.txnHistory);
+                // // console.log(this.txnHistory);
                 this._snackBar.success(response.message, 4000);
             },
             (error) => {
@@ -164,7 +164,7 @@ export class HomeComponent implements OnInit {
         this._adminService.viewTotalSupply(data).subscribe(
             (response: any) => {
                 this.totalSupply = response.data.data;
-                console.log(response);
+                // console.log(response);
             },
             (error) => {
               this._snackBar.error(error.error.message, 4000);

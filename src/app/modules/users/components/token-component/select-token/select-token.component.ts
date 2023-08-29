@@ -52,8 +52,8 @@ export class SelectTokenComponent implements OnInit, OnDestroy {
     this.userDetails = JSON.parse(user);
 
     this.triggerSocket();
-    console.log(this.youtubeLink);
-    console.log('facebooklink', this.facebookLink);
+    // console.log(this.youtubeLink);
+    // console.log('facebooklink', this.facebookLink);
 
 
   }
@@ -79,7 +79,7 @@ export class SelectTokenComponent implements OnInit, OnDestroy {
    * @returns 
    */
   handleSeats(message: any) {
-    // console.log(message)
+    // // console.log(message)
     if (+this.round == +message[0].round) {
       for (let i = 0; i < message.length; i++) {
         this.seats.push({
@@ -107,7 +107,7 @@ export class SelectTokenComponent implements OnInit, OnDestroy {
       this.seats.push(message[i]);
     }
     for (let i = 0; i < message.length; i++) {
-      // console.log(this.userDetails.username, this.seats[i].selectedBy)
+      // // console.log(this.userDetails.username, this.seats[i].selectedBy)
       if (this.userDetails.name == this.seats[i].selectedBy) {
         this.seats[i].userSelected = true;
       }
@@ -120,7 +120,7 @@ export class SelectTokenComponent implements OnInit, OnDestroy {
   handleSocketResponse() {
     let token = localStorage.getItem('accessToken');
     this.socket.fromEvent('userBalance').subscribe((message: any) => {
-      console.log('token', message);
+      // console.log('token', message);
 
     });
 
@@ -132,7 +132,7 @@ export class SelectTokenComponent implements OnInit, OnDestroy {
     this.socket.fromEvent('game').subscribe((message: any) => {
       this.handleSeats(message);
 
-      console.log('handleseat', message);
+      // console.log('handleseat', message);
     });
 
     this.socket.emit('getGame', this.round);

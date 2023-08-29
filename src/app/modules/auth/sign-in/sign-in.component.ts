@@ -168,7 +168,7 @@ export class AuthSignInComponent implements OnInit, OnDestroy {
                 if (response.statusCode === 201) {
                     this.phoneNumber = this.signInForm.value.number;
                     this.errorMessage = '';
-                    console.log(response);
+                    // console.log(response);
                 }
 
                 if (response.data.isAdmin) {
@@ -178,7 +178,7 @@ export class AuthSignInComponent implements OnInit, OnDestroy {
                 }
             },
             (error: HttpErrorResponse) => {
-                console.log(error);
+                // console.log(error);
                 if (error.status === 0) {
                     this.errorMessage = 'Error: Backend server not connected';
                 } else {
@@ -207,7 +207,7 @@ export class AuthSignInComponent implements OnInit, OnDestroy {
         this._authService.forgotPassword(data).subscribe(
             (response) => {
                 if (response.statusCode === 201) {
-                    console.log(response);
+                    // console.log(response);
                     this.currentStep++;
                     this.phoneNumber = this.numberForm.value.numbers;
                     this.startCountdown();
@@ -252,7 +252,7 @@ export class AuthSignInComponent implements OnInit, OnDestroy {
                 this.countdown = 0;
                 this.isOtpSent=false
             }
-            console.log(this.countdown);
+            // console.log(this.countdown);
         }, 1000); // Changed interval to 1000 milliseconds (1 second)
     }
 
@@ -261,7 +261,7 @@ export class AuthSignInComponent implements OnInit, OnDestroy {
 
         const { otp1, otp2, otp3, otp4 } = this.otpForm.value;
         const enteredOTP = otp1 + otp2 + otp3 + otp4;
-        console.log(enteredOTP);
+        // console.log(enteredOTP);
 
         if (this.otpForm.invalid) {
             return;
@@ -293,7 +293,7 @@ export class AuthSignInComponent implements OnInit, OnDestroy {
                 'Please wait for 45 seconds before generating a new OTP.';
         }
         if (this.countdown <= 0) {
-            // console.log('GOTOSENDOTP');
+            // // console.log('GOTOSENDOTP');
             this.currentStep--;
             this.countdown = 45;
             this.goToSendOtp();

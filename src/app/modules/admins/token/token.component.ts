@@ -83,7 +83,7 @@ export class TokenComponent implements OnInit {
     }
 
     clear() {
-        console.log("CLEARED");
+        // console.log("CLEARED");
         this.name = '';
             this.prize = '';
             this.tokenPrice = '';
@@ -97,10 +97,10 @@ export class TokenComponent implements OnInit {
             this.facebookLiveLink = '';
         this.tokenForm.reset()
 
-        console.log(this.tokenForm.value.name)
+        // console.log(this.tokenForm.value.name)
         this.rounds = 0
         this.isFetched = false
-        console.log(this.tokenForm.value.name)
+        // console.log(this.tokenForm.value.name)
     }
 
     tokenCreation(): void {
@@ -118,7 +118,7 @@ export class TokenComponent implements OnInit {
             youtubeLink: this.tokenForm.value.youtubeLink,
             facebookLink: this.tokenForm.value.facebookLink
         };
-        // console.log(data)
+        // // console.log(data)
 
         this.tokenService.createToken(data).subscribe(
             (response) => {
@@ -129,7 +129,7 @@ export class TokenComponent implements OnInit {
             },
             (error) => {
                 this.snackbarServiceService.error(error.error.message, 4000);
-                // console.log(error);
+                // // console.log(error);
             }
         );
     }
@@ -142,7 +142,7 @@ export class TokenComponent implements OnInit {
             action: this.action,
             token: accessToken
         };
-        // console.log(data)
+        // // console.log(data)
 
         this.tokenService.updateRound(data).subscribe(
             (response) => {
@@ -153,7 +153,7 @@ export class TokenComponent implements OnInit {
             },
             (error) => {
                 this.snackbarServiceService.error(error.error.message, 4000);
-                // console.log(error);
+                // // console.log(error);
             }
         );
     }
@@ -166,9 +166,9 @@ export class TokenComponent implements OnInit {
         // }
         const valuesArray: string[] = this.winnerList.split(',');
 
-        console.log(valuesArray);
-        console.log(valuesArray.length);
-        console.log(this.prize.length);
+        // console.log(valuesArray);
+        // console.log(valuesArray.length);
+        // console.log(this.prize.length);
 
         if (this.prize.length != valuesArray.length) {
             this.snackbarServiceService.error(`Total winning prize for this round is ${this.prize.length}, please check the winner list`, 5000)
@@ -184,7 +184,7 @@ export class TokenComponent implements OnInit {
             winnerList: valuesArray
         };
 
-        console.log(data);
+        // console.log(data);
 
         this.tokenService.updateRewardType(data).subscribe(
             (response) => {
@@ -217,7 +217,7 @@ export class TokenComponent implements OnInit {
 
         this.tokenService.updateRound(data).subscribe(
             (response) => {
-                // console.log(response);
+                // // console.log(response);
                 if (response.statusCode === 201) {
                     this.snackbarServiceService.success(response.message, 4000);
                     this.rounds = 0;
@@ -273,8 +273,8 @@ export class TokenComponent implements OnInit {
     }
 
     // choosetab(status: string) {
-    //     console.log(status);
-    //     console.log(status === 'finalise');
+    //     // console.log(status);
+    //     // console.log(status === 'finalise');
     //     if (status === 'finalise' || status === 'refund') {
     //         this.tab = 4;
     //     }

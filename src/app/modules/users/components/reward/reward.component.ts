@@ -28,7 +28,7 @@ export class RewardComponent implements OnInit {
       this._snackbar.success("Claimed", 4000);
     },
       (error) => {
-        console.log(error)
+        // console.log(error)
         this._snackbar.error(error.error.message, 4000);
       })
   }

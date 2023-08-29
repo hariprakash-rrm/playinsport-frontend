@@ -38,7 +38,7 @@ export class CouponComponent implements OnInit {
       token: accessToken,
       canUse: this.createCouponDto.canUse
     }
-console.log(data)
+// console.log(data)
     this._adminService.createCoupon(data).subscribe((res: any) => {
       this._snackBar.success(res.data.message, 4000);
     }, (error: any) => {

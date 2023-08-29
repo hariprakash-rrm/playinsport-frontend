@@ -40,9 +40,17 @@
               </div>
             </div>
             <div class="grid grid-cols-12 gap-4 p-4">
-              <div class="col-span-6">
+              <div *ngIf="card?.status==='live'" class="col-span-6">
                 <p class="text-black text-base font-normal font-sans">Status: </p>
-                <p class="text-black text-xl font-semibold font-sans">{{ card?.status }}</p>
+                <p class="text-black text-xl font-semibold font-sans">Live</p>
+              </div>
+              <div *ngIf="card?.status=='finalise'" class="col-span-6">
+                <p class="text-black text-base font-normal font-sans">Status: </p>
+                <p class="text-black text-xl font-semibold font-sans">Completed</p>
+              </div>
+              <div *ngIf="card?.status=='refunded'" class="col-span-6">
+                <p class="text-black text-base font-normal font-sans">Status: </p>
+                <p class="text-black text-xl font-semibold font-sans">Cancelled</p>
               </div>
               <div class="col-span-6">
                 <h2 class="text-black text-base font-normal font-sans">Round </h2>

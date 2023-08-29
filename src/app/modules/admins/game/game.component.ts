@@ -80,7 +80,7 @@ export class GameComponent implements OnInit {
         try {
             this.gameService.getDepositTransactions(data).subscribe((res: any) => {
                 this.depositTransactions = res.data.data
-                console.log(res.data.data);
+                // console.log(res.data.data);
             }, (error: any) => {
                 this.snack.error(error.error.message, 4000)
             })
@@ -99,11 +99,11 @@ export class GameComponent implements OnInit {
         this.withdrawalTransactions = []
         this.gameService.getWithdrawTransaction(data).subscribe((res: any) => {
             this.withdrawalTransactions = res.data.data
-            console.log(res.data.data);
+            // console.log(res.data.data);
 
         }, (error: any) => {
 
-            this.snack.error(error.error.message, 4000)            // console.log('resposnseeee', res)
+            this.snack.error(error.error.message, 4000)            // // console.log('resposnseeee', res)
 
         })
     }
@@ -133,7 +133,7 @@ export class GameComponent implements OnInit {
     }
 
     updatePayment(details: any) {
-        console.log("**********", details);
+        // console.log("**********", details);
         let { token, method, amount, message, userPhoneNumber } = details
         let data = {
             token: token,
@@ -156,7 +156,7 @@ export class GameComponent implements OnInit {
                 this.showDeclineModal = false;
             }, (error: any) => {
 
-                console.log(error);
+                // console.log(error);
                 this.snack.error(error.error.message, 4000)
             });
         } catch (error) {
@@ -165,7 +165,7 @@ export class GameComponent implements OnInit {
     }
 
     declineTransaction(transaction: any, method: any) {
-        console.log(method);
+        // console.log(method);
         this.showDeclineModal = true;
         this.selectedTransaction = transaction;
 
@@ -183,7 +183,7 @@ export class GameComponent implements OnInit {
             message: this.declineMessage,
             userPhoneNumber: this.selectedTransaction.userPhoneNumber
         }
-        console.log(this.selectedTransaction.method);
+        // console.log(this.selectedTransaction.method);
         this.phonenumber = data.userPhoneNumber;
         this.updatePayment(data)
     }
@@ -220,7 +220,7 @@ export class GameComponent implements OnInit {
         this.gameService.searchTransaction(data).subscribe((res: any) => {
             
             if(method === 'withdraw'){
-                console.log(res.data.data);
+                // console.log(res.data.data);
                 this.withdrawalTransactions = res.data.data
             }else{
                 this.depositTransactions = res.data.data

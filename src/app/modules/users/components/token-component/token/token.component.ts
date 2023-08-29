@@ -41,14 +41,14 @@ export class TokenComponent implements OnInit {
 
 
   onDateChange(event: any) {
-    console.log('Selected Date:', this.selectedDate);
+    // console.log('Selected Date:', this.selectedDate);
 
     this.getGame()
   }
 
   getGame() {
     //testing purpose
-    console.log('trigger')
+    // console.log('trigger')
     let tDate='Thu Aug 26 2023 00:00:00 GMT+0530 (India Standard Time)'
     this.service.getGames(tDate).subscribe(
       (response) => {
@@ -71,7 +71,7 @@ export class TokenComponent implements OnInit {
   }
 
   activity() {
-    // console.log('triggered',this.gameId)
+    // // console.log('triggered',this.gameId)
 
     // Handle the emitted event here
     this.gameId = null
@@ -85,7 +85,7 @@ export class TokenComponent implements OnInit {
   getLink(roundNumber: number) {
     this.games.forEach((element: any) => {
       if (element.round == roundNumber) {
-        console.log(element);
+        // console.log(element);
         this.youtubeLiveLink = element?.youtubeLiveLink;
         this.youtubeLink = element?.youtubeLink;
         this.facebookLiveLink = element?.facebookLiveLink;

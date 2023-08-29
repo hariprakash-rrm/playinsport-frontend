@@ -19,13 +19,13 @@ export class TransactionHistoryComponent implements OnInit {
   }
 
   viewTransactionHistory() {
-    console.log("HELLO")
+    // console.log("HELLO")
     const token = localStorage.getItem('accessToken');
     
     this._userService.getTransactionHistory(token).subscribe(
       (response: any) => {
-        console.log("response", response);
-        console.log(response.data.data);
+        // console.log("response", response);
+        // console.log(response.data.data);
         this.transactionHistory = response.data.data;
         if (response.statusCode === 201) {
           this.errorMessage = '';
@@ -33,7 +33,7 @@ export class TransactionHistoryComponent implements OnInit {
       },
       (error) => {
         this._snackBar.error(error.error.message, 4000);
-        // console.log(error);
+        // // console.log(error);
       }
     )
   }

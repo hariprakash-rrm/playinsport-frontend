@@ -81,7 +81,7 @@ export class UserService {
         );
     }
     getTransactionHistory(token: any): Observable<any> {
-        console.log("TOKEN", token);
+        // console.log("TOKEN", token);
         const params = new HttpParams()
             .set('token', token);
         return this._httpClient

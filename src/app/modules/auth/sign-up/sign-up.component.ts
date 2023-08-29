@@ -124,7 +124,7 @@ export class AuthSignUpComponent implements OnInit,OnDestroy {
         this.signUpForm.get('refNumber').setValue(this.refCode);
           });
 
-          console.log(this.refCode);
+          // console.log(this.refCode);
     }
     get username() {
         return this.signUpForm.get('username');
@@ -169,7 +169,7 @@ export class AuthSignUpComponent implements OnInit,OnDestroy {
 
         // Sign up
 
-        console.log(this.refCode);
+        // console.log(this.refCode);
         let data = {
             username: this.signUpForm.value.username,
             number: this.signUpForm.value.number,
@@ -177,7 +177,7 @@ export class AuthSignUpComponent implements OnInit,OnDestroy {
         }
         this._authService.signUp(data).subscribe(
             (response) => {
-                console.log(this.signUpForm.value);
+                // console.log(this.signUpForm.value);
                 if (response.statusCode === 201) {
                     this.errorMessage = '';
                     this.currentStep++;
@@ -197,7 +197,7 @@ export class AuthSignUpComponent implements OnInit,OnDestroy {
     }
 
     clearOtpFields() {
-        console.log(this.otpForm.value.otp1);
+        // console.log(this.otpForm.value.otp1);
         this.otpForm.value.otp1 = '';
         this.otpForm.value.otp2 = '';
         this.otpForm.value.otp3 = '';
@@ -234,10 +234,10 @@ export class AuthSignUpComponent implements OnInit,OnDestroy {
                     this.currentStep++;
                     this.errorMessage = '';
                 }
-                // console.log(response);
+                // // console.log(response);
             },
             (error) => {
-                console.log("NOTVALID");
+                // console.log("NOTVALID");
                 this.clearOtpFields();
                 this.errorMessage = error.error.message;
             }
@@ -287,7 +287,7 @@ export class AuthSignUpComponent implements OnInit,OnDestroy {
         // this.countdown = 10;
         this.interval = setInterval(() => {
             this.countdown--;
-            // console.log(this.countdown);
+            // // console.log(this.countdown);
             if (this.countdown === 0) {
                 clearInterval(this.interval);
             }

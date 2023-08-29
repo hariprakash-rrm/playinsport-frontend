@@ -73,7 +73,7 @@ export class WalletComponent implements OnInit {
   //   const file: File = event.target.files[0];
 
   //   if (file) {
-  //     console.log(file.type);
+  //     // console.log(file.type);
   //     // Check if the file type is allowed (PNG, JPG, or JPEG)
   //     if (file.type === 'image/png' || file.type === 'image/jpeg' || file.type === 'image/jpg') {
   //       // Check if the file size is within the allowed limit (e.g., 2MB)
@@ -105,7 +105,7 @@ export class WalletComponent implements OnInit {
         userPhoneNumber: +this.phoneNumberOfUser,
         token: token
       }
-      console.log(data);
+      // console.log(data);
       this._walletService.deposit(data).subscribe(
         (response) => {
           if (response.statusCode === 201) {
@@ -113,7 +113,7 @@ export class WalletComponent implements OnInit {
           }
         },
         (error) => {
-          console.log(error)
+          // console.log(error)
             this.snackBar.error(error.error.message, 4000);
         }
       );
@@ -143,11 +143,11 @@ export class WalletComponent implements OnInit {
       }
       this._walletService.deposit(data).subscribe(
         (response) => {
-          // console.log(response);
+          // // console.log(response);
           this.snackBar.success(response.message, 4000);
         },
         (error) => {
-          console.log(error)
+          // console.log(error)
           this.snackBar.error(error.error.message, 4000);
 
         }
@@ -180,7 +180,7 @@ export class WalletComponent implements OnInit {
     }
     this._walletService.getTxn(data).subscribe((res: any) => {
       this.transactionHistory = res.data.data
-      console.log(res)
+      // console.log(res)
     },
     (error) => {
       this.snackBar.error(error.error.message, 4000);

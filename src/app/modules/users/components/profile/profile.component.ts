@@ -27,7 +27,7 @@ export class ProfileComponent implements OnInit {
 
       this._userService.getUserDetails(accessToken).subscribe(
         (response) => {
-          console.log(response);
+          // console.log(response);
           if (response.statusCode === 201) {
             this.errorMessage = '';
             this.userName = response.data.username;
@@ -41,7 +41,7 @@ export class ProfileComponent implements OnInit {
         },
     (error) => {
       this._snackBar.error(error.error.message, 4000);
-      // console.log(error);
+      // // console.log(error);
       localStorage.clear()
       window.location.reload()
     }

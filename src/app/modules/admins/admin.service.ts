@@ -131,7 +131,7 @@ export class AdminService {
         }).
             pipe(
                 switchMap((response: any) => {
-                    console.log(response);
+                    // console.log(response);
                     return of(response);
                 })
             )
@@ -149,12 +149,12 @@ export class AdminService {
     }
 
     getQr(accessToken: any) {
-        console.log(accessToken)
+        // console.log(accessToken)
         let data = {
             token: accessToken
         }
         return this._httpClient.post(`${this.apiUrl}/qr`, data).pipe(switchMap((res: any) => {
-            console.log((res))
+            // console.log((res))
             return of((res.data))
         }))
     }
