@@ -146,11 +146,16 @@
     </div>
     <div *ngIf="errorMessage" class="text-red-500 text-sm mt-1">{{ errorMessage }}</div>
     <div class="h-24"></div>
-    <button type="button" (click)="goBack()"
-      class="w-full mt-20 text-white focus:outline-none bg-black rounded-md font-sans font-semibold text-sm px-5 py-2.5 text-center mr-2 uppercase mb-2">Back</button>
-    <button type="button" (click)="checkOTP()"
-      class="w-full mt-20 text-white focus:outline-none bg-black rounded-md font-sans font-semibold text-sm px-5 py-2.5 text-center mr-2 uppercase mb-2">Verify
-      OTP</button>
+    <div class="mt-20 flex justify-between gap-4">
+      <button type="button" (click)="goBack()"
+        class="w-full text-black focus:outline-none bg-white border-2 border-black hover:bg-black hover:text-white rounded-md font-sans font-semibold text-sm px-5 py-2.5 text-center uppercase">Back</button>
+      <button type="button" (click)="checkOTP()"
+        class="w-full text-white focus:outline-none bg-black rounded-md font-sans font-semibold text-sm px-5 py-2.5 text-center uppercase">Verify
+        OTP</button>
+    </div>
+  
+
+
     <div class="flex items-center mt-4 justify-between">
       <p class="text-center text-base text--secondary font-sans font-medium"> 00:{{ countdown }}</p>
       <a (click)="resendotp()" class="font-sans text-base text--primary font-semibold ">Resend OTP?</a>
