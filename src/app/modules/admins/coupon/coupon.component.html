@@ -1,32 +1,34 @@
-<div>
-    <h2>Create Coupon</h2>
-    <form (ngSubmit)="onSubmit()">
+<div class="p-5">
+    <h2 class="mb-4 text-2xl font-bold">Create Coupon</h2>
+    <form (ngSubmit)="onSubmit()" class="grid grid-cols-12 gap-4">
       
-      <div class="form-group">
-        <label for="coupon">Coupon:</label>
-        <input type="text" id="coupon" [(ngModel)]="createCouponDto.coupon" name="coupon" required>
+      <div class="col-span-12">
+            <label for="coupon" class="text-base md:text-lg font-bold">Coupon</label>
+            <input type="text" id="coupon" class="w-full p-2 border border-gray-300 rounded" [(ngModel)]="createCouponDto.coupon" name="coupon" required>
       </div>
-      <div class="form-group">
-        <label for="value">Value:</label>
-        <input type="tel" id="value" [(ngModel)]="createCouponDto.value" name="value" required>
+      <div class="col-span-12">
+        <label for="value" class="text-base md:text-lg font-bold">Value</label>
+        <input type="tel" id="value" class="w-full p-2 border border-gray-300 rounded" [(ngModel)]="createCouponDto.value" name="value" required>
       </div>
-      <div class="form-group">
-        <label for="canUse">canUse:</label>
-        <input type="tel" id="canUse" [(ngModel)]="createCouponDto.canUse" name="canUse" required>
+      <div class="col-span-12">
+        <label for="canUse" class="text-base md:text-lg font-bold">canUse</label>
+        <input type="tel" id="canUse" class="w-full p-2 border border-gray-300 rounded" [(ngModel)]="createCouponDto.canUse" name="canUse" required>
       </div>
-      <div class="form-group">
-        <label for="validFor">Valid For (comma-separated numbers):</label>
-        <input type="tel" id="validFor" [(ngModel)]="validForInput" name="validFor" required>
+      <div class="col-span-12">
+        <label for="validFor" class="text-base md:text-lg font-bold">Valid For (comma-separated numbers)</label>
+        <input type="tel" id="validFor" class="w-full p-2 border border-gray-300 rounded" [(ngModel)]="validForInput" name="validFor" required>
       </div>
-      <div class="form-group">
-        <label for="validFrom">Valid From:</label>
-        <input type="datetime-local" id="validFrom" [(ngModel)]="createCouponDto.validFrom" name="validFrom" required>
+      <div class="col-span-12">
+        <label for="validFrom" class="text-base md:text-lg font-bold">Valid From</label>
+        <input type="datetime-local" class="w-full p-2 border border-gray-300 rounded" id="validFrom" [(ngModel)]="createCouponDto.validFrom" name="validFrom" required>
       </div>
-      <div class="form-group">
-        <label for="validUpto">Valid Upto:</label>
-        <input type="datetime-local" id="validUpto" [(ngModel)]="createCouponDto.validUpto" name="validUpto" required>
+      <div class="col-span-12">
+        <label for="validUpto" class="text-base md:text-lg font-bold">Valid Upto</label>
+        <input type="datetime-local" class="w-full p-2 border border-gray-300 rounded" id="validUpto" [(ngModel)]="createCouponDto.validUpto" name="validUpto" required>
       </div>
-      <button type="submit">Create Coupon</button>
+      <div class="col-span-12">
+        <button type="submit" class="px-4 py-2 bg-black text-white font-sans font-medium rounded hover:bg-white hover:text-black border-black border-2 border-solid w-full whitespace-nowrap">Create Coupon</button>
+      </div>
     </form>
   </div>
   
