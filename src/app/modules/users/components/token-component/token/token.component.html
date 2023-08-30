@@ -12,7 +12,7 @@
       
     </div>
   </div> -->
-<div *ngIf="gameId==null" class="grid grid-cols-12 gap-4 w-full p-6">
+<div *ngIf="gameId==null" class=" w-full p-6">
   <div class="col-span-12">
     <mat-form-field class="w-full">
       <input matInput [matDatepicker]="picker" placeholder="Select a date" [(ngModel)]="selectedDate"
@@ -22,19 +22,33 @@
     </mat-form-field>
   </div>
   <div class="flex gap-4 mb-4">
-    <div [class]="selectedTab === 'live' ? 'cursor-pointer text-lg font-medium text-black underline' : 'cursor-pointer text-lg font-medium text-black'" (click)="selectedTab = 'live'">Live</div>
-    <div [class]="selectedTab === 'completed' ? 'cursor-pointer text-lg font-medium text-black underline' : 'cursor-pointer text-lg font-medium text-black'" (click)="selectedTab = 'completed'">Completed</div>
+   
+    <ul class="flex gap-4 items-center justify-center border-b w-full">
+      <li class="w-full text-center">
+        <a [class]="selectedTab === 'live' ? 'cursor-pointer text-lg font-medium text-black text-black border-b-2 border-solid border-black' : 'cursor-pointer text-lg font-medium text-black'" 
+        (click)="selectedTab = 'live'" class="bg-white inline-block px-4 font-semibold cursor-pointer">
+        Live
+        </a>
+      </li>
+      <li class="w-full text-center">
+        <a [class]="selectedTab === 'completed' ? 'cursor-pointer text-lg font-medium text-black border-b-2 border-solid border-black' : 'cursor-pointer text-lg font-medium text-black'"
+        (click)="selectedTab = 'completed'" class="bg-white inline-block px-4 font-semibold cursor-pointer">
+        Completed
+        </a>
+      </li>
+      <!-- <li class="w-full text-center">
+        <a [class.activeTab]="activeTab === 'history'" (click)="activeTab = 'history';getTransactionHistory()"
+          class="bg-white inline-block py-2 px-4 font-semibold cursor-pointer">
+          History
+        </a>
+      </li> -->
+    </ul>
   </div>
   
   
-  <div class="col-span-12" *ngFor="let card of games;let i = index">
+  <div  *ngFor="let card of games;let i = index">
 
-    <div class="flex justify-center gap-4" >
-      <a
-        class="rounded-3xl inline-block overflow-hidden shadow-xl w-full cursor-pointer transition ease-in-out hover:-translate-y-1 hover:scale-102 duration-300">
-       
-        
-        <div *ngIf="card?.status=='live' && selectedTab=='live'" class="bg-white" >
+        <div *ngIf="card?.status=='live' && selectedTab=='live'" class="rounded-3xl inline-block overflow-hidden shadow-xl w-full cursor-pointer transition ease-in-out hover:-translate-y-1 hover:scale-102 duration-300 mt-4  bg-white" >
           <div
             (click)="gameId=card.round">
             <div (click) = "getLink(card.round)" >
@@ -80,7 +94,7 @@
           </div>
           </div>
         </div>
-        <div *ngIf="card?.status!='live' && selectedTab=='completed'" class="bg-white" >
+        <div *ngIf="card?.status!='live' && selectedTab=='completed'" class="rounded-3xl inline-block overflow-hidden shadow-xl w-full cursor-pointer transition ease-in-out hover:-translate-y-1 hover:scale-102 duration-300 mt-4 bg-white" >
           <div
             (click)="gameId=card.round">
             <div (click) = "getLink(card.round)" >
@@ -126,12 +140,6 @@
           </div>
           </div>
         </div>
-      </a>
-
-    </div>
-
-
-
   </div>
 </div>
 <div #container><app-select-token *ngIf="gameId!=null" (activity)="activity($event)" [gameId]="gameId"
