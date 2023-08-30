@@ -168,12 +168,13 @@ export class GameComponent implements OnInit {
         // console.log(method);
         this.showDeclineModal = true;
         this.selectedTransaction = transaction;
+        this.selectedTransaction.method=method
 
 
     }
 
     confirmDecline(transaction: any) {
-        this.selectedTransaction.method = 'declineDeposit'
+        // this.selectedTransaction.method = 'declineDeposit'
         let token = localStorage.getItem('accessToken')
         let number = this.classy.phonenumber
         let data = {
