@@ -16,7 +16,7 @@ export class TokenComponent implements OnInit {
   facebookLiveLink: string = null;
 
   selectedTime: any;
-  selectedTab:any
+  selectedTab:any='live'
   selectedDate: Date;
 
   defaultValue = { hour: 13, minute: 30 };

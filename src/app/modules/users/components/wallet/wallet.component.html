@@ -71,14 +71,24 @@
         </div>
 
 
-        <div *ngSwitchCase="'withdraw'" class="p-4">
+        <div *ngSwitchCase="'withdraw'" class="p-4 space-y-4">
           <!-- <h3 class="text-lg font-semibold mb-2">Withdraw</h3> -->
-
+          <div class="space-y-6 mt-4">
+            <div class="overflow-auto grid grid-cols-12 gap-2 justify-start items-center">
+              <p class="col-span-7 sm:col-span-5 font-sans text-base whitespace-nowrap">Your Wallet Balance </p> 
+              <p class="col-span-5 sm:col-span-7 text-xl font-medium font-sans">{{wallet}}</p>
+            </div>
+            <div class="overflow-auto grid grid-cols-12 gap-2 justify-start items-center">
+              <p class="col-span-7 sm:col-span-5 font-sans text-base whitespace-nowrap">Your Reward Balance </p> 
+              <p class="col-span-5 sm:col-span-7 text-xl font-medium font-sans">{{reward}}</p>
+            </div>
+          </div>
           <div>
             <label for="withdrawAmount" class="text-base md:text-lg font-medium font-sans">Amount</label>
             <input type="tel" id="withdrawAmount" class="w-full p-2 border border-gray-300 rounded mt-1"
               [(ngModel)]="withdrawAmount">
           </div>
+            
           <button
             class="px-4 py-2 bg-black text-white font-sans font-medium rounded hover:bg-white hover:text-black border-black border-2 border-solid w-full whitespace-nowrap mt-8"
             (click)="withdraw()">Submit</button>
@@ -88,14 +98,11 @@
           <!-- <h3 class="text-lg font-semibold mb-2">History</h3> -->
 
           <!-- Display deposit and withdraw history here -->
-          <div class="grid grid-cols-12 gap-4">
-            <div *ngFor="let transaction of transactionHistory" class="col-span-12">
+          <div class="grid grid-cols-12 gap-4 relative">
+            <div *ngFor="let transaction of transactionHistory" class="col-span-12 relative">
               <div
-                class="rounded-3xl space-y-4 p-4 px-10 inline-block overflow-hidden shadow-xl w-full cursor-pointer relative">
-                <p *ngIf="transaction?.status==='deposited'" class="transform -rotate-90 origin-bottom-left absolute w-full bottom-0 flex justify-center items-center text-base font-medium left-5 capitalize bg--green px- rounded">{{transaction?.status}}</p>
-               <p *ngIf="transaction?.status==='pending'" class="transform -rotate-90 origin-bottom-left absolute w-full bottom-0 flex justify-center items-center text-base font-medium left-5 capitalize bg--yellow px- rounded">{{transaction?.status}}</p>
-               <p *ngIf="transaction?.status==='declined'" class="transform -rotate-90 origin-bottom-left absolute w-full bottom-0 flex justify-center items-center text-base font-medium left-5 capitalize bg--red px- rounded">{{transaction?.status}}</p>
-               <p *ngIf="transaction?.status==='withdrawn'" class="transform -rotate-90 origin-bottom-left absolute w-full bottom-0 flex justify-center items-center text-base font-medium left-5 capitalize bg--green px- rounded">{{transaction?.status}}</p>
+                class="rounded-3xl space-y-4 p-4 inline-block overflow-hidden shadow-xl w-full cursor-pointer relative">
+              
                 <div>
                   <h2 class="text-sm text-grey-600 font-sans">Transaction ID</h2>
                   <p class="text-lg font-medium font-sans text-black"> {{transaction?.transactionId}}</p>
@@ -116,6 +123,20 @@
                 <div>
                   <h2 class="text-sm text-grey-600 font-sans">Message</h2>
                   <p class="text-lg font-medium font-sans text-black">{{transaction?.message}}</p>
+                </div>
+                <div>
+                    <p *ngIf="transaction?.status==='deposited'"
+                      class="transform origin-bottom-left absolute w-full bottom-0 flex justify-center items-start text-base font-medium left-0 capitalize bg--green px-4 mt-4 rounded">
+                      {{transaction?.status}}</p>
+                    <p *ngIf="transaction?.status==='pending'"
+                      class="transform origin-bottom-left absolute w-full bottom-0 flex justify-center items-start text-base font-medium left-0 capitalize bg--yellow px-4 mt-4 rounded">
+                      {{transaction?.status}}</p>
+                    <p *ngIf="transaction?.status==='declined'"
+                      class="transform origin-bottom-left absolute w-full bottom-0 flex justify-center items-start text-base font-medium left-0 capitalize bg--red px-4 mt-4 rounded">
+                      {{transaction?.status}}</p>
+                    <p *ngIf="transaction?.status==='withdrawn'"
+                      class="transform origin-bottom-left absolute w-full bottom-0 flex justify-center items-start text-base font-medium left-0 capitalize bg--green px-4 mt-4 rounded">
+                      {{transaction?.status}}</p>
                 </div>
               </div>
             </div>
