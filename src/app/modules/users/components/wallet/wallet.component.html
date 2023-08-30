@@ -102,15 +102,15 @@
             <div *ngFor="let transaction of transactionHistory" class="col-span-12 relative">
               <div
                 class="rounded-3xl space-y-4 p-4 inline-block overflow-hidden shadow-xl w-full cursor-pointer relative">
-              
-                <div>
-                  <h2 class="text-sm text-grey-600 font-sans">Transaction ID</h2>
-                  <p class="text-lg font-medium font-sans text-black"> {{transaction?.transactionId}}</p>
-                </div>
                 <div>
                   <h2 class="text-sm text-grey-600 font-sans">Transaction Method</h2>
                   <p class="text-lg font-medium font-sans text-black"> {{transaction?.method ? (transaction.method.charAt(0).toUpperCase() + transaction.method.slice(1)) : ''}}</p>
                 </div>
+                <div>
+                  <h2 class="text-sm text-grey-600 font-sans">Transaction ID</h2>
+                  <p class="text-lg font-medium font-sans text-black"> {{transaction?.transactionId}}</p>
+                </div>
+                
                 <div>
                   <h2 class="text-sm text-grey-600 font-sans">Amount</h2>
                   <p class="text-lg font-medium font-sans text-black"> {{ transaction?.amount }}</p>
