@@ -4,7 +4,7 @@
 
 export const environment = {
     production: true,
-    apiUrl: 'http://teamquantum.in:3000',
+    apiUrl: 'https://playinsport.com/nest',
     // apiUrl:'http://localhost:3000'
 };
 
