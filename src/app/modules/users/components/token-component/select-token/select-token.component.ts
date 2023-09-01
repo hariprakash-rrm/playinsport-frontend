@@ -62,13 +62,13 @@ export class SelectTokenComponent implements OnInit, OnDestroy {
    * triggering socket connection
    */
   async triggerSocket() {
-    this.socket.on('/nest/connect', async () => {
+    this.socket.on('connect', async () => {
       const socketId = this.socket.ioSocket.id;
       this.userDetails.socketId = await socketId;
       this.handleSocketResponse();
     });
     this.socket.connect()
-    await this.socket.on('/nest/disconnect', () => {
+    await this.socket.on('disconnect', () => {
     });
   }
 
