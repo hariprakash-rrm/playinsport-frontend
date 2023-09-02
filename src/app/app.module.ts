@@ -19,7 +19,7 @@ import { environment } from 'environments/environment';
 import { TransactionHistoryComponent } from './transaction-history/transaction-history.component';
 
 const config: SocketIoConfig = {
-    url: 'https://www.playinsport.com/nest',
+    url: 'https://www.playinsport.com',
     options: {},
 };
 
@@ -32,7 +32,7 @@ const routerConfig: ExtraOptions = {
     declarations: [AppComponent, TransactionHistoryComponent],
     imports: [
         SocketIoModule.forRoot({
-            url:'https://www.playinsport.com/nest',
+            url:'https://www.playinsport.com',
             options: {},
         }),
         BrowserModule,
