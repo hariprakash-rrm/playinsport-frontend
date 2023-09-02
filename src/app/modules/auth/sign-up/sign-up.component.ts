@@ -187,7 +187,7 @@ export class AuthSignUpComponent implements OnInit,OnDestroy {
                     this.phoneNumber = this.signUpForm.value.number;
                     this.startCountdown();
                 }
-                
+                this.signupLoading=false
                 
             },
             (error: HttpErrorResponse) => {
@@ -242,7 +242,7 @@ export class AuthSignUpComponent implements OnInit,OnDestroy {
                     this.errorMessage = '';
                 }
                 // // console.log(response);
-                
+                this.signupLoading=false
             },
             (error) => {
                 // console.log("NOTVALID");
@@ -280,7 +280,7 @@ export class AuthSignUpComponent implements OnInit,OnDestroy {
                     this.snackbar.success('Password updated', 4000);
                 }
                 this._router.navigate(['/home']);
-                
+                // this.signupLoading=false
             },
             (error) => {
                 this.signupLoading=false

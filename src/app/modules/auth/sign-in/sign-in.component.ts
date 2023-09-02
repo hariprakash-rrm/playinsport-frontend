@@ -177,7 +177,7 @@ export class AuthSignInComponent implements OnInit, OnDestroy {
                 } else {
                     this._router.navigate(['/home']);
                 }
-                
+                // this.signinLoading=false
             },
             (error: HttpErrorResponse) => {
                 // console.log(error);
@@ -218,7 +218,7 @@ export class AuthSignInComponent implements OnInit, OnDestroy {
                     this.errorMessage = '';
                     this.isOtpSent=true
                 }
-                
+                this.signinLoading=false
             },
             (error: HttpErrorResponse) => {
                 if (error.status === 0) {
@@ -283,7 +283,7 @@ export class AuthSignInComponent implements OnInit, OnDestroy {
                     this.currentStep++;
                     this.errorMessage = '';
                 }
-                
+                this.signinLoading=false
             },
             (error: HttpErrorResponse) => {
                 if (error.status === 0) {
@@ -333,7 +333,7 @@ export class AuthSignInComponent implements OnInit, OnDestroy {
                     this.currentStep++;
                 }
                 this._router.navigate(['/home']);
-                
+                // this.signinLoading=false
             },
             (error: HttpErrorResponse) => {
                 if (error.status === 0) {
