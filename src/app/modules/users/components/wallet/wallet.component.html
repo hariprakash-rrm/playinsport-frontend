@@ -5,12 +5,12 @@
   <div class="col-span-12">
     <div>
       <ul class="flex gap-4 items-center justify-center border-b">
-        <li class="w-full text-center">
+        <!-- <li class="w-full text-center">
           <a [class.activeTab]="activeTab === 'deposit'" (click)="activeTab = 'deposit'"
             class="bg-white inline-block py-2 px-4 font-semibold cursor-pointer">
             Deposit
           </a>
-        </li>
+        </li> -->
         <li class="w-full text-center">
           <a [class.activeTab]="activeTab === 'withdraw'" (click)="activeTab = 'withdraw'"
             class="bg-white inline-block py-2 px-4 font-semibold cursor-pointer">
@@ -27,7 +27,7 @@
 
 
       <div [ngSwitch]="activeTab">
-        <div *ngSwitchCase="'deposit'" class="p-4">
+        <!-- <div *ngSwitchCase="'deposit'" class="p-4">
 
           <form [formGroup]="depositForm">
             <div class="space-y-4">
@@ -68,7 +68,7 @@
               class="px-4 py-2 bg-black text-white font-sans font-medium rounded hover:bg-white hover:text-black border-black border-2 border-solid w-full whitespace-nowrap mt-8"
               (click)="deposit()">Submit</button>
           </form>
-        </div>
+        </div> -->
 
 
         <div *ngSwitchCase="'withdraw'" class="p-4 space-y-4">

@@ -26,7 +26,7 @@ export class WalletComponent implements OnInit {
   ];
 
   depositForm: FormGroup
-  activeTab: string = 'deposit';
+  activeTab: string = 'withdraw';
   withdrawNumber: string = '';
   withdrawAmount: number = 0;
   payMethod: any;
