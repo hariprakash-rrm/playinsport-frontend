@@ -52,7 +52,7 @@ export class AuthSignInComponent implements OnInit, OnDestroy {
     isAdmin:boolean;
     isOtpSent:boolean;
     passwordEdited: boolean;
-
+    signinLoading:boolean=false
     phoneNumber: any;
     /**
      * Constructor
@@ -156,6 +156,7 @@ export class AuthSignInComponent implements OnInit, OnDestroy {
             }
             return;
         }
+        this.signinLoading=true
 
         const credentials = {
             number: this.signInForm.value.number ,
@@ -176,6 +177,7 @@ export class AuthSignInComponent implements OnInit, OnDestroy {
                 } else {
                     this._router.navigate(['/home']);
                 }
+                // this.signinLoading=false
             },
             (error: HttpErrorResponse) => {
                 // console.log(error);
@@ -184,6 +186,7 @@ export class AuthSignInComponent implements OnInit, OnDestroy {
                 } else {
                     this.errorMessage = error.error.message;
                 }
+                this.signinLoading=false
             }
         );
     }
@@ -204,6 +207,7 @@ export class AuthSignInComponent implements OnInit, OnDestroy {
         this.errorMessage=`Please wait ${this.countdown} seconds and try again`
         return
        }
+       this.signinLoading=true
         this._authService.forgotPassword(data).subscribe(
             (response) => {
                 if (response.statusCode === 201) {
@@ -214,6 +218,7 @@ export class AuthSignInComponent implements OnInit, OnDestroy {
                     this.errorMessage = '';
                     this.isOtpSent=true
                 }
+                this.signinLoading=false
             },
             (error: HttpErrorResponse) => {
                 if (error.status === 0) {
@@ -221,6 +226,7 @@ export class AuthSignInComponent implements OnInit, OnDestroy {
                 } else {
                     this.errorMessage = error.error.message;
                 }
+                this.signinLoading=false
             }
         );
     }
@@ -266,6 +272,7 @@ export class AuthSignInComponent implements OnInit, OnDestroy {
         if (this.otpForm.invalid) {
             return;
         }
+        this.signinLoading=true
         let OTPValidation = {
             otp: enteredOTP,
             number: this.numberForm.value.numbers,
@@ -276,6 +283,7 @@ export class AuthSignInComponent implements OnInit, OnDestroy {
                     this.currentStep++;
                     this.errorMessage = '';
                 }
+                this.signinLoading=false
             },
             (error: HttpErrorResponse) => {
                 if (error.status === 0) {
@@ -283,6 +291,7 @@ export class AuthSignInComponent implements OnInit, OnDestroy {
                 } else {
                     this.errorMessage = error.error.message;
                 }
+                this.signinLoading=false
             });
     }
     resendotp() {
@@ -317,12 +326,14 @@ export class AuthSignInComponent implements OnInit, OnDestroy {
             token: this.tokens,
             password: this.setPasswordForm.value.passwords,
         };
+        this.signinLoading=true
         this._authService.resetPassword(validation).subscribe(
             (response) => {
                 if (response.statusCode === 201) {
                     this.currentStep++;
                 }
                 this._router.navigate(['/home']);
+                // this.signinLoading=false
             },
             (error: HttpErrorResponse) => {
                 if (error.status === 0) {
@@ -330,6 +341,7 @@ export class AuthSignInComponent implements OnInit, OnDestroy {
                 } else {
                     this.errorMessage = error.error.message;
                 }
+                this.signinLoading=false
     });
 }
     onInputChange(event: any, nextInput: number) {

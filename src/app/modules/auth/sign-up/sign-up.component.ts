@@ -50,6 +50,7 @@ export class AuthSignUpComponent implements OnInit,OnDestroy {
 
     countdown: number = 45; // Initial countdown value
     interval: any;
+    signupLoading:boolean=false
 
     /**
      * Constructor
@@ -145,6 +146,7 @@ export class AuthSignUpComponent implements OnInit,OnDestroy {
      * Sign up
      */
     signUp(): void {
+        
         this.errorMessage ='';
 
         if (this.signUpForm.invalid) {
@@ -163,6 +165,7 @@ export class AuthSignUpComponent implements OnInit,OnDestroy {
             }
             return;
         }
+        this.signupLoading=true
 
         // Hide the alert
         this.showAlert = false;
@@ -184,6 +187,7 @@ export class AuthSignUpComponent implements OnInit,OnDestroy {
                     this.phoneNumber = this.signUpForm.value.number;
                     this.startCountdown();
                 }
+                this.signupLoading=false
                 
             },
             (error: HttpErrorResponse) => {
@@ -192,6 +196,7 @@ export class AuthSignUpComponent implements OnInit,OnDestroy {
                 } else {
                     this.errorMessage = error.error.message;
                 }
+                this.signupLoading=false
             }
         );
     }
@@ -214,6 +219,7 @@ export class AuthSignUpComponent implements OnInit,OnDestroy {
       }
 
     checkOTP(): void {
+        this.signupLoading=true
         this.errorMessage ='';
 
         const { otp1, otp2, otp3, otp4 } = this.otpForm.value;
@@ -222,6 +228,7 @@ export class AuthSignUpComponent implements OnInit,OnDestroy {
 
         if (this.otpForm.invalid) {
             this.clearOtpFields();
+            this.signupLoading=false
             return;
         }
         let OTPValidation = {
@@ -235,11 +242,13 @@ export class AuthSignUpComponent implements OnInit,OnDestroy {
                     this.errorMessage = '';
                 }
                 // // console.log(response);
+                this.signupLoading=false
             },
             (error) => {
                 // console.log("NOTVALID");
                 this.clearOtpFields();
                 this.errorMessage = error.error.message;
+                this.signupLoading=false
             }
         );
     }
@@ -259,6 +268,7 @@ export class AuthSignUpComponent implements OnInit,OnDestroy {
             this.errorMessage = "Confirm password doesn't match password";
             return;
         }
+        this.signupLoading=true
         let validation = {
             token: this.tokens,
             password: this.setPasswordForm.value.password,
@@ -270,8 +280,10 @@ export class AuthSignUpComponent implements OnInit,OnDestroy {
                     this.snackbar.success('Password updated', 4000);
                 }
                 this._router.navigate(['/home']);
+                // this.signupLoading=false
             },
             (error) => {
+                this.signupLoading=false
                 this.errorMessage = error.error.message;
             }
         );

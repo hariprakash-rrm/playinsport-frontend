@@ -55,9 +55,12 @@
         Password?</a>
     </div>
 
-    <button type="button" (click)="signIn()"
+    <button *ngIf="!signinLoading" type="button" (click)="signIn()"
       class="w-full mt-20 text-white focus:outline-none bg-black rounded-md font-sans font-semibold text-sm px-5 py-2.5 text-center mr-2 uppercase mb-2 cursor-pointer">Sign
       In</button>
+      <button *ngIf="signinLoading" type="button" 
+      class="w-full mt-20 text-white focus:outline-none bg-black rounded-md font-sans font-semibold text-sm px-5 py-2.5 text-center mr-2 uppercase mb-2 cursor-pointer">Loading . . . 
+      </button>
     <span class="text-center text-base text--secondary font-sans pt-2 font-medium">New here? <a
         (click)="goToSignUpForm()" class="font-sans text-base text--primary font-semibold cursor-pointer">Sign
         Up</a></span>
@@ -96,9 +99,12 @@
     <div class=" mt-20 flex justify-between gap-4">
       <button type="button" (click)="goBack()"
         class="w-full text-black focus:outline-none bg-white border-2 border-black hover:bg-black hover:text-white rounded-md font-sans font-semibold text-sm px-5 py-2.5 text-center uppercase">Back</button>
-      <button type="button" (click)="goToSendOtp()"
+      <button *ngIf="!signinLoading" type="button" (click)="goToSendOtp()"
         class="w-full text-white focus:outline-none bg-black rounded-md font-sans font-semibold text-sm px-5 py-2.5 text-center uppercase">Send
         OTP</button>
+        <button *ngIf="signinLoading" type="button" 
+        class="w-full text-white focus:outline-none bg-black rounded-md font-sans font-semibold text-sm px-5 py-2.5 text-center uppercase">Loading . . .
+        </button>
     </div>
    
   </form>
@@ -149,9 +155,12 @@
     <div class="mt-20 flex justify-between gap-4">
       <button type="button" (click)="goBack()"
         class="w-full text-black focus:outline-none bg-white border-2 border-black hover:bg-black hover:text-white rounded-md font-sans font-semibold text-sm px-5 py-2.5 text-center uppercase">Back</button>
-      <button type="button" (click)="checkOTP()"
+      <button *ngIf="!signinLoading" type="button" (click)="checkOTP()"
         class="w-full text-white focus:outline-none bg-black rounded-md font-sans font-semibold text-sm px-5 py-2.5 text-center uppercase">Verify
         OTP</button>
+        <button *ngIf="signinLoading" type="button" 
+        class="w-full text-white focus:outline-none bg-black rounded-md font-sans font-semibold text-sm px-5 py-2.5 text-center uppercase">Loading . . .
+        </button>
     </div>
   
 
@@ -209,9 +218,12 @@
         class="text-red-500 text-sm mt-1">{{ errorMessage }}</div>
     </div>
     <div class="h-20"></div>
-    <button type="button" (click)="_setpassword()"
+    <button *ngIf="!signinLoading" type="button" (click)="_setpassword()"
       class="w-full mt-20 text-white focus:outline-none bg-black rounded-md font-sans font-semibold text-sm px-5 py-2.5 text-center mr-2 uppercase mb-2">Set
       password</button>
+      <button *ngIf="signinLoading" type="button" 
+      class="w-full mt-20 text-white focus:outline-none bg-black rounded-md font-sans font-semibold text-sm px-5 py-2.5 text-center mr-2 uppercase mb-2">
+      Loading . . .</button>
   </form>
 </div>
 <!-- </div> -->
