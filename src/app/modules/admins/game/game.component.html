@@ -121,7 +121,7 @@
 
   <div *ngIf="showPopup" id="popup" tabindex="-1" aria-hidden="true"
     class="fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0  min-h-screen flex justify-center items-center bg-overlay">
-    <div class="relative w-full max-w-2xl max-h-full ">
+    <div class="relative w-full max-w-lg max-h-full ">
       <!-- Modal content -->
       <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
 
@@ -132,11 +132,10 @@
             <div class="close-button" (click)="closePopup()">
               <i class="fas fa-times"></i>
             </div>
-            <div class="overflow-auto h-24 flex justify-center items-center">
-              <p class="font-sans text-base">Have you sent the withdraw amount to the user? Please send the amount
-                before accept this transaction.</p> &nbsp;
-              <!-- <p class="text-xl font-medium font-sans">Accept</p> -->
-              <button (click)="closePopup()">Ok</button>
+            <div class="overflow-auto mt-4">
+              <p class="font-sans text-base lg:text-xl">Have you sent the withdraw amount to the user? Please send the amount
+                before accept this transaction.</p> 
+              <button (click)="closePopup()" class="float-right ml-auto px-4 py-2 bg-black mt-4 text-white font-sans font-medium rounded hover:bg-white hover:text-black border-black border-2 border-solid w-32 whitespace-nowrap">Ok</button>
             </div>
           </div>
         </div>
