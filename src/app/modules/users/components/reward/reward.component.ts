@@ -25,7 +25,7 @@ export class RewardComponent implements OnInit {
       code: this.couponCode
     }
     this._rewardService.claimCoupom(data).subscribe((res: any) => {
-      this._snackbar.success("Claimed", 4000);
+      this._snackbar.success("Congratulations - coupon claimed", 5000);
     },
       (error) => {
         // console.log(error)

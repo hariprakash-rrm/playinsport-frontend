@@ -34,6 +34,8 @@ export class WalletComponent implements OnInit {
   selectedValue: any;
   phoneNumberOfUser: any;
   transactionHistory: any[] = [];
+  rewardBalance =0
+  walletBalance =0
   
 
 
@@ -48,6 +50,8 @@ export class WalletComponent implements OnInit {
 
     this._classyComponent.number$.subscribe((res: any) => {
       this.phoneNumberOfUser = res
+      this.rewardBalance=this._classyComponent.reward
+      this.walletBalance=this._classyComponent.wallet
     })
     this.getTransactionHistory()
     this.depositForm = this.formBuilder.group({
@@ -127,7 +131,11 @@ export class WalletComponent implements OnInit {
       this.snackBar.error('enter some amount', 4000)
     }
     if (userBalance == 0) {
-      this.snackBar.error('Low balance', 4000)
+      this.snackBar.error('Your balance is 0', 4000)
+      return
+    }
+    if (this.withdrawAmount <100) {
+      this.snackBar.error('Minimum withdraw amount is 100', 4000)
       return
     }
     if (+userBalance >= +this.withdrawAmount) {
@@ -154,7 +162,7 @@ export class WalletComponent implements OnInit {
       );
     }
     else {
-      this.snackBar.error(`you can only withdraw : ${userBalance}`, 4000)
+      this.snackBar.error(`You can only withdraw : ${userBalance}`, 4000)
     }
   }
 

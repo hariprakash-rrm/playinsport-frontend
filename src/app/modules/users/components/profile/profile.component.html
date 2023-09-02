@@ -1,18 +1,20 @@
 <div class="p-6 flex flex-col gap-4">
-    <div>
-        <h2 class="text-sm text-grey-600 font-sans">User Name</h2>
-        <p class="text-lg font-medium font-sans text-black"> {{userName}}</p>
+    <div class="text-gray-600">
+        <h2 class="text-sm font-sans">User Name</h2>
+        <p class="text-lg font-medium font-sans text-black">{{ userName }}</p>
     </div>
-    <div>
-        <h2 class="text-sm text-grey-600 font-sans">Phone Number</h2>
-        <p class="text-lg font-medium font-sans text-black"> {{phonenumber}}</p>
+    <div class="text-gray-600">
+        <h2 class="text-sm font-sans">Phone Number</h2>
+        <p class="text-lg font-medium font-sans text-black">{{ phonenumber }}</p>
     </div>
-
-    <div>
-        <h2 class="text-sm text-grey-600 font-sans">Referral Code</h2>
-        <p class="text-lg font-medium font-sans text-black"> {{referralCode}}</p>
+    <div class="text-gray-600">
+        <h2 class="text-sm font-sans">Referral Code</h2>
+        <p class="text-lg font-medium font-sans text-black">{{ referralCode }}</p>
     </div>
-    <button (click)="copyToClipboard()" class="px-4 py-2 bg-black text-white rounded w-full">
+    <button (click)="copyToClipboard()" class="px-4 py-2 bg-black text-white rounded w-full hover:bg-gray-900">
         Copy
     </button>
+    <p class="text-sm font-sans text-gray-600 text-center">
+        Refer and earn up to ₹5000!
+    </p>
 </div>
