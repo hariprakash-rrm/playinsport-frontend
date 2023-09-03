@@ -89,6 +89,12 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy {
     updateNumber(value: any) {
         this.numberSubject.next(value);
     }
+    updateWallet(value: any) {
+        this.walletSubject.next(value);
+    }
+    updateReward(value: any) {
+        this.rewardSubject.next(value);
+    }
 
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks
@@ -123,6 +129,8 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy {
                         this.txnHistory = Object.values(response.data.txnHistory);
                         this.updateName(this.userName)
                         this.updateNumber(this.phonenumber);
+                        this.updateReward(this.reward)
+                        this.updateWallet(this.wallet)
 
                     }
 
