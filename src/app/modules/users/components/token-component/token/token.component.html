@@ -22,18 +22,18 @@
     </mat-form-field>
   </div> -->
   <div class="flex gap-4 mb-4">
-   
+
     <ul class="flex gap-4 items-center justify-center border-b w-full">
       <li class="w-full text-center">
-        <a [class]="selectedTab === 'live' ? 'cursor-pointer text-lg font-medium text-black text-black border-b-2 border-solid border-black' : 'cursor-pointer text-lg font-medium text-black'" 
-        (click)="selectedTab = 'live'" class="bg-white inline-block px-4 font-semibold cursor-pointer">
-        Live
+        <a [class]="selectedTab === 'live' ? 'cursor-pointer text-lg font-medium text-black text-black border-b-2 border-solid border-black' : 'cursor-pointer text-lg font-medium text-black'"
+          (click)="selectedTab = 'live'" class="bg-white inline-block px-4 font-semibold cursor-pointer">
+          Live
         </a>
       </li>
       <li class="w-full text-center">
         <a [class]="selectedTab === 'completed' ? 'cursor-pointer text-lg font-medium text-black border-b-2 border-solid border-black' : 'cursor-pointer text-lg font-medium text-black'"
-        (click)="selectedTab = 'completed'" class="bg-white inline-block px-4 font-semibold cursor-pointer">
-        Completed
+          (click)="selectedTab = 'completed'" class="bg-white inline-block px-4 font-semibold cursor-pointer">
+          Completed
         </a>
       </li>
       <!-- <li class="w-full text-center">
@@ -44,108 +44,180 @@
       </li> -->
     </ul>
   </div>
-  
-  
-  <div  *ngFor="let card of games;let i = index">
 
-        <div *ngIf="card?.status=='live' && selectedTab=='live'" class="rounded-3xl inline-block overflow-hidden shadow-xl w-full cursor-pointer transition ease-in-out hover:-translate-y-1 hover:scale-102 duration-300 mt-4  bg-white" >
-          <div
-            (click)="gameId=card.round">
-            <div (click) = "getLink(card.round)" >
-              <div class="relative group w-full overflow-hidden bg-black h-32 rounded-t-3xl">
-                <img
-                  src="{{card?.image}}"
-                  class="object-cover w-full h-full transform duration-700 backdrop-opacity-100" />
-                <div class="absolute bg-gradient-to-t from-black w-full h-full flex items-end justify-center -inset-y-0">
-                  <!-- <h1 class="font-bold text-2xl text-white mb-2">{{card?.round}}</h1> -->
-                </div>
-                </div>
-                <div class="grid grid-cols-12 gap-4 p-4">
-                  <div  class="col-span-6">
-                    <p class="text-black text-base font-normal font-sans">Round: </p>
-                    <p class="text-black text-xl font-semibold font-sans">{{card?.name}}</p>
-                  </div>
-                  <div *ngIf="card?.status==='live'" class="col-span-6">
-                    <p class="text-black text-base font-normal font-sans">Status: </p>
-                    <p class="text-black text-xl font-semibold font-sans">Live</p>
-                  </div>
-                  <div *ngIf="card?.status=='finalise'" class="col-span-6">
-                    <p class="text-black text-base font-normal font-sans">Status: </p>
-                    <p class="text-black text-xl font-semibold font-sans">Completed</p>
-                  </div>
-                  <div *ngIf="card?.status=='refunded'" class="col-span-6">
-                    <p class="text-black text-base font-normal font-sans">Status: </p>
-                    <p class="text-black text-xl font-semibold font-sans">Cancelled</p>
-                  </div>
-                  <div class="col-span-6">
-                    <h2 class="text-black text-base font-normal font-sans">Round No.</h2>
-                    <p class="text-black text-xl font-semibold font-sans">{{ card?.round }}</p>
-                  </div>
-                  <div class="col-span-6" *ngIf="card?.winnerList != ''">
-                    <p class="text-black text-base font-normal font-sans">Winner Token: </p>
-                    <p class="text-black text-xl font-semibold font-sans">{{ card?.winnerList }}</p>
-                  </div>
 
-                  <div class="col-span-6">
-                    <h2 class="text-black text-base font-normal font-sans">Price per token </h2>
-                    <p class="text-black text-xl font-semibold font-sans">{{card?.tokenPrice}}</p>
-                  </div>
-                  <div class="col-span-6">
-                    <h2 class="text-black text-base font-normal font-sans">Total Token </h2>
-                    <p class="text-black text-xl font-semibold font-sans">{{card?.tokenDetails.length}}</p>
-                  </div>
-                </div>
+  <div *ngFor="let card of games;let i = index">
+
+    <div *ngIf="card?.status=='live' && selectedTab=='live'"
+      class="rounded-3xl inline-block overflow-hidden shadow-xl w-full cursor-pointer transition ease-in-out hover:-translate-y-1 hover:scale-102 duration-300 mt-4  bg-white">
+      <div (click)="gameId=card.round">
+        <div (click)="getLink(card.round)">
+          <div class="relative group w-full overflow-hidden bg-black h-32 rounded-t-3xl">
+            <img src="{{card?.image}}" class="object-cover w-full h-full transform duration-700 backdrop-opacity-100" />
+            <div class="absolute bg-gradient-to-t from-black w-full h-full flex items-end justify-center -inset-y-0">
+              <!-- <h1 class="font-bold text-2xl text-white mb-2">{{card?.round}}</h1> -->
+            </div>
+          </div>
+          <div class="grid grid-cols-12 gap-4 p-4">
+            <div class="col-span-6">
+              <p class="text-black text-base font-normal font-sans">Round: </p>
+              <p class="text-black text-xl font-semibold font-sans">{{card?.name}}</p>
+            </div>
+            <div *ngIf="card?.status==='live'" class="col-span-6">
+              <p class="text-black text-base font-normal font-sans">Status: </p>
+              <p class="text-black text-xl font-semibold font-sans">Live</p>
+            </div>
+            <div *ngIf="card?.status=='finalise'" class="col-span-6">
+              <p class="text-black text-base font-normal font-sans">Status: </p>
+              <p class="text-black text-xl font-semibold font-sans">Completed</p>
+            </div>
+            <div *ngIf="card?.status=='refunded'" class="col-span-6">
+              <p class="text-black text-base font-normal font-sans">Status: </p>
+              <p class="text-black text-xl font-semibold font-sans">Cancelled</p>
+            </div>
+            <div class="col-span-6">
+              <h2 class="text-black text-base font-normal font-sans">Round No.</h2>
+              <p class="text-black text-xl font-semibold font-sans">{{ card?.round }}</p>
+            </div>
+            <div class="col-span-6" *ngIf="card?.winnerList != ''">
+              <p class="text-black text-base font-normal font-sans">Winner Token: </p>
+              <p class="text-black text-xl font-semibold font-sans">{{ card?.winnerList }}</p>
+            </div>
+
+            <div class="col-span-6">
+              <h2 class="text-black text-base font-normal font-sans">Price per token </h2>
+              <p class="text-black text-xl font-semibold font-sans">{{card?.tokenPrice}}</p>
+            </div>
+            <div class="col-span-6">
+              <h2 class="text-black text-base font-normal font-sans">Total Token </h2>
+              <p class="text-black text-xl font-semibold font-sans">{{card?.tokenDetails.length}}</p>
+            </div>
+            <div class="col-span-6">
+              <h2 class="text-black text-base font-normal font-sans">View Prize </h2>
+              <!-- glowing-text.component.html -->
+              <p class="text-black text-xl font-semibold font-sans animate-glow" (click)="viewPrizes()">View Prizes</p>
+
+
             </div>
           </div>
         </div>
-        <div *ngIf="card?.status!='live' && selectedTab=='completed'" class="rounded-3xl inline-block overflow-hidden shadow-xl w-full cursor-pointer transition ease-in-out hover:-translate-y-1 hover:scale-102 duration-300 mt-4 bg-white" >
-          <div
-            (click)="gameId=card.round">
-            <div (click) = "getLink(card.round)" >
-            <div class="relative group w-full overflow-hidden bg-black h-32 rounded-t-3xl">
-              <img
-                src="{{card?.image}}"
-                class="object-cover w-full h-full transform duration-700 backdrop-opacity-100" />
-              <div class="absolute bg-gradient-to-t from-black w-full h-full flex items-end justify-center -inset-y-0">
-                <h1 class="font-bold text-2xl text-white mb-2">{{card?.round}}</h1>
-              </div>
-            </div>
-            <div class="grid grid-cols-12 gap-4 p-4">
-              <div *ngIf="card?.status==='live'" class="col-span-6">
-                <p class="text-black text-base font-normal font-sans">Status: </p>
-                <p class="text-black text-xl font-semibold font-sans">Live</p>
-              </div>
-              <div *ngIf="card?.status=='finalise'" class="col-span-6">
-                <p class="text-black text-base font-normal font-sans">Status: </p>
-                <p class="text-black text-xl font-semibold font-sans">Completed</p>
-              </div>
-              <div *ngIf="card?.status=='refunded'" class="col-span-6">
-                <p class="text-black text-base font-normal font-sans">Status: </p>
-                <p class="text-black text-xl font-semibold font-sans">Cancelled</p>
-              </div>
-              <div class="col-span-6">
-                <h2 class="text-black text-base font-normal font-sans">Round </h2>
-                <p class="text-black text-xl font-semibold font-sans">{{ card?.round }}</p>
-              </div>
-              <div class="col-span-6" *ngIf="card?.winnerList != ''">
-                <p class="text-black text-base font-normal font-sans">Winner Token: </p>
-                <p class="text-black text-xl font-semibold font-sans">{{ card?.winnerList }}</p>
-              </div>
-
-              <div class="col-span-6">
-                <h2 class="text-black text-base font-normal font-sans">Price per token </h2>
-                <p class="text-black text-xl font-semibold font-sans">{{card?.tokenPrice}}</p>
-              </div>
-              <div class="col-span-6">
-                <h2 class="text-black text-base font-normal font-sans">Total Token </h2>
-                <p class="text-black text-xl font-semibold font-sans">{{card?.tokenDetails.length}}</p>
-              </div>
+      </div>
+    </div>
+    <div *ngIf="card?.status!='live' && selectedTab=='completed'"
+      class="rounded-3xl inline-block overflow-hidden shadow-xl w-full cursor-pointer transition ease-in-out hover:-translate-y-1 hover:scale-102 duration-300 mt-4 bg-white">
+      <div (click)="gameId=card.round">
+        <div (click)="getLink(card.round)">
+          <div class="relative group w-full overflow-hidden bg-black h-32 rounded-t-3xl">
+            <img src="{{card?.image}}" class="object-cover w-full h-full transform duration-700 backdrop-opacity-100" />
+            <div class="absolute bg-gradient-to-t from-black w-full h-full flex items-end justify-center -inset-y-0">
+              <h1 class="font-bold text-2xl text-white mb-2">{{card?.round}}</h1>
             </div>
           </div>
+          <div class="grid grid-cols-12 gap-4 p-4">
+            <div *ngIf="card?.status==='live'" class="col-span-6">
+              <p class="text-black text-base font-normal font-sans">Status: </p>
+              <p class="text-black text-xl font-semibold font-sans">Live</p>
+            </div>
+            <div *ngIf="card?.status=='finalise'" class="col-span-6">
+              <p class="text-black text-base font-normal font-sans">Status: </p>
+              <p class="text-black text-xl font-semibold font-sans">Completed</p>
+            </div>
+            <div *ngIf="card?.status=='refunded'" class="col-span-6">
+              <p class="text-black text-base font-normal font-sans">Status: </p>
+              <p class="text-black text-xl font-semibold font-sans">Cancelled</p>
+            </div>
+            <div class="col-span-6">
+              <h2 class="text-black text-base font-normal font-sans">Round </h2>
+              <p class="text-black text-xl font-semibold font-sans">{{ card?.round }}</p>
+            </div>
+            <div class="col-span-6" *ngIf="card?.winnerList != ''">
+              <p class="text-black text-base font-normal font-sans">Winner Token: </p>
+              <p class="text-black text-xl font-semibold font-sans">{{ card?.winnerList }}</p>
+            </div>
+
+            <div class="col-span-6">
+              <h2 class="text-black text-base font-normal font-sans">Price per token </h2>
+              <p class="text-black text-xl font-semibold font-sans">{{card?.tokenPrice}}</p>
+            </div>
+            <div class="col-span-6">
+              <h2 class="text-black text-base font-normal font-sans">Total Token </h2>
+              <p class="text-black text-xl font-semibold font-sans">{{card?.tokenDetails.length}}</p>
+            </div>
           </div>
         </div>
+      </div>
+    </div>
   </div>
 </div>
+
+
 <div #container><app-select-token *ngIf="gameId!=null" (activity)="activity($event)" [gameId]="gameId"
     [youtubeLink]="youtubeLink" [youtubeLiveLink]="youtubeLiveLink" [facebookLink]="facebookLink"
     [facebookLiveLink]="facebookLiveLink"></app-select-token></div>
+
+
+    <div *ngIf="viewPrize == true" id="defaultModal" tabindex="-1" aria-hidden="true"
+    class="fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0  min-h-screen flex justify-center items-center bg-overlay">
+    <div class="relative w-full max-w-2xl max-h-full ">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+            <div class="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                    View Selected Tokens
+                </h3>
+                <button (click)="viewPrizes()" type="button"
+                    class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                    data-modal-hide="defaultModal">
+                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                    </svg>
+                    <span class="sr-only">Close modal</span>
+                </button>
+            </div>
+            <!-- Modal body -->
+            <div class="grid grid-cols-12 gap-4 p-4 space-y-6">
+                <div class="col-span-12">
+                    <!-- Display the transaction history data here -->
+                    <div class="overflow-auto h-96">
+                        <!-- <table *ngIf="viewSelected">
+                        <thead>
+                            <td>Token no.</td>
+                            <td>Owner</td>
+                        </thead>
+                        <tbody *ngFor="let seat of seats; let i = index">
+                            <td class="p-4 cursor-pointer text-center font-sans" *ngIf="seat?.isSelected">
+                                {{seat?.tokenNumber}}</td>
+                            <td class="p-4 cursor-pointer text-center font-sans" *ngIf="seat?.isSelected">
+                                {{seat?.selectedBy}}</td>
+                        </tbody>
+                    
+                    </table> -->
+
+                        <table class="w-full border-collapse" *ngIf="viewPrize">
+                            <thead>
+                                <tr>
+                                    <th class="py-2 px-4 bg-gray-200 w-24 text-left font-sans">No.</th>
+                                    <th class="py-2 px-4 bg-gray-200 text-left font-sans">Prize</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                              <tr *ngFor="let seat of seats; let i = index">
+                                <td class="py-2 px-4 border text-left font-sans">
+                                  Winner - {{i+1}}</td>
+                                <td class="py-2 px-4 border text-left font-sans">
+                                  Prize {{seat?.prize[i]}}</td>
+                              </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+</div>

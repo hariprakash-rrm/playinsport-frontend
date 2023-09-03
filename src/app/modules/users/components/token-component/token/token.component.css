@@ -1,0 +1,16 @@
+/* styles.css (or styles.scss) */
+@keyframes glow {
+    0% {
+      text-shadow: 0 0 5px rgba(0, 0, 255, 0.5); /* Initial state with a blue glow */
+    }
+    50% {
+      text-shadow: 0 0 20px rgba(0, 0, 255, 0.8); /* Stronger glow at 50% */
+    }
+    100% {
+      text-shadow: 0 0 5px rgba(0, 0, 255, 0.5); /* Back to the initial state */
+    }
+  }
+  
+  .animate-glow {
+    animation: glow 2s infinite; /* Apply the glow animation infinitely */
+  }

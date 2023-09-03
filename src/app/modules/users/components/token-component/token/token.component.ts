@@ -5,6 +5,7 @@ import { TokenService } from '../../token.service';
 @Component({
   selector: 'app-token',
   templateUrl: './token.component.html',
+  styleUrls: ['./token.component.css']
 })
 export class TokenComponent implements OnInit {
 
@@ -24,6 +25,7 @@ export class TokenComponent implements OnInit {
 
   winner: string = 'Not yet updated'
   winners: any;
+  viewPrize:boolean=false
 
 
   timeChangeHandler(event: any) { }
@@ -38,6 +40,10 @@ export class TokenComponent implements OnInit {
 
   async ngOnInit() {
     this.getGame()
+  }
+
+  viewPrizes(){
+    this.viewPrize= !this.viewPrize
   }
 
 
