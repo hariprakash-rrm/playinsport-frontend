@@ -48,7 +48,7 @@ export class WalletComponent implements OnInit {
         private _classyComponent: ClassyLayoutComponent
     ) {}
 
-    ngOnInit(): void {
+    async ngOnInit() {
         this._classyComponent.name$.subscribe((res: any) => {
             this.names = res;
         });
@@ -62,7 +62,7 @@ export class WalletComponent implements OnInit {
         this._classyComponent.wallet$.subscribe((res: any) => {
             this.walletBalance = res;
         });
-        this.walletBalance = this._classyComponent.wallet;
+        // this.walletBalance = this._classyComponent.wallet;
         // this.getTransactionHistory()
         this.depositForm = this.formBuilder.group({
             mobileNumber: new FormControl('', [
