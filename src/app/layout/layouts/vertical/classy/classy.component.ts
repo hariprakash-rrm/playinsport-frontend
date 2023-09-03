@@ -185,7 +185,8 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy {
 
     viewWallet(): void {
         // this.currentPage = 2;
-        this.showPopup = true;
+        // this.showPopup = true;
+        this._router.navigate(['user/wallet'])
     }
     viewTransaction(): void {
         this.showTxnHistory = true;
