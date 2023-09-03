@@ -31,8 +31,8 @@
                             "crypto-js/enc-base64"
                         ],
                         "assets": [
-                            "src/favicon-16x16.png",
-                            "src/favicon-32x32.png",
+                            "src/favi.png",
+                            "src/favi.png",
                             "src/assets",
                             {
                                 "glob": "_redirects",
@@ -118,8 +118,8 @@
                         "karmaConfig": "karma.conf.js",
                         "inlineStyleLanguage": "scss",
                         "assets": [
-                            "src/favicon-16x16.png",
-                            "src/favicon-32x32.png",
+                            "src/favi.png",
+                            "src/favi.png",
                             "src/assets"
                         ],
                         "styles": [
