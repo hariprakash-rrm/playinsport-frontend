@@ -61,6 +61,10 @@
                 </div>
                 </div>
                 <div class="grid grid-cols-12 gap-4 p-4">
+                  <div  class="col-span-6">
+                    <p class="text-black text-base font-normal font-sans">Round: </p>
+                    <p class="text-black text-xl font-semibold font-sans">{{card?.name}}</p>
+                  </div>
                   <div *ngIf="card?.status==='live'" class="col-span-6">
                     <p class="text-black text-base font-normal font-sans">Status: </p>
                     <p class="text-black text-xl font-semibold font-sans">Live</p>
@@ -74,7 +78,7 @@
                     <p class="text-black text-xl font-semibold font-sans">Cancelled</p>
                   </div>
                   <div class="col-span-6">
-                    <h2 class="text-black text-base font-normal font-sans">Round </h2>
+                    <h2 class="text-black text-base font-normal font-sans">Round No.</h2>
                     <p class="text-black text-xl font-semibold font-sans">{{ card?.round }}</p>
                   </div>
                   <div class="col-span-6" *ngIf="card?.winnerList != ''">
