@@ -20,6 +20,8 @@ import { SlideshowComponent } from './components/home-component/slideshow/slides
 import { RewardComponent } from './components/reward/reward.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { TransactionHistoryComponent } from './components/transaction-history/transaction-history.component';
+import { TermsAndConditionsComponent } from './components/terms-and-conditions/terms-and-conditions.component';
+
 
 @NgModule({
   declarations: [
@@ -31,6 +33,7 @@ import { TransactionHistoryComponent } from './components/transaction-history/tr
     RewardComponent,
     ProfileComponent,
     TransactionHistoryComponent,
+    TermsAndConditionsComponent,
     
   ],
   imports: [
