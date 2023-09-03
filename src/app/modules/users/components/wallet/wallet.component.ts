@@ -10,6 +10,7 @@ import { SnackbarServiceService } from 'app/shared/snackbar-service.service';
 import { WalletService } from '../wallet.service';
 import { ClassyLayoutComponent } from 'app/layout/layouts/vertical/classy/classy.component';
 import { Subject } from 'rxjs';
+import { UserService } from 'app/core/user/user.service';
 
 interface Option {
     label: string;
@@ -45,23 +46,36 @@ export class WalletComponent implements OnInit {
         private snackBar: SnackbarServiceService,
         private formBuilder: FormBuilder,
         private _walletService: WalletService,
-        private _classyComponent: ClassyLayoutComponent
+        private _classyComponent: ClassyLayoutComponent,
+        private _userService:UserService
     ) {}
 
     async ngOnInit() {
-        this._classyComponent.name$.subscribe((res: any) => {
-            this.names = res;
-        });
+      
+        const accessToken = localStorage.getItem('accessToken');
 
-        this._classyComponent.number$.subscribe((res: any) => {
-            this.phoneNumberOfUser = res;
-        });
-        this._classyComponent.reward$.subscribe((res: any) => {
-            this.rewardBalance = res;
-        });
-        this._classyComponent.wallet$.subscribe((res: any) => {
-            this.walletBalance = res;
-        });
+    if (accessToken) {
+
+      this._userService.getUserDetails(accessToken).subscribe(
+        (response) => {
+          // console.log(response);
+          if (response.statusCode === 201) {
+            
+            
+            this.walletBalance = response.data.wallet;
+            this.rewardBalance = response.data.reward;
+            
+          }
+
+        },
+    (error) => {
+      this.snackBar.error(error.error.message, 4000);
+      // // console.log(error);
+      localStorage.clear()
+      window.location.reload()
+    }
+      )
+  }
         // this.walletBalance = this._classyComponent.wallet;
         // this.getTransactionHistory()
         this.depositForm = this.formBuilder.group({
