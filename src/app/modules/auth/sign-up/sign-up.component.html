@@ -54,17 +54,7 @@
 
         <div *ngIf="(signUpForm.get('username').touched || signUpForm.get('number').touched) && (signUpForm.invalid || (!signUpForm.get('username').value || !signUpForm.get('number').value))"
             class="text-red-500 text-sm mt-1">{{ numberError }}</div>
-            <div class="relative z-0 w-full mb-6">
-                <input type="checkbox" id="agreeTerms" formControlName="agreeTerms" class="mr-2 leading-tight">
-                <label for="agreeTerms" class="text-sm font-medium text--secondary font-sans">
-                    I agree to the <a href="/t&c" target="_blank" class="text--primary">Terms and Conditions</a>
-                </label>
-                <mat-error
-                    *ngIf="signUpForm.get('agreeTerms').touched && signUpForm.get('agreeTerms').hasError('required')"
-                    class="text-red-500 text-sm mt-1">
-                    You must agree to the Terms and Conditions to proceed.
-                </mat-error>
-            </div>
+            
 
         <div class="h-20"></div>
         <button *ngIf="!signupLoading" type="button" (click)="signUp()"
