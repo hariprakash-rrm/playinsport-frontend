@@ -43,6 +43,12 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy {
     private numberSubject = new Subject<any>();
     number$ = this.numberSubject.asObservable();
 
+    private walletSubject = new Subject<any>();
+    wallet$ = this.walletSubject.asObservable();
+
+    private rewardSubject = new Subject<any>();
+    reward$ = this.rewardSubject.asObservable();
+
     private _unsubscribeAll: Subject<any> = new Subject<any>();
     private apiUrl = environment.apiUrl;
     showTxnHistory = false;
