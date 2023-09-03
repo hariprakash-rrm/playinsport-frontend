@@ -9,7 +9,7 @@ import { TermsAndConditionsComponent } from './modules/users/components/terms-an
 // tslint:disable:max-line-length
 export const appRoutes: Route[] = [
     // Redirect empty path to '/example'
-  
+
     // no routing redirect to user
     { path: '', pathMatch: 'full', redirectTo: 'user' },
 
@@ -51,6 +51,10 @@ export const appRoutes: Route[] = [
                     import('app/modules/auth/sign-in/sign-in.module').then(
                         (m) => m.AuthSignInModule
                     ),
+            },
+            {
+                path: 't&c',
+                component: TermsAndConditionsComponent,
             },
             {
                 path: 'sign-up',
@@ -125,7 +129,7 @@ export const appRoutes: Route[] = [
             //             (m) => m.HomeModule
             //         ),
             // },
-           
+
             {
                 path: 'admin',
                 loadChildren: () =>
@@ -140,15 +144,9 @@ export const appRoutes: Route[] = [
                         (m) => m.UsersModule
                     ),
             },
-            {
-                path:'t&c',
-                component:TermsAndConditionsComponent
-            }
         ],
     },
-     
 
     // no routing redirect to user
     { path: '**', pathMatch: 'full', redirectTo: 'user' },
-   
 ];
