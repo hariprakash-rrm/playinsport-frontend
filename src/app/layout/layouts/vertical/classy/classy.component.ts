@@ -191,10 +191,12 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy {
         this.showTxnHistory = true;
     }
     closePopup(): void {
-        this.showPopup = false;
+        this._router.navigate(['user/wallet'])
+        // this.showPopup = false;
     }
     viewUserDetails(): void {
-        this.showPopupForUser = !this.showPopupForUser;
+        // this.showPopupForUser = !this.showPopupForUser;
+        this._router.navigate(['user/profile'])
     }
     refresh(): void {
         window.location.reload();

@@ -53,7 +53,7 @@ export class WalletComponent implements OnInit {
       this.rewardBalance=this._classyComponent.reward
       this.walletBalance=this._classyComponent.wallet
     })
-    this.getTransactionHistory()
+    // this.getTransactionHistory()
     this.depositForm = this.formBuilder.group({
       mobileNumber: new FormControl('', [
         Validators.required,
