@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 })
 export class SlideshowComponent implements OnInit {
 
-
+routeLink:any=['/user/refer','/user/token']
   
   banners = [
     'https://www.ciim.in/wp-content/uploads/2021/01/refer_earn.jpeg',
@@ -38,8 +38,8 @@ export class SlideshowComponent implements OnInit {
   }
 
   navigateToDestination() {
-    // console.log('triggered',this.currentBannerIndex)
-    this.router.navigate(['/user/token']);
+    console.log('triggered',this.currentBannerIndex)
+    this.router.navigate([this.routeLink[this.currentBannerIndex]]);
   }
 
 }
