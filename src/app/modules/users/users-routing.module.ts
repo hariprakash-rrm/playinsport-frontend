@@ -7,6 +7,7 @@ import { HomeComponent } from './components/home-component/home/home.component';
 import { RewardComponent } from './components/reward/reward.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { TransactionHistoryComponent } from './components/transaction-history/transaction-history.component';
+import { ContactUsComponent } from './components/contact-us/contact-us.component';
 
 
 const routes: Routes = [
@@ -34,7 +35,12 @@ const routes: Routes = [
   {
     path: 'transaction-history',
     component: TransactionHistoryComponent
+  },
+  {
+    path: 'contact',
+    component: ContactUsComponent
   }
+
 
 ];
 @NgModule({

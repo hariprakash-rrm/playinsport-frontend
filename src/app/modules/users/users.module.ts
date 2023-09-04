@@ -21,6 +21,7 @@ import { RewardComponent } from './components/reward/reward.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { TransactionHistoryComponent } from './components/transaction-history/transaction-history.component';
 import { TermsAndConditionsComponent } from './components/terms-and-conditions/terms-and-conditions.component';
+import { ContactUsComponent } from './components/contact-us/contact-us.component';
 
 
 @NgModule({
@@ -34,6 +35,7 @@ import { TermsAndConditionsComponent } from './components/terms-and-conditions/t
     ProfileComponent,
     TransactionHistoryComponent,
     TermsAndConditionsComponent,
+    ContactUsComponent,
     
   ],
   imports: [

@@ -4,28 +4,28 @@ import { FuseNavigationItem } from '@fuse/components/navigation';
 export const defaultNavigation: FuseNavigationItem[] = [
     {
         id: 'User',
-        title: 'User Home',
+        title: 'Home',
         type: 'basic',
         icon: 'heroicons_outline:home',
         link: '/user',
     },
     {
         id: 'Token',
-        title: 'User Token',
+        title: 'Token',
         type: 'basic',
         icon: 'heroicons_outline:cube',
         link: '/user/token',
     },
     {
         id: 'Wallet',
-        title: 'User Wallet',
+        title: 'Wallet',
         type: 'basic',
         icon: 'heroicons_outline:currency-rupee',
         link: '/user/wallet',
     },
     {
         id: 'UserProfile',
-        title: 'User Profile',
+        title: 'Profile',
         type: 'collapsable', // Change type to 'collapsable' to create a dropdown
         icon: 'heroicons_outline:user-circle',
         children: [
@@ -52,6 +52,20 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 link: '/user/transaction-history',
             },
         ],
+    },
+    {
+        id: 'Contact-us',
+        title: 'Contact-us',
+        type: 'basic',
+        icon: 'heroicons_outline:user-group',
+        link: '/user/contact',
+    },
+    {
+        id: 'Terms & conditions*',
+        title: 'Terms & conditions*',
+        type: 'basic',
+        icon: 'heroicons_outline:bell',
+        link: '/t&c',
     },
     {
         id: 'Sign out',
@@ -113,6 +127,21 @@ export const compactNavigation: FuseNavigationItem[] = [
             },
         ],
     },
+        {
+            id: 'Contact-us',
+            title: 'Contact-us',
+            type: 'basic',
+            icon: 'heroicons_outline:user-group',
+            link: '/user/contact',
+        },
+        {
+            id: 'Terms & conditions*',
+            title: 'Terms & conditions*',
+            type: 'basic',
+            icon: 'heroicons_outline:bell',
+            link: '/t&c',
+        },
+    
   
     {
         id: 'Home',
