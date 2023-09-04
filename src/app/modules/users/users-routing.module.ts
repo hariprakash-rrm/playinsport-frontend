@@ -9,6 +9,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { TransactionHistoryComponent } from './components/transaction-history/transaction-history.component';
 import { ContactUsComponent } from './components/contact-us/contact-us.component';
 import { TermsAndConditionsComponent } from './components/terms-and-conditions/terms-and-conditions.component';
+import { ReferAndEarnComponent } from './components/refer-and-earn/refer-and-earn.component';
 
 
 const routes: Routes = [
@@ -40,6 +41,10 @@ const routes: Routes = [
   {
     path: 'contact',
     component: ContactUsComponent
+  },
+  {
+    path:'refer',
+    component:ReferAndEarnComponent
   },
   {
     path:'t&c',

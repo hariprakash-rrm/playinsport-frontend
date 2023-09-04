@@ -54,6 +54,13 @@ export const defaultNavigation: FuseNavigationItem[] = [
         ],
     },
     {
+        id: 'Refer',
+        title: 'Refer & Earn',
+        type: 'basic',
+        icon: 'heroicons_outline:bolt',
+        link: '/user/refer',
+    },
+    {
         id: 'Contact-us',
         title: 'Contact-us',
         type: 'basic',
@@ -126,6 +133,13 @@ export const compactNavigation: FuseNavigationItem[] = [
                 link: '/user/transaction-history',
             },
         ],
+    },
+    {
+        id: 'Refer',
+        title: 'Refer & Earn',
+        type: 'basic',
+        icon: 'heroicons_outline:bolt',
+        link: '/user/refer',
     },
         {
             id: 'Contact-us',
