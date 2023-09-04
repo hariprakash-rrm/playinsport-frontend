@@ -65,7 +65,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
         title: 'Terms & conditions*',
         type: 'basic',
         icon: 'heroicons_outline:bell',
-        link: '/t&c',
+        link: '/user/t&c',
     },
     {
         id: 'Sign out',
