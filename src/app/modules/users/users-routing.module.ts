@@ -8,6 +8,7 @@ import { RewardComponent } from './components/reward/reward.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { TransactionHistoryComponent } from './components/transaction-history/transaction-history.component';
 import { ContactUsComponent } from './components/contact-us/contact-us.component';
+import { TermsAndConditionsComponent } from './components/terms-and-conditions/terms-and-conditions.component';
 
 
 const routes: Routes = [
@@ -39,6 +40,10 @@ const routes: Routes = [
   {
     path: 'contact',
     component: ContactUsComponent
+  },
+  {
+    path:'t&c',
+    component:TermsAndConditionsComponent
   }
 
 
