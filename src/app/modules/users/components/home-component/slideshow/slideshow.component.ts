@@ -11,9 +11,8 @@ export class SlideshowComponent implements OnInit {
 
   
   banners = [
-    'https://t4.ftcdn.net/jpg/04/59/48/15/360_F_459481536_QyHEGtoIASEBK49fdg5ZhuOEfOGnOYaS.jpg',
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq_oQ4_ahQzI2vzj82NVvmO6YH30uTgJpmUw',
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzWm2CY-FGrg9RYPsRREm32A-VHsfphPn3Lg'
+    'https://www.ciim.in/wp-content/uploads/2021/01/refer_earn.jpeg',
+    'https://ph-files.imgix.net/f2c5a758-67d4-4ce5-866f-8b0d239937c9.png?auto=format&fit=crop'
   ];
   currentBannerIndex = 0;
 
