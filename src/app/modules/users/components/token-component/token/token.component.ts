@@ -44,8 +44,12 @@ export class TokenComponent implements OnInit {
   }
 
   viewPrizes(card:any){
+    console.log(card)
     this.prizes=card.prize
-    this.viewPrize= !this.viewPrize
+    this.viewPrize= true
+  }
+  CloseModal(){
+    this.viewPrize=false
   }
 
 
@@ -69,7 +73,7 @@ export class TokenComponent implements OnInit {
           this.facebookLink = response.data.data.facebookLink;
           this.facebookLiveLink = response.data.data.facebookLiveLink;
           this.winners = response.data.data.winnerList
-          console.log(response.data.data);
+          // console.log(response.data.data);
         }
       },
       (error) => {

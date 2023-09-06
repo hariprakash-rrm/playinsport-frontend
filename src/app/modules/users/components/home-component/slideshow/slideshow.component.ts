@@ -38,7 +38,7 @@ routeLink:any=['/user/refer','/user/token']
   }
 
   navigateToDestination() {
-    console.log('triggered',this.currentBannerIndex)
+    // console.log('triggered',this.currentBannerIndex)
     this.router.navigate([this.routeLink[this.currentBannerIndex]]);
   }
 
