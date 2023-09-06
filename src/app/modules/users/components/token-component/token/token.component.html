@@ -92,7 +92,7 @@
             <div class="col-span-6">
               <h2 class="text-black text-base font-normal font-sans">View Prize </h2>
               <!-- glowing-text.component.html -->
-              <p class="text-black text-xl font-semibold font-sans animate-glow" (click)="viewPrizes()">View Prizes</p>
+              <p class="text-black text-xl font-semibold font-sans animate-glow" (click)="viewPrizes(car)">View Prizes</p>
 
 
             </div>
@@ -224,7 +224,7 @@
                             </thead>
                             <tbody>
 
-                              <tr *ngFor="let card of games; let i = index">
+                              <tr *ngFor="let card of prizes; let i = index">
                                 <td class="py-2 px-4 border text-left font-sans">
                                   {{i+1}}</td>
                                 <td class="py-2 px-4 border text-left font-sans">

@@ -22,6 +22,7 @@ export class TokenComponent implements OnInit {
 
   defaultValue = { hour: 13, minute: 30 };
   games: any
+  prizes:any
 
   winner: string = 'Not yet updated'
   winners: any;
@@ -42,7 +43,8 @@ export class TokenComponent implements OnInit {
     this.getGame()
   }
 
-  viewPrizes(){
+  viewPrizes(card:any){
+    this.prizes=card.prize
     this.viewPrize= !this.viewPrize
   }
 
