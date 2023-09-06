@@ -11,8 +11,8 @@ export class SlideshowComponent implements OnInit {
 routeLink:any=['/user/refer','/user/token']
   
   banners = [
-    'https://www.ciim.in/wp-content/uploads/2021/01/refer_earn.jpeg',
-    'https://ph-files.imgix.net/f2c5a758-67d4-4ce5-866f-8b0d239937c9.png?auto=format&fit=crop'
+    'https://t4.ftcdn.net/jpg/04/90/93/03/360_F_490930345_3ToZEj1ijJolIiC0LAsOSrjsxCiHUhzP.jpg',
+    'https://static.vecteezy.com/system/resources/previews/003/475/731/original/play-and-win-big-prizes-contest-online-games-web-banner-free-vector.jpg'
   ];
   currentBannerIndex = 0;
 
