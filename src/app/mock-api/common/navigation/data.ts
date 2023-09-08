@@ -62,7 +62,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
     },
     {
         id: 'Contact-us',
-        title: 'Contact-us',
+        title: 'Contact Us',
         type: 'basic',
         icon: 'heroicons_outline:user-group',
         link: '/user/contact',
