@@ -10,6 +10,8 @@ import { TransactionHistoryComponent } from './components/transaction-history/tr
 import { ContactUsComponent } from './components/contact-us/contact-us.component';
 import { TermsAndConditionsComponent } from './components/terms-and-conditions/terms-and-conditions.component';
 import { ReferAndEarnComponent } from './components/refer-and-earn/refer-and-earn.component';
+import { ExchangeHomeComponent } from './components/exchange-compoents/exchange-home/exchange-home.component';
+import { ExchangeCricketComponent } from './components/exchange-compoents/exchange-cricket/exchange-cricket.component';
 
 
 const routes: Routes = [
@@ -49,6 +51,10 @@ const routes: Routes = [
   {
     path:'t&c',
     component:TermsAndConditionsComponent
+  },
+  {
+    path:'exchange',
+    component:ExchangeCricketComponent
   }
 
 

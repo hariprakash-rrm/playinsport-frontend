@@ -23,6 +23,8 @@ import { TransactionHistoryComponent } from './components/transaction-history/tr
 import { TermsAndConditionsComponent } from './components/terms-and-conditions/terms-and-conditions.component';
 import { ContactUsComponent } from './components/contact-us/contact-us.component';
 import { ReferAndEarnComponent } from './components/refer-and-earn/refer-and-earn.component';
+import { ExchangeHomeComponent } from './components/exchange-compoents/exchange-home/exchange-home.component';
+import { ExchangeCricketComponent } from './components/exchange-compoents/exchange-cricket/exchange-cricket.component';
 
 
 @NgModule({
@@ -38,6 +40,8 @@ import { ReferAndEarnComponent } from './components/refer-and-earn/refer-and-ear
     TermsAndConditionsComponent,
     ContactUsComponent,
     ReferAndEarnComponent,
+    ExchangeHomeComponent,
+    ExchangeCricketComponent,
     
   ],
   imports: [

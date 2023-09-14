@@ -1,0 +1,20 @@
+button {
+    transition: all 0.2s ease-in-out;
+  }
+  
+  button:hover {
+    border-color: #e2e8f0;
+  }
+  
+  button:focus {
+    outline: none;
+  }
+  
+  button.active {
+    border-color: #4299e1;
+    color: #4299e1;
+  }
+  
+  #ind {
+    display: none;
+  }

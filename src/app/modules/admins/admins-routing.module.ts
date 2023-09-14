@@ -4,6 +4,7 @@ import { HomeComponent } from './home/home.component';
 import { GameComponent } from './game/game.component';
 import { TokenComponent } from './token/token.component';
 import { CouponComponent } from './coupon/coupon.component';
+import { ExchangeComponent } from './exchange/exchange.component';
 
 
 const routes: Routes = [
@@ -22,6 +23,10 @@ const routes: Routes = [
   {
     path: 'create-coupon',
     component: CouponComponent
+  },
+  {
+    path:'exchange',
+    component:ExchangeComponent
   }
 
 ];

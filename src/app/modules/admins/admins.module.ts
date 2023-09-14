@@ -12,10 +12,11 @@ import { TokenService } from './token.service';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { DatePipe } from '@angular/common';
 import { CouponComponent } from './coupon/coupon.component';
+import { ExchangeComponent } from './exchange/exchange.component';
 
 
 @NgModule({
-    declarations: [TokenComponent, GameComponent, HomeComponent, CouponComponent],
+    declarations: [TokenComponent, GameComponent, HomeComponent, CouponComponent, ExchangeComponent],
     imports: [
         CommonModule,
         NgxPaginationModule,

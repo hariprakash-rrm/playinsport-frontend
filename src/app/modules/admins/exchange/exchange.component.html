@@ -1,0 +1,102 @@
+<!-- my-form.component.html -->
+
+<div class="max-w-md mx-auto mt-5">
+    <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2">Type:</label>
+            <select
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              formControlName="types"
+            >
+              <option value="cricket">Cricket</option>
+              <option value="tennis">Tennis</option>
+            </select>
+            <div *ngIf="myForm.get('types').hasError('required')" class="text-red-500 text-xs mt-1">Type is required.</div>
+          </div>
+      
+          <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2">Mode:</label>
+            <select
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              formControlName="mode"
+            >
+              <option value="toss">Toss</option>
+              <option value="match">Match</option>
+            </select>
+            <div *ngIf="myForm.get('mode').hasError('required')" class="text-red-500 text-xs mt-1">Mode is required.</div>
+          </div>
+  
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2">Team 1:</label>
+        <input
+          type="text"
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          formControlName="team1"
+        />
+        <div *ngIf="myForm.get('team1').hasError('required')" class="text-red-500 text-xs mt-1">Team 1 is required.</div>
+      </div>
+  
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2">Team 2:</label>
+        <input
+          type="text"
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          formControlName="team2"
+        />
+        <div *ngIf="myForm.get('team2').hasError('required')" class="text-red-500 text-xs mt-1">Team 2 is required.</div>
+      </div>
+  
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2">Odds 1:</label>
+        <input
+          type="number"
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          formControlName="odds1"
+        />
+        <div *ngIf="myForm.get('odds1').hasError('required')" class="text-red-500 text-xs mt-1">Odds 1 is required.</div>
+        <div *ngIf="myForm.get('odds1').hasError('min')" class="text-red-500 text-xs mt-1">Odds 1 must be greater than or equal to 0.</div>
+      </div>
+  
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2">Odds 2:</label>
+        <input
+          type="number"
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          formControlName="odds2"
+        />
+        <div *ngIf="myForm.get('odds2').hasError('required')" class="text-red-500 text-xs mt-1">Odds 2 is required.</div>
+        <div *ngIf="myForm.get('odds2').hasError('min')" class="text-red-500 text-xs mt-1">Odds 2 must be greater than or equal to 0.</div>
+      </div>
+  
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2">Start Time:</label>
+        <input
+          type="datetime-local"
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          formControlName="startTime"
+        />
+        <div *ngIf="myForm.get('startTime').hasError('required')" class="text-red-500 text-xs mt-1">Start Time is required.</div>
+      </div>
+      
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2">End Time:</label>
+        <input
+          type="datetime-local"
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          formControlName="endTime"
+        />
+        <div *ngIf="myForm.get('endTime').hasError('required')" class="text-red-500 text-xs mt-1">End Time is required.</div>
+      </div>
+      
+  
+      <div class="mb-4">
+        <button
+          type="submit"
+          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        >
+          Submit
+        </button>
+      </div>
+    </form>
+  </div>
+  
