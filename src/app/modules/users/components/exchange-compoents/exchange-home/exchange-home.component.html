@@ -11,7 +11,22 @@
     <!-- Sub-cards for Cricket -->
     <div *ngIf="expandedCard === 'cricket'" class="p-4">
       <!-- Add your sub-cards here for Cricket -->
-     <div *ngFor=""></div>
+      <div *ngFor="let data of cricket;let i = index">
+        <div [routerLink]="['/user/exchange/cricket']"
+        [queryParams]="{ team1: data.team1,team2:data.team2 }" class="col-span-12">
+          <div class="box px-4 py-4 mb-3 flex items-center zoom-in justify-between shadow-card border border-grey">
+            <div>
+              <img src="assets/icons/india.png" class="w-24 h-16 object-contain" alt="">
+              <h2 class="text-black text-lg font-semibold text-center">{{data?.team1}}</h2>
+            </div>
+            <h2 class="text-black text-lg p-4 rounded-md"> <span class="font-normal">vs</span> </h2>
+            <div>
+              <img src="assets/icons/pakistan.png" class="w-24 h-16 object-contain" alt="">
+              <h2 class="text-black text-lg font-semibold text-center">{{data?.team2}}</h2>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 

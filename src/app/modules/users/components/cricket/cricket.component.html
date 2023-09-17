@@ -1,0 +1,97 @@
+<div class="grid grid-cols-12 gap-4 md:gap-6 w-full p-5 pt-8">
+    <div class="col-span-6">
+        <div class="shadow-card border border-grey bg-white p-4 rounded-lg text-center">
+            <img src="assets/icons/cricket.png" class="w-24 h-16 object-contain" alt="">
+            <h2 class="text-black font-sans text-base font-semibold pt-4">Cricket</h2>
+        </div>
+    </div>
+    <div class="col-span-6">
+        <div class="shadow-card border border-grey bg-white p-4 rounded-lg text-center">
+            <img src="assets/icons/tennis.png" class="w-24 h-16 object-contain" alt="">
+            <h2 class="text-black font-sans text-base font-semibold pt-4">Tennis</h2>
+        </div>
+    </div>
+
+    <div class="col-span-12">
+        <div class="box px-4 py-4 mb-3 flex items-center zoom-in justify-between shadow-card border border-grey">
+            <div>
+                <img src="assets/icons/india.png" class="w-24 h-16 object-contain" alt="">
+                <h2 class="text-black text-lg font-semibold text-center">IND</h2>
+            </div>
+            <h2 class="text-black text-lg p-4 rounded-md"> <span class="font-normal">vs</span> </h2>
+            <div>
+                <img src="assets/icons/pakistan.png" class="w-24 h-16 object-contain" alt="">
+                <h2 class="text-black text-lg font-semibold text-center">PAK</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-span-12">
+        <div class="flex w-full border-black border-solid border-2 rounded mt-8">
+            <button (click)="activeTab = 'tab1'"
+                [ngClass]="activeTab === 'tab1' ? 'bg-black text-white' : 'bg-white text-black'"
+                class="font-bold py-2 px-4 w-full">Toss</button>
+
+            <button (click)="activeTab = 'tab2'"
+                [ngClass]="activeTab === 'tab2' ? 'bg-black text-white' : 'bg-white text-black'"
+                class="font-bold py-2 px-4 w-full">Odds</button>
+        </div>
+        <!-- <div class="p-4"> -->
+        <div *ngIf="activeTab === 'tab1'">
+            <div class="py-4 mb-3 zoom-in shadow-card  relative">
+                <div class="grid grid-cols-12 gap-4 md:gap-6">
+                    <div class="col-span-6">
+                        <div>
+                            <img src="assets/icons/india.png" class="w-24 h-16 object-contain mx-auto" alt="">
+                            <h2 class="text-black text-lg font-semibold text-center">IND</h2>
+                        </div>
+                    </div>
+                    <div class="col-span-6">
+                        <div>
+                            <img src="assets/icons/pakistan.png" class="w-24 h-16 object-contain mx-auto" alt="">
+                            <h2 class="text-black text-lg font-semibold text-center">PAK</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="grid grid-cols-12 gap-4 md:gap-6 my-4">
+                    <div class="col-span-6">
+                        <div>
+                            <label for="withdrawAmount" class="text-base md:text-lg font-medium font-sans">Odds</label>
+                            <input type="number" id="withdrawAmount" class="w-full p-2 border border-gray-300 rounded mt-1">
+                        </div>
+                        <div>
+                            <button 
+                                class="px-4 py-2 bg-black text-white font-sans font-medium rounded hover:bg-white hover:text-black border-black border-2 border-solid w-full whitespace-nowrap mt-4">Place Bet</button>
+                        </div>
+                    </div>
+                    <div class="col-span-6">
+                        <div>
+                            <label for="withdrawAmount" class="text-base md:text-lg font-medium font-sans">Odds</label>
+                            <input type="number" id="withdrawAmount" class="w-full p-2 border border-gray-300 rounded mt-1">
+                        </div>
+                        <div>
+                            <button
+                                class="px-4 py-2 bg-black text-white font-sans font-medium rounded hover:bg-white hover:text-black border-black border-2 border-solid w-full whitespace-nowrap mt-4">Place
+                                Bet</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+
+                    
+                    <div class="bg-white absolute top-10 left-32">
+                        <h2 class="text-black text-lg p-2 rounded-md"> <span class="font-normal">vs</span> </h2>
+                    </div>
+                </div>
+
+                
+            </div>
+        </div>
+        <div *ngIf="activeTab === 'tab2'">
+            <!-- Content for Tab 2 -->
+            <p>This is the content for Tab 2.</p>
+        </div>
+        <!-- </div> -->
+    </div>
+</div>

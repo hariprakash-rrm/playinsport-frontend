@@ -25,6 +25,7 @@ import { ContactUsComponent } from './components/contact-us/contact-us.component
 import { ReferAndEarnComponent } from './components/refer-and-earn/refer-and-earn.component';
 import { ExchangeHomeComponent } from './components/exchange-compoents/exchange-home/exchange-home.component';
 import { ExchangeCricketComponent } from './components/exchange-compoents/exchange-cricket/exchange-cricket.component';
+import { CricketComponent } from './components/cricket/cricket.component';
 
 
 @NgModule({
@@ -42,6 +43,7 @@ import { ExchangeCricketComponent } from './components/exchange-compoents/exchan
     ReferAndEarnComponent,
     ExchangeHomeComponent,
     ExchangeCricketComponent,
+    CricketComponent,
     
   ],
   imports: [

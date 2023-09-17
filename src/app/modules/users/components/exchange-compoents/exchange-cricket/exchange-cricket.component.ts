@@ -1,39 +1,77 @@
 import { Component, OnInit } from '@angular/core';
+import { ExchangeUserService } from '../service/exchange-user.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-exchange-cricket',
-  templateUrl: './exchange-cricket.component.html',
-  styleUrls: ['./exchange-cricket.component.scss']
+    selector: 'app-exchange-cricket',
+    templateUrl: './exchange-cricket.component.html',
+    styleUrls: ['./exchange-cricket.component.scss'],
 })
 export class ExchangeCricketComponent implements OnInit {
+    activeTab = 'tab1';
+    AllData: any;
+    Toss: any;
+    Match: any;
+    constructor(
+        private exchangeService: ExchangeUserService,
+        private route: ActivatedRoute
+    ) {}
 
-  constructor() { }
+    ngOnInit(): void {
+        this.route.queryParams.subscribe((queryParams) => {
+            const team1 = queryParams['team1'];
+            const team2 = queryParams['team2'];
+            // console.log(');
+            this.filterExchanges(team1, team2);
+        });
+    }
 
-  ngOnInit(): void {
-  }
+    findExchangeById(id: number): void {
+        this.exchangeService.findById(id).subscribe(
+            (data) => {
+                // Handle the response data here
+                console.log(data);
+                this.AllData = data;
+            },
+            (error) => {
+                console.error('Error fetching exchange', error);
+            }
+        );
+    }
 
-  toggleTab(tab: string) {
-    const tabs = ['match', 'toss'];
-    tabs.forEach(t => {
-      const el = document.getElementById(t);
-      if (t === tab) {
-        el.classList.remove('hidden');
-      } else {
-        el.classList.add('hidden');
-      }
-    });
-  }
+    filterExchanges(team1: string, team2: string): void {
+        this.exchangeService.filterExchanges(team1, team2).subscribe(
+            (data) => {
+                // Handle the response data here
+                this.AllData = data;
+                console.log(data);
+                this.Match = data.filter((exch) => exch.mode == 'match');
+                console.log(this.Match, 'Match');
+            },
+            (error) => {
+                console.error('Error fetching filtered exchanges', error);
+            }
+        );
+    }
 
-  toggleTeam(team: string) {
-    const teams = ['ind', 'pak'];
-    teams.forEach(t => {
-      const el = document.getElementById(t);
-      if (t === team) {
-        el.style.display = 'block';
-      } else {
-        el.style.display = 'none';
-      }
-    });
-  }
+    placePrediction(id, data) {
+        // Create a function to update exchange details
+        let _data: any = {
+            username: '',
+            usernumber: '',
+            amount: '',
+            team: '',
+        };
+        this.exchangeService.updateExchangeDetails(id, _data).subscribe(
+            (data) => {
+                // Handle the response data here
+                console.log('Updated exchange details:', data);
 
+                // You can also update any component properties or perform other actions as needed
+            },
+            (error) => {
+                console.error('Error updating exchange details', error);
+            }
+        );
+    }
 }

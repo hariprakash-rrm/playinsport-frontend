@@ -1,46 +1,115 @@
-<div class="flex justify-center">
-    <div class="max-w-md">
-      <div class="flex border-b border-gray-200">
-        <button class="text-gray-500 hover:text-gray-700 py-4 px-6 block border-b-2 font-medium border-transparent focus:outline-none focus:border-gray-500" (click)="toggleTab('match')">
-          Match
-        </button>
-        <button class="text-gray-500 hover:text-gray-700 py-4 px-6 block border-b-2 font-medium border-transparent focus:outline-none" (click)="toggleTab('toss')">
-          Toss
-        </button>
-      </div>
-      <div class="py-4">
-        <div class="hidden" id="match">
-          Match content goes here.
-        </div>
-        <div id="toss">
-          <div class="flex justify-between">
-            <div class="w-1/2 text-center py-4 border-r border-gray-200">
-              <button class="text-gray-500 hover:text-gray-700 font-medium focus:outline-none" (click)="toggleTeam('ind')">
-                IND
-              </button>
-            </div>
-            <div class="w-1/2 text-center py-4">
-              <button class="text-gray-500 hover:text-gray-700 font-medium focus:outline-none" (click)="toggleTeam('pak')">
-                PAK
-              </button>
-            </div>
-          </div>
-          <div id="ind">
-            <form>
-              <div class="mb-4">
-                <label class="block text-gray-700 font-bold mb-2" for="amount">
-                  Amount
-                </label>
-                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="amount" type="text" placeholder="Enter amount">
-              </div>
-              <div class="flex items-center justify-between">
-                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
-                  Submit
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
+<div class="col-span-12">
+  <div class="flex w-full border-black border-solid border-2 rounded mt-8">
+      <button (click)="activeTab = 'tab1'"
+          [ngClass]="activeTab === 'tab1' ? 'bg-black text-white' : 'bg-white text-black'"
+          class="font-bold py-2 px-4 w-full">Toss</button>
+
+      <button (click)="activeTab = 'tab2'"
+          [ngClass]="activeTab === 'tab2' ? 'bg-black text-white' : 'bg-white text-black'"
+          class="font-bold py-2 px-4 w-full">Odds</button>
   </div>
+  <!-- <div class="p-4"> -->
+  <div *ngIf="activeTab === 'tab1'">
+      <div *ngFor="let data of Match;let i=index" class="py-4 mb-3 zoom-in shadow-card  relative">
+          <div class="grid grid-cols-12 gap-4 md:gap-6">
+              <div class="col-span-6">
+                  <div>
+                      <img src="assets/icons/india.png" class="w-24 h-16 object-contain mx-auto" alt="">
+                      <h2 class="text-black text-lg font-semibold text-center">{{data.team1}}</h2>
+                  </div>
+              </div>
+              <div class="col-span-6">
+                  <div>
+                      <img src="assets/icons/pakistan.png" class="w-24 h-16 object-contain mx-auto" alt="">
+                      <h2 class="text-black text-lg font-semibold text-center">{{data.team2}}</h2>
+                  </div>
+              </div>
+          </div>
+          <div class="grid grid-cols-12 gap-4 md:gap-6 my-4">
+              <div class="col-span-6">
+                  <div>
+                      <label for="withdrawAmount" class="text-base md:text-lg font-medium font-sans">Odds : {{data.odds1}}</label>
+                      <input type="number" id="withdrawAmount" class="w-full p-2 border border-gray-300 rounded mt-1">
+                  </div>
+                  <div>
+                      <button 
+                          class="px-4 py-2 bg-black text-white font-sans font-medium rounded hover:bg-white hover:text-black border-black border-2 border-solid w-full whitespace-nowrap mt-4">Place Bet</button>
+                  </div>
+              </div>
+              <div class="col-span-6">
+                  <div>
+                      <label for="withdrawAmount" class="text-base md:text-lg font-medium font-sans">Odds : {{data.odds2}}</label>
+                      <input type="number" id="withdrawAmount" class="w-full p-2 border border-gray-300 rounded mt-1">
+                  </div>
+                  <div>
+                      <button (click)="placePrediction(data.id,data)"
+                          class="px-4 py-2 bg-black text-white font-sans font-medium rounded hover:bg-white hover:text-black border-black border-2 border-solid w-full whitespace-nowrap mt-4">Place
+                          Bet</button>
+                  </div>
+              </div>
+          </div>
+
+          <div>
+
+              
+              <div class="bg-white absolute top-10 left-32">
+                  <h2 class="text-black text-lg p-2 rounded-md"> <span class="font-normal">vs</span> </h2>
+              </div>
+          </div>
+
+          
+      </div>
+  </div>
+  <div *ngIf="activeTab === 'tab2'">
+    <div class="py-4 mb-3 zoom-in shadow-card  relative">
+      <div class="grid grid-cols-12 gap-4 md:gap-6">
+          <div class="col-span-6">
+              <div>
+                  <img src="assets/icons/india.png" class="w-24 h-16 object-contain mx-auto" alt="">
+                  <h2 class="text-black text-lg font-semibold text-center">IND</h2>
+              </div>
+          </div>
+          <div class="col-span-6">
+              <div>
+                  <img src="assets/icons/pakistan.png" class="w-24 h-16 object-contain mx-auto" alt="">
+                  <h2 class="text-black text-lg font-semibold text-center">PAK</h2>
+              </div>
+          </div>
+      </div>
+      <div class="grid grid-cols-12 gap-4 md:gap-6 my-4">
+          <div class="col-span-6">
+              <div>
+                  <label for="withdrawAmount" class="text-base md:text-lg font-medium font-sans">Odds</label>
+                  <input type="number" id="withdrawAmount" class="w-full p-2 border border-gray-300 rounded mt-1">
+              </div>
+              <div>
+                  <button 
+                      class="px-4 py-2 bg-black text-white font-sans font-medium rounded hover:bg-white hover:text-black border-black border-2 border-solid w-full whitespace-nowrap mt-4">Place Bet</button>
+              </div>
+          </div>
+          <div class="col-span-6">
+              <div>
+                  <label for="withdrawAmount" class="text-base md:text-lg font-medium font-sans">Odds</label>
+                  <input type="number" id="withdrawAmount" class="w-full p-2 border border-gray-300 rounded mt-1">
+              </div>
+              <div>
+                  <button
+                      class="px-4 py-2 bg-black text-white font-sans font-medium rounded hover:bg-white hover:text-black border-black border-2 border-solid w-full whitespace-nowrap mt-4">Place
+                      Bet</button>
+              </div>
+          </div>
+      </div>
+
+      <div>
+
+          
+          <div class="bg-white absolute top-10 left-32">
+              <h2 class="text-black text-lg p-2 rounded-md"> <span class="font-normal">vs</span> </h2>
+          </div>
+      </div>
+
+      
+  </div>
+  </div>
+  <!-- </div> -->
+</div>

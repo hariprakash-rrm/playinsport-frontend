@@ -12,6 +12,7 @@ import { TermsAndConditionsComponent } from './components/terms-and-conditions/t
 import { ReferAndEarnComponent } from './components/refer-and-earn/refer-and-earn.component';
 import { ExchangeHomeComponent } from './components/exchange-compoents/exchange-home/exchange-home.component';
 import { ExchangeCricketComponent } from './components/exchange-compoents/exchange-cricket/exchange-cricket.component';
+import { CricketComponent } from './components/cricket/cricket.component';
 
 
 const routes: Routes = [
@@ -55,7 +56,14 @@ const routes: Routes = [
   {
     path:'exchange',
     component:ExchangeHomeComponent
-  }
+  },{
+    path: 'cricket',
+    component:CricketComponent
+  },
+  {
+    path:'exchange/cricket',
+    component:ExchangeCricketComponent
+  },
 
 
 ];
