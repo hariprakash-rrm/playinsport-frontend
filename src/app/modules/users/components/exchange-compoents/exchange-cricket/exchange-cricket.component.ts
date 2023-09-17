@@ -9,6 +9,8 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ExchangeCricketComponent implements OnInit {
     activeTab = 'tab1';
+    isAccordionShown: boolean = false;
+    isModalShown: boolean = false;
     AllData: any;
     Toss: any;
     Match: any;
@@ -25,7 +27,15 @@ export class ExchangeCricketComponent implements OnInit {
             this.filterExchanges(team1, team2);
         });
     }
-
+    accordionToggle() {
+        this.isAccordionShown = !this.isAccordionShown;
+    }
+    openModal() {
+        this.isModalShown = true
+    }
+    closeModal() {
+        this.isModalShown = false;
+    }
     findExchangeById(id: number): void {
         this.exchangeService.findById(id).subscribe(
             (data) => {

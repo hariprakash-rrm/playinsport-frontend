@@ -1,62 +1,58 @@
-<div class="grid grid-cols-1 md:grid-cols-3 gap-4 p-4">
-  <!-- Cricket Card -->
-  <div [ngClass]="{'bg-blue-200': expandedCard === 'cricket'}" class="bg-white rounded-lg shadow-lg overflow-hidden">
-    <div (click)="toggleCard('cricket')" class="cursor-pointer">
-      <img src="cricket-image-url" alt="Cricket" class="w-full h-48 object-cover object-center">
-      <div class="p-4">
-        <h2 class="text-xl font-semibold mb-2">Cricket</h2>
-        <p class="text-gray-600">Description about Cricket.</p>
-      </div>
+<div class="grid grid-cols-12 gap-4 md:gap-6 w-full p-4">
+  <div class="col-span-12">
+    <div class="shadow-lg rounded-md">
+      <ul class="flex flex-wrap gap-2 text-sm font-medium text-center text-gray-500">
+        <li [ngClass]="expandedCard === 'cricket' ?  'border-b-2 border-black' : ''">
+          <a (click)="toggleCard('cricket')"
+            class="inline-flex items-center justify-center p-4 t rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 group">
+            <img src="assets/icons/cricket.png" class="w-6 h-6 mx-auto" alt="">
+          </a>
+        </li>
+        <div class="border-r border-solid h-6 my-auto"></div>
+        <li [ngClass]="expandedCard === 'tennis' ?  'border-b-2 border-black' : ''">
+          <a (click)="toggleCard('tennis')"
+            class="inline-flex items-center justify-center p-4 text-blue-600 rounded-t-lg group" aria-current="page">
+            <img src="assets/icons/tennis.png" class="w-6 h-6 mx-auto" alt="">
+          </a>
+        </li>
+
+        <div class="border-r border-solid h-6 my-auto"></div>
+        <li [ngClass]="expandedCard === 'football' ?  'border-b-2 border-black' : ''">
+          <a (click)="toggleCard('football')"
+            class="inline-flex items-center justify-center p-4 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 group">
+            <img src="assets/icons/soccer.png" class="w-6 h-6 mx-auto" alt="">
+          </a>
+        </li>
+      </ul>
     </div>
+
     <!-- Sub-cards for Cricket -->
-    <div *ngIf="expandedCard === 'cricket'" class="p-4">
+    <div *ngIf="expandedCard === 'cricket'" class="py-4">
       <!-- Add your sub-cards here for Cricket -->
       <div *ngFor="let data of cricket;let i = index">
-        <div [routerLink]="['/user/exchange/cricket']"
-        [queryParams]="{ team1: data.team1,team2:data.team2 }" class="col-span-12">
-          <div class="box px-4 py-4 mb-3 flex items-center zoom-in justify-between shadow-card border border-grey">
-            <div>
-              <img src="assets/icons/india.png" class="w-24 h-16 object-contain" alt="">
-              <h2 class="text-black text-lg font-semibold text-center">{{data?.team1}}</h2>
+        <div [routerLink]="['/user/exchange/cricket']" [queryParams]="{ team1: data.team1,team2:data.team2 }"
+          class="col-span-12">
+          <div class="box px-4 py-4 mb-4  zoom-in  shadow-card border border-grey">
+            <div class="float-right mb-2 text-right inline-flex rounded gap-3 bg-red-100 px-4  ">
+             <div class="flex items-end justify-end">
+              <h2 class="text-black text-base font-normal font-sans">Ends In : </h2>
+              <p class="text-black text-base font-semibold font-sans">09/09/23</p>
+             </div>
             </div>
-            <h2 class="text-black text-lg p-4 rounded-md"> <span class="font-normal">vs</span> </h2>
-            <div>
-              <img src="assets/icons/pakistan.png" class="w-24 h-16 object-contain" alt="">
-              <h2 class="text-black text-lg font-semibold text-center">{{data?.team2}}</h2>
+            <div class="flex items-center justify-between">
+              <div>
+                <img src="assets/icons/india.png" class="w-12 h-12 object-contain" alt="">
+                <h2 class="text-black text-lg font-semibold text-center uppercase">{{data?.team1}}</h2>
+              </div>
+              <h2 class="text-black text-lg p-4 rounded-md"> <span class="font-normal">vs</span> </h2>
+              <div>
+                <img src="assets/icons/pakistan.png" class="w-12 h-12  object-contain" alt="">
+                <h2 class="text-black text-lg font-semibold text-center uppercase">{{data?.team2}}</h2>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
-
-  <!-- Tennis Card -->
-  <div [ngClass]="{'bg-blue-200': expandedCard === 'tennis'}" class="bg-white rounded-lg shadow-lg overflow-hidden">
-    <div (click)="toggleCard('tennis')" class="cursor-pointer">
-      <img src="tennis-image-url" alt="Tennis" class="w-full h-48 object-cover object-center">
-      <div class="p-4">
-        <h2 class="text-xl font-semibold mb-2">Tennis</h2>
-        <p class="text-gray-600">Description about Tennis.</p>
-      </div>
-    </div>
-    <!-- Sub-cards for Tennis -->
-    <div *ngIf="expandedCard === 'tennis'" class="p-4">
-      <!-- Add your sub-cards here for Tennis -->
-    </div>
-  </div>
-
-  <!-- Football Card -->
-  <div [ngClass]="{'bg-blue-200': expandedCard === 'football'}" class="bg-white rounded-lg shadow-lg overflow-hidden">
-    <div (click)="toggleCard('football')" class="cursor-pointer">
-      <img src="football-image-url" alt="Football" class="w-full h-48 object-cover object-center">
-      <div class="p-4">
-        <h2 class="text-xl font-semibold mb-2">Football</h2>
-        <p class="text-gray-600">Description about Football.</p>
-      </div>
-    </div>
-    <!-- Sub-cards for Football -->
-    <div *ngIf="expandedCard === 'football'" class="p-4">
-      <!-- Add your sub-cards here for Football -->
     </div>
   </div>
 </div>

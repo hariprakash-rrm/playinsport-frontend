@@ -4,8 +4,8 @@
 
 export const environment = {
     production: false,
-    // apiUrl: 'https://playinsport.com/nest',
-    apiUrl: 'http://localhost:3000'
+    apiUrl: 'https://playinsport.com/nest',
+    // apiUrl: 'http://localhost:3000'
 };
 
 /*
