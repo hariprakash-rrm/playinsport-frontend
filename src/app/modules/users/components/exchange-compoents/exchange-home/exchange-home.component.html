@@ -1,24 +1,47 @@
-<div class="bg-white shadow-md p-4">
-    <h2 class="text-xl font-semibold">Tennis</h2>
-    <button (click)="toggleTennisTeams()">Create</button>
-    <div *ngIf="showTennisTeams" class="mt-4">
-      <h3 class="text-lg font-semibold">Tennis Teams</h3>
-      <div class="bg-gray-100 p-2 mt-2">
-        <p>Ind vs Pak</p>
-        <p>Aus vs Eng</p>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 p-4">
+  <!-- Cricket Card -->
+  <div [ngClass]="{'bg-blue-200': expandedCard === 'cricket'}" class="bg-white rounded-lg shadow-lg overflow-hidden">
+    <div (click)="toggleCard('cricket')" class="cursor-pointer">
+      <img src="cricket-image-url" alt="Cricket" class="w-full h-48 object-cover object-center">
+      <div class="p-4">
+        <h2 class="text-xl font-semibold mb-2">Cricket</h2>
+        <p class="text-gray-600">Description about Cricket.</p>
       </div>
     </div>
-  </div>
-  
-  <div class="bg-white shadow-md p-4 mt-4">
-    <h2 class="text-xl font-semibold">Cricket</h2>
-    <button (click)="toggleCricketTeams()">Create</button>
-    <div *ngIf="showCricketTeams" class="mt-4">
-      <h3 class="text-lg font-semibold">Cricket Teams</h3>
-      <div class="bg-gray-100 p-2 mt-2">
-        <p>Ind vs Pak</p>
-        <p>Aus vs Eng</p>
-      </div>
+    <!-- Sub-cards for Cricket -->
+    <div *ngIf="expandedCard === 'cricket'" class="p-4">
+      <!-- Add your sub-cards here for Cricket -->
+     <div *ngFor=""></div>
     </div>
   </div>
-  
+
+  <!-- Tennis Card -->
+  <div [ngClass]="{'bg-blue-200': expandedCard === 'tennis'}" class="bg-white rounded-lg shadow-lg overflow-hidden">
+    <div (click)="toggleCard('tennis')" class="cursor-pointer">
+      <img src="tennis-image-url" alt="Tennis" class="w-full h-48 object-cover object-center">
+      <div class="p-4">
+        <h2 class="text-xl font-semibold mb-2">Tennis</h2>
+        <p class="text-gray-600">Description about Tennis.</p>
+      </div>
+    </div>
+    <!-- Sub-cards for Tennis -->
+    <div *ngIf="expandedCard === 'tennis'" class="p-4">
+      <!-- Add your sub-cards here for Tennis -->
+    </div>
+  </div>
+
+  <!-- Football Card -->
+  <div [ngClass]="{'bg-blue-200': expandedCard === 'football'}" class="bg-white rounded-lg shadow-lg overflow-hidden">
+    <div (click)="toggleCard('football')" class="cursor-pointer">
+      <img src="football-image-url" alt="Football" class="w-full h-48 object-cover object-center">
+      <div class="p-4">
+        <h2 class="text-xl font-semibold mb-2">Football</h2>
+        <p class="text-gray-600">Description about Football.</p>
+      </div>
+    </div>
+    <!-- Sub-cards for Football -->
+    <div *ngIf="expandedCard === 'football'" class="p-4">
+      <!-- Add your sub-cards here for Football -->
+    </div>
+  </div>
+</div>

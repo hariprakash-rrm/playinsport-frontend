@@ -1,0 +1,30 @@
+.tabs {
+    width: 100%;
+    max-width: 400px; /* Adjust the width as needed */
+    margin: 0 auto;
+  }
+  
+  .tab-header {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .tab-header button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #ccc;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .tab-header button.active {
+    background-color: #007bff;
+    color: #fff;
+  }
+  
+  .tab-content {
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin-top: 10px;
+  }
+  

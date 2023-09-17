@@ -54,7 +54,7 @@ const routes: Routes = [
   },
   {
     path:'exchange',
-    component:ExchangeCricketComponent
+    component:ExchangeHomeComponent
   }
 
 
