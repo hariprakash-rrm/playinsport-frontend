@@ -21,14 +21,14 @@
                             <polyline points="6 9 12 15 18 9"></polyline>
                         </svg>
                     </div>
-                    <div *ngIf="isAccordionShown" class="mt-4 rounded-lg border">
-                        <div class="relative overflow-x-auto p-2">
+                    <div  *ngIf="isAccordionShown" class="mt-4 rounded-lg border">
+                        <div *ngFor="let data of Match;let i=index" class="relative overflow-x-auto p-2">
                             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                                 <thead
                                     class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
                                     <tr>
                                         <th scope="col" class="px-6 py-3 rounded-l-lg">
-                                            Match
+                                            Match {{data.id}}
                                         </th>
                                         <th scope="col" class="px-6 py-3 text-center">
                                             Odds
@@ -39,23 +39,23 @@
                                     <tr class="bg-white">
                                         <th scope="row"
                                             class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                            Ind
+                                            {{data.team1}}
                                         </th>
                                         <td class="px-6 py-4 text-center">
-                                            <a (click)="openModal()"
+                                            <a (click)="openModal()" (click)="betTeam(data.team1,data.odds1,data.id)"
                                                 class="font-medium text-white font-sans text-sm px-4 hover:underline p-2 bg-black rounded-md">
-                                                Edit
+                                                {{data.odds1}}
                                             </a>
                                         </td>
                                     </tr>
                                     <tr class="bg-white">
-                                        <th scope="row"
+                                        <th scope="row" 
                                             class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                            Pak
+                                            {{data.team2}}
                                         </th>
                                         <td class="px-6 py-4 text-center">
-                                            <a
-                                                class="font-medium text-white font-sans text-sm px-4 hover:underline p-2 bg-black rounded-md">Edit</a>
+                                            <a (click)="openModal()" (click)="betTeam(data.team2,data.odds2,data.id)"
+                                                class="font-medium text-white font-sans text-sm px-4 hover:underline p-2 bg-black rounded-md">{{data.odds2}}</a>
                                         </td>
                                     </tr>
 
@@ -71,7 +71,7 @@
             </div>
 
 
-            <div *ngFor="let data of Match;let i=index" class="py-4 mb-3 zoom-in shadow-card  relative">
+            <!-- <div *ngFor="let data of Match;let i=index" class="py-4 mb-3 zoom-in shadow-card  relative">
                 <div class="grid grid-cols-12 gap-4 md:gap-6">
                     <div class="col-span-6">
                         <div>
@@ -124,7 +124,7 @@
                 </div>
 
 
-            </div>
+            </div> -->
         </div>
         <div *ngIf="activeTab === 'tab2'">
             <div class="py-4 mb-3 zoom-in shadow-card  relative">
@@ -132,7 +132,7 @@
                     <div class="col-span-6">
                         <div>
                             <img src="assets/icons/india.png" class="w-24 h-16 object-contain mx-auto" alt="">
-                            <h2 class="text-black text-lg font-semibold text-center">IND</h2>
+                            <h2 class="text-black text-lg font-semibold text-center">{{current.team}}</h2>
                         </div>
                     </div>
                     <div class="col-span-6">
@@ -150,7 +150,7 @@
                                 class="w-full p-2 border border-gray-300 rounded mt-1">
                         </div>
                         <div>
-                            <button
+                            <button (click)="betTeam(card.team1,card.odds1,card.id)"
                                 class="px-4 py-2 bg-black text-white font-sans font-medium rounded hover:bg-white hover:text-black border-black border-2 border-solid w-full whitespace-nowrap mt-4">Place
                                 Bet</button>
                         </div>
@@ -162,7 +162,7 @@
                                 class="w-full p-2 border border-gray-300 rounded mt-1">
                         </div>
                         <div>
-                            <button
+                            <button (click)="betTeam(card.team2,card.odds2,card.id)"
                                 class="px-4 py-2 bg-black text-white font-sans font-medium rounded hover:bg-white hover:text-black border-black border-2 border-solid w-full whitespace-nowrap mt-4">Place
                                 Bet</button>
                         </div>
@@ -188,12 +188,12 @@
         <h4 class="text-lg font-semibold mb-2">Matches</h4>
             <div class="flex items-center justfy-start gap-2">
                 <img src="assets/icons/india.png" class="w-12 h-12 object-contain" alt="">
-                <h2 class="text-black text-base font-semibold text-center">INDIA</h2>
+                <h2 class="text-black text-base font-semibold text-center">{{current?.team}}</h2>
             </div>
             
         <div class="mt-4">
-            <label for="odds" class="text-base md:text-lg font-medium font-sans">Odds : 1.4</label>
-            <input type="number" id="odds" class="w-full p-2 border border-gray-300 rounded mt-1">
+            <label for="odds" class="text-base md:text-lg font-medium font-sans">{{current?.odds}}</label>
+            <input [(ngModel)]="currentAmount" placeholder="Enter Amount" type="number" id="odds" class="w-full p-2 border border-gray-300 rounded mt-1">
         </div>
         <div class="grid grid-cols-12 gap-4 md:gap-6">
             <div class="col-span-5">
@@ -201,9 +201,11 @@
                     class="px-8 py-2 border-2 border-solid border-black rounded text-black font-medium w-full hover:bg-black hover:text-white transition-all ease-in-out duration-300 mt-6">Close</button>
             </div>
             <div class="col-span-7">
-                <button 
+                <button *ngIf="!isBetLoading" (click)="betNow(current?.team,current?.odds)"
                     class="px-4 py-2 bg-black text-white font-sans font-medium rounded hover:bg-white hover:text-black border-black border-2 border-solid w-full whitespace-nowrap mt-6 float-right">Bet</button>
-            </div>
+                    <button *ngIf="isBetLoading"
+                    class="px-4 py-2 bg-black text-white font-sans font-medium rounded hover:bg-white hover:text-black border-black border-2 border-solid w-full whitespace-nowrap mt-6 float-right">Loading . . .</button>
+                  </div>
         </div>
 
 

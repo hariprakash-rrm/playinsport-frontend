@@ -30,13 +30,18 @@ export class ExchangeUserService {
 
     return this.http.get<any[]>(url, { params });
   }
-  updateExchangeDetails(id: number, updateExchangeDto: any): Observable<any> {
+  updateExchangeDetails(id: number, data: any): Observable<any> {
     // Replace 'any' with the actual type of updateExchangeDto if you have a defined type for it
 
     const url = `${environment.apiUrl}/exchange/update-details/${id}`;
 
     // You can also include any authentication headers here if required
 
-    return this.http.post(url, updateExchangeDto);
+    return this.http.post(url, data);
+  }
+
+  findExchangesByNumber(usernumber: number): Observable<any[]> {
+    const url = `${environment.apiUrl}/exchange/by-number/${usernumber}`;
+    return this.http.get<any[]>(url);
   }
 }

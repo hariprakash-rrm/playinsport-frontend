@@ -15,15 +15,16 @@ import { ExchangeService } from './services/exchange.service';
     templateUrl: './exchange.component.html',
     styleUrls: ['./exchange.component.scss'],
 })
-export class ExchangeComponent implements OnInit{
+export class ExchangeComponent implements OnInit {
     myForm: FormGroup;
     editForm: FormGroup;
+    initForm: FormGroup;
     searchInput = 1;
     activeTab = '1'; // Default to the "Create" tab
     showPopup = false;
-    currentData:any
-    finalizeTeam:any
-    exchanges:any
+    currentData: any;
+    finalizeTeam: any;
+    exchanges: any;
     constructor(
         private fb: FormBuilder,
         private http: HttpClient,
@@ -31,6 +32,7 @@ export class ExchangeComponent implements OnInit{
         private exchangeService: ExchangeService
     ) {
         this.myForm = this.fb.group({
+            id: ['', [Validators.required]],
             types: ['', [Validators.required]],
             mode: ['', [Validators.required]],
             team1: ['', [Validators.required]],
@@ -39,6 +41,9 @@ export class ExchangeComponent implements OnInit{
             odds2: [0, [Validators.required, Validators.min(0)]],
             startTime: new FormControl(null, [Validators.required]),
             endTime: new FormControl(null, [Validators.required]),
+        });
+        this.initForm = this.fb.group({
+            name: ['', [Validators.required]],
         });
         this.editForm = this.fb.group({
             types: ['', [Validators.required]],
@@ -54,9 +59,7 @@ export class ExchangeComponent implements OnInit{
         });
     }
 
-    ngOnInit(): void {
-    }
-    
+    ngOnInit(): void {}
 
     // Define a function to convert Unix timestamps to datetime-local format
     convertUnixToDatetimeLocal(unixTimestamp: number): string {
@@ -64,20 +67,18 @@ export class ExchangeComponent implements OnInit{
         return date.toISOString().slice(0, 16); // Convert to datetime-local format (YYYY-MM-DDTHH:mm)
     }
 
-    
-
     openPopup() {
-      this.showPopup = true;
+        this.showPopup = true;
     }
-  
+
     closePopup() {
-      this.showPopup = false;
+        this.showPopup = false;
     }
-  
+
     submit() {
-      // Handle the submit logic here
-      // You can access the selected payment method from the dropdown
-      this.closePopup();
+        // Handle the submit logic here
+        // You can access the selected payment method from the dropdown
+        this.closePopup();
     }
 
     onSubmit() {
@@ -105,6 +106,10 @@ export class ExchangeComponent implements OnInit{
         }
     }
 
+    onInitial() {
+        this.createInitialMatch(this.initForm.get('name').value);
+    }
+
     // Define a function to update an exchange
     updateExchange(id: string, updateExchangeDto: any) {
         const editFormValues = {
@@ -115,8 +120,8 @@ export class ExchangeComponent implements OnInit{
             team2: this.editForm.get('team2').value,
             odds1: this.editForm.get('odds1').value,
             odds2: this.editForm.get('odds2').value,
-            startTime: this.editForm.get('startTime').value,
-            endTime: this.editForm.get('endTime').value,
+            startTime: new Date(this.editForm.get('startTime').value).getTime(),
+            endTime: new Date(this.editForm.get('endTime').value).getTime(),
             isFinalized: Boolean(this.editForm.get('isFinalized').value),
             message: this.editForm.get('message').value,
         };
@@ -135,33 +140,45 @@ export class ExchangeComponent implements OnInit{
         );
     }
 
+    createInitialMatch(name: string): void {
+        this.exchangeService.initialMatch(name).subscribe(
+            (response) => {
+                console.log('Initial match created:', response);
+                // Handle the response as needed
+            },
+            (error) => {
+                console.error('Error creating initial match:', error);
+                // Handle errors
+            }
+        );
+    }
+
     finalize(id: number, team: string) {
-        console.log(id,team)
-      this.exchangeService.finalizeExchange(id, team).subscribe(
-        (response) => {
-          // Handle the successful response here
-          console.log('Exchange finalized:', response);
-        },
-        (error) => {
-          // Handle errors here
-          console.error('Error finalizing exchange:', error);
-        }
-      );
+        console.log(id, team);
+        this.exchangeService.finalizeExchange(id, team).subscribe(
+            (response) => {
+                // Handle the successful response here
+                console.log('Exchange finalized:', response);
+            },
+            (error) => {
+                // Handle errors here
+                console.error('Error finalizing exchange:', error);
+            }
+        );
     }
 
     refund(id: number) {
-      this.exchangeService.refundExchange(id).subscribe(
-        (response) => {
-          // Handle the successful response here
-          console.log('Exchange refunded:', response);
-        },
-        (error) => {
-          // Handle errors here
-          console.error('Error refunding exchange:', error);
-        }
-      );
+        this.exchangeService.refundExchange(id).subscribe(
+            (response) => {
+                // Handle the successful response here
+                console.log('Exchange refunded:', response);
+            },
+            (error) => {
+                // Handle errors here
+                console.error('Error refunding exchange:', error);
+            }
+        );
     }
-    
 
     // Define a function to get an exchange by its ID
     getExchangeById(id: number) {
@@ -170,9 +187,9 @@ export class ExchangeComponent implements OnInit{
                 console.log('Exchange found:', exchange);
                 console.log(exchange);
                 // Handle the retrieved exchange (e.g., display it in the UI)
-                
+
                 this.editForm.patchValue(exchange);
-                this.currentData=exchange
+                this.currentData = exchange;
             },
             (error) => {
                 console.error('Error finding exchange:', error);
@@ -182,7 +199,7 @@ export class ExchangeComponent implements OnInit{
         );
     }
 
-    placeDetails(term:any){
-        console.log(term)
+    placeDetails(term: any) {
+        console.log(term);
     }
 }

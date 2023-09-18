@@ -15,7 +15,8 @@ export class ExchangeService {
     }
 
     findById(id: number): Observable<any> {
-        const url = `${environment.apiUrl}/exchange/get/${id}`;
+      let subId=0
+        const url = `${environment.apiUrl}/exchange/get/${id}/${subId}`;
         return this.http.get(url);
     }
 
@@ -32,6 +33,12 @@ export class ExchangeService {
       // Send an HTTP PUT request to the API endpoint
       return this.http.put(url, {});
     }
+
+
+    initialMatch(name: string): Observable<any> {
+      return this.http.post<any>(`${environment.apiUrl}/exchange/initial-match`, { name });
+    }
+  
 
    
   

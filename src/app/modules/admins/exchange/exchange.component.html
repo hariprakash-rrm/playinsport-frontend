@@ -2,280 +2,300 @@
 
 
 
-  <div class="tabs">
-    <div class="tab-header">
-      <button (click)="activeTab = 'create'" [class.active]="activeTab === 'create'">Create</button>
-      <button (click)="activeTab = 'edit'" [class.active]="activeTab === 'edit'">Edit</button>
-      <button (click)="activeTab = 'finalize'" [class.active]="activeTab === 'finalize'">Edit</button>
-    </div>
-    
-    <div class="tab-content" *ngIf="activeTab === 'create'">
-      <div class="max-w-md mx-auto mt-5">
-        <div class="max-w-md mx-auto mt-5">
-          <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
-              <div class="mb-4">
-                  <label class="block text-gray-700 text-sm font-bold mb-2">Type:</label>
-                  <select
-                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    formControlName="types"
-                  >
-                    <option value="Cricket">Cricket</option>
-                    <option value="Tennis">Tennis</option>
-                  </select>
-                  <div *ngIf="myForm.get('types')?.hasError('required')" class="text-red-500 text-xs mt-1">Type is required.</div>
-                </div>
-            
-                <div class="mb-4">
-                  <label class="block text-gray-700 text-sm font-bold mb-2">Mode:</label>
-                  <select
-                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    formControlName="mode"
-                  >
-                    <option value="toss">Toss</option>
-                    <option value="match">Match</option>
-                  </select>
-                  <div *ngIf="myForm.get('mode')?.hasError('required')" class="text-red-500 text-xs mt-1">Mode is required.</div>
-                </div>
-        
-            <div class="mb-4">
-              <label class="block text-gray-700 text-sm font-bold mb-2">Team 1:</label>
-              <input
-                type="text"
-                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                formControlName="team1"
-              />
-              <div *ngIf="myForm.get('team1')?.hasError('required')" class="text-red-500 text-xs mt-1">Team 1 is required.</div>
-            </div>
-        
-            <div class="mb-4">
-              <label class="block text-gray-700 text-sm font-bold mb-2">Team 2:</label>
-              <input
-                type="text"
-                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                formControlName="team2"
-              />
-              <div *ngIf="myForm.get('team2')?.hasError('required')" class="text-red-500 text-xs mt-1">Team 2 is required.</div>
-            </div>
-        
-            <div class="mb-4">
-              <label class="block text-gray-700 text-sm font-bold mb-2">Odds 1:</label>
-              <input
-                type="number"
-                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                formControlName="odds1"
-              />
-              <div *ngIf="myForm.get('odds1')?.hasError('required')" class="text-red-500 text-xs mt-1">Odds 1 is required.</div>
-              <div *ngIf="myForm.get('odds1')?.hasError('min')" class="text-red-500 text-xs mt-1">Odds 1 must be greater than or equal to 0.</div>
-            </div>
-        
-            <div class="mb-4">
-              <label class="block text-gray-700 text-sm font-bold mb-2">Odds 2:</label>
-              <input
-                type="number"
-                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                formControlName="odds2"
-              />
-              <div *ngIf="myForm.get('odds2')?.hasError('required')" class="text-red-500 text-xs mt-1">Odds 2 is required.</div>
-              <div *ngIf="myForm.get('odds2')?.hasError('min')" class="text-red-500 text-xs mt-1">Odds 2 must be greater than or equal to 0.</div>
-            </div>
-        
-            <div class="mb-4">
-              <label class="block text-gray-700 text-sm font-bold mb-2">Start Time:</label>
-              <input
-                type="datetime-local"
-                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                formControlName="startTime"
-              />
-              <div *ngIf="myForm.get('startTime')?.hasError('required')" class="text-red-500 text-xs mt-1">Start Time is required.</div>
-            </div>
-            
-            <div class="mb-4">
-              <label class="block text-gray-700 text-sm font-bold mb-2">End Time:</label>
-              <input
-                type="datetime-local"
-                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                formControlName="endTime"
-              />
-              <div *ngIf="myForm.get('endTime')?.hasError('required')" class="text-red-500 text-xs mt-1">End Time is required.</div>
-            </div>
-            
-        
-            <div class="mb-4">
-              <button
-                type="submit"
-                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-              >
-                Submit
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-    
-    <div class="tab-content" *ngIf="activeTab === 'edit'">
-      <div class="max-w-md mx-auto mt-5">
-        <div class="max-w-md mx-auto mt-5">
-          <input [(ngModel)]="searchInput" type="text">
-          <button (click)="getExchangeById(searchInput)">Search</button>
-          <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
-              <div class="mb-4">
-                  <label class="block text-gray-700 text-sm font-bold mb-2">Type:</label>
-                  <select
-                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    formControlName="types"
-                  >
-                    <option value="Cricket">Cricket</option>
-                    <option value="Tennis">Tennis</option>
-                  </select>
-                  <div *ngIf="editForm.get('types')?.hasError('required')" class="text-red-500 text-xs mt-1">Type is required.</div>
-                </div>
-            
-                <div class="mb-4">
-                  <label class="block text-gray-700 text-sm font-bold mb-2">Mode:</label>
-                  <select
-                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    formControlName="mode"
-                  >
-                    <option value="toss">Toss</option>
-                    <option value="match">Match</option>
-                  </select>
-                  <div *ngIf="editForm.get('mode')?.hasError('required')" class="text-red-500 text-xs mt-1">Mode is required.</div>
-                </div>
-        
-            <div class="mb-4">
-              <label class="block text-gray-700 text-sm font-bold mb-2">Team 1:</label>
-              <input
-                type="text"
-                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                formControlName="team1"
-              />
-              <div *ngIf="editForm.get('team1')?.hasError('required')" class="text-red-500 text-xs mt-1">Team 1 is required.</div>
-            </div>
-        
-            <div class="mb-4">
-              <label class="block text-gray-700 text-sm font-bold mb-2">Team 2:</label>
-              <input
-                type="text"
-                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                formControlName="team2"
-              />
-              <div *ngIf="editForm.get('team2')?.hasError('required')" class="text-red-500 text-xs mt-1">Team 2 is required.</div>
-            </div>
-        
-            <div class="mb-4">
-              <label class="block text-gray-700 text-sm font-bold mb-2">Odds 1:</label>
-              <input
-                type="number"
-                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                formControlName="odds1"
-              />
-              <div *ngIf="editForm.get('odds1')?.hasError('required')" class="text-red-500 text-xs mt-1">Odds 1 is required.</div>
-              <div *ngIf="editForm.get('odds1')?.hasError('min')" class="text-red-500 text-xs mt-1">Odds 1 must be greater than or equal to 0.</div>
-            </div>
-        
-            <div class="mb-4">
-              <label class="block text-gray-700 text-sm font-bold mb-2">Odds 2:</label>
-              <input
-                type="number"
-                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                formControlName="odds2"
-              />
-              <div *ngIf="editForm.get('odds2')?.hasError('required')" class="text-red-500 text-xs mt-1">Odds 2 is required.</div>
-              <div *ngIf="editForm.get('odds2')?.hasError('min')" class="text-red-500 text-xs mt-1">Odds 2 must be greater than or equal to 0.</div>
-            </div>
-        
-            <div class="mb-4">
-              <label class="block text-gray-700 text-sm font-bold mb-2">Start Time:</label>
-              <input
-                type="datetime-local"
-                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                formControlName="startTime"
-              />
-              <div *ngIf="editForm.get('startTime')?.hasError('required')" class="text-red-500 text-xs mt-1">Start Time is required.</div>
-            </div>
-            
-            <div class="mb-4">
-              <label class="block text-gray-700 text-sm font-bold mb-2">End Time:</label>
-              
-              <input
-                type="datetime-local"
-                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                formControlName="endTime"
-              />
-              <div *ngIf="editForm.get('endTime')?.hasError('required')" class="text-red-500 text-xs mt-1">End Time is required.</div>
-            </div>
-
-            <div class="mb-4">
-              <label class="block text-gray-700 text-sm font-bold mb-2">Finalize</label>
-              <input
-                type="text"
-                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                formControlName="isFinalized"
-              />
-              <div *ngIf="editForm.get('isFinalized')?.hasError('required')" class="text-red-500 text-xs mt-1"></div>
-            </div>
-
-            <div class="mb-4">
-              <label class="block text-gray-700 text-sm font-bold mb-2">Message</label>
-              <input
-                type="text"
-                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                formControlName="message"
-              />
-              <div *ngIf="editForm.get('message')?.hasError('required')" class="text-red-500 text-xs mt-1"></div>
-            </div>
-            
-        
-            <div class="mb-4">
-              <button (click)="updateExchange(searchInput)"
-                type="submit"
-                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-              >
-                Submit
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
+<div class="tabs">
+  <div class="tab-header">
+    <button (click)="activeTab = 'init'" [class.active]="activeTab === 'init'">Init</button>
+    <button (click)="activeTab = 'create'" [class.active]="activeTab === 'create'">Create</button>
+    <button (click)="activeTab = 'edit'" [class.active]="activeTab === 'edit'">Edit</button>
+    <button (click)="activeTab = 'finalize'" [class.active]="activeTab === 'finalize'">Edit</button>
   </div>
 
-  <div class="tab-content" *ngIf="activeTab === 'finalize'">
+  <div class="tab-content" *ngIf="activeTab === 'init'">
     <div class="max-w-md mx-auto mt-5">
       <div class="max-w-md mx-auto mt-5">
-        <div class="mb-4">
-          <div class="min-h-screen flex items-center justify-center">
-            <div class="space-x-4">
-              <button class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded" (click)="openPopup()">Finalize</button>
-              <button class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded" (dblclick)="refund(currentData.id)">Refund</button>
-            </div>
+        <form [formGroup]="initForm" (ngSubmit)="onInitial()">
+          <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2">name</label>
+            <input type="text"
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              formControlName="name" />
+            <div *ngIf="initForm.get('name')?.hasError('required')" class="text-red-500 text-xs mt-1">Team 2 is
+              required.</div>
           </div>
-          
-          <div class="fixed inset-0 flex items-center justify-center z-50" *ngIf="showPopup">
-            <div class="bg-white shadow-lg rounded-lg p-8">
-              <h2 class="text-xl font-semibold mb-4">Finalize Order</h2>
-              <div class="mb-4">
-                <label for="paymentMethod" class="block text-gray-600">Select Payment Method</label>
-                <select [(ngModel)]="finalizeTeam" id="paymentMethod" class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
-                  <option [value]="editForm.get('team1').value">{{ this.editForm.get('team1').value}}</option>
-                  <option [value]=" this.editForm.get('team2').value">{{ this.editForm.get('team2').value}}</option>
-                  <!-- <option [value]="bankTransfer">Bank Transfer</option> -->
-                </select>
-              </div>
-              <div class="text-right">
-                <button class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded" (click)="finalize(currentData.id,finalizeTeam)">Submit</button>
-                <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded ml-2" (click)="closePopup()">Cancel</button>
-              </div>
-            </div>
+
+          <div class="mb-4">
+            <button type="submit"
+              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+              Submit
+            </button>
           </div>
-          
-          
-          <!-- Use (click) to call the placeDetails function -->
-         
-        </div>
+        </form>
       </div>
     </div>
   </div>
-  
-  
+
+  <div class="tab-content" *ngIf="activeTab === 'create'">
+    <div class="max-w-md mx-auto mt-5">
+      <div class="max-w-md mx-auto mt-5">
+        <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+          <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2">Id</label>
+            <input type="number"
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              formControlName="id" />
+            <div *ngIf="myForm.get('id')?.hasError('required')" class="text-red-500 text-xs mt-1">Team 1 is required.
+            </div>
+          </div>
+          <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2">Type:</label>
+            <select
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              formControlName="types">
+              <option value="Cricket">Cricket</option>
+              <option value="Tennis">Tennis</option>
+            </select>
+            <div *ngIf="myForm.get('types')?.hasError('required')" class="text-red-500 text-xs mt-1">Type is required.
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2">Mode:</label>
+            <select
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              formControlName="mode">
+              <option value="Toss">Toss</option>
+              <option value="Match">Match</option>
+            </select>
+            <div *ngIf="myForm.get('mode')?.hasError('required')" class="text-red-500 text-xs mt-1">Mode is required.
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2">Team 1:</label>
+            <input type="text"
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              formControlName="team1" />
+            <div *ngIf="myForm.get('team1')?.hasError('required')" class="text-red-500 text-xs mt-1">Team 1 is required.
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2">Team 2:</label>
+            <input type="text"
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              formControlName="team2" />
+            <div *ngIf="myForm.get('team2')?.hasError('required')" class="text-red-500 text-xs mt-1">Team 2 is required.
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2">Odds 1:</label>
+            <input type="number"
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              formControlName="odds1" />
+            <div *ngIf="myForm.get('odds1')?.hasError('required')" class="text-red-500 text-xs mt-1">Odds 1 is required.
+            </div>
+            <div *ngIf="myForm.get('odds1')?.hasError('min')" class="text-red-500 text-xs mt-1">Odds 1 must be greater
+              than or equal to 0.</div>
+          </div>
+
+          <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2">Odds 2:</label>
+            <input type="number"
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              formControlName="odds2" />
+            <div *ngIf="myForm.get('odds2')?.hasError('required')" class="text-red-500 text-xs mt-1">Odds 2 is required.
+            </div>
+            <div *ngIf="myForm.get('odds2')?.hasError('min')" class="text-red-500 text-xs mt-1">Odds 2 must be greater
+              than or equal to 0.</div>
+          </div>
+
+          <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2">Start Time:</label>
+            <input type="datetime-local"
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              formControlName="startTime" />
+            <div *ngIf="myForm.get('startTime')?.hasError('required')" class="text-red-500 text-xs mt-1">Start Time is
+              required.</div>
+          </div>
+
+          <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2">End Time:</label>
+            <input type="datetime-local"
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              formControlName="endTime" />
+            <div *ngIf="myForm.get('endTime')?.hasError('required')" class="text-red-500 text-xs mt-1">End Time is
+              required.</div>
+          </div>
+
+
+          <div class="mb-4">
+            <button type="submit"
+              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+              Submit
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-content" *ngIf="activeTab === 'edit'">
+    <div class="max-w-md mx-auto mt-5">
+      <div class="max-w-md mx-auto mt-5">
+        <input [(ngModel)]="searchInput" type="number">
+        <button (click)="getExchangeById(searchInput)">Search</button>
+        <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+          <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2">Type:</label>
+            <select
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              formControlName="types">
+              <option value="Cricket">Cricket</option>
+              <option value="Tennis">Tennis</option>
+            </select>
+            <div *ngIf="editForm.get('types')?.hasError('required')" class="text-red-500 text-xs mt-1">Type is required.
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2">Mode:</label>
+            <select
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              formControlName="mode">
+              <option value="Toss">Toss</option>
+              <option value="Match">Match</option>
+            </select>
+            <div *ngIf="editForm.get('mode')?.hasError('required')" class="text-red-500 text-xs mt-1">Mode is required.
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2">Team 1:</label>
+            <input type="text"
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              formControlName="team1" />
+            <div *ngIf="editForm.get('team1')?.hasError('required')" class="text-red-500 text-xs mt-1">Team 1 is
+              required.</div>
+          </div>
+
+          <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2">Team 2:</label>
+            <input type="text"
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              formControlName="team2" />
+            <div *ngIf="editForm.get('team2')?.hasError('required')" class="text-red-500 text-xs mt-1">Team 2 is
+              required.</div>
+          </div>
+
+          <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2">Odds 1:</label>
+            <input type="number"
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              formControlName="odds1" />
+            <div *ngIf="editForm.get('odds1')?.hasError('required')" class="text-red-500 text-xs mt-1">Odds 1 is
+              required.</div>
+            <div *ngIf="editForm.get('odds1')?.hasError('min')" class="text-red-500 text-xs mt-1">Odds 1 must be greater
+              than or equal to 0.</div>
+          </div>
+
+          <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2">Odds 2:</label>
+            <input type="number"
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              formControlName="odds2" />
+            <div *ngIf="editForm.get('odds2')?.hasError('required')" class="text-red-500 text-xs mt-1">Odds 2 is
+              required.</div>
+            <div *ngIf="editForm.get('odds2')?.hasError('min')" class="text-red-500 text-xs mt-1">Odds 2 must be greater
+              than or equal to 0.</div>
+          </div>
+
+          <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2">Start Time:</label>
+            <input type="datetime-local"
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              formControlName="startTime" />
+            <div *ngIf="editForm.get('startTime')?.hasError('required')" class="text-red-500 text-xs mt-1">Start Time is
+              required.</div>
+          </div>
+
+          <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2">End Time:</label>
+
+            <input type="datetime-local"
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              formControlName="endTime" />
+            <div *ngIf="editForm.get('endTime')?.hasError('required')" class="text-red-500 text-xs mt-1">End Time is
+              required.</div>
+          </div>
+
+          <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2">Finalize</label>
+            <input type="text"
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              formControlName="isFinalized" />
+            <div *ngIf="editForm.get('isFinalized')?.hasError('required')" class="text-red-500 text-xs mt-1"></div>
+          </div>
+
+          <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2">Message</label>
+            <input type="text"
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              formControlName="message" />
+            <div *ngIf="editForm.get('message')?.hasError('required')" class="text-red-500 text-xs mt-1"></div>
+          </div>
+
+
+          <div class="mb-4">
+            <button (click)="updateExchange(searchInput)" type="submit"
+              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+              Submit
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="tab-content" *ngIf="activeTab === 'finalize'">
+  <div class="max-w-md mx-auto mt-5">
+    <div class="max-w-md mx-auto mt-5">
+      <div class="mb-4">
+        <div class="min-h-screen flex items-center justify-center">
+          <div class="space-x-4">
+            <button class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded"
+              (click)="openPopup()">Finalize</button>
+            <button class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded"
+              (dblclick)="refund(currentData.id)">Refund</button>
+          </div>
+        </div>
+
+        <div class="fixed inset-0 flex items-center justify-center z-50" *ngIf="showPopup">
+          <div class="bg-white shadow-lg rounded-lg p-8">
+            <h2 class="text-xl font-semibold mb-4">Finalize Order</h2>
+            <div class="mb-4">
+              <label for="paymentMethod" class="block text-gray-600">Select Payment Method</label>
+              <select [(ngModel)]="finalizeTeam" id="paymentMethod"
+                class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+                <option [value]="editForm.get('team1').value">{{ this.editForm.get('team1').value}}</option>
+                <option [value]=" this.editForm.get('team2').value">{{ this.editForm.get('team2').value}}</option>
+                <!-- <option [value]="bankTransfer">Bank Transfer</option> -->
+              </select>
+            </div>
+            <div class="text-right">
+              <button class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded"
+                (click)="finalize(currentData.id,finalizeTeam)">Submit</button>
+              <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded ml-2"
+                (click)="closePopup()">Cancel</button>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- Use (click) to call the placeDetails function -->
+
+      </div>
+    </div>
+  </div>
+</div>
