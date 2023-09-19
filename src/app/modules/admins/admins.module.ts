@@ -13,10 +13,13 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { DatePipe } from '@angular/common';
 import { CouponComponent } from './coupon/coupon.component';
 import { ExchangeComponent } from './exchange/exchange.component';
+import { MatchComponent } from './exchange/components/match/match.component';
+import { TossComponent } from './exchange/components/toss/toss.component';
+import { LambiComponent } from './exchange/components/lambi/lambi.component';
 
 
 @NgModule({
-    declarations: [TokenComponent, GameComponent, HomeComponent, CouponComponent, ExchangeComponent],
+    declarations: [TokenComponent, GameComponent, HomeComponent, CouponComponent, ExchangeComponent, MatchComponent, TossComponent, LambiComponent],
     imports: [
         CommonModule,
         NgxPaginationModule,

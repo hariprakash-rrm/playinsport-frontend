@@ -14,9 +14,9 @@ export class ExchangeService {
         return this.http.post(`${environment.apiUrl}/exchange`, exchangeData);
     }
 
-    findExchangeById(id: number): Observable<any> {
-        return this.http.get(`${environment.apiUrl}/exchange/${id}`);
-    }
+    // findExchangeById(id: number): Observable<any> {
+    //     return this.http.get(`${environment.apiUrl}/exchange/${id}`);
+    // }
 
     createMatch(exchangeId: number, matchData: any): Observable<any> {
         return this.http.post(
@@ -36,4 +36,9 @@ export class ExchangeService {
       return this.http.get(url)
       
     }
+
+    updateExchange(id: number, name: string): Observable<any> {
+        const url = `${environment.apiUrl}/exchange/${id}`;
+        return this.http.put(url, { name });
+      }
 }

@@ -6,8 +6,7 @@ import {
     FormGroup,
     Validators,
 } from '@angular/forms';
-import { SnackbarServiceService } from 'app/shared/snackbar-service.service';
-import { environment } from 'environments/environment';
+
 import { ExchangeService } from './services/exchange.service';
 
 @Component({
@@ -17,15 +16,10 @@ import { ExchangeService } from './services/exchange.service';
 })
 export class ExchangeComponent {
     exchangeForm: FormGroup;
+    upExchangeForm: FormGroup;
     exchangeId: number | null = null;
-    errorMessage: string | null = null;
-    createMatchForm: FormGroup;
-    successMessage: string | null = null;
-    formErrorMessage: string | null = null;
-    updateMatchForm: FormGroup;
-    matchDetails:any
-
-
+    errorMessage: any;
+    exchange: any;
     constructor(
         private formBuilder: FormBuilder,
         private exchangeService: ExchangeService
@@ -33,32 +27,12 @@ export class ExchangeComponent {
         this.exchangeForm = this.formBuilder.group({
             name: ['', [Validators.required]],
         });
-        this.createMatchForm = this.formBuilder.group({
-            exchangeId:[''],
-            team1: ['', [Validators.required]],
-            team2: ['', [Validators.required]],
-            odds1: ['', [Validators.required, Validators.min(0)]],
-            odds2: ['', [Validators.required, Validators.min(0)]],
-            startTime: ['', [Validators.required]],
-            endTime: ['', [Validators.required]],
-            message: [''],
+        this.upExchangeForm = this.formBuilder.group({
+          id: ['', [Validators.required, Validators.minLength(1)]],
+          name: ['', [Validators.required, Validators.minLength(1)]],
         });
-        this.updateMatchForm = this.formBuilder.group({
-            exchangeId: ['', Validators.required],
-            team1: ['', Validators.required],
-            team2: ['', Validators.required],
-            odds1: ['', Validators.required],
-            odds2: ['', Validators.required],
-            startTime: ['', Validators.required],
-            endTime: ['', Validators.required],
-            isFinalized: [false],
-            message: [''],
-          });
     }
-    convertToTimestamp(datetime: string): number {
-        const parsedDate = new Date(datetime);
-        return parsedDate.getTime();
-    }
+
     createExchange(): void {
         if (this.exchangeForm.valid) {
             const name = this.exchangeForm.get('name')?.value;
@@ -74,82 +48,44 @@ export class ExchangeComponent {
             );
         }
     }
-    searchMatchById(): void {
-        const matchId = this.updateMatchForm.get('id').value;
-        if (matchId) {
-          // Call the service to retrieve match details by ID
-          this.exchangeService.getMatchById(matchId).subscribe(
-            (response) => {
-              // Update the form with the retrieved match details
-              this.matchDetails = response;
-              this.updateMatchForm.patchValue(this.matchDetails.match[0]);
+
+    searchExchange() {
+        const id = this.upExchangeForm.get('id').value;
+        if (!id) {
+            return;
+        }
+
+        this.exchangeService.getMatchById(id).subscribe(
+            (exchange) => {
+                this.exchange = exchange; // Set the retrieved exchange data
+                this.upExchangeForm.patchValue({
+                    name: exchange.name,
+                });
             },
             (error) => {
-              // Handle error, e.g., show an error message
-              console.error('Error fetching match details:', error);
+                console.error('Error fetching exchange:', error);
             }
-          );
-        }
-      }
-
-      updateMatch() {
-        if (this.updateMatchForm.invalid) {
-          // Handle invalid form data, show error messages, etc.
-          return;
-        }
-    
-        const exchangeId = Number(this.updateMatchForm.get('exchangeId').value);
-        const matchData = this.updateMatchForm.value; // Get all form values as an object
-    
-        this.exchangeService.updateMatch(exchangeId, matchData).subscribe(
-          (response) => {
-            console.log('Match updated successfully', response);
-            // Optionally, reset the form after a successful update
-            this.updateMatchForm.reset();
-          },
-          (error) => {
-            console.error('Error updating match', error);
-          }
         );
-      }
+    }
 
-    // Method to fetch exchange data by ID and populate the form
-  fetchExchangeData(exchangeId: number) {
-    this.exchangeService.getMatchById(exchangeId).subscribe(
-      (exchangeData) => {
-        // Populate the form with the retrieved data
-        this.updateMatchForm.patchValue(exchangeData.match);
-      },
-      (error) => {
-        console.error('Error fetching exchange data', error);
-      }
-    );
-  }
-
-    createMatch(): void {
-        if (this.createMatchForm.valid) {
-            const startTime = this.convertToTimestamp(
-                this.createMatchForm.get('startTime').value
-            );
-            const endTime = this.convertToTimestamp(
-                this.createMatchForm.get('endTime').value
-            );
-
-            const exchangeId = 1; // Replace with the desired exchange ID
-            const matchData = this.createMatchForm.value;
-            matchData.startTime = startTime
-            matchData.endTime=endTime
-            this.exchangeService.createMatch(exchangeId, matchData).subscribe(
-                () => {
-                    this.successMessage = 'Match created successfully';
-                    this.formErrorMessage = null;
-                    this.createMatchForm.reset();
-                },
-                (error) => {
-                    this.successMessage = null;
-                    this.formErrorMessage = 'Error creating match';
-                }
-            );
+    update() {
+        if (this.exchangeForm.invalid) {
+            return;
         }
+
+        const id = this.exchangeForm.get('id').value;
+        const name = this.exchangeForm.get('name').value;
+
+        // If there's an existing exchange, update it
+        this.exchangeService.updateExchange(id, name).subscribe(
+            (response) => {
+                // Handle the success response
+                console.log('Exchange updated:', response);
+            },
+            (error) => {
+                // Handle the error
+                console.error('Error updating exchange:', error);
+            }
+        );
     }
 }
