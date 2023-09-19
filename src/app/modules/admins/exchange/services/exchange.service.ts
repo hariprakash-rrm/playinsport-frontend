@@ -9,37 +9,31 @@ import { Observable } from 'rxjs';
 export class ExchangeService {
     constructor(private http: HttpClient) {}
 
-    updateExchange(id: string, updateExchangeDto: any): Observable<any> {
-        const url = `${environment.apiUrl}/exchange/${id}`;
-        return this.http.put(url, updateExchangeDto);
+    createExchange(name: string): Observable<any> {
+        const exchangeData = { name };
+        return this.http.post(`${environment.apiUrl}/exchange`, exchangeData);
     }
 
-    findById(id: number): Observable<any> {
-      let subId=0
-        const url = `${environment.apiUrl}/exchange/get/${id}/${subId}`;
-        return this.http.get(url);
+    findExchangeById(id: number): Observable<any> {
+        return this.http.get(`${environment.apiUrl}/exchange/${id}`);
     }
 
-    finalizeExchange(id: number, team: string) {
-      const url = `${environment.apiUrl}/exchange/finalize/${id}/${team}`;
-      
-      // Send an HTTP PUT request to the API endpoint
-      return this.http.put(url, {});
+    createMatch(exchangeId: number, matchData: any): Observable<any> {
+        return this.http.post(
+            `${environment.apiUrl}/exchange/${exchangeId}/match`,
+            matchData
+        );
+    }
+    updateMatch(exchangeId: number, matchData: any): Observable<any> {
+      const url = `${environment.apiUrl}/exchange/${exchangeId}`;
+      return this.http.put(url, matchData);
     }
 
-    refundExchange(id: number) {
-      const url = `${environment.apiUrl}/exchange/refund/${id}`;
-      
-      // Send an HTTP PUT request to the API endpoint
-      return this.http.put(url, {});
-    }
-
-
-    initialMatch(name: string): Observable<any> {
-      return this.http.post<any>(`${environment.apiUrl}/exchange/initial-match`, { name });
-    }
+    getMatchById(matchId: number): Observable<any> {
+      const url = `${environment.apiUrl}/exchange/${matchId}`; // Adjust the URL as per your API endpoint
   
-
-   
-  
+      // Make the HTTP GET request to fetch match details by ID
+      return this.http.get(url)
+      
+    }
 }
