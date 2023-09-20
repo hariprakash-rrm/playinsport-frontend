@@ -43,6 +43,7 @@ export class ExchangeService {
       }
 
       getRecent20Data(): Observable<any[]> {
+        console.log("EXCHANGE");
         const apiUrl =`${environment.apiUrl}/exchange/recent` 
         return this.http.get<any[]>(apiUrl);
       }

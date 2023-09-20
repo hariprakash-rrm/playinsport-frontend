@@ -1,48 +1,50 @@
 <!-- exchange.component.html -->
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link" (click)="currentTab = 'create'">Create Exchange</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" (click)="currentTab = 'view'">View/Update Exchange</a>
+  </li>
+</ul>
 
-<div [formGroup]="exchangeForm">
-  <label for="name">Exchange Name:</label>
-  <input type="text" id="name" formControlName="name" />
-  <div *ngIf="exchangeForm.get('name')?.hasError('required') && exchangeForm.get('name').touched">
-    <p class="error-message">Name is required.</p>
+<div *ngIf="currentTab === 'create'">
+  <div [formGroup]="exchangeForm">
+    <label for="name">Exchange Name:</label>
+    <input type="text" id="name" formControlName="name" />
+    <div *ngIf="exchangeForm.get('name')?.hasError('required') && exchangeForm.get('name').touched">
+      <p class="error-message">Name is required.</p>
+    </div>
+    <button (click)="createExchange()">Create Exchange</button>
   </div>
-  <button (click)="createExchange()">Create Exchange</button>
+
+  <div *ngIf="exchangeId !== null">
+    <p>Created Exchange ID: {{ exchangeId }}</p>
+  </div>
+
+  <div *ngIf="errorMessage !== null">
+    <p>{{ errorMessage }}</p>
+  </div>
 </div>
 
-<div *ngIf="exchangeId !== null">
-  <p>Created Exchange ID: {{ exchangeId }}</p>
-  <button (click)="findExchange()">Find Exchange</button>
+<div *ngIf="currentTab === 'view'">
+  <form [formGroup]="upExchangeForm">
+    <div class="form-group">
+      <label for="id">Matches :</label>
+      <select id="id" formControlName="id">
+        <option *ngFor="let match of recentData" [value]="match.id">{{ match.name }}</option>
+      </select>
+      <div *ngIf="upExchangeForm.get('id').hasError('required') && upExchangeForm.get('id').touched">
+        <p class="error-message">Match is required.</p>
+      </div>
+    </div>
+    <button (click)="searchExchange()">Search</button>
+    <div class="form-group">
+      <label for="name">Exchange Name</label>
+      <input type="text" id="name" formControlName="name" class="form-control" required minlength="1" />
+    </div>
+    <button [disabled]="upExchangeForm.get('name')?.invalid" type="submit" class="btn btn-primary" (click)="update()">
+      Update Exchange
+    </button>
+  </form>
 </div>
-
-<div *ngIf="errorMessage !== null">
-  <p>{{ errorMessage }}</p>
-</div>
-
-
-
-<form [formGroup]="upExchangeForm" (ngSubmit)="update()">
-  <div class="form-group">
-    <label for="id">Exchange ID</label>
-    <input type="number" id="id" formControlName="id" class="form-control" required minlength="1" />
-    <div *ngIf="upExchangeForm.get('id')?.hasError('required')" class="text-danger">
-      ID is required.
-    </div>
-    <div *ngIf="upExchangeForm.get('id')?.hasError('minlength')" class="text-danger">
-      ID must be at least 1 character.
-    </div>
-  </div>
-  <button (click)="searchExchange()">Search</button>
-  <div class="form-group">
-    <label for="name">Exchange Name</label>
-    <input type="text" id="name" formControlName="name" class="form-control" required minlength="1" />
-    <div *ngIf="upExchangeForm.get('name')?.hasError('required')" class="text-danger">
-      Name is required.
-    </div>
-    <div *ngIf="upExchangeForm.get('name')?.hasError('minlength')" class="text-danger">
-      Name must be at least 1 character.
-    </div>
-  </div>
-  <button type="submit" class="btn btn-primary" >
-    {{ exchange ? 'Update' : 'Create' }} Exchange
-  </button>
-</form>

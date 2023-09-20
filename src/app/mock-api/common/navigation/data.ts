@@ -57,7 +57,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
         id: 'Refer',
         title: 'Refer & Earn',
         type: 'basic',
-        icon: 'heroicons_outline:bolt',
+        icon: 'heroicons_outline:collection',
         link: '/user/refer',
     },
     {
@@ -138,25 +138,25 @@ export const compactNavigation: FuseNavigationItem[] = [
         id: 'Refer',
         title: 'Refer & Earn',
         type: 'basic',
-        icon: 'heroicons_outline:bolt',
+        icon: 'heroicons_outline:collection',
         link: '/user/refer',
     },
-        {
-            id: 'Contact-us',
-            title: 'Contact-us',
-            type: 'basic',
-            icon: 'heroicons_outline:user-group',
-            link: '/user/contact',
-        },
-        {
-            id: 'Terms & conditions*',
-            title: 'Terms & conditions*',
-            type: 'basic',
-            icon: 'heroicons_outline:bell',
-            link: 'user/t&c',
-        },
-    
-  
+    {
+        id: 'Contact-us',
+        title: 'Contact-us',
+        type: 'basic',
+        icon: 'heroicons_outline:user-group',
+        link: '/user/contact',
+    },
+    {
+        id: 'Terms & conditions*',
+        title: 'Terms & conditions*',
+        type: 'basic',
+        icon: 'heroicons_outline:bell',
+        link: 'user/t&c',
+    },
+
+
     {
         id: 'Home',
         title: 'Admin Home',
@@ -185,6 +185,29 @@ export const compactNavigation: FuseNavigationItem[] = [
         type: 'basic',
         icon: 'heroicons_outline:key',
         link: '/admin/create-coupon',
+    },
+    {
+        id: 'Exchange',
+        title: 'Exchange',
+        type: 'collapsable',
+        icon: 'heroicons_outline:key',
+        children: [
+            // Nest the items within the 'children' property
+            {
+                id: 'exchange',
+                title: 'Exchange',
+                type: 'basic',
+                icon: 'heroicons_outline:user',
+                link: '/admin/exchange',
+            },
+            {
+                id: 'exchangeMatch',
+                title: 'Match',
+                type: 'basic',
+                icon: 'heroicons_outline:user',
+                link: '/admin/exchange/match',
+            },
+        ],
     },
     {
         id: 'Sign out',
