@@ -29,9 +29,11 @@ export class ExchangeComponent {
         });
         this.upExchangeForm = this.formBuilder.group({
           id: ['', [Validators.required, Validators.minLength(1)]],
-          name: ['', [Validators.required, Validators.minLength(1)]],
+          name: ['', [Validators.required]],
         });
     }
+
+    
 
     createExchange(): void {
         if (this.exchangeForm.valid) {
@@ -51,6 +53,7 @@ export class ExchangeComponent {
 
     searchExchange() {
         const id = this.upExchangeForm.get('id').value;
+        
         if (!id) {
             return;
         }
@@ -69,12 +72,15 @@ export class ExchangeComponent {
     }
 
     update() {
-        if (this.exchangeForm.invalid) {
+        console.log(this.upExchangeForm.get('id').value)
+        console.log(this.upExchangeForm.get('name').value)
+        console.log(this.upExchangeForm.valid)
+        if (!this.upExchangeForm.valid ) {
             return;
         }
 
-        const id = this.exchangeForm.get('id').value;
-        const name = this.exchangeForm.get('name').value;
+        const id = this.upExchangeForm.get('id').value;
+        const name = this.upExchangeForm.get('name').value;
 
         // If there's an existing exchange, update it
         this.exchangeService.updateExchange(id, name).subscribe(

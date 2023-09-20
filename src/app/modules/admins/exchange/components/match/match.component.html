@@ -1,6 +1,16 @@
 <div [formGroup]="createMatchForm">
     <!-- create-match.component.html -->
-  
+    
+    <div class="form-group">
+      <label for="exchangeId">Matches :</label>
+      <select id="exchangeId" formControlName="exchangeId">
+        <option *ngFor="let match of recentData" [value]="match.id">{{ match.name }}</option>
+      </select>
+      <div *ngIf="createMatchForm.get('exchangeId').hasError('required') && createMatchForm.get('exchangeId').touched">
+        <p class="error-message">Match is required.</p>
+      </div>
+    </div>
+
     <div class="form-group">
       <label for="team1">Team 1:</label>
       <input type="text" id="team1" formControlName="team1" />

@@ -13,12 +13,13 @@ export class MatchComponent implements OnInit {
     formErrorMessage: string | null = null;
     updateMatchForm: FormGroup;
     matchDetails: any;
+    recentData:any=[]
     constructor(
         private formBuilder: FormBuilder,
         private exchangeService: ExchangeService
     ) {
         this.createMatchForm = this.formBuilder.group({
-            exchangeId: [''],
+            exchangeId: ['', Validators.required],
             team1: ['', [Validators.required]],
             team2: ['', [Validators.required]],
             odds1: ['', [Validators.required, Validators.min(0)]],
@@ -40,7 +41,16 @@ export class MatchComponent implements OnInit {
         });
     }
 
-    ngOnInit(): void {}
+    ngOnInit(): void {
+        this.getRecentData()
+    }
+
+    getRecentData(): void {
+        this.exchangeService.getRecent20Data()
+          .subscribe(data => {
+            this.recentData = data;
+          });
+      }
 
     createMatch(): void {
         if (this.createMatchForm.valid) {

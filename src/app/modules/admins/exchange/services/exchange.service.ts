@@ -25,7 +25,7 @@ export class ExchangeService {
         );
     }
     updateMatch(exchangeId: number, matchData: any): Observable<any> {
-      const url = `${environment.apiUrl}/exchange/${exchangeId}`;
+      const url = `${environment.apiUrl}/exchange/match/${exchangeId}`;
       return this.http.put(url, matchData);
     }
 
@@ -40,5 +40,10 @@ export class ExchangeService {
     updateExchange(id: number, name: string): Observable<any> {
         const url = `${environment.apiUrl}/exchange/${id}`;
         return this.http.put(url, { name });
+      }
+
+      getRecent20Data(): Observable<any[]> {
+        const apiUrl =`${environment.apiUrl}/exchange/recent` 
+        return this.http.get<any[]>(apiUrl);
       }
 }
