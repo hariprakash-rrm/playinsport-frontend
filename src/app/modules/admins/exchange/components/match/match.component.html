@@ -1,29 +1,28 @@
-<div [formGroup]="createMatchForm">
+<!-- exchange.component.html -->
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link" (click)="currentTab = 'create'">Create Match</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" (click)="currentTab = 'update'">Update Match</a>
+  </li>
+</ul>
+
+<div *ngIf="currentTab === 'create'">
+  <div [formGroup]="createMatchForm">
     <!-- create-match.component.html -->
-    
+
     <div class="form-group">
       <label for="exchangeId">Matches :</label>
-      <select id="exchangeId" formControlName="exchangeId">
+      <select (click)="updateSelectMatch()" id="exchangeId" formControlName="exchangeId">
         <option *ngFor="let match of recentData" [value]="match.id">{{ match.name }}</option>
       </select>
       <div *ngIf="createMatchForm.get('exchangeId').hasError('required') && createMatchForm.get('exchangeId').touched">
         <p class="error-message">Match is required.</p>
       </div>
     </div>
-    <div [formGroup]="createMatchForm">
-      <!-- create-match.component.html -->
-      
-      <div class="form-group">
-        <label for="exchangeId">Matches :</label>
-        <select id="exchangeId" formControlName="exchangeId">
-          <option *ngFor="let match of recentData" [value]="match.id">{{ match.name }}</option>
-        </select>
-        <div *ngIf="createMatchForm.get('exchangeId').hasError('required') && createMatchForm.get('exchangeId').touched">
-          <p class="error-message">Match is required.</p>
-        </div>
-      </div>
-      
-  
+
+    <div *ngIf="isMatchSelected && matchExist">
       <div class="form-group">
         <label for="team1">Team 1:</label>
         <input type="text" id="team1" formControlName="team1" />
@@ -38,7 +37,7 @@
           <p class="error-message">Team 2 is required.</p>
         </div>
       </div>
-    
+
       <div class="form-group">
         <label for="odds1">Odds for Team 1:</label>
         <input type="number" id="odds1" formControlName="odds1" />
@@ -49,7 +48,7 @@
           <p class="error-message">Odds for Team 1 must be greater than or equal to 0.</p>
         </div>
       </div>
-    
+
       <div class="form-group">
         <label for="odds2">Odds for Team 2:</label>
         <input type="number" id="odds2" formControlName="odds2" />
@@ -60,7 +59,7 @@
           <p class="error-message">Odds for Team 2 must be greater than or equal to 0.</p>
         </div>
       </div>
-    
+
       <div class="form-group">
         <label for="startTime">Start Time:</label>
         <input type="datetime-local" id="startTime" formControlName="startTime" />
@@ -68,7 +67,7 @@
           <p class="error-message">Start Time is required.</p>
         </div>
       </div>
-    
+
       <div class="form-group">
         <label for="endTime">End Time:</label>
         <input type="datetime-local" id="endTime" formControlName="endTime" />
@@ -76,309 +75,85 @@
           <p class="error-message">End Time is required.</p>
         </div>
       </div>
-    
+
       <div class="form-group">
         <label for="message">Message:</label>
         <input type="text" id="message" formControlName="message" />
       </div>
-    
+
       <button (click)="createMatch()">Create Match</button>
     </div>
-    
-    <div *ngIf="successMessage !== null">
-      <p>{{ successMessage }}</p>
-    </div>
-    
-    <div *ngIf="formErrorMessage !== null">
-      <p>{{ formErrorMessage }}</p>
-    </div>
-    
-  
-  
-  
-    <form [formGroup]="updateMatchForm" (ngSubmit)="updateMatch()">
-      <div>
-        <label for="exchangeId">Exchange ID:</label>
-        <input type="text" id="exchangeId" formControlName="exchangeId" required>
+  </div>
+
+</div>
+
+<div *ngIf="successMessage !== null">
+  <p>{{ successMessage }}</p>
+</div>
+
+<div *ngIf="formErrorMessage !== null">
+  <p>{{ formErrorMessage }}</p>
+</div>
+
+
+
+
+<div *ngIf="currentTab=='update'">
+  <form [formGroup]="updateMatchForm" (ngSubmit)="updateMatch()">
+    <!-- <div>
+    <label for="exchangeId">Exchange ID:</label>
+    <input type="text" id="exchangeId" formControlName="exchangeId" required>
+  </div> -->
+    <!-- <div class="form-group"> -->
+    <div>
+      <label for="exchangeId">Matches :</label>
+      <select (click)="fetchExchangeData(updateMatchForm.get('exchangeId').value)" id="exchangeId"
+        formControlName="exchangeId">
+        <option *ngFor="let match of recentData" [value]="match.id">{{ match.name }}</option>
+      </select>
+      <div *ngIf="updateMatchForm.get('exchangeId').hasError('required') && updateMatchForm.get('exchangeId').touched">
+        <p class="error-message">Match is required.</p>
       </div>
-      <button type="button" (click)="fetchExchangeData(updateMatchForm.get('exchangeId').value)">Fetch Exchange Data</button>
-      
-    
+    </div>
+
+    <!-- < button type="button" (click)="fetchExchangeData(updateMatchForm.get('exchangeId').value)">Fetch Exchange
+    Data</button> -->
+
+    <div *ngIf="!matchExist">
       <div>
         <label for="team1">Team 1:</label>
         <input type="text" id="team1" formControlName="team1" required>
       </div>
-    
+
       <div>
         <label for="team2">Team 2:</label>
         <input type="text" id="team2" formControlName="team2" required>
       </div>
-    
+
       <div>
         <label for="odds1">Odds 1:</label>
         <input type="number" id="odds1" formControlName="odds1" required>
       </div>
-    
+
       <div>
         <label for="odds2">Odds 2:</label>
         <input type="number" id="odds2" formControlName="odds2" required>
       </div>
-    
+
       <div>
         <label for="startTime">Start Time:</label>
         <input type="datetime-local" id="startTime" formControlName="startTime" required>
       </div>
-    
+
       <div>
         <label for="endTime">End Time:</label>
         <input type="datetime-local" id="endTime" formControlName="endTime" required>
-      </div><div [formGroup]="createMatchForm">
-        <!-- create-match.component.html -->
-        
-        <div class="form-group">
-          <label for="exchangeId">Matches :</label>
-          <select id="exchangeId" formControlName="exchangeId">
-            <option *ngFor="let match of recentData" [value]="match.id">{{ match.name }}</option>
-          </select>
-          <div *ngIf="createMatchForm.get('exchangeId').hasError('required') && createMatchForm.get('exchangeId').touched">
-            <p class="error-message">Match is required.</p>
-          </div>
-        </div>
-        
-    
-        <div class="form-group">
-          <label for="team1">Team 1:</label>
-          <input type="text" id="team1" formControlName="team1" />
-          <div *ngIf="createMatchForm.get('team1').hasError('required') && createMatchForm.get('team1').touched">
-            <p class="error-message">Team 1 is required.</p>
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="team2">Team 2:</label>
-          <input type="text" id="team2" formControlName="team2" />
-          <div *ngIf="createMatchForm.get('team2').hasError('required') && createMatchForm.get('team2').touched">
-            <p class="error-message">Team 2 is required.</p>
-          </div>
-        </div>
-      
-        <div class="form-group">
-          <label for="odds1">Odds for Team 1:</label>
-          <input type="number" id="odds1" formControlName="odds1" />
-          <div *ngIf="createMatchForm.get('odds1').hasError('required') && createMatchForm.get('odds1').touched">
-            <p class="error-message">Odds for Team 1 are required.</p>
-          </div>
-          <div *ngIf="createMatchForm.get('odds1').hasError('min') && createMatchForm.get('odds1').touched">
-            <p class="error-message">Odds for Team 1 must be greater than or equal to 0.</p>
-          </div>
-        </div>
-      
-        <div class="form-group">
-          <label for="odds2">Odds for Team 2:</label>
-          <input type="number" id="odds2" formControlName="odds2" />
-          <div *ngIf="createMatchForm.get('odds2').hasError('required') && createMatchForm.get('odds2').touched">
-            <p class="error-message">Odds for Team 2 are required.</p>
-          </div>
-          <div *ngIf="createMatchForm.get('odds2').hasError('min') && createMatchForm.get('odds2').touched">
-            <p class="error-message">Odds for Team 2 must be greater than or equal to 0.</p>
-          </div>
-        </div>
-      
-        <div class="form-group">
-          <label for="startTime">Start Time:</label>
-          <input type="datetime-local" id="startTime" formControlName="startTime" />
-          <div *ngIf="createMatchForm.get('startTime').hasError('required') && createMatchForm.get('startTime').touched">
-            <p class="error-message">Start Time is required.</p>
-          </div>
-        </div>
-      
-        <div class="form-group">
-          <label for="endTime">End Time:</label>
-          <input type="datetime-local" id="endTime" formControlName="endTime" />
-          <div *ngIf="createMatchForm.get('endTime').hasError('required') && createMatchForm.get('endTime').touched">
-            <p class="error-message">End Time is required.</p>
-          </div>
-        </div>
-      
-        <div class="form-group">
-          <label for="message">Message:</label>
-          <input type="text" id="message" formControlName="message" />
-        </div>
-      
-        <button (click)="createMatch()">Create Match</button>
       </div>
-      
-      <div *ngIf="successMessage !== null">
-        <p>{{ successMessage }}</p>
-      </div>
-      
-      <div *ngIf="formErrorMessage !== null">
-        <p>{{ formErrorMessage }}</p>
-      </div>
-      
-    
-    
-    
-      <form [formGroup]="updateMatchForm" (ngSubmit)="updateMatch()">
-        <div>
-          <label for="exchangeId">Exchange ID:</label>
-          <input type="text" id="exchangeId" formControlName="exchangeId" required>
-        </div>
-        <button type="button" (click)="fetchExchangeData(updateMatchForm.get('exchangeId').value)">Fetch Exchange Data</button>
-        
-      
-        <div>
-          <label for="team1">Team 1:</label>
-          <input type="text" id="team1" formControlName="team1" required>
-        </div>
-      
-        <div>
-          <label for="team2">Team 2:</label>
-          <input type="text" id="team2" formControlName="team2" required>
-        </div>
-      
-        <div>
-          <label for="odds1">Odds 1:</label>
-          <input type="number" id="odds1" formControlName="odds1" required>
-        </div>
-      
-        <div>
-          <label for="odds2">Odds 2:</label>
-          <input type="number" id="odds2" formControlName="odds2" required>
-        </div>
-      
-        <div>
-          <label for="startTime">Start Time:</label>
-          <input type="datetime-local" id="startTime" formControlName="startTime" required>
-        </div>
-      
-        <div>
-          <label for="endTime">End Time:</label>
-          <input type="datetime-local" id="endTime" formControlName="endTime" required>
-        </div>
-      
-        <!-- Add more input fields for other match properties -->
-      
-        <button type="submit" [disabled]="updateMatchForm.invalid">Update Match</button>
-      </form>
-      
-    
+
+
       <!-- Add more input fields for other match properties -->
-    
+
       <button type="submit" [disabled]="updateMatchForm.invalid">Update Match</button>
-    </form>
-    
-    <div class="form-group">
-      <label for="team1">Team 1:</label>
-      <input type="text" id="team1" formControlName="team1" />
-      <div *ngIf="createMatchForm.get('team1').hasError('required') && createMatchForm.get('team1').touched">
-        <p class="error-message">Team 1 is required.</p>
-      </div>
     </div>
-    <div class="form-group">
-      <label for="team2">Team 2:</label>
-      <input type="text" id="team2" formControlName="team2" />
-      <div *ngIf="createMatchForm.get('team2').hasError('required') && createMatchForm.get('team2').touched">
-        <p class="error-message">Team 2 is required.</p>
-      </div>
-    </div>
-  
-    <div class="form-group">
-      <label for="odds1">Odds for Team 1:</label>
-      <input type="number" id="odds1" formControlName="odds1" />
-      <div *ngIf="createMatchForm.get('odds1').hasError('required') && createMatchForm.get('odds1').touched">
-        <p class="error-message">Odds for Team 1 are required.</p>
-      </div>
-      <div *ngIf="createMatchForm.get('odds1').hasError('min') && createMatchForm.get('odds1').touched">
-        <p class="error-message">Odds for Team 1 must be greater than or equal to 0.</p>
-      </div>
-    </div>
-  
-    <div class="form-group">
-      <label for="odds2">Odds for Team 2:</label>
-      <input type="number" id="odds2" formControlName="odds2" />
-      <div *ngIf="createMatchForm.get('odds2').hasError('required') && createMatchForm.get('odds2').touched">
-        <p class="error-message">Odds for Team 2 are required.</p>
-      </div>
-      <div *ngIf="createMatchForm.get('odds2').hasError('min') && createMatchForm.get('odds2').touched">
-        <p class="error-message">Odds for Team 2 must be greater than or equal to 0.</p>
-      </div>
-    </div>
-  
-    <div class="form-group">
-      <label for="startTime">Start Time:</label>
-      <input type="datetime-local" id="startTime" formControlName="startTime" />
-      <div *ngIf="createMatchForm.get('startTime').hasError('required') && createMatchForm.get('startTime').touched">
-        <p class="error-message">Start Time is required.</p>
-      </div>
-    </div>
-  
-    <div class="form-group">
-      <label for="endTime">End Time:</label>
-      <input type="datetime-local" id="endTime" formControlName="endTime" />
-      <div *ngIf="createMatchForm.get('endTime').hasError('required') && createMatchForm.get('endTime').touched">
-        <p class="error-message">End Time is required.</p>
-      </div>
-    </div>
-  
-    <div class="form-group">
-      <label for="message">Message:</label>
-      <input type="text" id="message" formControlName="message" />
-    </div>
-  
-    <button (click)="createMatch()">Create Match</button>
-  </div>
-  
-  <div *ngIf="successMessage !== null">
-    <p>{{ successMessage }}</p>
-  </div>
-  
-  <div *ngIf="formErrorMessage !== null">
-    <p>{{ formErrorMessage }}</p>
-  </div>
-  
 
-
-
-  <form [formGroup]="updateMatchForm" (ngSubmit)="updateMatch()">
-    <div>
-      <label for="exchangeId">Exchange ID:</label>
-      <input type="text" id="exchangeId" formControlName="exchangeId" required>
-    </div>
-    <button type="button" (click)="fetchExchangeData(updateMatchForm.get('exchangeId').value)">Fetch Exchange Data</button>
-    
-  
-    <div>
-      <label for="team1">Team 1:</label>
-      <input type="text" id="team1" formControlName="team1" required>
-    </div>
-  
-    <div>
-      <label for="team2">Team 2:</label>
-      <input type="text" id="team2" formControlName="team2" required>
-    </div>
-  
-    <div>
-      <label for="odds1">Odds 1:</label>
-      <input type="number" id="odds1" formControlName="odds1" required>
-    </div>
-  
-    <div>
-      <label for="odds2">Odds 2:</label>
-      <input type="number" id="odds2" formControlName="odds2" required>
-    </div>
-  
-    <div>
-      <label for="startTime">Start Time:</label>
-      <input type="datetime-local" id="startTime" formControlName="startTime" required>
-    </div>
-  
-    <div>
-      <label for="endTime">End Time:</label>
-      <input type="datetime-local" id="endTime" formControlName="endTime" required>
-    </div>
-  
-    <!-- Add more input fields for other match properties -->
-  
-    <button type="submit" [disabled]="updateMatchForm.invalid">Update Match</button>
   </form>
-  

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ExchangeService } from '../../services/exchange.service';
+import { SnackbarServiceService } from 'app/shared/snackbar-service.service';
 
 @Component({
     selector: 'app-match',
@@ -13,10 +14,14 @@ export class MatchComponent implements OnInit {
     formErrorMessage: string | null = null;
     updateMatchForm: FormGroup;
     matchDetails: any;
-    recentData:any=[]
+    recentData: any = [];
+    currentTab: string = 'create';
+    isMatchSelected: boolean;
+    matchExist: boolean = false;
     constructor(
         private formBuilder: FormBuilder,
-        private exchangeService: ExchangeService
+        private exchangeService: ExchangeService,
+        private snackbar: SnackbarServiceService
     ) {
         this.createMatchForm = this.formBuilder.group({
             exchangeId: ['', Validators.required],
@@ -47,10 +52,10 @@ export class MatchComponent implements OnInit {
 
     getRecentData(): void {
         this.exchangeService.getRecent20Data()
-          .subscribe(data => {
-            this.recentData = data;
-          });
-      }
+            .subscribe(data => {
+                this.recentData = data;
+            });
+    }
 
     createMatch(): void {
         if (this.createMatchForm.valid) {
@@ -61,7 +66,9 @@ export class MatchComponent implements OnInit {
                 this.createMatchForm.get('endTime').value
             );
 
-            const exchangeId = 1; // Replace with the desired exchange ID
+            // const exchangeId = this.createMatchForm.value.get('exchangeId'); // Replace with the desired exchange ID
+            const exchangeId = Number(this.createMatchForm.get('exchangeId').value);
+
             const matchData = this.createMatchForm.value;
             matchData.startTime = startTime;
             matchData.endTime = endTime;
@@ -125,14 +132,41 @@ export class MatchComponent implements OnInit {
 
     // Method to fetch exchange data by ID and populate the form
     fetchExchangeData(exchangeId: number) {
+        this.successMessage ="";
         this.exchangeService.getMatchById(exchangeId).subscribe(
             (exchangeData) => {
+                console.log("DATA*****", exchangeData.match);
                 // Populate the form with the retrieved data
                 this.updateMatchForm.patchValue(exchangeData.match);
+
+                if (exchangeData.match?.team1) {
+                    console.log("EXCHANANANANAN", exchangeData.match?.team1);
+                    const startTime = new Date(exchangeData.match.startTime);
+                    const endTime = new Date(exchangeData.match.endTime);
+
+                    this.updateMatchForm.get('startTime').setValue(
+                        startTime.toISOString().slice(0, -8) // Format: 'YYYY-MM-DDTHH:mm'
+                    );
+
+                    this.updateMatchForm.get('endTime').setValue(
+                        endTime.toISOString().slice(0, -8) // Format: 'YYYY-MM-DDTHH:mm'
+                    );
+                    this.matchExist = false;
+                }
+                else {
+                    this.matchExist = true;
+                }
+                console.log(this.matchExist);
             },
             (error) => {
                 console.error('Error fetching exchange data', error);
             }
         );
     }
+    async updateSelectMatch() {
+        const exchangeId = Number(this.createMatchForm.get('exchangeId').value);
+        const fetchData = this.fetchExchangeData(exchangeId);
+        this.isMatchSelected = true;
+    }
+
 }
