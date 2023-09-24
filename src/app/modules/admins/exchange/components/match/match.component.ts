@@ -51,7 +51,7 @@ export class MatchComponent implements OnInit {
     }
 
     getRecentData(): void {
-        this.exchangeService.getRecent20Data()
+        this.exchangeService.getUnfinalizedExchanges()
             .subscribe(data => {
                 this.recentData = data;
             });

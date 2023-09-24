@@ -10,13 +10,8 @@ export class ExchangeUserService {
 
   constructor(private http:HttpClient) { }
 
-  getLiveExchanges(): Observable<any> {
-    const url = `${environment.apiUrl}/exchange/live`;
-    return this.http.get(url);
-  }
-
   findById(id: number): Observable<any> {
-    const url = `${environment.apiUrl}/exchange/get/${id}`;
+    const url = `${environment.apiUrl}/exchange/${id}`;
     return this.http.get(url);
   }
 
@@ -30,18 +25,19 @@ export class ExchangeUserService {
 
     return this.http.get<any[]>(url, { params });
   }
-  updateExchangeDetails(id: number, data: any): Observable<any> {
+  predict(id: number, data: any): Observable<any> {
     // Replace 'any' with the actual type of updateExchangeDto if you have a defined type for it
 
-    const url = `${environment.apiUrl}/exchange/update-details/${id}`;
+    const url = `${environment.apiUrl}/exchange/match/predict/${id}`;
 
     // You can also include any authentication headers here if required
 
     return this.http.post(url, data);
   }
 
-  findExchangesByNumber(usernumber: number): Observable<any[]> {
-    const url = `${environment.apiUrl}/exchange/by-number/${usernumber}`;
-    return this.http.get<any[]>(url);
+ 
+
+  getUnfinalizedExchanges(): Observable<any> {
+    return this.http.get(`${environment.apiUrl}/exchange/unfinalized`);
   }
 }

@@ -30,10 +30,10 @@ export class ExchangeCricketComponent implements OnInit {
 
     ngOnInit(): void {
         this.route.queryParams.subscribe((queryParams) => {
-            const team1 = queryParams['team1'];
-            const team2 = queryParams['team2'];
+            const id = queryParams['id'];
+           
             // console.log(');
-            this.filterExchanges(team1, team2);
+            this.findExchangeById(id);
         });
         const accessToken = localStorage.getItem('accessToken');
         this._userService.getUserDetails(accessToken).subscribe(
@@ -43,9 +43,8 @@ export class ExchangeCricketComponent implements OnInit {
                     console.log(response, 'RESPOSE,,,,,');
                     this.userData.username = response.data.username;
                     this.userData.usernumber = response.data.number;
-                    // this.walletBalance = response.data.wallet;
-                    // this.rewardBalance = response.data.reward;
-                    this.getExchangesByNumber()
+                   
+                    
                 }
             },
             (error) => {
@@ -74,28 +73,14 @@ export class ExchangeCricketComponent implements OnInit {
             (data) => {
                 // Handle the response data here
                 console.log(data);
-                this.AllData = data;
+                this.AllData=(data);
             },
             (error) => {
                 console.error('Error fetching exchange', error);
             }
         );
     }
-
-    filterExchanges(team1: string, team2: string): void {
-        this.exchangeService.filterExchanges(team1, team2).subscribe(
-            (data) => {
-                // Handle the response data here
-                this.AllData = data;
-                console.log(data);
-                this.Match = data.filter((exch) => exch.mode == 'match');
-                console.log(this.Match, 'Match');
-            },
-            (error) => {
-                console.error('Error fetching filtered exchanges', error);
-            }
-        );
-    }
+    
 
     placePrediction(id, data) {
         // Create a function to update exchange details
@@ -119,7 +104,7 @@ export class ExchangeCricketComponent implements OnInit {
         };
         console.log(_data, 'data');
         this.exchangeService
-            .updateExchangeDetails(this.current.id, _data)
+            .predict(this.current.id, _data)
             .subscribe(
                 (data) => {
                     // Handle the response data here
@@ -136,10 +121,5 @@ export class ExchangeCricketComponent implements OnInit {
             );
     }
 
-    getExchangesByNumber() {
-      const usernumber = this.userData.usernumber// Replace with the usernumber you want to search for
-      this.exchangeService.findExchangesByNumber(usernumber).subscribe((data) => {
-        console.log(data);
-      });
-    }
+  
 }

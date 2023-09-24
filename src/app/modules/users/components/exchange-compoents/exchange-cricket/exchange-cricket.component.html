@@ -22,13 +22,13 @@
                         </svg>
                     </div>
                     <div  *ngIf="isAccordionShown" class="mt-4 rounded-lg border">
-                        <div *ngFor="let data of Match;let i=index" class="relative overflow-x-auto p-2">
+                        <div  class="relative overflow-x-auto p-2">
                             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                                 <thead
                                     class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
                                     <tr>
                                         <th scope="col" class="px-6 py-3 rounded-l-lg">
-                                            Match {{data.id}}
+                                            Match {{AllData.id}}
                                         </th>
                                         <th scope="col" class="px-6 py-3 text-center">
                                             Odds
@@ -39,23 +39,23 @@
                                     <tr class="bg-white">
                                         <th scope="row"
                                             class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                            {{data.team1}}
+                                            {{AllData.match.team1}}
                                         </th>
                                         <td class="px-6 py-4 text-center">
-                                            <a (click)="openModal()" (click)="betTeam(data.team1,data.odds1,data.id)"
+                                            <a (click)="openModal()" (click)="betTeam(AllData.match.team1,AllData.match.odds1,AllData.id)"
                                                 class="font-medium text-white font-sans text-sm px-4 hover:underline p-2 bg-black rounded-md">
-                                                {{data.odds1}}
+                                                {{AllData.match.odds1}}
                                             </a>
                                         </td>
                                     </tr>
                                     <tr class="bg-white">
                                         <th scope="row" 
                                             class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                            {{data.team2}}
+                                            {{AllData.match.team2}}
                                         </th>
                                         <td class="px-6 py-4 text-center">
-                                            <a (click)="openModal()" (click)="betTeam(data.team2,data.odds2,data.id)"
-                                                class="font-medium text-white font-sans text-sm px-4 hover:underline p-2 bg-black rounded-md">{{data.odds2}}</a>
+                                            <a (click)="openModal()" (click)="betTeam(AllData.match.team2,AllData.match.odds2,AllData.id)"
+                                                class="font-medium text-white font-sans text-sm px-4 hover:underline p-2 bg-black rounded-md">{{AllData.match.odds2}}</a>
                                         </td>
                                     </tr>
 
@@ -201,10 +201,10 @@
                     class="px-8 py-2 border-2 border-solid border-black rounded text-black font-medium w-full hover:bg-black hover:text-white transition-all ease-in-out duration-300 mt-6">Close</button>
             </div>
             <div class="col-span-7">
-                <button *ngIf="!isBetLoading" (click)="betNow(current?.team,current?.odds)"
+                <button (click)="betNow(current?.team,current?.odds)"
                     class="px-4 py-2 bg-black text-white font-sans font-medium rounded hover:bg-white hover:text-black border-black border-2 border-solid w-full whitespace-nowrap mt-6 float-right">Bet</button>
-                    <button *ngIf="isBetLoading"
-                    class="px-4 py-2 bg-black text-white font-sans font-medium rounded hover:bg-white hover:text-black border-black border-2 border-solid w-full whitespace-nowrap mt-6 float-right">Loading . . .</button>
+                    <!-- <button *ngIf="isBetLoading"
+                    class="px-4 py-2 bg-black text-white font-sans font-medium rounded hover:bg-white hover:text-black border-black border-2 border-solid w-full whitespace-nowrap mt-6 float-right">Loading . . .</button> -->
                   </div>
         </div>
 

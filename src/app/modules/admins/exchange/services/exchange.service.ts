@@ -42,9 +42,9 @@ export class ExchangeService {
         return this.http.put(url, { name });
       }
 
-      getRecent20Data(): Observable<any[]> {
-        console.log("EXCHANGE");
-        const apiUrl =`${environment.apiUrl}/exchange/recent` 
-        return this.http.get<any[]>(apiUrl);
+      getUnfinalizedExchanges(): Observable<any> {
+        return this.http.get(`${environment.apiUrl}/exchange/unfinalized`);
       }
+
+    
 }

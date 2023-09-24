@@ -21,17 +21,20 @@ export class ExchangeHomeComponent implements OnInit {
     constructor(private exchangeService: ExchangeUserService) {}
 
     ngOnInit(): void {
-        this.exchangeService.getLiveExchanges().subscribe(
-            (data) => {
-                this.exchanges = data;
-                console.log(data);
-                this.cricket = data.filter(exchange => exchange.types === 'Cricket');
-                console.log(this.cricket)
-            },
-            
-            (error) => {
-                console.error('Error fetching exchanges', error);
-            }
-        );
+        try {
+            this.exchangeService.getUnfinalizedExchanges().subscribe(
+              (data) => {
+                this.exchanges = data; // Update with the response data structure
+                console.log(this.exchanges,'exchangeee')
+              },
+              (error) => {
+                console.error('Error:', error);
+                // this.errorMessage = 'An error occurred while fetching data.';
+              }
+            );
+          } catch (error) {
+            console.error('Try-catch error:', error);
+            // this.errorMessage = 'An error occurred.';
+          }
     }
 }

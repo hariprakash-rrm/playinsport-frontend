@@ -29,8 +29,8 @@
     <!-- Sub-cards for Cricket -->
     <div *ngIf="expandedCard === 'cricket'" class="py-4">
       <!-- Add your sub-cards here for Cricket -->
-      <div *ngFor="let data of cricket;let i = index">
-        <div [routerLink]="['/user/exchange/cricket']" [queryParams]="{ team1: data.team1,team2:data.team2 }"
+      <div *ngFor="let data of exchanges;let i = index">
+        <div [routerLink]="['/user/exchange/cricket']" [queryParams]="{ id: data.id }"
           class="col-span-12">
           <div class="box px-4 py-4 mb-4  zoom-in  shadow-card border border-grey">
             <div class="float-right mb-2 text-right inline-flex rounded gap-3 bg-red-100 px-4  ">

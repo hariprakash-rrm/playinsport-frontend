@@ -42,7 +42,7 @@ export class ExchangeComponent implements OnInit {
     }
 
     getRecentData(): void {
-        this.exchangeService.getRecent20Data()
+        this.exchangeService.getUnfinalizedExchanges()
             .subscribe((data: any) => {
                 this.recentData = data;
                 console.log("RECENTDATA-------->", this.recentData);
