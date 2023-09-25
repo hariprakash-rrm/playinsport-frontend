@@ -114,9 +114,17 @@ export class MatchComponent implements OnInit {
             // Handle invalid form data, show error messages, etc.
             return;
         }
+        const startTime = this.convertToTimestamp(
+            this.updateMatchForm.get('startTime').value
+        );
+        const endTime = this.convertToTimestamp(
+            this.updateMatchForm.get('endTime').value
+        );
 
         const exchangeId = Number(this.updateMatchForm.get('exchangeId').value);
         const matchData = this.updateMatchForm.value; // Get all form values as an object
+        matchData.startTime = startTime;
+            matchData.endTime = endTime;
 
         this.exchangeService.updateMatch(exchangeId, matchData).subscribe(
             (response) => {
