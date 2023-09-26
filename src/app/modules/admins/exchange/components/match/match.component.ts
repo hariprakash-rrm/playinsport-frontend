@@ -104,6 +104,7 @@ export class MatchComponent implements OnInit {
                 (error) => {
                     // Handle error, e.g., show an error message
                     console.error('Error fetching match details:', error);
+                    this.snackbar.error("Error fetching match details", 3000);
                 }
             );
         }
@@ -121,11 +122,13 @@ export class MatchComponent implements OnInit {
         this.exchangeService.updateMatch(exchangeId, matchData).subscribe(
             (response) => {
                 console.log('Match updated successfully', response);
+                this.snackbar.success("Match updated successfully", 3000);
                 // Optionally, reset the form after a successful update
                 this.updateMatchForm.reset();
             },
             (error) => {
                 console.error('Error updating match', error);
+                this.snackbar.error("Error updating match", 3000);
             }
         );
     }
@@ -135,12 +138,10 @@ export class MatchComponent implements OnInit {
         this.successMessage ="";
         this.exchangeService.getMatchById(exchangeId).subscribe(
             (exchangeData) => {
-                console.log("DATA*****", exchangeData.match);
                 // Populate the form with the retrieved data
                 this.updateMatchForm.patchValue(exchangeData.match);
 
                 if (exchangeData.match?.team1) {
-                    console.log("EXCHANANANANAN", exchangeData.match?.team1);
                     const startTime = new Date(exchangeData.match.startTime);
                     const endTime = new Date(exchangeData.match.endTime);
 
@@ -156,10 +157,10 @@ export class MatchComponent implements OnInit {
                 else {
                     this.matchExist = true;
                 }
-                console.log(this.matchExist);
             },
             (error) => {
                 console.error('Error fetching exchange data', error);
+                this.snackbar.error("Error fetching excange data", 3000);
             }
         );
     }
