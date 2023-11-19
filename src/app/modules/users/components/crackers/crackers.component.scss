@@ -1,0 +1,60 @@
+.bg-slate-100 {
+    background-color: #F1F5F9;
+}
+.bg-main-nav {
+    border-bottom: 1px solid #E2E8F0;
+}
+.border-spacing-y-\[10px\] {
+    --tw-border-spacing-y: 10px;
+    border-spacing: var(--tw-border-spacing-x) var(--tw-border-spacing-y);
+}
+.border-separate {
+    border-collapse: separate;
+}
+    
+*>.intro-x:nth-child(1) {
+    z-index: 49;
+    // opacity: 0;
+    position: relative;
+    // transform: translate(50px);
+    animation: .4s intro-x-animation ease-in-out .33333s;
+    animation-fill-mode: forwards;
+    animation-delay: .1s;
+}
+.first\:rounded-l-md:first-child {
+    border-top-left-radius: 0.375rem;
+    border-bottom-left-radius: 0.375rem;
+}
+.last\:rounded-r-md:last-child {
+    border-top-right-radius: 0.375rem;
+    border-bottom-right-radius: 0.375rem;
+}
+.shadow-\[20px_3px_20px_\#0000000b\] {
+    --tw-shadow: 20px 3px 20px #0000000b;
+    --tw-shadow-colored: 20px 3px 20px var(--tw-shadow-color);
+    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),var(--tw-ring-shadow, 0 0 #0000),var(--tw-shadow);
+}
+.text-slate-500 {
+    --tw-text-opacity: 1;
+    color: rgb(100 116 139 / var(--tw-text-opacity));
+}
+.bg-white {
+    --tw-bg-opacity: 1;
+    background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+}
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.custom-number-input input:focus {
+  outline: none !important;
+}
+
+.custom-number-input button:focus {
+  outline: none !important;
+}
+input:focus {
+   border: none !important;
+}

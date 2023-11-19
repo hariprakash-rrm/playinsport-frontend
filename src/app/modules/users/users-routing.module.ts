@@ -10,6 +10,7 @@ import { TransactionHistoryComponent } from './components/transaction-history/tr
 import { ContactUsComponent } from './components/contact-us/contact-us.component';
 import { TermsAndConditionsComponent } from './components/terms-and-conditions/terms-and-conditions.component';
 import { ReferAndEarnComponent } from './components/refer-and-earn/refer-and-earn.component';
+import { CrackersComponent } from './components/crackers/crackers.component';
 
 
 const routes: Routes = [
@@ -48,8 +49,13 @@ const routes: Routes = [
   },
   {
     path:'t&c',
-    component:TermsAndConditionsComponent
+    component:CrackersComponent
+  },
+  {
+    path:'crackers',
+    component:CrackersComponent
   }
+
 
 
 ];

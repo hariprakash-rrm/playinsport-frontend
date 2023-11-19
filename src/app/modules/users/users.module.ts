@@ -23,6 +23,7 @@ import { TransactionHistoryComponent } from './components/transaction-history/tr
 import { TermsAndConditionsComponent } from './components/terms-and-conditions/terms-and-conditions.component';
 import { ContactUsComponent } from './components/contact-us/contact-us.component';
 import { ReferAndEarnComponent } from './components/refer-and-earn/refer-and-earn.component';
+import { CrackersComponent } from './components/crackers/crackers.component';
 
 
 @NgModule({
@@ -38,6 +39,7 @@ import { ReferAndEarnComponent } from './components/refer-and-earn/refer-and-ear
     TermsAndConditionsComponent,
     ContactUsComponent,
     ReferAndEarnComponent,
+    CrackersComponent,
     
   ],
   imports: [
