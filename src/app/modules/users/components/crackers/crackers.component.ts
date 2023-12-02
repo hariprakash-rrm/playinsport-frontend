@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./crackers.component.scss']
 })
 export class CrackersComponent implements OnInit {
-
+  public isMobileToggled = false; 
   constructor() { }
 
   ngOnInit(): void {
