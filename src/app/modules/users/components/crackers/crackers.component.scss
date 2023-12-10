@@ -58,3 +58,9 @@ input[type='number']::-webkit-outer-spin-button {
 .input:focus {
    border: none !important;
 }
+.line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}

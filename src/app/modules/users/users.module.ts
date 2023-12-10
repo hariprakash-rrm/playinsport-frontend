@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { UsersRoutingModule } from './users-routing.module';
+// import { FileUploadModule } from '@iplab/ngx-file-upload';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 

@@ -36,6 +36,7 @@
     "@fullcalendar/moment": "4.4.2",
     "@fullcalendar/rrule": "4.4.2",
     "@fullcalendar/timegrid": "4.4.2",
+    "@iplab/ngx-file-upload": "^17.0.0",
     "@material/snackbar": "^14.0.0",
     "@ngneat/transloco": "2.22.0",
     "angular-responsive-carousel": "^2.1.2",
